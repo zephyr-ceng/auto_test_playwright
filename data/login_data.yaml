@@ -1,0 +1,9 @@
+url: "https://x.finetool.cn/login"
+locators:
+  username_input: "#username"
+  password_input: "#password"
+  login_button: "button[type='submit']"
+  form_error: ".ant-form-item-explain-error"
+  toast_message: ".ant-message-notice-content"
+  modal_content: ".ant-modal-content"
+  ack_button: "button:has-text('我已了解')"

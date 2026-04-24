@@ -1,0 +1,10 @@
+.ai/
+.codex/
+.vscode/
+.pytest_cache/
+.venv/
+.idea/
+logs/
+data/dicom/张凤_20241114100330_Dicom
+data/dicom/20240718_101201
+

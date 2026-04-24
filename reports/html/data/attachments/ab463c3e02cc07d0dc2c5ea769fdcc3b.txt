@@ -1,0 +1,3 @@
+[32mINFO    [0m login_test:logger.py:60 Typed text into #username: demo
+[32mINFO    [0m login_test:logger.py:60 Typed text into #password: 
+[32mINFO    [0m login_test:logger.py:60 Clicked element: button[type='submit']

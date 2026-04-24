@@ -1,0 +1,1 @@
+[1m[31mERROR   [0m baidu_test:logger.py:64 Failed to start browser: 'coroutine' object has no attribute 'chromium'

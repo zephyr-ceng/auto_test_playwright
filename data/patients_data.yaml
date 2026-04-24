@@ -1,0 +1,34 @@
+url: "https://x.finetool.cn/surgicalDesignList"
+locators:
+  # create patient
+  new_patient_button: "button:has-text('新建患者')"
+  name: "[role='dialog'] #name"
+  birthday: "[role='dialog'] #dateOfBirth"
+  phone: "[role='dialog'] #telephone"
+  gender_male: "[role='dialog'] .ant-form-item:has(label:has-text('性别')) .ant-segmented-item:has-text('男')"
+  gender_female: "[role='dialog'] .ant-form-item:has(label:has-text('性别')) .ant-segmented-item:has-text('女')"
+  remark: "[role='dialog'] #desc"
+  submit: "button:has-text('确 定')"
+  form_error: "[role='dialog'] .ant-form-item-explain-error"
+  ack_button: "button:has-text('我已了解')"
+
+  # menu tabs
+  patient_management_tab: "xpath=(//li[@role='menuitem'])[1]"
+  design_management_tab: "xpath=(//li[@role='menuitem'])[2]"
+
+  # pagination
+  page_size_trigger: ".ant-pagination-options .ant-pagination-options-size-changer"
+  page_size_option: ".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option"
+  patients_rows: ".ant-table-tbody > tr.ant-table-row"
+  designs_rows: "[class*='design-manage-card-layout']"
+
+  # patient query
+  patient_search_name_input: "input[placeholder='请输入患者姓名']"
+  patient_search_phone_input: "input[placeholder='请输入电话号码']"
+  patient_search_button: "button:has-text('查询')"
+
+  # design query
+  design_search_name_input: "input[placeholder='请输入患者姓名']"
+  design_status_trigger: ".ant-select:not(.ant-pagination-options-size-changer)"
+  design_status_option: ".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option"
+  design_search_button: "button:has-text('查询')"

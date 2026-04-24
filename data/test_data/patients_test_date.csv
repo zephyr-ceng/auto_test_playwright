@@ -1,0 +1,8 @@
+﻿序号,是否有效,姓名,生日,电话,性别,备注,预期结果
+1,False,,,,,,请填写患者姓名
+2,False,这是一个超过十字符的文本,,,,,姓名最多输入10个字符
+3,False,孙飞伟,,ILg,,,手机号格式错误！
+5,False,何伟静,,9859596931,,,手机号格式错误！
+6,False,尤敏泽,,269265782692,,,手机号格式错误！
+6,False,周玲军,,17528115576,,lurxjEOCSgzmnAOzb6K1zdcGpdsoq4DjMmfy5tYoezBksjvHmoYuptsNwoMbVTloaWkFuZyQVaYbJvWBKg3UhUIvsyl0vEBKE1bblY2kkFf38DYXslP7nXumwhayOW5s8tIPLYurlUYhi9K9LvQq69H,备注最多150字
+6,True,柏峰怡,,18249736481,,3C16yzZzvj1SwmbMvzUk,patientID

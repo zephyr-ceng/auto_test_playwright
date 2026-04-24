@@ -1,0 +1,3 @@
+search_input: '//*[@id="chat-textarea"]'
+search_button: '//button[contains(text(),"百度一下")]'
+result_items: "#content_left .result.c-container"

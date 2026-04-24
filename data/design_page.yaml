@@ -1,0 +1,6 @@
+url: 'https://x.finetool.cn/createDesign?patientID=642972813557358592'
+locators:
+  import_data: "button:has-text('导入数据')"
+  import_model: "button:has-text('导入模型文件 (.STL, .DCM)')"
+  input_dcm_name: '//input[@placeholder="输入模型名称"]'
+  confirmed_btn: "button:has-text('确 认')"

@@ -1,0 +1,8 @@
+[32mINFO    [0m patients_test:logger.py:60 Clicked element: button:has-text('新建患者')
+[32mINFO    [0m patients_test:logger.py:60 Wait for time: 500
+[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #name: 周玲军
+[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #dateOfBirth: 
+[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #telephone: 17528115576
+[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #desc: lurxjEOCSgzmnAOzb6K1zdcGpdsoq4DjMmfy5tYoezBksjvHmoYuptsNwoMbVTloaWkFuZyQVaYbJvWBKg3UhUIvsyl0vEBKE1bblY2kkFf38DYXslP7nXumwhayOW5s8tIPLYurlUYhi9K9LvQq69H
+[32mINFO    [0m patients_test:logger.py:60 Clicked element: button:has-text('确 定')
+[32mINFO    [0m patients_test:logger.py:60 Wait for time: 1000

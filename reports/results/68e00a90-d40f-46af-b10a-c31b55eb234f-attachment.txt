@@ -1,0 +1,9 @@
+[32mINFO    [0m patients_test:logger.py:60 Clicked element: xpath=(//li[@role='menuitem'])[2]
+[32mINFO    [0m patients_test:logger.py:60 Typed text into input[placeholder='请输入患者姓名']: 张
+[32mINFO    [0m patients_test:logger.py:60 Clicked element: .ant-select:not(.ant-pagination-options-size-changer)
+[32mINFO    [0m patients_test:logger.py:60 Clicked by text: .ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option, text=手术中
+[32mINFO    [0m patients_test:logger.py:60 Clicked element: button:has-text('查询')
+[32mINFO    [0m patients_test:logger.py:60 Closed page
+[32mINFO    [0m patients_test:logger.py:60 Closed context
+[32mINFO    [0m patients_test:logger.py:60 Closed browser
+[32mINFO    [0m patients_test:logger.py:60 Stopped Playwright

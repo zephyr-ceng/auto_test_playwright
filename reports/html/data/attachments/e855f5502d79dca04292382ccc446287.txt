@@ -1,0 +1,14 @@
+[32mINFO    [0m patients_test:logger.py:60 Started chromium browser (headless=False)
+[32mINFO    [0m patients_test:logger.py:60 Created new page
+[32mINFO    [0m patients_test:logger.py:60 Read YAML file: D:\ubuntu\Playwright_demo\data\patients_data.yaml
+[32mINFO    [0m patients_test:logger.py:60 Read YAML file: D:\ubuntu\Playwright_demo\config\config.yaml
+[32mINFO    [0m patients_test:logger.py:60 Clicked element: button:has-text('新建患者')
+[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #name: 这是一个超过十字符的文本
+[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #dateOfBirth: 
+[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #telephone: 
+[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #desc: 
+[32mINFO    [0m patients_test:logger.py:60 Clicked element: [role='dialog'] button:has-text('确 定')
+[32mINFO    [0m patients_test:logger.py:60 Closed page
+[32mINFO    [0m patients_test:logger.py:60 Closed context
+[32mINFO    [0m patients_test:logger.py:60 Closed browser
+[32mINFO    [0m patients_test:logger.py:60 Stopped Playwright

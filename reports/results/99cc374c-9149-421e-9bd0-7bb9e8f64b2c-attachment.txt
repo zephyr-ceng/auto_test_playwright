@@ -1,0 +1,23 @@
+[31m[1mERROR   [0m patients_test:logger.py:64 Click failed for button:has-text('新建患者'): Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button:has-text('新建患者')")
+
+[31m[1mERROR   [0m patients_test:logger.py:64 Type text failed for [role='dialog'] #name: Locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("[role='dialog'] #name")
+
+[31m[1mERROR   [0m patients_test:logger.py:64 Type text failed for [role='dialog'] #dateOfBirth: Locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("[role='dialog'] #dateOfBirth")
+
+[31m[1mERROR   [0m patients_test:logger.py:64 Type text failed for [role='dialog'] #telephone: Locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("[role='dialog'] #telephone")
+
+[31m[1mERROR   [0m patients_test:logger.py:64 Type text failed for [role='dialog'] #desc: Locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("[role='dialog'] #desc")
+
+[31m[1mERROR   [0m patients_test:logger.py:64 Click failed for button:has-text('确 定'): Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button:has-text('确 定')")
