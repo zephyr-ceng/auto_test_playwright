@@ -283,12 +283,12 @@ class PatientsPage(BasePage):
 
     """  ************************************************  测试函数  **********************************************************************************  """
 
-    def count_page_patients(self, number: int) -> int:
+    def count_page_patients(self, number: int) -> int | None:
         """ 统计单页患者数量 """
         self._open_url(self.patient_url)
         return self._count_page_items("patient_management_tab", "patients_rows", number)
 
-    def count_designs(self, number: int) -> int:
+    def count_page_designs(self, number: int) -> int:
         """ 统计单页设计数量 """
         self._open_url(self.patient_url)
         return self._count_page_items("design_management_tab", "designs_rows", number)
