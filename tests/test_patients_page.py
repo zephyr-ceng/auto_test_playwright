@@ -44,7 +44,7 @@ def _prepare_patients_test_data() -> list[dict]:
 @pytest.fixture(scope="class")
 def page():
     log = Logger("patients_test")
-    manager = BrowserManager(browser_type="chromium", headless=False, logger=log)
+    manager = BrowserManager(browser_type="chromium", headless=True, logger=log)
     # browser_page = manager.start()
     browser_page = manager.new_page()
     patients = PatientsPage(browser_page, log)

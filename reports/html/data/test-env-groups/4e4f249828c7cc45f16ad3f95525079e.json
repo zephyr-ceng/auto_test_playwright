@@ -1,1 +1,1 @@
-{"id":"4e4f249828c7cc45f16ad3f95525079e","fullName":"tests.test_patients_page.TestPatientsPage#test_create_patients_page","name":"Create patient with invalid input should show expected error","status":"failed","testResultsByEnv":{"default":"355db6c5e2747b3aa73cfe0ab437356a"}}
+{"id":"4e4f249828c7cc45f16ad3f95525079e","fullName":"tests.test_patients_page.TestPatientsPage#test_create_patients_page","name":"测试用例3--手机号格式错误！","status":"passed","testResultsByEnv":{"default":"6073a37e28c1e4f6b5595c70b7acb84f"}}

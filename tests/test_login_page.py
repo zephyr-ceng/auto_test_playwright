@@ -31,7 +31,7 @@ def _prepare_login_test_data() -> list[dict]:
 @pytest.fixture(scope="class")
 def login_page():
     log = Logger("login_test")
-    manager = BrowserManager(browser_type="chromium", headless=False, logger=log)
+    manager = BrowserManager(browser_type="chromium", headless=True, logger=log)
     # page = manager.start()
     page = manager.new_page()
     login = LoginPage(page, logger=log)

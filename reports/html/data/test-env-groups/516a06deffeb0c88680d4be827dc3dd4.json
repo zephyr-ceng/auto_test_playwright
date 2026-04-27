@@ -1,1 +1,0 @@
-{"id":"516a06deffeb0c88680d4be827dc3dd4","fullName":"tests.test_baidu_page.TestBaiduSearch#test_search_text","name":"Search specified text and assert result count > 0","status":"failed","testResultsByEnv":{"default":"fe83eaaf3fd52d857b96b865e82baae3"}}

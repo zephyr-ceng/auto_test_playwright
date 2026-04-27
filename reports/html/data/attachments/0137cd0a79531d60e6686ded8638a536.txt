@@ -1,8 +1,0 @@
-[32mINFO    [0m patients_test:logger.py:60 Clicked element: button:has-text('新建患者')
-[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #name: 尤敏泽
-[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #dateOfBirth: 
-[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #telephone: 269265782692
-[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #desc: 
-[31m[1mERROR   [0m patients_test:logger.py:64 Click failed for [role='dialog'] button:has-text('确定'): Locator.click: Timeout 30000ms exceeded.
-Call log:
-  - waiting for locator("[role='dialog'] button:has-text('确定')")

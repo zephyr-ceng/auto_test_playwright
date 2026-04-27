@@ -1,8 +1,0 @@
-[32mINFO    [0m patients_test:logger.py:60 Clicked element: button:has-text('新建患者')
-[32mINFO    [0m patients_test:logger.py:60 Wait for time: 500
-[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #name: 这是一个超过十字符的文本
-[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #dateOfBirth: 
-[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #telephone: 
-[32mINFO    [0m patients_test:logger.py:60 Typed text into [role='dialog'] #desc: 
-[32mINFO    [0m patients_test:logger.py:60 Clicked element: button:has-text('确 定')
-[32mINFO    [0m patients_test:logger.py:60 Wait for time: 1000

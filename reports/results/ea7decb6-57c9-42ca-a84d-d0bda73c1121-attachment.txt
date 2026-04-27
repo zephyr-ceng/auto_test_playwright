@@ -1,6 +1,0 @@
-[32mINFO    [0m login_test:logger.py:60 Started chromium browser (headless=True)
-[32mINFO    [0m login_test:logger.py:60 Created new page
-[32mINFO    [0m login_test:logger.py:60 Read YAML file: D:\ubuntu\Playwright_demo\data\login_data.yaml
-[32mINFO    [0m login_test:logger.py:60 Typed text into #username: demo
-[32mINFO    [0m login_test:logger.py:60 Typed text into #password: 123
-[32mINFO    [0m login_test:logger.py:60 Clicked element: button[type='submit']
