@@ -84,12 +84,12 @@ class TestPatientsPage:
         assert expected in url, f"当前url {url} 中没有包含字段: {expected}"
 
     @allure.story("select page show number")
-    @pytest.mark.parametrize("number", [10, 20, 50, 100])
+    @pytest.mark.parametrize("number", [10, 30, 50, 100])
     def test_count_patients(self, page, number):
         """ 单页面显示设计及患者数量 """
         allure.dynamic.title(f"每页显示数量为: {number}")
         count_pa = page.count_page_patients(number)
-        count_de = page.count_designs(number)
+        count_de = page.count_page_designs(number)
         assert count_pa == number, f"并未查询到对应数据:实际值{count_pa} != 预设值{number}"
         assert count_de == number, f"并未查询到对应数据:实际值{count_pa} != 预设值{number}"
 
