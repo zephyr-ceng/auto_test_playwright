@@ -1,9 +1,0 @@
-[32mINFO    [0m baidu_test:logger.py:60 Connecting to remote browser: ws://192.168.58.128:3000
-[31m[1mERROR   [0m baidu_test:logger.py:64 Failed to start async browser: BrowserType.connect: WebSocket error: connect ECONNREFUSED 192.168.58.128:3000
-Call log:
-  - <ws connecting> ws://192.168.58.128:3000/
-  - <ws error> ws://192.168.58.128:3000/ error connect ECONNREFUSED 192.168.58.128:3000
-  - <ws connect error> ws://192.168.58.128:3000/ connect ECONNREFUSED 192.168.58.128:3000
-  - <ws disconnected> ws://192.168.58.128:3000/ code=1006 reason=
-
-[32mINFO    [0m baidu_test:logger.py:60 Stopped async Playwright

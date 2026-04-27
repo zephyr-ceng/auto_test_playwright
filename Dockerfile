@@ -17,9 +17,9 @@ RUN apt-get update && \
     fi && \
     rm -rf /var/lib/apt/lists/*
 
-COPY requirement.txt .
+COPY requirements.txt .
 RUN pip install --upgrade pip && \
-    pip install -r requirement.txt && \
+    pip install -r requirements.txt && \
     npm install -g allure@${ALLURE_VERSION} && \
     allure --version && \
     playwright install --with-deps chromium
