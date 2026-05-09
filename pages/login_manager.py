@@ -14,18 +14,12 @@ class LoginPage(BasePage):
             config_path: str = "config/config.yaml",
     ):
         super().__init__(driver, logger)
-        cfg = YamlManager(self.logger).read(locators_path)
-        self.login_url = cfg.get("url")
-        self.locators = cfg.get("locators")
-        self.username_input = self.locators.get("username_input")
-        self.password_input = self.locators.get("password_input")
-        self.login_button = self.locators.get("login_button")
-        self.form_error = self.locators.get("form_error")
-        self.toast_message = self.locators.get("toast_message")
-        self.modal_content = self.locators.get("modal_content")
-        self.ack_button = self.locators.get("ack_button")
-
         self._config = YamlManager(self.logger)
+
+        # login_data.yaml
+        login_cfg = self._config.read(locators_path)
+        self.login_url = login_cfg.get("url")
+        self.locators = login_cfg.get("locators")
 
         # config.yaml
         self._config_path = config_path
@@ -41,33 +35,40 @@ class LoginPage(BasePage):
         if not self.login_username or not self.login_password:
             raise RuntimeError(f"username/password not configured in {config_path}")
 
+    def _get_locator(self, key):
+        return self.locators.get(key)
+
     def open_login(self) -> None:
         if not self.login_url:
             raise RuntimeError("login_url is not configured for LoginPage")
         self.open_url(self.login_url)
 
     def accept_webgl_ack(self) -> None:
-        if not self.ack_button:
+        act_btn = self._get_locator("ack_button")
+        if not act_btn:
             return
-        ack_locator = self.driver.locator(self.ack_button)
+        ack_locator = self.driver.locator(act_btn)
         if ack_locator.count():
             ack_locator.first.click()
             self.driver.wait_for_timeout(500)
 
     def input_account(self, account: str) -> bool:
-        if not self.username_input:
+        username_locator = self._get_locator("username_input")
+        if not username_locator:
             return False
-        return self.type_text(self.username_input, account, clear_first=True)
+        return self.type_text(username_locator, account, clear_first=True)
 
     def input_password(self, password: str) -> bool:
-        if not self.password_input:
+        password_locator = self._get_locator("password_input")
+        if not password_locator:
             return False
-        return self.type_text(self.password_input, password, clear_first=True)
+        return self.type_text(password_locator, password, clear_first=True)
 
-    def click_login(self) -> bool:
-        if not self.login_button:
+    def _click_login(self) -> bool:
+        login_btn = self._get_locator("login_button")
+        if not login_btn:
             return False
-        return self.click(self.login_button)
+        return self.click(login_btn)
 
     def _collect_texts(self, selector: Optional[str]) -> List[str]:
         if not selector:
@@ -85,13 +86,13 @@ class LoginPage(BasePage):
             self.accept_webgl_ack()
             self.input_account(account)
             self.input_password(password)
-            self.click_login()
+            self._click_login()
             self.driver.wait_for_timeout(1200)
 
             texts = []
-            texts.extend(self._collect_texts(self.form_error))
-            texts.extend(self._collect_texts(self.toast_message))
-            texts.extend(self._collect_texts(self.modal_content))
+            texts.extend(self._collect_texts(self._get_locator("form_error")))
+            texts.extend(self._collect_texts(self._get_locator("toast_message")))
+            texts.extend(self._collect_texts(self._get_locator("modal_content")))
             combined = "\n".join(texts).strip()
             return combined or None
         except Exception as e:
@@ -103,7 +104,7 @@ class LoginPage(BasePage):
         self.accept_webgl_ack()
         self.input_account(account)
         self.input_password(password)
-        self.click_login()
+        self._click_login()
         self.driver.wait_for_timeout(1200)
         cookies = self.driver.context.cookies()
         return cookies if cookies else None

@@ -9,7 +9,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# Allure Report 3 uses Node.js (not Java). Keep Java optional for compatibility.
+# Jenkins will mount the host project into /app at runtime.
+# This image only prepares the execution environment.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs npm && \
     if [ "$INSTALL_JAVA" = "true" ]; then \
@@ -17,13 +18,12 @@ RUN apt-get update && \
     fi && \
     rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
+COPY requirements.txt /tmp/requirements.txt
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt && \
+    pip install -r /tmp/requirements.txt && \
     npm install -g allure@${ALLURE_VERSION} && \
     allure --version && \
-    playwright install --with-deps chromium
-
-COPY . .
-
-CMD ["python", "run_tests.py"]
+    pytest --version && \
+    playwright --version && \
+    playwright install --with-deps chromium && \
+    python -c "import importlib.metadata as m; pkgs=['playwright','pytest','allure-pytest','allure-python-commons','pyyaml']; print('Installed package versions:'); [print(f'{p}=={m.version(p)}') for p in pkgs]"

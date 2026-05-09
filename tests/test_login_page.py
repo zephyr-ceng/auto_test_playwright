@@ -2,7 +2,7 @@ import allure
 import pytest
 
 from core.browser_manager import BrowserManager
-from pages.login_page import LoginPage
+from pages.login_manager import LoginPage
 from utils.csv_manager import CSVManager
 from utils.logger import Logger
 
@@ -42,7 +42,6 @@ def login_page():
 @allure.feature("Login")
 class TestLoginPage:
     @allure.story("有效账号登录测试")
-    # @allure.title("Login with invalid credentials should show expected message")
     @pytest.mark.parametrize(
         "case",
         [case for case in _prepare_login_test_data() if case["是否有效"] == "False"],
