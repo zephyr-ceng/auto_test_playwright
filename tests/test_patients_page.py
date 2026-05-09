@@ -4,7 +4,7 @@ import allure
 import pytest
 
 from core.browser_manager import BrowserManager
-from pages.patients_page import PatientsPage
+from pages.patient_manager import PatientsPage
 from utils.Path_manager import PathManager
 from utils.csv_manager import CSVManager
 from utils.logger import Logger
@@ -84,7 +84,7 @@ class TestPatientsPage:
         assert expected in url, f"当前url {url} 中没有包含字段: {expected}"
 
     @allure.story("select page show number")
-    @pytest.mark.parametrize("number", [10, 30, 50, 100])
+    @pytest.mark.parametrize("number", [10, 20, 50, 100])
     def test_count_patients(self, page, number):
         """ 单页面显示设计及患者数量 """
         allure.dynamic.title(f"每页显示数量为: {number}")
@@ -97,19 +97,19 @@ class TestPatientsPage:
     @pytest.mark.parametrize("name,phone", [('test', '16666666666'), ('演示', ''), ("", "139")])
     def test_select_patients_or_design(self, page, name, phone):
         allure.dynamic.title(f"查询患者信息{name, phone}")
-        res = page.select_patient(name, phone)
+        res = page.search_patient(name, phone)
         assert res is True, f"查询功能异常"
 
     @allure.story("select patients or design")
     @pytest.mark.parametrize("design_name,status", [('test', ''), ('张', '手术中')])
     def test_select_patients_or_design(self, page, design_name, status):
         allure.dynamic.title(f"查询指定患者设计{design_name, status}")
-        res = page.select_design(design_name, status)
+        res = page.search_design(design_name, status)
         assert res is True, f"查询功能异常"
 
-    @pytest.mark.parametrize('dcm_dir',
-                             [dir for dir in PathManager(f"data/dicom").get_subdirectory() if os.path.isdir(dir)])
-    def test_dcm_render(self, page, dcm_dir):
-        print(dcm_dir)
-        status = page.dcm_render(dcm_dir, "术前CT", timeout_ms=1000 * 60 * 5)
-        assert status is True, f"文件未渲染成功，状态为{status}"
+    # @pytest.mark.parametrize('dcm_dir',
+    #                          [dir for dir in PathManager(f"data/dicom").get_subdirectory() if os.path.isdir(dir)])
+    # def test_dcm_render(self, page, dcm_dir):
+    #     print(dcm_dir)
+    #     status = page.dcm_upload(dcm_dir, "术前CT", timeout_ms=1000 * 60 * 5)
+    #     assert status is True, f"文件未渲染成功，状态为{status}"

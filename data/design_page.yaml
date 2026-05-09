@@ -4,3 +4,5 @@ locators:
   import_model: "button:has-text('导入模型文件 (.STL, .DCM)')"
   input_dcm_name: '//input[@placeholder="输入模型名称"]'
   confirmed_btn: "button:has-text('确 认')"
+  input_label: "div.ant-select-content:visible"
+  input_combobox: 'combobox'
