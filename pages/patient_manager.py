@@ -66,7 +66,7 @@ class PatientsPage(BasePage):
         self._accept_webgl_ack()
 
     def _open_create_form(self) -> bool:
-        selector = self._selector("new_patient_button")
+        selector = self._selector_patient("new_patient_button")
         if not selector:
             return False
         ok = self.click(selector)
@@ -75,48 +75,48 @@ class PatientsPage(BasePage):
         return ok
 
     def _input_name(self, name: str) -> bool:
-        selector = self._selector("name")
+        selector = self._selector_patient("name")
         if not selector:
             return False
         return self.type_text(selector, name or "", clear_first=True)
 
     def _input_birthday(self, birthday: str) -> bool:
-        selector = self._selector("birthday")
+        selector = self._selector_patient("birthday")
         if not selector:
-            return True
+            return False
         return self.type_text(selector, birthday or "", clear_first=True)
 
     def _input_phone(self, phone: str) -> bool:
-        selector = self._selector("phone")
+        selector = self._selector_patient("phone")
         if not selector:
-            return True
+            return False
         return self.type_text(selector, phone or "", clear_first=True)
 
     def _select_gender(self, gender: str) -> bool:
         gender_text = (gender or "").strip()
         if not gender_text:
             return True
-        generic_selector = self._selector("gender")
+        generic_selector = self._selector_patient("gender")
         if generic_selector:
             return self.type_text(generic_selector, gender_text, clear_first=True)
 
         lower_text = gender_text.lower()
         if lower_text in {"male", "m", "男", "男性"}:
-            male_selector = self._selector("gender_male")
+            male_selector = self._selector_patient("gender_male")
             return self.click(male_selector) if male_selector else False
         if lower_text in {"female", "f", "女", "女性"}:
-            female_selector = self._selector("gender_female")
+            female_selector = self._selector_patient("gender_female")
             return self.click(female_selector) if female_selector else False
         return False
 
     def _input_remark(self, remark: str) -> bool:
-        selector = self._selector("remark")
+        selector = self._selector_patient("remark")
         if not selector:
-            return True
+            return False
         return self.type_text(selector, remark or "", clear_first=True)
 
     def _click_submit(self) -> bool:
-        selector = self._selector("submit")
+        selector = self._selector_patient("submit")
         if not selector:
             return False
         return self.click(selector)
@@ -146,8 +146,11 @@ class PatientsPage(BasePage):
         self._config.update(self._config_path, {"cookies_write_time": local_time})
         self._config.update(self._config_path, {"cookies": self.cookies})
 
-    def _selector(self, key: str) -> Optional[str]:
+    def _selector_patient(self, key: str) -> Optional[str]:
         return self.patient_locators.get(key)
+
+    def _selector_design(self, key: str) -> Optional[str]:
+        return self.design_locators.get(key)
 
     def _collect_texts(self, selector: Optional[str]) -> List[str]:
         if not selector:
@@ -164,12 +167,12 @@ class PatientsPage(BasePage):
             errors.extend(self._collect_texts(selector))
 
         for key in ("name_error", "phone_error", "remark_error", "form_error", "toast_error", "modal_error"):
-            errors.extend(self._collect_texts(self._selector(key)))
+            errors.extend(self._collect_texts(self._selector_patient(key)))
 
         return errors[0] if errors else None
 
     def _accept_webgl_ack(self) -> None:
-        ack_selector = self._selector("ack_button")
+        ack_selector = self._selector_patient("ack_button")
         if not ack_selector:
             return
         try:
@@ -186,10 +189,10 @@ class PatientsPage(BasePage):
         if number <= 0:
             raise ValueError("number must be > 0")
 
-        tab_selector = self._selector(tab_selector_key)
-        rows_selector = self._selector(rows_selector_key)
-        trigger = self._selector("page_size_trigger")
-        options = self._selector("page_size_option")
+        tab_selector = self._selector_patient(tab_selector_key)
+        rows_selector = self._selector_patient(rows_selector_key)
+        trigger = self._selector_patient("page_size_trigger")
+        options = self._selector_patient("page_size_option")
         if not rows_selector:
             raise RuntimeError(f"missing rows locator: {rows_selector_key}")
         if not trigger or not options:
@@ -281,6 +284,15 @@ class PatientsPage(BasePage):
 
         return False
 
+    def _input_label(self, label_name):
+        selector = self._selector_design("input_label")
+        input_role = self._selector_design("input_combobox")
+        # print(selector)
+        if not selector:
+            return False
+        self.click(selector)
+        return self.type_text_role(str(input_role), label_name)
+
     """  ************************************************  测试函数  **********************************************************************************  """
 
     def count_page_patients(self, number: int) -> int | None:
@@ -328,15 +340,15 @@ class PatientsPage(BasePage):
         """通过 name/phone/gender 查询患者，存在返回 True，不存在返回 False。"""
         self._open_url(self.patient_url)
         # 点击病患管理后查找相关元素
-        tab = self._selector("patient_management_tab")
+        tab = self._selector_patient("patient_management_tab")
         if tab:
             self.click(tab)
             self.wait_for_time(500)
 
-        name_input = self._selector("patient_search_name_input")
-        phone_input = self._selector("patient_search_phone_input")
-        search_button = self._selector("patient_search_button")
-        row_selector = self._selector("patients_rows")
+        name_input = self._selector_patient("patient_search_name_input")
+        phone_input = self._selector_patient("patient_search_phone_input")
+        search_button = self._selector_patient("patient_search_button")
+        row_selector = self._selector_patient("patients_rows")
         if not name_input or not phone_input or not search_button or not row_selector:
             raise RuntimeError("patient query locators are not configured in data/patients_data.yaml")
 
@@ -375,17 +387,17 @@ class PatientsPage(BasePage):
 
         self._open_url(self.patient_url)
         # 点击设计管理
-        tab = self._selector("design_management_tab")
+        tab = self._selector_patient("design_management_tab")
         if tab:
             self.click(tab)
             self.wait_for_time(500)
 
         # 元素定位
-        name_input = self._selector("design_search_name_input")
-        status_trigger = self._selector("design_status_trigger")  # 点击状态切换
-        status_option = self._selector("design_status_option")  # 切换手术状态
-        search_button = self._selector("design_search_button")  # 搜索按钮
-        cards_selector = self._selector("designs_rows")  # 指定元素
+        name_input = self._selector_patient("design_search_name_input")
+        status_trigger = self._selector_patient("design_status_trigger")  # 点击状态切换
+        status_option = self._selector_patient("design_status_option")  # 切换手术状态
+        search_button = self._selector_patient("design_search_button")  # 搜索按钮
+        cards_selector = self._selector_patient("designs_rows")  # 指定元素
         if not name_input or not status_trigger or not status_option or not search_button or not cards_selector:
             raise RuntimeError("design query locators are not configured in data/patients_data.yaml")
 
@@ -402,13 +414,13 @@ class PatientsPage(BasePage):
 
     def dcm_render(self, dcm_dir: str, ct_name: str, timeout_ms: int = 180000, target_status: int = 2) -> bool:
         """ 文件上传 """
-        # TODO: 暂时使用手动创建用户
-        self.create_patient(self._random.random_chinese_name())
+        self.create_patient(self._random.random_chinese_name())  # TODO: 暂时使用手动创建用户
+        # self._open_url()
         dcm_files = self._file_is_dcm(dcm_dir)
 
         # 传入文件等待解析
-        import_data = self.design_locators.get("import_data")
-        import_model = self.design_locators.get("import_model")
+        import_data = self._selector_design("import_data")
+        import_model = self._selector_design("import_model")
         if not import_data or not import_model:
             raise RuntimeError("cannot find import data or import model on current page")
         self.click(import_data)
@@ -420,9 +432,9 @@ class PatientsPage(BasePage):
         self.wait_for_time(500)
 
         # 解析完成触发上传
-        input_dcm_name = self.design_locators.get(
+        input_dcm_name = self._selector_design(
             "input_dcm_name") or "input[placeholder='\u8f93\u5165\u6a21\u578b\u540d\u79f0']"
-        confirmed_btn = self.design_locators.get("confirmed_btn")
+        confirmed_btn = self._selector_design("confirmed_btn")
         if not confirmed_btn:
             raise RuntimeError("cannot find `confirmed_btn` in modal")
 
@@ -444,6 +456,40 @@ class PatientsPage(BasePage):
             self.logger.info(f"DCM渲染状态为{status}")
         return status
 
+    def create_tooth(self, tooth_position: int) -> bool:
+        """ 病例创建 """
+        if not isinstance(tooth_position, int):
+            raise ValueError("tooth_position must be int")
+        if tooth_position <= 0:
+            raise ValueError("tooth_position must be > 0")
+        # if "patientID" not in (self.driver.url or ""):
+        #     raise ValueError("patientID must be set")
+        # self.create_patient(self._random.random_chinese_name())  # TODO: 暂时使用手动创建用户
+        self._open_url("https://x.finetool.cn/createDesign?patientID=663912333812113408")
+        print(self.driver.url)
+        self.click("button:has-text('新增病例')")
+        self.click_nth(f"[role='dialog'] svg path[data-name='{tooth_position}']", 0) or self.click_nth(
+            f"[role='dialog'] svg path[data-name='{tooth_position}']", 1)
+        self.wait_for_time(300)
+        self._input_label(f"牙位：{tooth_position}")
+        self.click("button:has-text('保 存')")
+        self.wait_for_time(1000)
+        ele_count = self.count_elements("//div[contains(@class,'bg-[#232323]')]")
+        if ele_count > 0:
+            print(ele_count)
+            return True
+        return False
+
+    def open_url(self, url) -> None:
+        if not url:
+            raise RuntimeError("patients url is not configured")
+        self._refresh_cookies()
+        if self.cookies:
+            self.driver.context.add_cookies(self.cookies)
+        self.driver.goto(url)
+        self.driver.wait_for_load_state("networkidle")
+        self._accept_webgl_ack()
+
 
 if __name__ == "__main__":
     from core.browser_manager import BrowserManager
@@ -454,7 +500,8 @@ if __name__ == "__main__":
     try:
         page = manager.start()
         pp = PatientsPage(page, log)
-        print(pp.dcm_render("data/dicom/wujia", '术前CT'))
+        res = pp.create_tooth(17)
+        print(res)
         # pp.create_patient_invalid('test')
     finally:
         manager.close()
