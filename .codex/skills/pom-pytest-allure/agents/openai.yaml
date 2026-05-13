@@ -1,0 +1,4 @@
+interface:
+  display_name: "POM Pytest Allure"
+  short_description: "Generate POM pytest Allure flows."
+  default_prompt: "Create or update Playwright_demo automation flows using Page Object managers, YAML locators, pytest assertions, and Allure reporting conventions."
