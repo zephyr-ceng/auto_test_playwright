@@ -39,6 +39,19 @@ class BasePage:
         if self.logger:
             self.logger.info(f"Opened url: {url}")
 
+    def build_url(self, base_url: str, path: str) -> str:
+        if not base_url:
+            raise RuntimeError("base_url is not configured")
+        if not path:
+            raise RuntimeError("page url path is not configured")
+
+        page_path = str(path).strip()
+        if page_path.startswith(("http://", "https://")):
+            raise ValueError("page yaml url must be a path, not a full URL")
+        if not page_path.startswith("/"):
+            page_path = f"/{page_path}"
+        return f"{str(base_url).rstrip('/')}{page_path}"
+
     def add_cookies(self, cookies: dict):
         if not cookies:
             raise ValueError("cookies is empty")
@@ -129,6 +142,50 @@ class BasePage:
                 self.logger.error(f"Count elements failed for {selector}: {e}")
             return 0
 
+    def wait_for_selector(self, selector: str) -> bool:
+        """
+        等待 selector 对应元素出现在页面中。
+
+        Args:
+            selector: 从 YAML 读取的 CSS、XPath 或 Playwright selector。
+
+        Returns:
+            等待成功返回 True，等待失败返回 False。
+        """
+        try:
+            self.get_locator(selector).wait_for()
+            if self.logger:
+                self.logger.info(f"Waited for selector: {selector}")
+            return True
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Wait for selector failed for {selector}: {e}")
+            return False
+
+    def get_attribute(self, selector: str, attr_name: str, index: int = 0) -> Optional[str]:
+        """
+        读取 selector 对应元素的属性值。
+
+        Args:
+            selector: 从 YAML 读取的 CSS、XPath 或 Playwright selector。
+            attr_name: 要读取的属性名称，例如 `aria-valuenow`。
+            index: 匹配到多个元素时读取第几个元素，默认读取第 0 个。
+
+        Returns:
+            属性存在时返回字符串值；属性不存在或读取失败时返回 None。
+        """
+        try:
+            if index < 0:
+                raise ValueError("index must be >= 0")
+            value = self.get_locator(selector).nth(index).get_attribute(attr_name)
+            # if self.logger:
+            #     self.logger.info(f"Got attribute {attr_name} for {selector}[{index}]: {value}")
+            return value
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Get attribute failed for {selector}[{index}], attr={attr_name}: {e}")
+            return None
+
     def get_alert_text(self, timeout: int = 5000, accept: bool = False) -> Optional[str]:
         """等待浏览器弹窗并返回文本，可选自动点击确认。"""
         try:
@@ -178,33 +235,87 @@ class BasePage:
             raise ValueError("time cannot be None")
         try:
             self.driver.wait_for_timeout(time)
-            if self.logger:
-                self.logger.info(f"Wait for time: {time}")
-
         except Exception as e:
             if self.logger:
                 self.logger.error(f"Wait for time: {e}")
 
+    def get_page_url(self):
+        return self.driver.url
+
     """*************************************************** Role定位方式 *************************************************************************** """
 
+    def _get_role_locator(self, role_ele: str, role_name: Optional[str] = None):
+        """
+        获取 role 定位对应的 Playwright Locator。
+
+        Args:
+            role_ele: 从 YAML 读取的 role 类型，例如 `button`、`combobox`。
+            role_name: 从 YAML 读取的可选 accessible name；为空时仅按 role 定位。
+
+        Returns:
+            Playwright Locator 对象，可继续调用 `click()`、`fill()`、`press()` 等动作。
+        """
+        if role_name is None:
+            return self.driver.get_by_role(role_ele)
+        return self.driver.get_by_role(role_ele, name=role_name)
+
     def _get_locator_single_role(self, role_ele: str):
-        return self.driver.get_by_role(role_ele)
+        return self._get_role_locator(role_ele)
 
     def _get_locator_multi_role(self, role_ele, role_name):
-        return self.driver.get_by_role(role_ele, role_name)
+        return self._get_role_locator(role_ele, role_name)
 
     @_handle_role_action("Click role")
-    def click_role(self, role_ele: str, role_name: str) -> bool:
-        self._get_locator_single_role(role_ele).click()
+    def click_role(self, role_ele: str, role_name: Optional[str] = None) -> bool:
+        """
+        点击 role 定位到的元素。
+
+        Args:
+            role_ele: 从 YAML 读取的 role 类型，例如 `button`。
+            role_name: 从 YAML 读取的可选 accessible name；为空时仅按 role 定位。
+
+        Returns:
+            点击成功返回 True，点击失败返回 False。
+        """
+        self._get_role_locator(role_ele, role_name).click()
         if self.logger:
-            self.logger.info(f"Click role: {role_ele}")
+            self.logger.info(f"Click role: {role_ele}, name={role_name}")
         return True
 
     @_handle_role_action("Type text role")
-    def type_text_role(self, role_ele: str, text: str) -> bool:
-        self._get_locator_single_role(role_ele).fill(text)
+    def type_text_role(self, role_ele: str, text: str, role_name: Optional[str] = None) -> bool:
+        """
+        向 role 定位到的元素填充文本。
+
+        Args:
+            role_ele: 从 YAML 读取的 role 类型，例如 `textbox`、`combobox`。
+            text: 需要填充的文本内容。
+            role_name: 从 YAML 读取的可选 accessible name；为空时仅按 role 定位。
+
+        Returns:
+            填充成功返回 True，填充失败返回 False。
+        """
+        self._get_role_locator(role_ele, role_name).fill(text)
         if self.logger:
-            self.logger.info(f"Type text role: {role_ele}")
+            self.logger.info(f"Type text role: {role_ele}, name={role_name}")
+        return True
+
+    @_handle_role_action("Send keys role")
+    def send_keys_role(self, role_ele: str, keys: str, role_name: Optional[str] = None) -> bool:
+        """
+        向 role 定位到的元素发送键盘按键。
+
+        Args:
+            role_ele: 从 YAML 读取的 role 类型，例如 `button`、`combobox`。
+            keys: 要发送的按键，例如 `Enter`、`Backspace`。
+            role_name: 从 YAML 读取的可选 accessible name；为空时仅按 role 定位。
+
+        Returns:
+            发送成功返回 True，发送失败返回 False。
+        """
+        self._get_role_locator(role_ele, role_name).press(keys)
+        if self.logger:
+            self.logger.info(f"Send keys role: {role_ele}, name={role_name}, keys={keys}")
         return True
 
     """*************************************************** 异步方法 *************************************************************************** """
