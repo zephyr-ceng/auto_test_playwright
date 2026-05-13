@@ -392,7 +392,7 @@ if __name__ == "__main__":
     try:
         page = manager.start()
         pp = DesignManager(page, log)
-        pp.create_design('https://x.finetool.cn/createDesign?patientID=675671885525254144', 33)
+        pp.create_design('https://x.finetool.cn/createDesign?patientID=675671885525254144', 41)
         # pp.create_patient_invalid('test')
     finally:
         manager.close()

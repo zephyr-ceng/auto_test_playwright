@@ -7,3 +7,5 @@ locators:
   toast_message: ".ant-message-notice-content"
   modal_content: ".ant-modal-content"
   ack_button: "button:has-text('我已了解')"
+  agreement_text: "text=用户协议"
+  agreement_dialog: "[role='dialog']:has-text('用户协议')"
