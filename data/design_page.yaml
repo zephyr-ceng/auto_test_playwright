@@ -1,4 +1,4 @@
-url: 'https://x.finetool.cn/createDesign?patientID=642972813557358592'
+url: "/createDesign?patientID=642972813557358592"
 locators:
   import_data: "button:has-text('导入数据')"
   import_model: "button:has-text('导入模型文件 (.STL, .DCM)')"
@@ -6,3 +6,17 @@ locators:
   confirmed_btn: "button:has-text('确 认')"
   input_label: "div.ant-select-content:visible"
   input_combobox: 'combobox'
+  new_case_button: "button:has-text('新增病例')"
+  tooth_path_template: "[role='dialog'] svg path[data-name='{tooth_position}']"
+  save_button: "button:has-text('保 存')"
+  case_card: "//div[contains(@class,'bg-[#232323]')]"
+  tooth_label_template: "span:has-text('{tooth_position}')"
+  create_design_button: "创建设计"
+  progressbar: "[role='progressbar']"
+  tool_button: "div._tool-btn_m3ugk_1"
+  implant_tooth_path_template: "[role='dialog'] svg path[data-name='{tooth_position}']"
+  select_implant_button: "选择植体"
+  final_confirm_button: "button:has-text('确 定')"
+  next_apex_button_text: "下一步：选择牙尖点"
+  finish_adjustment_button_text: "完成调整"
+  skip_button_text: "暂时不用"

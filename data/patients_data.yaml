@@ -1,4 +1,4 @@
-url: "https://x.finetool.cn/surgicalDesignList"
+url: "/surgicalDesignList"
 locators:
   # create patient
   new_patient_button: "button:has-text('新建患者')"

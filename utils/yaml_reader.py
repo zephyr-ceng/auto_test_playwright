@@ -1,17 +1,14 @@
 from pathlib import Path
 import re
 from typing import Any, Dict, Optional
-
 import yaml
-
-from utils.logger import Logger
 
 
 class YamlManager:
     """YAML 工具类：读取/写入 YAML，并输出日志。"""
 
-    def __init__(self, logger: Optional[Logger] = None):
-        self.logger = logger or Logger("yaml_manager")
+    def __init__(self, log):
+        self._logger = log
         self._project_root = Path(__file__).resolve().parents[1]
 
     def _resolve_path(self, file_path: str) -> Path:
@@ -30,16 +27,16 @@ class YamlManager:
         p = self._resolve_path(file_path)
         try:
             if not p.exists():
-                self.logger.error(f"YAML file not found: {p}")
+                self._logger.error(f"YAML file not found: {p}")
                 return None
 
             with p.open("r", encoding="utf-8") as f:
                 data = yaml.safe_load(f)
 
-            self.logger.info(f"Read YAML file: {p}")
+            self._logger.info(f"Read YAML file: {p}")
             return data
         except Exception as e:
-            self.logger.error(f"Failed to read YAML file {p}: {e}")
+            self._logger.error(f"Failed to read YAML file {p}: {e}")
             return None
 
     def write(self, file_path: str, data: Any) -> bool:
@@ -50,16 +47,16 @@ class YamlManager:
             with p.open("w", encoding="utf-8") as f:
                 yaml.safe_dump(data, f, allow_unicode=True)
 
-            self.logger.info(f"Wrote YAML file: {p}")
+            self._logger.info(f"Wrote YAML file: {p}")
             return True
         except Exception as e:
-            self.logger.error(f"Failed to write YAML file {p}: {e}")
+            self._logger.error(f"Failed to write YAML file {p}: {e}")
             return False
 
     def update(self, file_path: str, updates: Dict[str, Any]) -> bool:
         """Update top-level YAML keys while keeping existing file format as-is."""
         if not isinstance(updates, dict):
-            self.logger.error("updates must be a dict")
+            self._logger.error("updates must be a dict")
             return False
 
         p = self._resolve_path(file_path)
@@ -117,14 +114,16 @@ class YamlManager:
                 _replace_or_append(k, v)
 
             p.write_text("".join(lines), encoding="utf-8")
-            self.logger.info(f"Updated YAML file (in-place): {p}")
+            self._logger.info(f"Updated YAML file (in-place): {p}")
             return True
         except Exception as e:
-            self.logger.error(f"Failed to update YAML file {p}: {e}")
+            self._logger.error(f"Failed to update YAML file {p}: {e}")
             return False
 
 
 if __name__ == "__main__":
+    from utils.logger import Logger
+
     logger = Logger("yaml_manager")
     file_path = "data/design_page.yaml"
     data = YamlManager(logger).read(file_path)

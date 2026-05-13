@@ -12,33 +12,62 @@ from utils.random_manager import RandomManager
 
 
 class DesignManager(BasePage):
+    """设计管理页面对象，封装 DICOM 上传、病例牙位、创建设计和植体选择流程。"""
+
     def __init__(self, driver, logger, design_path: str = "data/design_page.yaml"):
-        super().__init__(driver)
+        """
+        初始化设计管理页面。
+
+        Args:
+            driver: Playwright page 实例。
+            logger: 项目日志对象。
+            design_path: 设计页面 YAML 配置路径，默认读取 `data/design_page.yaml`。
+        """
+        super().__init__(driver, logger)
         self._logger = logger
-        self._login_page = LoginPage(driver)
+        self._login_page = LoginPage(driver, self._logger)
         self._design_path = design_path
         self._config = YamlManager(self._logger)
         self._random = RandomManager()
         self._cookies = self._login_page.cookies
-        self._patients_page = PatientsPage(driver)
+        self._patients_page = PatientsPage(driver, self._logger)
 
         # design_page.yaml
         design_cfg = self._config.read(self._design_path)
         if design_cfg is None:
             raise RuntimeError(f"failed to read yaml config: {design_cfg}")
-        self.design_url = design_cfg.get("url")
+        self.design_url = self.build_url(self._login_page.base_url, design_cfg.get("url"))
         self.design_locators = design_cfg.get("locators")
 
         # other
         self._responses = deque(maxlen=10)
 
-    def _selector_design(self, key: str) -> Optional[str]:
-        """ 元素查找 """
+    def _selector_design(self, key: str):
+        """
+        按 key 获取设计页面定位表达式。
+
+        Args:
+            key: `data/design_page.yaml` 中 `locators` 下的定位 key。
+
+        Returns:
+            命中的定位表达式；未配置时返回 None。
+        """
         return self.design_locators.get(key)
 
     @staticmethod
     def _file_is_dcm(dcm_dir: str) -> List[str]:
-        """ 获取文件目录 """
+        """
+        获取目录中的 DICOM 文件列表。
+
+        Args:
+            dcm_dir: DICOM 文件目录，支持项目相对路径或绝对路径。
+
+        Returns:
+            排序后的 `.dcm` / `.DCM` 文件绝对路径列表。
+
+        Raises:
+            FileNotFoundError: 目录不存在、路径不是目录或目录内没有 DICOM 文件。
+        """
         target_dir = Path(dcm_dir)
         if not target_dir.is_absolute():
             target_dir = (Path(__file__).resolve().parents[1] / target_dir).resolve()
@@ -54,7 +83,15 @@ class DesignManager(BasePage):
         return dcm_files
 
     def _handle_response(self, response):
-        """响应拦截函数"""
+        """
+        处理 Playwright response 事件，捕获 AI 任务状态。
+
+        Args:
+            response: Playwright 响应对象。
+
+        Side Effects:
+            当响应中包含文件状态时，将 `aiTaskStatus` 写入 `_responses` 队列。
+        """
         # 1. 匹配网关地址并确保是 POST 请求
         if "/tars/v1/gateway" in response.url:
             try:
@@ -90,7 +127,16 @@ class DesignManager(BasePage):
                     print(e)
 
     def _is_ai_status(self, target_status=2, timeout_ms=180000):
-        """持续监听判定函数"""
+        """
+        持续监听接口响应，判断 AI 任务是否到达目标状态。
+
+        Args:
+            target_status: 期望捕获的 AI 状态，默认 2 表示处理成功。
+            timeout_ms: 最大等待时间，单位毫秒。
+
+        Returns:
+            捕获到目标状态返回 True，超时返回 False。
+        """
         # 1. 注册监听
         self.driver.on('response', self._handle_response)
         start_time = time.time()
@@ -113,6 +159,15 @@ class DesignManager(BasePage):
         return False
 
     def _input_label(self, label_name):
+        """
+        在病例标签输入框中输入标签名称。
+
+        Args:
+            label_name: 要输入的标签文本，例如 `牙位：32`。
+
+        Returns:
+            输入成功返回 True，定位缺失或输入失败返回 False。
+        """
         selector = self._selector_design("input_label")
         input_role = self._selector_design("input_combobox")
         # print(selector)
@@ -122,7 +177,22 @@ class DesignManager(BasePage):
         return self.type_text_role(str(input_role), label_name)
 
     def _dcm_upload(self, dcm_dir: str, ct_name: str, timeout_ms: int = 180000, target_status: int = 2) -> bool:
-        """ 文件上传 """
+        """
+        上传 DICOM 文件并等待 AI 渲染状态。
+
+        Args:
+            dcm_dir: DICOM 文件目录，支持项目相对路径或绝对路径。
+            ct_name: 上传模型名称。
+            timeout_ms: 等待 AI 状态的超时时间，单位毫秒。
+            target_status: 期望的 AI 任务状态，默认 2。
+
+        Returns:
+            AI 状态达到目标值返回 True，否则返回 False。
+
+        Raises:
+            RuntimeError: 上传入口、模型名称输入框或确认按钮定位缺失。
+            FileNotFoundError: DICOM 目录或文件不存在。
+        """
         # self.create_patient(self._random.random_chinese_name())  # TODO: 暂时使用手动创建用户
         # self._open_url()
         # TODO: 添加当前页面判定
@@ -167,30 +237,124 @@ class DesignManager(BasePage):
         return status
 
     def _create_tooth(self, tooth_position: int) -> bool:
-        """ 病例创建 """
+        """
+        创建指定牙位的病例。
+
+        Args:
+            tooth_position: 标准牙位编号，例如 32。
+
+        Returns:
+            创建后页面出现病例卡片返回 True，否则返回 False。
+
+        Raises:
+            ValueError: `tooth_position` 不是整数，或不是支持的标准牙位。
+        """
         if not isinstance(tooth_position, int):
             raise ValueError("tooth_position must be int")
-        self.click("button:has-text('新增病例')")
+        self.click(self._selector_design("new_case_button"))
+        tooth_selector = self._selector_design("tooth_path_template").format(tooth_position=tooth_position)
         if tooth_position in [17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27]:
-            self.click_nth(f"[role='dialog'] svg path[data-name='{tooth_position}']", 0)
+            self.click_nth(tooth_selector, 0)
         elif tooth_position in [31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44, 45, 46, 47]:
-            self.click_nth(f"[role='dialog'] svg path[data-name='{tooth_position}']", 1)
+            self.click_nth(tooth_selector, 1)
         else:
             raise ValueError(f"tooth_position must be standard dental position")
 
         # self.click_nth(f"[role='dialog'] svg path[data-name='{tooth_position}']", 1)
         self.wait_for_time(300)
         self._input_label(f"牙位：{tooth_position}")
-        self.click("button:has-text('保 存')")
+        self.click(self._selector_design("save_button"))
         self.wait_for_time(1000)
-        ele_count = self.count_elements("//div[contains(@class,'bg-[#232323]')]")
+        ele_count = self.count_elements(self._selector_design("case_card"))
         if ele_count > 0:
             print(ele_count)
             return True
         return False
 
+    def _create_design_and_wait_progress(self, tooth_position: int) -> None:
+        """
+        触发指定牙位的创建设计流程并等待进度接近完成。
+
+        Args:
+            tooth_position: 已创建病例的牙位编号。
+
+        Side Effects:
+            点击“创建设计”，等待进度条出现，并轮询到进度大于等于 99。
+            # TODO: 无法判定取值100
+        """
+        tooth_label = self._selector_design("tooth_label_template").format(tooth_position=tooth_position)
+        create_design_button = self._selector_design("create_design_button")
+        progress = self._selector_design("progressbar")
+        self.click_nth(tooth_label, 0)
+        self.click_role("button", role_name=create_design_button)
+        # 等待进度条出现
+        self.wait_for_selector(progress)
+        while True:
+            value = self.get_attribute(progress, "aria-valuenow")
+            percent = int(value) if value else 0
+            print("当前进度:", percent)
+            # TODO: 并不能监听到100,无法稳定的监听到下载进度
+            if percent >= 99:
+                break
+        # self.take_screenshot("dcm_download")
+        self.wait_for_time(10000)
+
+    def _select_implant(self, tooth_position: int) -> None:
+        """
+        为指定牙位选择植体系统、类型和型号。
+
+        Args:
+            tooth_position: 需要选择植体的牙位编号。
+
+        Side Effects:
+            打开植体选择弹窗，选择士卓曼骨水平种植体 `021.2608` 并确认。
+        """
+        self.click_nth(self._selector_design("tool_button"), 0)
+        # (self.click_nth(f"[role='dialog'] svg path[data-name='{tooth_position}']", 0) or self.click_nth(f"[role='dialog'] svg path[data-name='{tooth_position}']", 1))
+        tooth_selector = self._selector_design("implant_tooth_path_template").format(tooth_position=tooth_position)
+        # self.click_nth(tooth_selector, 1)  # 点击牙位
+        # TODO: 添加牙位判定
+        if tooth_position in [17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27]:
+            self.click_nth(tooth_selector, 0)
+        elif tooth_position in [31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44, 45, 46, 47]:
+            self.click_nth(tooth_selector, 1)
+        else:
+            raise ValueError(f"tooth_position must be standard dental position")
+        self.click_role("button", role_name=self._selector_design("select_implant_button"))  # 选择植体
+        self.wait_for_time(2000)
+
+        # TODO:植体品牌先保持默认
+        self.driver.get_by_role("button", name="collapsed 士卓曼").click()  # 选择品牌
+        self.driver.locator("div").filter(has_text=re.compile(r"^骨水平种植体$")).nth(1).click()  # 选择植体类别
+        self.driver.get_by_text("021.2608").click()  # 选择植体型号
+        self.click_nth(self._selector_design("final_confirm_button"), 0)  # 点击确认植体
+        self.wait_for_time(500)
+        self.click_nth(self._selector_design("final_confirm_button"), 1)  # 点击确认添加
+
+    def _skip_apex_adjustment(self) -> None:
+        """
+        跳过牙尖点调整流程。
+
+        Side Effects:
+            依次点击“下一步：选择牙尖点”、“完成调整”和“暂时不用”。
+        """
+        self.click_role("button", role_name=self._selector_design("next_apex_button_text"))
+        self.click_role("button", role_name=self._selector_design("finish_adjustment_button_text"))
+        self.click_role("button", role_name=self._selector_design("skip_button_text"))
+
     def create_design(self, url: str, tooth_position: int, dcm_dir: str = '', ct_name: str = ''):
-        """ 创建设计，URL需要定位到患者详情页，并且DCM渲染完成,URL下不需要写入DCM_dir,ct_name """
+        """
+        创建完整手术设计流程。
+
+        Args:
+            url: 非空时打开已配置的设计页并认为 DICOM 已完成；为空时先创建患者并上传 DICOM。
+            tooth_position: 目标牙位编号。
+            dcm_dir: DICOM 文件目录；当 `url` 为空时必需。
+            ct_name: DICOM 上传后的模型名称；当 `url` 为空时必需。
+
+        Side Effects:
+            可能创建患者、上传 DICOM、创建病例、触发设计生成并选择植体。
+        """
         ai_status = False
         if url:
             if self._cookies:
@@ -201,38 +365,19 @@ class DesignManager(BasePage):
 
             ai_status = True  # URL需要定位到患者详情页，并且DCM渲染完成
         else:
-            page_url = self._patients_page.create_patient("T_" + self._random.random_chinese_name())
+            self._patients_page.create_patient("T_" + self._random.random_chinese_name())
+            page_url = self.get_page_url()
+            ai_status = True
+            self.wait_for_time(500)
             if "patientID" not in page_url:
                 self._logger.error(f"patientID not found in url: {page_url}")
                 raise RuntimeError("cannot find patientID in url")
             ai_status = self._dcm_upload(dcm_dir, ct_name)
         if ai_status:
             self._create_tooth(tooth_position)
-            self.click_nth(f"span:has-text('{tooth_position}')", 0)
-            self.driver.get_by_role("button", name="创建设计").click()
-            progress = self.driver.locator('[role="progressbar"]')
-            # 等待进度条出现
-            progress.wait_for()
-            while True:
-                value = progress.get_attribute("aria-valuenow")
-                percent = int(value) if value else 0
-                print("当前进度:", percent)
-                # TODO: 并不能监听到100,无法稳定的监听到下载进度
-                if percent >= 99:
-                    break
-            self.take_screenshot("dcm_download")
-            self.wait_for_time(10000)
-            self.click_nth("div._tool-btn_m3ugk_1", 0)
-            # (self.click_nth(f"[role='dialog'] svg path[data-name='{tooth_position}']", 0) or self.click_nth(f"[role='dialog'] svg path[data-name='{tooth_position}']", 1))
-            self.click_nth(f"[role='dialog'] svg path[data-name='{tooth_position}']", 1)
-            self.driver.get_by_role("button", name="选择植体").click()
-            self.wait_for_time(1000)
-            self.driver.get_by_role("button", name="collapsed 士卓曼").click()
-            self.driver.locator("div").filter(has_text=re.compile(r"^骨水平种植体$")).nth(1).click()
-            self.driver.get_by_text("021.2608").click()
-            self.driver.get_by_label("选择植体").get_by_role("button", name="确 定").click()
-            self.wait_for_time(500)
-            self.driver.get_by_role("button", name="确 定").click()
+            self._create_design_and_wait_progress(tooth_position)
+            self._select_implant(tooth_position)
+            self._skip_apex_adjustment()
             # self.wait_for_time(50000)
         else:
             self._logger.error(f"DCM is not segmentation")
@@ -247,7 +392,7 @@ if __name__ == "__main__":
     try:
         page = manager.start()
         pp = DesignManager(page, log)
-        pp.create_design("https://x.finetool.cn/createDesign?patientID=672043815051198464", 32)
+        pp.create_design('https://x.finetool.cn/createDesign?patientID=675671885525254144', 33)
         # pp.create_patient_invalid('test')
     finally:
         manager.close()

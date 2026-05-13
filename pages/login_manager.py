@@ -16,11 +16,6 @@ class LoginPage(BasePage):
         super().__init__(driver, logger)
         self._config = YamlManager(self.logger)
 
-        # login_data.yaml
-        login_cfg = self._config.read(locators_path)
-        self.login_url = login_cfg.get("url")
-        self.locators = login_cfg.get("locators")
-
         # config.yaml
         self._config_path = config_path
         shared_cfg = self._config.read(self._config_path)
@@ -29,11 +24,17 @@ class LoginPage(BasePage):
 
         self.login_username = shared_cfg.get("username")
         self.login_password = shared_cfg.get("password")
+        self.base_url = shared_cfg.get("base_url")  # config中的url
         self.cookies = shared_cfg.get("cookies")
         self.cookies_write_time = shared_cfg.get("cookies_write_time")
 
-        if not self.login_username or not self.login_password:
-            raise RuntimeError(f"username/password not configured in {config_path}")
+        if not self.login_username or not self.login_password or not self.base_url:
+            raise RuntimeError(f"username/password/base_url not configured in {config_path}")
+
+        # login_data.yaml
+        login_cfg = self._config.read(locators_path)
+        self.locators = login_cfg.get("locators")
+        self.login_url = self.build_url(self.base_url, login_cfg.get("url"))  # 拼接url
 
     def _get_locator(self, key):
         return self.locators.get(key)
