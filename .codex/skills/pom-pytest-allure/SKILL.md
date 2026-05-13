@@ -60,6 +60,8 @@ Do not put selectors directly in tests. Tests call page manager business methods
    - Business methods should open the already-built instance URL and should not call `build_url()` inside each action method.
    - Add a private selector helper, for example `_selector(self, key: str)`.
    - Keep low-level clicks/fills inside private helpers when repeated.
+   - Distinguish external and internal Page Object calls: tests should call public business methods, while reusable internal steps should be private methods prefixed with `_`.
+   - Keep method granularity practical: do not split a short linear workflow into many tiny private methods unless a step is reused, hides meaningful complexity, or improves readability. Prefer one clear public business method for simple flows.
    - Expose business methods that return assertion-friendly values: `str | None`, `bool`, `int`, URL strings, or structured dicts when needed.
    - For authenticated pages, reuse `LoginPage.refresh_cookies()` and `add_cookies()` like `PatientsPage`.
    - Raise clear `RuntimeError` for missing required locators.
