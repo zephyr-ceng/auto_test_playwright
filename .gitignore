@@ -1,6 +1,5 @@
 .ai/
 */__pycache__/
-.codex/
 .vscode/
 .pytest_cache/
 .venv/
