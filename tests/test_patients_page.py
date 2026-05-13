@@ -1,11 +1,8 @@
-import os
-
 import allure
 import pytest
 
 from core.browser_manager import BrowserManager
 from pages.patient_manager import PatientsPage
-from utils.Path_manager import PathManager
 from utils.csv_manager import CSVManager
 from utils.logger import Logger
 from utils.random_manager import RandomManager
@@ -58,7 +55,7 @@ class TestPatientsPage:
     @pytest.mark.parametrize("case", [case for case in _prepare_patients_test_data() if case["是否有效"] == "False"])
     def test_create_patients_page(self, page, case):
         """ 新建患者的错误提示信息验证 """
-        allure.dynamic.title(f"测试用例{case['序号']}--{case['预期结果']}")
+        allure.dynamic.title(f"测试用例 - {case['序号']} - {case['预期结果']}")
         name = case["姓名"]
         birthday = case["生日"]
         phone = case["电话"]
@@ -72,7 +69,7 @@ class TestPatientsPage:
     @pytest.mark.parametrize("case", [case for case in _prepare_patients_test_data() if case["是否有效"] == "True"])
     def test_create_patient_success(self, page, case):
         """ 新建患者验证 """
-        allure.dynamic.title(f"测试用例{case['序号']}--{case['预期结果']}")
+        allure.dynamic.title(f"测试用例 - {case['序号']} - {case['预期结果']}")
         name = case["姓名"]
         birthday = case["生日"]
         phone = case["电话"]

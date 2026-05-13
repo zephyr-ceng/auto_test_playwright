@@ -17,12 +17,13 @@ class PatientsPage(BasePage):
         super().__init__(driver, logger)
         self._config = YamlManager(self.logger)
         self._random = RandomManager()
-        self._login_page = LoginPage(driver)
+        self._login_page = LoginPage(driver, logger)
+
         # patient_data.yaml 文件读取
         page_cfg = self._config.read(locators_path)
         if page_cfg is None:
             raise RuntimeError(f"failed to read yaml config: {locators_path}")
-        self.patient_url = page_cfg.get("url")
+        self.patient_url = self.build_url(self._login_page.base_url, page_cfg.get("url"))
         self.patient_locators = page_cfg.get("locators")
 
     """************************************************  基础函数  **********************************************************************************  """

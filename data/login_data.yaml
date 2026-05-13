@@ -1,4 +1,4 @@
-url: "https://x.finetool.cn/login"
+url: "/login"
 locators:
   username_input: "#username"
   password_input: "#password"

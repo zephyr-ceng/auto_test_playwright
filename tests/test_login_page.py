@@ -47,7 +47,7 @@ class TestLoginPage:
         [case for case in _prepare_login_test_data() if case["是否有效"] == "False"],
     )
     def test_login_invalid(self, login_page, case):
-        allure.dynamic.title(f"测试用例{case['序号']}--{case['预期结果']}")
+        allure.dynamic.title(f"测试用例 - {case['序号']} - {case['预期结果']}")
         user = case["账号"]
         password = case["密码"]
         message = login_page.login_account(user, password)
