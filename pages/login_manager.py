@@ -36,8 +36,11 @@ class LoginPage(BasePage):
         self.locators = login_cfg.get("locators")
         self.login_url = self.build_url(self.base_url, login_cfg.get("url"))  # 拼接url
 
-    def _get_locator(self, key):
-        return self.locators.get(key)
+    def _get_locator(self, key: str, required: bool = False):
+        selector = self.locators.get(key)
+        if required and not selector:
+            raise RuntimeError(f"locator `{key}` is not configured for LoginPage")
+        return selector
 
     def open_login(self) -> None:
         if not self.login_url:
@@ -99,6 +102,18 @@ class LoginPage(BasePage):
         except Exception as e:
             self.logger.error(f"filed is {e}")
             self.driver.take_screenshot('登录失败')
+
+    def get_user_agreement_text(self) -> str:
+        self.open_login()
+        agreement_text = self._get_locator("agreement_text", required=True)
+        agreement_dialog = self._get_locator("agreement_dialog", required=True)
+        self.click(agreement_text)
+        if not self.wait_for_selector(agreement_dialog):
+            return ""
+        dialog = self.driver.locator(agreement_dialog)
+        if dialog.count() <= 0:
+            return ""
+        return dialog.first.inner_text().strip()
 
     def get_cookies(self, account: str, password: str) -> Optional[list]:
         self.open_login()

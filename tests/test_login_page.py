@@ -31,7 +31,7 @@ def _prepare_login_test_data() -> list[dict]:
 @pytest.fixture(scope="class")
 def login_page():
     log = Logger("login_test")
-    manager = BrowserManager(browser_type="chromium", headless=True, logger=log)
+    manager = BrowserManager(browser_type="chromium", headless=False, logger=log)
     # page = manager.start()
     page = manager.new_page()
     login = LoginPage(page, logger=log)
@@ -41,6 +41,12 @@ def login_page():
 
 @allure.feature("Login")
 class TestLoginPage:
+    @allure.story("用户协议内容校验")
+    def test_user_agreement_text_not_empty(self, login_page):
+        allure.dynamic.title("用户协议弹窗正文非空")
+        agreement_text = login_page.get_user_agreement_text()
+        assert agreement_text.strip(), "用户协议正文为空"
+
     @allure.story("有效账号登录测试")
     @pytest.mark.parametrize(
         "case",
