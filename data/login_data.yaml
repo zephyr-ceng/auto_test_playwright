@@ -1,11 +1,18 @@
 url: "/login"
 locators:
+  # input_account / input_password / login_account
   username_input: "#username"
   password_input: "#password"
   login_button: "button[type='submit']"
+
+  # login_account 返回提示
   form_error: ".ant-form-item-explain-error"
   toast_message: ".ant-message-notice-content"
   modal_content: ".ant-modal-content"
+
+  # accept_webgl_ack
   ack_button: "button:has-text('我已了解')"
+
+  # get_user_agreement_text
   agreement_text: "text=用户协议"
   agreement_dialog: "[role='dialog']:has-text('用户协议')"
