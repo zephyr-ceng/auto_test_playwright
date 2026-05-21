@@ -52,6 +52,7 @@ Do not put selectors directly in tests. Tests call page manager business methods
    - Prefer stable Playwright selectors, CSS selectors, role/text selectors, and XPath only when useful.
    - Use descriptive locator keys such as `search_input`, `submit_button`, `table_rows`, `toast_message`, `form_error`.
    - Include success and failure observation locators needed by assertions.
+   - Group locator keys by the page-manager function that uses them, using a YAML comment immediately before the group, for example `# login_account` or `# _drag_surgical / drop_to_position`. When adding a locator for an existing function, add it under that function's comment instead of leaving it ungrouped.
 
 3. Build or update the page manager:
    - Inherit from `BasePage`.
