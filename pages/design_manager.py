@@ -532,20 +532,20 @@ class DesignManager(BasePage):
             self._logger.error(f"DCM is not segmentation")
             return None
 
-    def treatment_path_manager(self, url: str, tooth_position: int, dcm_dir: str = '', ct_name: str = ''):
-        """ 手术路径管理 """
-        tooth = self.create_tooth_case(url, tooth_position, dcm_dir, ct_name)
-        if tooth:
-            tooth_label = self._selector_design("tooth_label_template").format(tooth_position=tooth_position)
-            self.click_nth(tooth_label, 0)
-            ele = self.get_by_text("治疗路径")
-            if ele:
-                return True
-            else:
-                return False
-        else:
-            self.logger.error("tooth_position not found")
-            raise
+    # def treatment_path_manager(self, url: str, tooth_position: int, dcm_dir: str = '', ct_name: str = ''):
+    #     """ 手术路径管理 """
+    #     tooth = self.create_tooth_case(url, tooth_position, dcm_dir, ct_name)
+    #     if tooth:
+    #         tooth_label = self._selector_design("tooth_label_template").format(tooth_position=tooth_position)
+    #         self.click_nth(tooth_label, 0)
+    #         ele = self.get_by_text("治疗路径")
+    #         if ele:
+    #             return True
+    #         else:
+    #             return False
+    #     else:
+    #         self.logger.error("tooth_position not found")
+    #         raise
 
     def _get_current_surgical_path(
             self,
@@ -577,26 +577,50 @@ class DesignManager(BasePage):
 
         return surgical_path
 
+    def treatment_path(self, url: str, tooth_position: int):
+        if url:
+            self.add_cookies(self._cookies)
+            self.open_url(url)
+        tooth_label = self._selector_design("tooth_label_template").format(tooth_position=tooth_position)
+        self.click_nth(tooth_label, 0)
+        ele = self.get_by_text("治疗路径")
+        if ele:
+            return True
+        else:
+            return False
+
     """******************************************* case ******************************************************************"""
 
-    def drop_to_position(self, url, tooth_position, dcm_dir: str = '', ct_name: str = ''):
-        if not url:
-            raise ValueError("url cannot be empty")
-
-        if self._cookies:
-            self.driver.context.add_cookies(self._cookies)
-
-        path_ready = self.treatment_path_manager(url, tooth_position, dcm_dir, ct_name)
-        if not path_ready:
+    def drop_surgical(self, url: str, tooth_position: int):
+        """ 手术阶拖曳排序测试 """
+        surgical = self.treatment_path(url, tooth_position)
+        if not surgical:
             raise RuntimeError("treatment path is not ready")
         before = self._get_current_surgical_path()
         print(before)
         self._drag_surgical()
         after = self._get_current_surgical_path()
         print(after)
-        result = after == before
-        print(result)
-        return result
+        return not (after == before)
+
+    def refresh_drop_surgical(self, url, tooth_position):
+        """ 手术阶段拖曳排序保存测试 """
+        surgical = self.treatment_path(url, tooth_position)
+        if not surgical:
+            raise RuntimeError("treatment path is not ready")
+        before = self._get_current_surgical_path()
+        print(before)
+        if self.logger:
+            self.logger.info(f"before: {before}")
+        self._drag_surgical()
+        self.treatment_path('', tooth_position)
+        self.treatment_path('', tooth_position)
+        after = self._get_current_surgical_path()
+        print(after)
+        if self.logger:
+            self.logger.info(f"after: {after}")
+        print(after)
+        return not (after == before)
 
     def case_create_tooth(self, tooth_position_list: list) -> list:
         msg_list = []
@@ -618,7 +642,10 @@ class DesignManager(BasePage):
         Side Effects:
             可能创建患者、上传 DICOM、创建病例、触发设计生成并选择植体。
         """
-        page_status = self.treatment_path_manager(url, tooth_position, dcm_dir, ct_name)
+        # page_status = self.treatment_path_manager(url, tooth_position, dcm_dir, ct_name)
+        tooth_status = self.create_tooth_case(url, tooth_position, dcm_dir, ct_name)
+        surgical = self.treatment_path('', tooth_position)
+        page_status = tooth_status and surgical
         if page_status:
             self.create_design_and_wait_progress(tooth_position)
             self.select_implant(tooth_position)
@@ -641,7 +668,9 @@ if __name__ == "__main__":
         # pp.create_design('', 45, "./data/dicom/wujia", "术前手术")
         # print(pp.case_create_design('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32))
         # print(pp.get_current_surgical_path('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32))
-        pp.drop_to_position('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32)
+        # pp.refresh_drop_surgical('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32)
+        print(pp.case_create_tooth([13, 15, 17]))
+        print(pp.case_create_design('', 43, './data/dicom/wujia', "术前手术"))
         # pp.create_patient_invalid('test')
         # res = pp._read_case_tooth_positions(
         #     'https://x.finetool.cn/createDesign?surgicalDesignID=677156612823187456&mode=edit&patientID=677134467964960768&medicalRecordID=677156587053318144')
