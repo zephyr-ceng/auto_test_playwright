@@ -331,6 +331,34 @@ class DesignManager(BasePage):
         self.wait_for_time(1000)
         return alert_text
 
+    def _drag_surgical(self) -> bool:
+        """
+        Reorder the 5th visible surgical stage to the 6th visible stage position.
+
+        Returns:
+            True when the visible surgical stage order changed; otherwise False.
+
+        Raises:
+            RuntimeError: Surgical stage draggable locator is not configured.
+        """
+        surgical_stage_cards = self._selector_design("surgical_stage_draggable_cards")
+        if not surgical_stage_cards:
+            raise RuntimeError("locator `surgical_stage_draggable_cards` is not configured")
+
+        changed = self.drag_nth_locator_to_nth_locator(
+            surgical_stage_cards,
+            4,
+            5,
+            screenshot_name="surgical_stage_drag",
+        )
+        if self._logger:
+            self._logger.info(f"Surgical stage drag changed={changed}")
+        return changed
+
+    def _dragg_surgical(self) -> bool:
+        """Backward-compatible wrapper for the old misspelled method name."""
+        return self._drag_surgical()
+
     """******************************************* public function ******************************************************************"""
 
     def is_create_design_progress_completed(
@@ -519,24 +547,10 @@ class DesignManager(BasePage):
             self.logger.error("tooth_position not found")
             raise
 
-    def get_current_surgical_path(
+    def _get_current_surgical_path(
             self,
-            url: str,
-            tooth_position: int = 46,
-            dcm_dir: str = "",
-            ct_name: str = "",
     ) -> dict:
         """Enter treatment path and return visible surgical path titles by 1-based index."""
-        if not url:
-            raise ValueError("url cannot be empty")
-
-        if self._cookies:
-            self.driver.context.add_cookies(self._cookies)
-
-        path_ready = self.treatment_path_manager(url, tooth_position, dcm_dir, ct_name)
-        if not path_ready:
-            raise RuntimeError("treatment path is not ready")
-
         wrapper_selector = "div.ant-steps-item-wrapper:visible"
         wrapper_count = self.count_elements(wrapper_selector)
         if wrapper_count <= 0:
@@ -564,6 +578,25 @@ class DesignManager(BasePage):
         return surgical_path
 
     """******************************************* case ******************************************************************"""
+
+    def drop_to_position(self, url, tooth_position, dcm_dir: str = '', ct_name: str = ''):
+        if not url:
+            raise ValueError("url cannot be empty")
+
+        if self._cookies:
+            self.driver.context.add_cookies(self._cookies)
+
+        path_ready = self.treatment_path_manager(url, tooth_position, dcm_dir, ct_name)
+        if not path_ready:
+            raise RuntimeError("treatment path is not ready")
+        before = self._get_current_surgical_path()
+        print(before)
+        self._drag_surgical()
+        after = self._get_current_surgical_path()
+        print(after)
+        result = after == before
+        print(result)
+        return result
 
     def case_create_tooth(self, tooth_position_list: list) -> list:
         msg_list = []
@@ -607,7 +640,8 @@ if __name__ == "__main__":
         pp = DesignManager(page, log)
         # pp.create_design('', 45, "./data/dicom/wujia", "术前手术")
         # print(pp.case_create_design('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32))
-        print(pp.get_current_surgical_path('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32))
+        # print(pp.get_current_surgical_path('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32))
+        pp.drop_to_position('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32)
         # pp.create_patient_invalid('test')
         # res = pp._read_case_tooth_positions(
         #     'https://x.finetool.cn/createDesign?surgicalDesignID=677156612823187456&mode=edit&patientID=677134467964960768&medicalRecordID=677156587053318144')

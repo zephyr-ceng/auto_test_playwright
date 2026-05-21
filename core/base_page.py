@@ -186,6 +186,115 @@ class BasePage:
                 self.logger.error(f"Get attribute failed for {selector}[{index}], attr={attr_name}: {e}")
             return None
 
+    @_handle_role_action("Drag nth locator")
+    def drag_nth_locator_to_nth_locator(
+            self,
+            selector: str,
+            source_index: int,
+            target_index: int,
+            *,
+            timeout: int = 10000,
+            drag_steps: int = 20,
+            mouse_steps: int = 30,
+            wait_after_ms: int = 500,
+            screenshot_name: Optional[str] = None,
+    ) -> bool:
+        """
+        Drag one repeated locator item to another item and report whether order changed.
+
+        Args:
+            selector: CSS/XPath/Playwright selector for repeated draggable items.
+            source_index: Zero-based source item index.
+            target_index: Zero-based target item index.
+            timeout: Max wait time for the item list, in milliseconds.
+            drag_steps: Step count used by Playwright locator.drag_to().
+            mouse_steps: Step count used by mouse fallback movement.
+            wait_after_ms: Wait time after each drag attempt, in milliseconds.
+            screenshot_name: Optional screenshot name captured after drag.
+
+        Returns:
+            True when the locator list order changed; otherwise False.
+        """
+        if source_index < 0 or target_index < 0:
+            raise ValueError("source_index and target_index must be >= 0")
+
+        items = self.get_locator(selector)
+        items.first.wait_for(state="visible", timeout=timeout)
+        item_count = items.count()
+        required_count = max(source_index, target_index) + 1
+        if item_count < required_count:
+            raise RuntimeError(f"not enough elements for drag: count={item_count}, required={required_count}")
+
+        text_script = "items => items.map(item => item.innerText.replace(/\\s+/g, ' ').trim())"
+        before_texts = items.evaluate_all(text_script)
+        source = items.nth(source_index)
+        target = items.nth(target_index)
+        source.scroll_into_view_if_needed()
+        target.scroll_into_view_if_needed()
+
+        source_box = source.bounding_box()
+        target_box = target.bounding_box()
+        if not source_box or not target_box:
+            raise RuntimeError("cannot calculate drag coordinates")
+
+        source_position = {
+            "x": source_box["width"] / 2,
+            "y": source_box["height"] / 2,
+        }
+        target_position = {
+            "x": target_box["width"] / 2,
+            "y": max(target_box["height"] - 2, target_box["height"] / 2),
+        }
+
+        if self.logger:
+            self.logger.info(
+                f"Drag locator start: selector={selector}, source_index={source_index}, "
+                f"target_index={target_index}, before={before_texts}"
+            )
+
+        source.drag_to(
+            target,
+            force=True,
+            source_position=source_position,
+            target_position=target_position,
+            steps=drag_steps,
+        )
+        self.wait_for_time(wait_after_ms)
+        after_drag_to_texts = items.evaluate_all(text_script)
+        if after_drag_to_texts != before_texts:
+            if self.logger:
+                self.logger.info(f"Drag locator succeeded by drag_to: after={after_drag_to_texts}")
+            if screenshot_name:
+                self.take_screenshot(screenshot_name)
+            return True
+
+        refreshed_source_box = source.bounding_box() or source_box
+        refreshed_target_box = target.bounding_box() or target_box
+        self.driver.mouse.move(
+            refreshed_source_box["x"] + refreshed_source_box["width"] / 2,
+            refreshed_source_box["y"] + refreshed_source_box["height"] / 2,
+        )
+        self.driver.mouse.down()
+        target_y = refreshed_target_box["y"] + max(
+            refreshed_target_box["height"] - 2,
+            refreshed_target_box["height"] / 2,
+        )
+        self.driver.mouse.move(
+            refreshed_target_box["x"] + refreshed_target_box["width"] / 2,
+            target_y,
+            steps=mouse_steps,
+        )
+        self.driver.mouse.up()
+        self.wait_for_time(wait_after_ms)
+
+        after_mouse_texts = items.evaluate_all(text_script)
+        changed = after_mouse_texts != before_texts
+        if self.logger:
+            self.logger.info(f"Drag locator mouse fallback changed={changed}: after={after_mouse_texts}")
+        if screenshot_name:
+            self.take_screenshot(screenshot_name)
+        return changed
+
     @_handle_role_action("get selector text")
     def get_by_text(self, selector: str):
         ele = self.driver.get_by_text(selector)
