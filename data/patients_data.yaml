@@ -1,6 +1,6 @@
 url: "/surgicalDesignList"
 locators:
-  # create patient
+  # create_patient
   new_patient_button: "button:has-text('新建患者')"
   name: "[role='dialog'] #name"
   birthday: "[role='dialog'] #dateOfBirth"
@@ -12,22 +12,20 @@ locators:
   form_error: "[role='dialog'] .ant-form-item-explain-error"
   ack_button: "button:has-text('我已了解')"
 
-  # menu tabs
+  # count_page_patients / count_page_designs / search_design 共享列表
   patient_management_tab: "xpath=(//li[@role='menuitem'])[1]"
   design_management_tab: "xpath=(//li[@role='menuitem'])[2]"
-
-  # pagination
   page_size_trigger: ".ant-pagination-options .ant-pagination-options-size-changer"
   page_size_option: ".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option"
   patients_rows: ".ant-table-tbody > tr.ant-table-row"
   designs_rows: "[class*='design-manage-card-layout']"
 
-  # patient query
+  # search_patient
   patient_search_name_input: "input[placeholder='请输入患者姓名']"
   patient_search_phone_input: "input[placeholder='请输入电话号码']"
   patient_search_button: "button:has-text('查询')"
 
-  # design query
+  # search_design
   design_search_name_input: "input[placeholder='请输入患者姓名']"
   design_status_trigger: ".ant-select:not(.ant-pagination-options-size-changer)"
   design_status_option: ".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option"
