@@ -8,3 +8,8 @@ dependencies = [
     "pytest>=9.0.3",
     "pyyaml>=6.0.3",
 ]
+
+[tool.pytest.ini_options]
+markers = [
+    "design_remote: tests that use the remote design editor and may depend on WebGL/model initialization",
+]
