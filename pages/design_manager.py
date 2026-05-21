@@ -1,8 +1,12 @@
 import re
+import random
 import time
 from collections import deque
+from datetime import date
 from pathlib import Path
 from typing import List, Optional
+
+from twisted.names import authority
 
 from pages.login_manager import LoginPage
 from core.base_page import BasePage
@@ -41,6 +45,9 @@ class DesignManager(BasePage):
 
         # other
         self._responses = deque(maxlen=10)
+        self._patient_name = "T_" + self._random.random_chinese_name()
+        self._treatment_path_ready = False
+        self._treatment_path_context = {}
 
     def _selector_design(self, key: str):
         """
@@ -53,6 +60,45 @@ class DesignManager(BasePage):
             命中的定位表达式；未配置时返回 None。
         """
         return self.design_locators.get(key)
+
+    def _read_case_tooth_positions(self, url: str = "") -> Optional[List[str]]:
+        """
+        读取设计页病例列表中的所有病例牙位文本。
+
+        Args:
+            url: 需要访问的设计页地址；支持完整 URL、path、query 或空字符串。
+
+        Returns:
+            存在病例牙位时返回去重后的牙位文本数组；不存在时返回 None。
+
+        Raises:
+            RuntimeError: 未配置 cookies 或病例卡片定位器时抛出。
+        """
+
+        if "patientID" not in url:
+            print(f"当前页面不在患者详情页，{url}")
+            if self._logger:
+                self._logger.error(f"当前页面不在患者详情页，{url}")
+            return None
+
+        selector = self._selector_design("case_tooth_position_cards")
+        if not selector:
+            raise RuntimeError("locator `case_tooth_position_cards` is not configured")
+
+        locator = self.driver.locator(selector)
+        try:
+            locator.first.wait_for(timeout=10000)
+        except Exception:
+            return None
+
+        tooth_texts = []
+        seen = set()
+        for card in locator.all():
+            tooth_text = card.locator("xpath=.//span[contains(@class,'text-base')]").first.inner_text().strip()
+            if tooth_text and tooth_text not in seen:
+                seen.add(tooth_text)
+                tooth_texts.append(tooth_text)
+        return tooth_texts if tooth_texts else None
 
     @staticmethod
     def _file_is_dcm(dcm_dir: str) -> List[str]:
@@ -236,7 +282,7 @@ class DesignManager(BasePage):
             self._logger.info(f"DCM渲染状态为{status}")
         return status
 
-    def _create_tooth(self, tooth_position: int) -> bool:
+    def _create_tooth(self, tooth_position: int) -> str:
         """
         创建指定牙位的病例。
 
@@ -251,6 +297,14 @@ class DesignManager(BasePage):
         """
         if not isinstance(tooth_position, int):
             raise ValueError("tooth_position must be int")
+        page_url = self.get_page_url()
+        self.wait_for_time(500)
+        if "patientID" not in page_url:
+            self._logger.error(f"patientID not found in url: {page_url}")
+            raise RuntimeError("cannot find patientID in url")
+        case_list = self._read_case_tooth_positions(self.get_page_url())  # 获取所有牙位
+
+        # 新建病例
         self.click(self._selector_design("new_case_button"))
         tooth_selector = self._selector_design("tooth_path_template").format(tooth_position=tooth_position)
         if tooth_position in [17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27]:
@@ -259,47 +313,123 @@ class DesignManager(BasePage):
             self.click_nth(tooth_selector, 1)
         else:
             raise ValueError(f"tooth_position must be standard dental position")
-
-        # self.click_nth(f"[role='dialog'] svg path[data-name='{tooth_position}']", 1)
         self.wait_for_time(300)
-        self._input_label(f"牙位：{tooth_position}")
-        self.click(self._selector_design("save_button"))
-        self.wait_for_time(1000)
-        ele_count = self.count_elements(self._selector_design("case_card"))
-        if ele_count > 0:
-            print(ele_count)
-            return True
-        return False
 
-    def _create_design_and_wait_progress(self, tooth_position: int) -> None:
+        # 标签输入
+        # self._input_label(f"牙位：{tooth_position}")
+        selector = self._selector_design("input_label")
+        input_role = self._selector_design("input_combobox")
+        self.click(selector)
+        self.type_text_role(str(input_role), f"牙位：{tooth_position}")
+        self.click(self._selector_design("save_button"))
+
+        # 获取弹窗文本
+        alert_text = self.get_locator(self._selector_design("create_tooth_msg")).inner_text()
+        if case_list:
+            if str(tooth_position) in case_list:
+                self.click(self._selector_design("cancel_button"))
+        self.wait_for_time(1000)
+        return alert_text
+
+    """******************************************* public function ******************************************************************"""
+
+    def is_create_design_progress_completed(
+            self,
+            progress_selector: str,
+            create_design_button: str,
+            ready_selector: str,
+            progress_was_visible: bool = False,
+            elapsed_ms: int = 0,
+    ) -> bool:
         """
-        触发指定牙位的创建设计流程并等待进度接近完成。
+        判断创建设计进度是否已经完成。
+
+        不读取进度百分比；只通过页面状态判断完成态：
+        进度条出现后隐藏/移除，或进度条未捕获但等待过短暂兜底时间后，
+        “创建设计”入口已消失且下游操作区可见。
+        """
+        ready_locator = self.driver.locator(ready_selector)
+        progress_locator = self.driver.locator(progress_selector)
+        create_button_locator = self.driver.get_by_role("button", name=create_design_button)
+        try:
+            progress_visible = progress_locator.count() > 0 and progress_locator.first.is_visible(timeout=200)
+        except Exception as e:
+            if self._logger:
+                self._logger.info(f"Create design progress bar is no longer visible: {e}")
+            progress_visible = False
+
+        if progress_visible:
+            return False
+
+        if progress_was_visible:
+            return True
+
+        try:
+            create_button_hidden = (
+                    create_button_locator.count() == 0
+                    or not create_button_locator.first.is_visible(timeout=200)
+            )
+        except Exception:
+            create_button_hidden = True
+
+        try:
+            ready_visible = ready_locator.count() > 0 and ready_locator.first.is_visible(timeout=200)
+        except Exception:
+            ready_visible = False
+
+        return elapsed_ms >= 1000 and create_button_hidden and ready_visible
+
+    def create_design_and_wait_progress(self, tooth_position: int) -> None:
+        """
+        触发指定牙位的创建设计流程并等待进度完成。
 
         Args:
             tooth_position: 已创建病例的牙位编号。
 
         Side Effects:
-            点击“创建设计”，等待进度条出现，并轮询到进度大于等于 99。
-            # TODO: 无法判定取值100
+            点击“创建设计”，等待进度条出现，并轮询到完成态。
         """
-        tooth_label = self._selector_design("tooth_label_template").format(tooth_position=tooth_position)
+        # tooth_label = self._selector_design("tooth_label_template").format(tooth_position=tooth_position)
+        self.wait_for_time(500)
         create_design_button = self._selector_design("create_design_button")
         progress = self._selector_design("progressbar")
-        self.click_nth(tooth_label, 0)
+        ready_selector = self._selector_design("tool_button")
+        if not create_design_button or not progress or not ready_selector:
+            raise RuntimeError("create design button, progressbar or tool button locator is not configured")
+
+        # self.click_nth(tooth_label, 0)
         self.click_role("button", role_name=create_design_button)
-        # 等待进度条出现
-        self.wait_for_selector(progress)
-        while True:
-            value = self.get_attribute(progress, "aria-valuenow")
-            percent = int(value) if value else 0
-            print("当前进度:", percent)
-            # TODO: 并不能监听到100,无法稳定的监听到下载进度
-            if percent >= 99:
+        progress_was_visible = False
+        progress_locator = self.driver.locator(progress)
+        start_time = time.time()
+        deadline = start_time + 180
+        while time.time() < deadline:
+            try:
+                progress_was_visible = (
+                        progress_was_visible
+                        or progress_locator.count() > 0
+                        and progress_locator.first.is_visible(timeout=200)
+                )
+            except Exception:
+                pass
+
+            if self.is_create_design_progress_completed(
+                    progress,
+                    create_design_button,
+                    ready_selector,
+                    progress_was_visible,
+                    int((time.time() - start_time) * 1000),
+            ):
                 break
+            self.wait_for_time(500)
+        else:
+            # self.take_screenshot("dcm_download_timeout")
+            raise RuntimeError(f"create design progress did not complete for tooth position {tooth_position}")
+
         # self.take_screenshot("dcm_download")
         self.wait_for_time(10000)
 
-    def _select_implant(self, tooth_position: int) -> None:
+    def select_implant(self, tooth_position: int) -> None:
         """
         为指定牙位选择植体系统、类型和型号。
 
@@ -323,15 +453,18 @@ class DesignManager(BasePage):
         self.click_role("button", role_name=self._selector_design("select_implant_button"))  # 选择植体
         self.wait_for_time(2000)
 
-        # TODO:植体品牌先保持默认
-        self.driver.get_by_role("button", name="collapsed 士卓曼").click()  # 选择品牌
-        self.driver.locator("div").filter(has_text=re.compile(r"^骨水平种植体$")).nth(1).click()  # 选择植体类别
-        self.driver.get_by_text("021.2608").click()  # 选择植体型号
+        # TODO:植体品牌先保持默认,索引更新，需要重新编辑
+        # self.driver.get_by_role("button", name="collapsed 士卓曼").click()  # 选择品牌
+        # self.driver.locator("div").filter(has_text=re.compile(r"^骨水平种植体$")).nth(1).click()  # 选择植体类别
+        # self.driver.get_by_text("021.2608").click()  # 选择植体型号
+        self.driver.get_by_role("button", name="collapsed Straumann").click()
+        self.driver.locator("div").filter(has_text=re.compile(r"^Bone Level X Roxolid SLActive$")).first.click()
+        self.driver.get_by_text("061.3308").click()
         self.click_nth(self._selector_design("final_confirm_button"), 0)  # 点击确认植体
         self.wait_for_time(500)
         self.click_nth(self._selector_design("final_confirm_button"), 1)  # 点击确认添加
 
-    def _skip_apex_adjustment(self) -> None:
+    def skip_apex_adjustment(self) -> None:
         """
         跳过牙尖点调整流程。
 
@@ -339,10 +472,107 @@ class DesignManager(BasePage):
             依次点击“下一步：选择牙尖点”、“完成调整”和“暂时不用”。
         """
         self.click_role("button", role_name=self._selector_design("next_apex_button_text"))
+        self.wait_for_time(2000)
+        self.get_by_text("全部删除").wait_for(state="visible", timeout=10000)
         self.click_role("button", role_name=self._selector_design("finish_adjustment_button_text"))
         self.click_role("button", role_name=self._selector_design("skip_button_text"))
 
-    def create_design(self, url: str, tooth_position: int, dcm_dir: str = '', ct_name: str = ''):
+    def create_tooth_case(self, url: str, tooth_position: int, dcm_dir: str = '', ct_name: str = ''):
+        # ai_status = False
+        if url:
+            if self._cookies:
+                self.driver.context.add_cookies(self._cookies)
+                self.open_url(url)
+            else:
+                self._login_page.login_account(self._login_page.login_username, self._login_page.login_password)
+
+            ai_status = True  # URL需要定位到患者详情页，并且DCM渲染完成
+        else:
+            self._patients_page.create_patient(self._patient_name)
+            page_url = self.get_page_url()
+            # ai_status = True
+            self.wait_for_time(500)
+            if "patientID" not in page_url:
+                self._logger.error(f"patientID not found in url: {page_url}")
+                raise RuntimeError("cannot find patientID in url")
+            ai_status = self._dcm_upload(dcm_dir, ct_name)
+        if ai_status:
+            self.wait_for_time(1000)  # 添加延时，触发系统判定
+            self._create_tooth(tooth_position)
+            return tooth_position
+        else:
+            self._logger.error(f"DCM is not segmentation")
+            return None
+
+    def treatment_path_manager(self, url: str, tooth_position: int, dcm_dir: str = '', ct_name: str = ''):
+        """ 手术路径管理 """
+        tooth = self.create_tooth_case(url, tooth_position, dcm_dir, ct_name)
+        if tooth:
+            tooth_label = self._selector_design("tooth_label_template").format(tooth_position=tooth_position)
+            self.click_nth(tooth_label, 0)
+            ele = self.get_by_text("治疗路径")
+            if ele:
+                return True
+            else:
+                return False
+        else:
+            self.logger.error("tooth_position not found")
+            raise
+
+    def get_current_surgical_path(
+            self,
+            url: str,
+            tooth_position: int = 46,
+            dcm_dir: str = "",
+            ct_name: str = "",
+    ) -> dict:
+        """Enter treatment path and return visible surgical path titles by 1-based index."""
+        if not url:
+            raise ValueError("url cannot be empty")
+
+        if self._cookies:
+            self.driver.context.add_cookies(self._cookies)
+
+        path_ready = self.treatment_path_manager(url, tooth_position, dcm_dir, ct_name)
+        if not path_ready:
+            raise RuntimeError("treatment path is not ready")
+
+        wrapper_selector = "div.ant-steps-item-wrapper:visible"
+        wrapper_count = self.count_elements(wrapper_selector)
+        if wrapper_count <= 0:
+            return {}
+
+        surgical_path = {}
+        wrappers = self.driver.locator(wrapper_selector)
+        for index in range(wrapper_count):
+            wrapper = wrappers.nth(index)
+            content = wrapper.locator(".ant-steps-item-content")
+            source = content.first if content.count() > 0 else wrapper
+
+            raw_text = source.inner_text(timeout=5000).strip()
+            lines = [line.strip() for line in raw_text.splitlines() if line.strip()]
+
+            if lines and lines[0].isdigit() and len(lines) > 1:
+                title = lines[1]
+            elif lines:
+                title = lines[0]
+            else:
+                title = ""
+
+            surgical_path[index + 1] = title
+
+        return surgical_path
+
+    """******************************************* case ******************************************************************"""
+
+    def case_create_tooth(self, tooth_position_list: list) -> list:
+        msg_list = []
+        self._patients_page.create_patient(self._random.random_chinese_name())
+        for tooth_position in tooth_position_list:
+            msg_list.append(self._create_tooth(tooth_position))
+        return msg_list
+
+    def case_create_design(self, url: str, tooth_position: int, dcm_dir: str = '', ct_name: str = ''):
         """
         创建完整手术设计流程。
 
@@ -355,32 +585,15 @@ class DesignManager(BasePage):
         Side Effects:
             可能创建患者、上传 DICOM、创建病例、触发设计生成并选择植体。
         """
-        ai_status = False
-        if url:
-            if self._cookies:
-                self.driver.context.add_cookies(self._cookies)
-                self.open_url(url)
-            else:
-                self._login_page.login_account(self._login_page.login_username, self._login_page.login_password)
-
-            ai_status = True  # URL需要定位到患者详情页，并且DCM渲染完成
+        page_status = self.treatment_path_manager(url, tooth_position, dcm_dir, ct_name)
+        if page_status:
+            self.create_design_and_wait_progress(tooth_position)
+            self.select_implant(tooth_position)
+            self.skip_apex_adjustment()
+            return self._patients_page.search_design(self._patient_name, "设计完成")
         else:
-            self._patients_page.create_patient("T_" + self._random.random_chinese_name())
-            page_url = self.get_page_url()
-            ai_status = True
-            self.wait_for_time(500)
-            if "patientID" not in page_url:
-                self._logger.error(f"patientID not found in url: {page_url}")
-                raise RuntimeError("cannot find patientID in url")
-            ai_status = self._dcm_upload(dcm_dir, ct_name)
-        if ai_status:
-            self._create_tooth(tooth_position)
-            self._create_design_and_wait_progress(tooth_position)
-            self._select_implant(tooth_position)
-            self._skip_apex_adjustment()
-            # self.wait_for_time(50000)
-        else:
-            self._logger.error(f"DCM is not segmentation")
+            self.logger.error("tooth_position not found")
+            raise
 
 
 if __name__ == "__main__":
@@ -392,7 +605,12 @@ if __name__ == "__main__":
     try:
         page = manager.start()
         pp = DesignManager(page, log)
-        pp.create_design('https://x.finetool.cn/createDesign?patientID=675671885525254144', 41)
+        # pp.create_design('', 45, "./data/dicom/wujia", "术前手术")
+        # print(pp.case_create_design('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32))
+        print(pp.get_current_surgical_path('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32))
         # pp.create_patient_invalid('test')
+        # res = pp._read_case_tooth_positions(
+        #     'https://x.finetool.cn/createDesign?surgicalDesignID=677156612823187456&mode=edit&patientID=677134467964960768&medicalRecordID=677156587053318144')
+        # print(res)
     finally:
         manager.close()
