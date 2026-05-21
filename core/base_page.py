@@ -57,6 +57,12 @@ class BasePage:
             raise ValueError("cookies is empty")
         self.driver.context.add_cookies(cookies)
 
+    @_handle_role_action("reload")
+    def page_reload(self):
+        self.driver.reload()
+        if self.logger:
+            self.logger.info(f"page reload")
+
     """*************************************************** CSS定位 *************************************************************************** """
 
     def get_locator(self, selector: str):
