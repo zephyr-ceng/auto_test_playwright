@@ -186,6 +186,13 @@ class BasePage:
                 self.logger.error(f"Get attribute failed for {selector}[{index}], attr={attr_name}: {e}")
             return None
 
+    @_handle_role_action("get selector text")
+    def get_by_text(self, selector: str):
+        ele = self.driver.get_by_text(selector)
+        if self.logger:
+            self.logger.info(f"Get selector text: {selector}")
+        return ele
+
     def get_alert_text(self, timeout: int = 5000, accept: bool = False) -> Optional[str]:
         """等待浏览器弹窗并返回文本，可选自动点击确认。"""
         try:

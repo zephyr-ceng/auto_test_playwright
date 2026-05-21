@@ -268,6 +268,7 @@ class PatientsPage(BasePage):
         self.click(search_button)
         self.wait_for_time(1200)
         cards = self.driver.locator(cards_selector)
+        self.take_screenshot("患者查询结果")
         if not name:
             return cards.count() > 0
         return cards.filter(has_text=name).count() > 0
