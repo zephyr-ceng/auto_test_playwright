@@ -41,6 +41,8 @@ Do not put selectors directly in tests. Tests call page manager business methods
    - nearby `pages/*_manager.py`
    - nearby `tests/test_*_page.py`
    - relevant `data/*.yaml`
+   - Before generating or changing automation code, search and read the existing project files that may already contain reusable page methods, fixtures, utilities, locator keys, or workflow helpers.
+   - Before generating new scripts or methods, identify reusable functions in existing page managers, `BasePage`, and `utils`; call or compose those functions instead of reimplementing the same workflow.
 
 2. Build or update YAML first:
    - Put `url` at the top as a path only, for example `/login` or `/orders?status=pending`.
@@ -63,6 +65,7 @@ Do not put selectors directly in tests. Tests call page manager business methods
    - Distinguish external and internal Page Object calls: tests should call public business methods, while reusable internal steps should be private methods prefixed with `_`.
    - Keep method granularity practical: do not split a short linear workflow into many tiny private methods unless a step is reused, hides meaningful complexity, or improves readability. Prefer one clear public business method for simple flows.
    - Expose business methods that return assertion-friendly values: `str | None`, `bool`, `int`, URL strings, or structured dicts when needed.
+   - Add concise docstrings for generated page manager methods. Public business methods and non-trivial private helpers should explain purpose, key args, return value, raised errors, and side effects when applicable.
    - For authenticated pages, reuse `LoginPage.refresh_cookies()` and `add_cookies()` like `PatientsPage`.
    - Raise clear `RuntimeError` for missing required locators.
 
@@ -73,6 +76,7 @@ Do not put selectors directly in tests. Tests call page manager business methods
    - Keep assertions in tests, not in page managers.
    - Match the user-provided assertion standard exactly.
    - Add failure messages that show actual and expected values.
+   - Add concise docstrings for generated fixtures and test functions so the case intent is clear in code review and maintenance.
 
 5. Add Allure reporting:
    - Add `@allure.feature("<Feature>")` on the test class.
@@ -106,6 +110,9 @@ When adding tests, make sure fixture objects are visible to pytest so the failur
 
 - Do not hard-code credentials or cookies in tests.
 - Do not duplicate selectors across page managers and tests.
+- Prefer reading all relevant existing files first, then reuse existing methods, fixtures, utilities, and locators before adding new code.
+- Prefer reusing existing functions before creating new helpers or scripts; add new code only when existing APIs cannot cover the requirement cleanly.
+- Do not leave generated functions undocumented; include a concise function description/docstring unless the function is a tiny local callback or an obvious one-line wrapper.
 - Do not create one-off helper frameworks when `BasePage`, `BrowserManager`, `YamlManager`, `CSVManager`, and `Logger` already cover the need.
 - Do not rename existing files unless the user asks for a rename; for new page managers, always use `*_manager.py`.
 - Do not commit refreshed cookies unless explicitly requested.
