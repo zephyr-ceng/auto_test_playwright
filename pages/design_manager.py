@@ -1,12 +1,8 @@
 import re
-import random
 import time
 from collections import deque
-from datetime import date
 from pathlib import Path
 from typing import List, Optional
-
-from twisted.names import authority
 
 from pages.login_manager import LoginPage
 from core.base_page import BasePage
@@ -532,21 +528,6 @@ class DesignManager(BasePage):
             self._logger.error(f"DCM is not segmentation")
             return None
 
-    # def treatment_path_manager(self, url: str, tooth_position: int, dcm_dir: str = '', ct_name: str = ''):
-    #     """ 手术路径管理 """
-    #     tooth = self.create_tooth_case(url, tooth_position, dcm_dir, ct_name)
-    #     if tooth:
-    #         tooth_label = self._selector_design("tooth_label_template").format(tooth_position=tooth_position)
-    #         self.click_nth(tooth_label, 0)
-    #         ele = self.get_by_text("治疗路径")
-    #         if ele:
-    #             return True
-    #         else:
-    #             return False
-    #     else:
-    #         self.logger.error("tooth_position not found")
-    #         raise
-
     def _get_current_surgical_path(
             self,
     ) -> dict:
@@ -591,7 +572,7 @@ class DesignManager(BasePage):
 
     """******************************************* case ******************************************************************"""
 
-    def drop_surgical(self, url: str, tooth_position: int):
+    def case_drop_surgical(self, url: str, tooth_position: int):
         """ 手术阶拖曳排序测试 """
         surgical = self.treatment_path(url, tooth_position)
         if not surgical:
@@ -603,7 +584,7 @@ class DesignManager(BasePage):
         print(after)
         return not (after == before)
 
-    def refresh_drop_surgical(self, url, tooth_position):
+    def case_refresh_drop_surgical(self, url, tooth_position):
         """ 手术阶段拖曳排序保存测试 """
         surgical = self.treatment_path(url, tooth_position)
         if not surgical:
@@ -614,12 +595,12 @@ class DesignManager(BasePage):
             self.logger.info(f"before: {before}")
         self._drag_surgical()
         self.treatment_path('', tooth_position)
+        self.wait_for_time(1000)
         self.treatment_path('', tooth_position)
         after = self._get_current_surgical_path()
         print(after)
         if self.logger:
             self.logger.info(f"after: {after}")
-        print(after)
         return not (after == before)
 
     def case_create_tooth(self, tooth_position_list: list) -> list:
@@ -668,9 +649,10 @@ if __name__ == "__main__":
         # pp.create_design('', 45, "./data/dicom/wujia", "术前手术")
         # print(pp.case_create_design('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32))
         # print(pp.get_current_surgical_path('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32))
-        # pp.refresh_drop_surgical('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32)
-        print(pp.case_create_tooth([13, 15, 17]))
-        print(pp.case_create_design('', 43, './data/dicom/wujia', "术前手术"))
+        pp.case_refresh_drop_surgical('https://x.finetool.cn/createDesign?patientID=680133214116421632', 32)
+        # print(pp.case_create_tooth([13, 15, 17]))
+        # print(pp.case_create_design('', 43, './data/dicom/wujia', "术前手术"))
+
         # pp.create_patient_invalid('test')
         # res = pp._read_case_tooth_positions(
         #     'https://x.finetool.cn/createDesign?surgicalDesignID=677156612823187456&mode=edit&patientID=677134467964960768&medicalRecordID=677156587053318144')

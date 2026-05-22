@@ -6,10 +6,6 @@ from utils.logger import Logger
 from pages.design_manager import DesignManager
 
 
-# from utils.csv_manager import CSVManager
-# from utils.random_manager import RandomManager
-
-
 @pytest.fixture(scope="class")
 def page():
     logger = Logger("patients_test")
@@ -29,6 +25,18 @@ class TestDesignPage:
         res = page.case_create_tooth(tooth_position)
         for i in res:
             assert i == '操作成功', f"牙位创建失败{i}"
+
+    @allure.story("手术阶段调整")
+    @pytest.mark.parametrize("tooth_position", [[46, 32]])
+    def test_case_drop_surgical(self, page, tooth_position):
+        msg = page.case_create_tooth(tooth_position)
+        if msg[0] == '操作成功':
+            res = page.case_drop_surgical('', tooth_position[0])
+            assert res is True, f"手术阶段调整失败"
+            res2 = page.case_refresh_drop_surgical('', tooth_position[0])
+            assert res2 is True, f"手术阶段调整后未保存"  # 实际结果需要为True,
+        else:
+            print(msg[0])
 
     @allure.story("创建一个完整设计")
     @pytest.mark.parametrize("tooth_position", [46, 15])
