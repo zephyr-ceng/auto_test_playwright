@@ -653,9 +653,5 @@ if __name__ == "__main__":
         # print(pp.case_create_tooth([13, 15, 17]))
         # print(pp.case_create_design('', 43, './data/dicom/wujia', "术前手术"))
 
-        # pp.create_patient_invalid('test')
-        # res = pp._read_case_tooth_positions(
-        #     'https://x.finetool.cn/createDesign?surgicalDesignID=677156612823187456&mode=edit&patientID=677134467964960768&medicalRecordID=677156587053318144')
-        # print(res)
     finally:
         manager.close()
