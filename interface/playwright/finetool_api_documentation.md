@@ -1,0 +1,13976 @@
+# Finetool Network API Documentation
+
+- Capture time: `2026-06-02T09:39:23.740534+00:00`
+- Target login URL: `https://x.finetool.cn/login`
+- Total network requests in HAR/details: `211`
+- API-like endpoints documented: `18`
+- Sensitive values such as cookies, authorization headers, sessions, tokens and passwords are redacted.
+
+## Operations Covered
+
+- `ok` - open login page (2026-06-02T09:38:56.567936+00:00 -> 2026-06-02T09:38:58.231258+00:00)
+- `ok` - open and close user agreement (2026-06-02T09:38:58.231272+00:00 -> 2026-06-02T09:39:01.219724+00:00)
+- `ok` - acknowledge webgl prompt if present (2026-06-02T09:39:01.219733+00:00 -> 2026-06-02T09:39:01.227746+00:00)
+- `ok` - login (2026-06-02T09:39:01.227754+00:00 -> 2026-06-02T09:39:03.863143+00:00)
+- `ok` - open surgical design list (2026-06-02T09:39:03.863151+00:00 -> 2026-06-02T09:39:10.496655+00:00)
+- `ok` - patient tab search (2026-06-02T09:39:10.496667+00:00 -> 2026-06-02T09:39:13.183672+00:00)
+- `ok` - patient list page size (2026-06-02T09:39:13.183680+00:00 -> 2026-06-02T09:39:13.186071+00:00)
+- `ok` - open and close new patient modal (2026-06-02T09:39:13.186078+00:00 -> 2026-06-02T09:39:14.788367+00:00)
+- `ok` - design tab search (2026-06-02T09:39:14.788376+00:00 -> 2026-06-02T09:39:18.079028+00:00)
+- `ok` - design list page size (2026-06-02T09:39:18.079036+00:00 -> 2026-06-02T09:39:18.082703+00:00)
+- `ok` - reload business list (2026-06-02T09:39:18.082710+00:00 -> 2026-06-02T09:39:21.457565+00:00)
+
+## Endpoint Summary
+
+| # | Method | Origin | Path | Status | Resource | Trigger |
+|---:|---|---|---|---|---|---|
+| 1 | `GET` | `http://localhost:38080` | `/tars/v1/network_status` | `n/a` | `xhr` | login, open surgical design list, reload business list |
+| 2 | `GET` | `http://localhost:38080` | `/tars/v1/ping` | `n/a` | `xhr` | open and close user agreement, open surgical design list, reload business list |
+| 3 | `GET` | `http://localhost:38080` | `/tars/v1/version` | `n/a` | `xhr` | open and close user agreement, open surgical design list, reload business list |
+| 4 | `GET` | `https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com` | `/surgical_design_thumbnail/1779872568_4c401bb2-1a6f-424c-adbf-12b87d0f7d43_1` | `200` | `fetch` | design tab search, reload business list |
+| 5 | `GET` | `https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com` | `/surgical_design_thumbnail/1780281474_ae30f238-19b1-471d-be19-fe233a0f44ee_1` | `200` | `fetch` | design tab search, reload business list |
+| 6 | `GET` | `https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com` | `/surgical_design_thumbnail/1780295374_dc7d3fdb-98ee-415b-bed8-0f880b3d0d68_1` | `200` | `fetch` | design tab search, reload business list |
+| 7 | `GET` | `https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com` | `/surgical_design_thumbnail/1780295584_04cc0775-3aa7-4408-97fc-0c647e8611d1_1` | `200` | `fetch` | design tab search, reload business list |
+| 8 | `GET` | `https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com` | `/surgical_design_thumbnail/1780300083_f33e2e90-54db-4e29-8432-d7b63c4fefc1_1` | `200` | `fetch` | design tab search, reload business list |
+| 9 | `GET` | `https://tars.finetool.cn` | `/ping` | `200` | `fetch` | open and close new patient modal, open and close user agreement, open surgical design list, reload business list |
+| 10 | `GET` | `https://tars.finetool.cn` | `/tars/v1/settings` | `200, n/a` | `xhr` | login, open and close user agreement, open surgical design list, reload business list |
+| 11 | `GET` | `https://x.finetool.cn` | `/assets/login-CAs8E3FN.js` | `200` | `script` | open and close user agreement, open surgical design list, reload business list |
+| 12 | `GET` | `https://x.finetool.cn` | `/assets/login-bg-B9IJCfeq.jpg` | `200` | `image` | open and close user agreement |
+| 13 | `GET` | `https://x.finetool.cn` | `/itk/itk-wasm-pipeline.min.worker.js` | `200` | `xhr` | open and close user agreement, open surgical design list, reload business list |
+| 14 | `GET` | `https://x.finetool.cn` | `/itk/pipelines/read-image-dicom-file-series.wasm.zst` | `200` | `xhr` | open and close user agreement, open surgical design list, reload business list |
+| 15 | `GET` | `https://x.finetool.cn` | `/login` | `200` | `document` | open login page |
+| 16 | `POST` | `http://localhost:38080` | `/tars/v1/otp/generate_secret` | `n/a` | `xhr` | login |
+| 17 | `POST` | `https://tars.finetool.cn` | `/tars/v1/gateway` | `200, n/a` | `xhr` | design tab search, login, open surgical design list, patient tab search, reload business list |
+| 18 | `POST` | `https://tars.finetool.cn` | `/tars/v1/login_by_username` | `200` | `xhr` | login |
+
+## Endpoint Details
+
+### 1. `GET /tars/v1/network_status`
+
+- Origin: `http://localhost:38080`
+- Observed count: `3`
+- Trigger actions: `login, open surgical design list, reload business list`
+- Status codes: `n/a`
+- Request content type: ``
+- Response content type: ``
+
+### 2. `GET /tars/v1/ping`
+
+- Origin: `http://localhost:38080`
+- Observed count: `4`
+- Trigger actions: `open and close user agreement, open surgical design list, reload business list`
+- Status codes: `n/a`
+- Request content type: ``
+- Response content type: ``
+
+### 3. `GET /tars/v1/version`
+
+- Origin: `http://localhost:38080`
+- Observed count: `4`
+- Trigger actions: `open and close user agreement, open surgical design list, reload business list`
+- Status codes: `n/a`
+- Request content type: ``
+- Response content type: ``
+
+### 4. `GET /surgical_design_thumbnail/1779872568_4c401bb2-1a6f-424c-adbf-12b87d0f7d43_1`
+
+- Origin: `https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com`
+- Observed count: `4`
+- Trigger actions: `design tab search, reload business list`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `image/png`
+
+Query parameters:
+
+```json
+{
+  "q-sign-algorithm": "sha1",
+  "q-ak": "<redacted>",
+  "q-sign-time": "<redacted>",
+  "q-key-time": "<redacted>",
+  "q-header-list": "host",
+  "q-url-param-list": "",
+  "q-signature": "<redacted>"
+}
+```
+
+### 5. `GET /surgical_design_thumbnail/1780281474_ae30f238-19b1-471d-be19-fe233a0f44ee_1`
+
+- Origin: `https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com`
+- Observed count: `2`
+- Trigger actions: `design tab search, reload business list`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `image/png`
+
+Query parameters:
+
+```json
+{
+  "q-sign-algorithm": "sha1",
+  "q-ak": "<redacted>",
+  "q-sign-time": "<redacted>",
+  "q-key-time": "<redacted>",
+  "q-header-list": "host",
+  "q-url-param-list": "",
+  "q-signature": "<redacted>"
+}
+```
+
+### 6. `GET /surgical_design_thumbnail/1780295374_dc7d3fdb-98ee-415b-bed8-0f880b3d0d68_1`
+
+- Origin: `https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com`
+- Observed count: `2`
+- Trigger actions: `design tab search, reload business list`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `image/png`
+
+Query parameters:
+
+```json
+{
+  "q-sign-algorithm": "sha1",
+  "q-ak": "<redacted>",
+  "q-sign-time": "<redacted>",
+  "q-key-time": "<redacted>",
+  "q-header-list": "host",
+  "q-url-param-list": "",
+  "q-signature": "<redacted>"
+}
+```
+
+### 7. `GET /surgical_design_thumbnail/1780295584_04cc0775-3aa7-4408-97fc-0c647e8611d1_1`
+
+- Origin: `https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com`
+- Observed count: `2`
+- Trigger actions: `design tab search, reload business list`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `image/png`
+
+Query parameters:
+
+```json
+{
+  "q-sign-algorithm": "sha1",
+  "q-ak": "<redacted>",
+  "q-sign-time": "<redacted>",
+  "q-key-time": "<redacted>",
+  "q-header-list": "host",
+  "q-url-param-list": "",
+  "q-signature": "<redacted>"
+}
+```
+
+### 8. `GET /surgical_design_thumbnail/1780300083_f33e2e90-54db-4e29-8432-d7b63c4fefc1_1`
+
+- Origin: `https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com`
+- Observed count: `8`
+- Trigger actions: `design tab search, reload business list`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `image/png`
+
+Query parameters:
+
+```json
+{
+  "q-sign-algorithm": "sha1",
+  "q-ak": "<redacted>",
+  "q-sign-time": "<redacted>",
+  "q-key-time": "<redacted>",
+  "q-header-list": "host",
+  "q-url-param-list": "",
+  "q-signature": "<redacted>"
+}
+```
+
+### 9. `GET /ping`
+
+- Origin: `https://tars.finetool.cn`
+- Observed count: `4`
+- Trigger actions: `open and close new patient modal, open and close user agreement, open surgical design list, reload business list`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `application/json; charset=utf-8`
+
+Response body sample:
+
+```json
+{
+  "message": "pong"
+}
+```
+
+### 10. `GET /tars/v1/settings`
+
+- Origin: `https://tars.finetool.cn`
+- Observed count: `8`
+- Trigger actions: `login, open and close user agreement, open surgical design list, reload business list`
+- Status codes: `200, n/a`
+- Request content type: ``
+- Response content type: `application/json; charset=utf-8`
+
+Response body sample:
+
+```json
+{
+  "code": 0,
+  "data": {
+    "Drills": null,
+    "ImplantSystems": [
+      {
+        "alias": "士卓曼,shizhuoman,straumann",
+        "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Logo/Straumann/logo.png",
+        "id": 1,
+        "name": "Straumann",
+        "systems": [
+          {
+            "brand_id": 1,
+            "id": 1,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.3308.png",
+                "id": 1,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"2.75mm\",\"总长度\":\"8.10mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"8.0mm\",\"领圈高度\":\"0.1mm\",\"骨内长度\":\"8.0mm\",\"规格\":\"Φ3.5mm x 8.0mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 1,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.3308.png",
+                    "id": 1,
+                    "length": 0.0081,
+                    "name": "061.3308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.35_blx_a.061.3308.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.35_blx_a.061.3308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.75mm\",\"总长度\":\"10.10mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"10.0mm\",\"领圈高度\":\"0.1mm\",\"骨内长度\":\"10.0mm\",\"规格\":\"Φ3.5mm x 10.0mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 1,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.3310.png",
+                    "id": 2,
+                    "length": 0.0101,
+                    "name": "061.3310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.35_blx_a.061.3310.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.35_blx_a.061.3310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.75mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"12.0mm\",\"领圈高度\":\"0.1mm\",\"骨内长度\":\"12.0mm\",\"规格\":\"Φ3.5mm x 12.0mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 1,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.3312.png",
+                    "id": 3,
+                    "length": 0.0121,
+                    "name": "061.3312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.35_blx_a.061.3312.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.35_blx_a.061.3312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.75mm\",\"总长度\":\"14.10mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"14.0mm\",\"领圈高度\":\"0.1mm\",\"骨内长度\":\"14.0mm\",\"规格\":\"Φ3.5mm x 14.0mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 1,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.3314.png",
+                    "id": 4,
+                    "length": 0.0141,
+                    "name": "061.3314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.35_blx_a.061.3314.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.35_blx_a.061.3314"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.75mm\",\"总长度\":\"16.10mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"16.0mm\",\"领圈高度\":\"0.1mm\",\"骨内长度\":\"16.0mm\",\"规格\":\"Φ3.5mm x 16.0mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 1,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.3316.png",
+                    "id": 5,
+                    "length": 0.0161,
+                    "name": "061.3316",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.35_blx_a.061.3316.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.35_blx_a.061.3316"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.75mm\",\"总长度\":\"18.10mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"18.0mm\",\"领圈高度\":\"0.1mm\",\"骨内长度\":\"18.0mm\",\"规格\":\"Φ3.5mm x 18.0mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 1,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.3318.png",
+                    "id": 6,
+                    "length": 0.0181,
+                    "name": "061.3318",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.35_blx_a.061.3318.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.35_blx_a.061.3318"
+                  }
+                ],
+                "name": "Φ3.5mm 直径",
+                "system_id": 1,
+                "type": "straumann.bone_level_x_roxolid_slactive_implant.35_blx_a"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.4308.png",
+                "id": 2,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"8.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"8.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"8.0mm\",\"规格\":\"Φ3.75mm x 8.0mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 2,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.4308.png",
+                    "id": 7,
+                    "length": 0.00812,
+                    "name": "061.4308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.375_blx_a.061.4308.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.375_blx_a.061.4308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"10.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"10.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"10.0mm\",\"规格\":\"Φ3.75mm x 10.0mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 2,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.4310.png",
+                    "id": 8,
+                    "length": 0.01012,
+                    "name": "061.4310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.375_blx_a.061.4310.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.375_blx_a.061.4310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"12.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"12.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"12.0mm\",\"规格\":\"Φ3.75mm x 12.0mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 2,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.4312.png",
+                    "id": 9,
+                    "length": 0.01212,
+                    "name": "061.4312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.375_blx_a.061.4312.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.375_blx_a.061.4312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"14.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"14.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"14.0mm\",\"规格\":\"Φ3.75mm x 14.0mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 2,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.4314.png",
+                    "id": 10,
+                    "length": 0.01412,
+                    "name": "061.4314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.375_blx_a.061.4314.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.375_blx_a.061.4314"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"16.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"16.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"16.0mm\",\"规格\":\"Φ3.75mm x 16.0mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 2,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.4316.png",
+                    "id": 11,
+                    "length": 0.01612,
+                    "name": "061.4316",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.375_blx_a.061.4316.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.375_blx_a.061.4316"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"18.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"18.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"18.0mm\",\"规格\":\"Φ3.75mm x 18.0mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 2,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.4318.png",
+                    "id": 12,
+                    "length": 0.01812,
+                    "name": "061.4318",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.375_blx_a.061.4318.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.375_blx_a.061.4318"
+                  }
+                ],
+                "name": "Φ3.75mm 直径",
+                "system_id": 1,
+                "type": "straumann.bone_level_x_roxolid_slactive_implant.375_blx_a"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.5308.png",
+                "id": 3,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"8.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"8.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"8.0mm\",\"规格\":\"Φ4.0mm x 8.0mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 3,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.5308.png",
+                    "id": 13,
+                    "length": 0.00812,
+                    "name": "061.5308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.40_blx_a.061.5308.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.40_blx_a.061.5308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"10.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"10.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"10.0mm\",\"规格\":\"Φ4.0mm x 10.0mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 3,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.5310.png",
+                    "id": 14,
+                    "length": 0.01012,
+                    "name": "061.5310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.40_blx_a.061.5310.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.40_blx_a.061.5310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"12.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"12.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"12.0mm\",\"规格\":\"Φ4.0mm x 12.0mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 3,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.5312.png",
+                    "id": 15,
+                    "length": 0.01212,
+                    "name": "061.5312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.40_blx_a.061.5312.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.40_blx_a.061.5312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"14.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"14.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"14.0mm\",\"规格\":\"Φ4.0mm x 14.0mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 3,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.5314.png",
+                    "id": 16,
+                    "length": 0.01412,
+                    "name": "061.5314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.40_blx_a.061.5314.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.40_blx_a.061.5314"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"16.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"16.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"16.0mm\",\"规格\":\"Φ4.0mm x 16.0mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 3,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.5316.png",
+                    "id": 17,
+                    "length": 0.01612,
+                    "name": "061.5316",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.40_blx_a.061.5316.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.40_blx_a.061.5316"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"2.9mm\",\"总长度\":\"18.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"18.0mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"18.0mm\",\"规格\":\"Φ4.0mm x 18.0mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 3,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.5318.png",
+                    "id": 18,
+                    "length": 0.01812,
+                    "name": "061.5318",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.40_blx_a.061.5318.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.40_blx_a.061.5318"
+                  }
+                ],
+                "name": "Φ4.0mm 直径",
+                "system_id": 1,
+                "type": "straumann.bone_level_x_roxolid_slactive_implant.40_blx_a"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.6308.png",
+                "id": 4,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.6mm\",\"总长度\":\"8.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"8.0mm\",\"规格\":\"Φ4.5mm x 8.00mm\"}",
+                    "diameter": 0.0045,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 4,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.6308.png",
+                    "id": 19,
+                    "length": 0.00812,
+                    "name": "061.6308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.45_blx_a.061.6308.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.45_blx_a.061.6308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.6mm\",\"总长度\":\"10.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"10.0mm\",\"规格\":\"Φ4.5mm x 10.00mm\"}",
+                    "diameter": 0.0045,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 4,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.6310.png",
+                    "id": 20,
+                    "length": 0.01012,
+                    "name": "061.6310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.45_blx_a.061.6310.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.45_blx_a.061.6310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.6mm\",\"总长度\":\"12.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"12.0mm\",\"规格\":\"Φ4.5mm x 12.00mm\"}",
+                    "diameter": 0.0045,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 4,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.6312.png",
+                    "id": 21,
+                    "length": 0.01212,
+                    "name": "061.6312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.45_blx_a.061.6312.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.45_blx_a.061.6312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.6mm\",\"总长度\":\"14.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"14.0mm\",\"规格\":\"Φ4.5mm x 14.00mm\"}",
+                    "diameter": 0.0045,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 4,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.6314.png",
+                    "id": 22,
+                    "length": 0.01412,
+                    "name": "061.6314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.45_blx_a.061.6314.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.45_blx_a.061.6314"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.6mm\",\"总长度\":\"16.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"16.0mm\",\"规格\":\"Φ4.5mm x 16.00mm\"}",
+                    "diameter": 0.0045,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 4,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.6316.png",
+                    "id": 23,
+                    "length": 0.01612,
+                    "name": "061.6316",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.45_blx_a.061.6316.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.45_blx_a.061.6316"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.6mm\",\"总长度\":\"18.12mm\",\"根尖直径\":\"1.9mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"0.12mm\",\"骨内长度\":\"18.0mm\",\"规格\":\"Φ4.5mm x 18.00mm\"}",
+                    "diameter": 0.0045,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 4,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.6318.png",
+                    "id": 24,
+                    "length": 0.01812,
+                    "name": "061.6318",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.45_blx_a.061.6318.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.45_blx_a.061.6318"
+                  }
+                ],
+                "name": "Φ4.5mm 直径",
+                "system_id": 1,
+                "type": "straumann.bone_level_x_roxolid_slactive_implant.45_blx_a"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.7308.png",
+                "id": 5,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.5mm\",\"总长度\":\"8.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ5.0mm x 8.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 5,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.7308.png",
+                    "id": 25,
+                    "length": 0.00833,
+                    "name": "061.7308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.50_blx_a.061.7308.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.50_blx_a.061.7308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.5mm\",\"总长度\":\"10.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ5.0mm x 10.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 5,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.7310.png",
+                    "id": 26,
+                    "length": 0.01033,
+                    "name": "061.7310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.50_blx_a.061.7310.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.50_blx_a.061.7310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.5mm\",\"总长度\":\"12.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ5.0mm x 12.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 5,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.7312.png",
+                    "id": 27,
+                    "length": 0.01233,
+                    "name": "061.7312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.50_blx_a.061.7312.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.50_blx_a.061.7312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.5mm\",\"总长度\":\"14.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ5.0mm x 14.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 5,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.7314.png",
+                    "id": 28,
+                    "length": 0.01433,
+                    "name": "061.7314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.50_blx_a.061.7314.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.50_blx_a.061.7314"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.5mm\",\"总长度\":\"16.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ5.0mm x 16.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 5,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.7316.png",
+                    "id": 29,
+                    "length": 0.01633,
+                    "name": "061.7316",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.50_blx_a.061.7316.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.50_blx_a.061.7316"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.5mm\",\"总长度\":\"18.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"18.00mm\",\"规格\":\"Φ5.0mm x 18.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 5,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.7318.png",
+                    "id": 30,
+                    "length": 0.01833,
+                    "name": "061.7318",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.50_blx_a.061.7318.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.50_blx_a.061.7318"
+                  }
+                ],
+                "name": "Φ5.0mm 直径",
+                "system_id": 1,
+                "type": "straumann.bone_level_x_roxolid_slactive_implant.50_blx_a"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.8306.png",
+                "id": 6,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"6.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ5.5mm x 6.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 6,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.8306.png",
+                    "id": 31,
+                    "length": 0.00633,
+                    "name": "061.8306",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.55_blx_a.061.8306.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.55_blx_a.061.8306"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"8.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ5.5mm x 8.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 6,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.8308.png",
+                    "id": 32,
+                    "length": 0.00833,
+                    "name": "061.8308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.55_blx_a.061.8308.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.55_blx_a.061.8308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"10.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ5.5mm x 10.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 6,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.8310.png",
+                    "id": 33,
+                    "length": 0.01033,
+                    "name": "061.8310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.55_blx_a.061.8310.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.55_blx_a.061.8310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"12.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ5.5mm x 12.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 6,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.8312.png",
+                    "id": 34,
+                    "length": 0.01233,
+                    "name": "061.8312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.55_blx_a.061.8312.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.55_blx_a.061.8312"
+                  }
+                ],
+                "name": "Φ5.5mm 直径",
+                "system_id": 1,
+                "type": "straumann.bone_level_x_roxolid_slactive_implant.55_blx_a"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.9306.png",
+                "id": 7,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"5.2mm\",\"总长度\":\"6.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"6.0mm\",\"规格\":\"Φ6.5mm x 6.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 7,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.9306.png",
+                    "id": 35,
+                    "length": 0.00633,
+                    "name": "061.9306",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.65_blx_a.061.9306.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.65_blx_a.061.9306"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.2mm\",\"总长度\":\"8.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"8.0mm\",\"规格\":\"Φ6.5mm x 8.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 7,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.9308.png",
+                    "id": 36,
+                    "length": 0.00833,
+                    "name": "061.9308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.65_blx_a.061.9308.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.65_blx_a.061.9308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.2mm\",\"总长度\":\"10.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"10.0mm\",\"规格\":\"Φ6.5mm x 10.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 7,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.9310.png",
+                    "id": 37,
+                    "length": 0.01033,
+                    "name": "061.9310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.65_blx_a.061.9310.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.65_blx_a.061.9310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.2mm\",\"总长度\":\"12.33mm\",\"根尖直径\":\"2.2mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.33mm\",\"骨内长度\":\"12.0mm\",\"规格\":\"Φ6.5mm x 12.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 7,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/061.9312.png",
+                    "id": 38,
+                    "length": 0.01233,
+                    "name": "061.9312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.blx_bl.65_blx_a.061.9312.stl",
+                    "type": "straumann.bone_level_x_roxolid_slactive_implant.65_blx_a.061.9312"
+                  }
+                ],
+                "name": "Φ6.5mm 直径",
+                "system_id": 1,
+                "type": "straumann.bone_level_x_roxolid_slactive_implant.65_blx_a"
+              }
+            ],
+            "name": "Bone Level X Roxolid SLActive",
+            "type": "straumann.bone_level_x_roxolid_slactive_implant"
+          },
+          {
+            "brand_id": 1,
+            "id": 2,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3508.png",
+                "id": 8,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"8.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 8,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3508.png",
+                    "id": 39,
+                    "length": 0.0081,
+                    "name": "021.3508",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_yg.021.3508.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.33_blt_nc_yg.021.3508"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 8,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3510.png",
+                    "id": 40,
+                    "length": 0.0101,
+                    "name": "021.3510",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_yg.021.3510.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.33_blt_nc_yg.021.3510"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 8,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3512.png",
+                    "id": 41,
+                    "length": 0.0121,
+                    "name": "021.3512",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_yg.021.3512.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.33_blt_nc_yg.021.3512"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 8,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3514.png",
+                    "id": 42,
+                    "length": 0.0141,
+                    "name": "021.3514",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_yg.021.3514.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.33_blt_nc_yg.021.3514"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"16.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ3.3mm x 16.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 8,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3516.png",
+                    "id": 43,
+                    "length": 0.0161,
+                    "name": "021.3516",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_yg.021.3516.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.33_blt_nc_yg.021.3516"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 2,
+                "type": "straumann.bone_level_tapered_roxolid_sla_implant.33_blt_nc_yg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5508.png",
+                "id": 9,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 9,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5508.png",
+                    "id": 44,
+                    "length": 0.0082,
+                    "name": "021.5508",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_yg.021.5508.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.41_blt_rc_yg.021.5508"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 9,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5510.png",
+                    "id": 45,
+                    "length": 0.0102,
+                    "name": "021.5510",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_yg.021.5510.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.41_blt_rc_yg.021.5510"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 9,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5512.png",
+                    "id": 46,
+                    "length": 0.0122,
+                    "name": "021.5512",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_yg.021.5512.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.41_blt_rc_yg.021.5512"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 9,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5514.png",
+                    "id": 47,
+                    "length": 0.0142,
+                    "name": "021.5514",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_yg.021.5514.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.41_blt_rc_yg.021.5514"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"16.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ4.1mm x 16.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 9,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5516.png",
+                    "id": 48,
+                    "length": 0.0162,
+                    "name": "021.5516",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_yg.021.5516.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.41_blt_rc_yg.021.5516"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 2,
+                "type": "straumann.bone_level_tapered_roxolid_sla_implant.41_blt_rc_yg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7508.png",
+                "id": 10,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 10,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7508.png",
+                    "id": 49,
+                    "length": 0.0082,
+                    "name": "021.7508",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_yg.021.7508.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.48_blt_rc_yg.021.7508"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 10,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7510.png",
+                    "id": 50,
+                    "length": 0.0102,
+                    "name": "021.7510",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_yg.021.7510.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.48_blt_rc_yg.021.7510"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 10,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7512.png",
+                    "id": 51,
+                    "length": 0.0122,
+                    "name": "021.7512",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_yg.021.7512.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.48_blt_rc_yg.021.7512"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 10,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7514.png",
+                    "id": 52,
+                    "length": 0.0142,
+                    "name": "021.7514",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_yg.021.7514.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.48_blt_rc_yg.021.7514"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"16.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ4.8mm x 16.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 10,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7516.png",
+                    "id": 53,
+                    "length": 0.0162,
+                    "name": "021.7516",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_yg.021.7516.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.48_blt_rc_yg.021.7516"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"18.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"18.00mm\",\"规格\":\"Φ4.8mm x 18.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 10,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7518.png",
+                    "id": 54,
+                    "length": 0.0182,
+                    "name": "021.7518",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_yg.021.7518.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_sla_implant.48_blt_rc_yg.021.7518"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 2,
+                "type": "straumann.bone_level_tapered_roxolid_sla_implant.48_blt_rc_yg"
+              }
+            ],
+            "name": "Bone Level Tapered Roxolid SLA",
+            "type": "straumann.bone_level_tapered_roxolid_sla_implant"
+          },
+          {
+            "brand_id": 1,
+            "id": 3,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3308.png",
+                "id": 11,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"8.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 11,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3308.png",
+                    "id": 55,
+                    "length": 0.0081,
+                    "name": "021.3308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_rg.021.3308.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.33_blt_nc_rg.021.3308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 11,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3310.png",
+                    "id": 56,
+                    "length": 0.0101,
+                    "name": "021.3310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_rg.021.3310.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.33_blt_nc_rg.021.3310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 11,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3312.png",
+                    "id": 57,
+                    "length": 0.0121,
+                    "name": "021.3312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_rg.021.3312.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.33_blt_nc_rg.021.3312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 11,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3314.png",
+                    "id": 58,
+                    "length": 0.0141,
+                    "name": "021.3314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_rg.021.3314.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.33_blt_nc_rg.021.3314"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"16.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ3.3mm x 16.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 11,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3316.png",
+                    "id": 59,
+                    "length": 0.0161,
+                    "name": "021.3316",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_rg.021.3316.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.33_blt_nc_rg.021.3316"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 3,
+                "type": "straumann.bone_level_tapered_roxolid_slactive_implant.33_blt_nc_rg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5308.png",
+                "id": 12,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 12,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5308.png",
+                    "id": 60,
+                    "length": 0.0082,
+                    "name": "021.5308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_rg.021.5308.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.41_blt_rc_rg.021.5308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 12,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5310.png",
+                    "id": 61,
+                    "length": 0.0102,
+                    "name": "021.5310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_rg.021.5310.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.41_blt_rc_rg.021.5310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 12,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5312.png",
+                    "id": 62,
+                    "length": 0.0122,
+                    "name": "021.5312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_rg.021.5312.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.41_blt_rc_rg.021.5312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 12,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5314.png",
+                    "id": 63,
+                    "length": 0.0142,
+                    "name": "021.5314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_rg.021.5314.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.41_blt_rc_rg.021.5314"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"16.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ4.1mm x 16.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 12,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5316.png",
+                    "id": 64,
+                    "length": 0.0162,
+                    "name": "021.5316",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_rg.021.5316.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.41_blt_rc_rg.021.5316"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 3,
+                "type": "straumann.bone_level_tapered_roxolid_slactive_implant.41_blt_rc_rg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7308.png",
+                "id": 13,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 13,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7308.png",
+                    "id": 65,
+                    "length": 0.0082,
+                    "name": "021.7308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_rg.021.7308.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.48_blt_rc_rg.021.7308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 13,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7310.png",
+                    "id": 66,
+                    "length": 0.0102,
+                    "name": "021.7310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_rg.021.7310.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.48_blt_rc_rg.021.7310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 13,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7312.png",
+                    "id": 67,
+                    "length": 0.0122,
+                    "name": "021.7312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_rg.021.7312.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.48_blt_rc_rg.021.7312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 13,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7314.png",
+                    "id": 68,
+                    "length": 0.0142,
+                    "name": "021.7314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_rg.021.7314.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.48_blt_rc_rg.021.7314"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"16.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ4.8mm x 16.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 13,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7316.png",
+                    "id": 69,
+                    "length": 0.0162,
+                    "name": "021.7316",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_rg.021.7316.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.48_blt_rc_rg.021.7316"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"18.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"18.00mm\",\"规格\":\"Φ4.8mm x 18.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 13,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7318.png",
+                    "id": 70,
+                    "length": 0.0182,
+                    "name": "021.7318",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_rg.021.7318.stl",
+                    "type": "straumann.bone_level_tapered_roxolid_slactive_implant.48_blt_rc_rg.021.7318"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 3,
+                "type": "straumann.bone_level_tapered_roxolid_slactive_implant.48_blt_rc_rg"
+              }
+            ],
+            "name": "Bone Level Tapered Roxolid SLActive",
+            "type": "straumann.bone_level_tapered_roxolid_slactive_implant",
+            "version": 4
+          },
+          {
+            "brand_id": 1,
+            "id": 4,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3408.png",
+                "id": 14,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"8.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 14,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3408.png",
+                    "id": 71,
+                    "length": 0.0081,
+                    "name": "021.3408",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_sla.021.3408.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.33_blt_nc_sla.021.3408"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 14,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3410.png",
+                    "id": 72,
+                    "length": 0.0101,
+                    "name": "021.3410",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_sla.021.3410.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.33_blt_nc_sla.021.3410"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 14,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3412.png",
+                    "id": 73,
+                    "length": 0.0121,
+                    "name": "021.3412",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_sla.021.3412.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.33_blt_nc_sla.021.3412"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 14,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3414.png",
+                    "id": 74,
+                    "length": 0.0141,
+                    "name": "021.3414",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_sla.021.3414.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.33_blt_nc_sla.021.3414"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"16.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ3.3mm x 16.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 14,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.3416.png",
+                    "id": 75,
+                    "length": 0.0161,
+                    "name": "021.3416",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_blt_nc_sla.021.3416.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.33_blt_nc_sla.021.3416"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 4,
+                "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.33_blt_nc_sla"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5408.png",
+                "id": 15,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 15,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5408.png",
+                    "id": 76,
+                    "length": 0.0082,
+                    "name": "021.5408",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_sla.021.5408.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.41_blt_rc_sla.021.5408"
+                  },
+                  {
+                    "comment": "021.5410",
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 15,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5410.png",
+                    "id": 77,
+                    "length": 0.0102,
+                    "name": "Φ4.1mm x 10.00mm",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_sla.021.5410.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.41_blt_rc_sla.021.5410"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 15,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5412.png",
+                    "id": 78,
+                    "length": 0.0122,
+                    "name": "021.5412",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_sla.021.5412.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.41_blt_rc_sla.021.5412"
+                  },
+                  {
+                    "comment": "021.5414",
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 15,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5414.png",
+                    "id": 79,
+                    "length": 0.0142,
+                    "name": "Φ4.1mm x 14.00mm",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_sla.021.5414.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.41_blt_rc_sla.021.5414"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"16.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ4.1mm x 16.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 15,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.5416.png",
+                    "id": 80,
+                    "length": 0.0162,
+                    "name": "021.5416",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_blt_rc_sla.021.5416.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.41_blt_rc_sla.021.5416"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 4,
+                "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.41_blt_rc_sla"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7408.png",
+                "id": 16,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 16,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7408.png",
+                    "id": 81,
+                    "length": 0.0082,
+                    "name": "021.7408",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_sla.021.7408.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.48_blt_rc_sla.021.7408"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 16,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7410.png",
+                    "id": 82,
+                    "length": 0.0102,
+                    "name": "021.7410",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_sla.021.7410.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.48_blt_rc_sla.021.7410"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 16,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7412.png",
+                    "id": 83,
+                    "length": 0.0122,
+                    "name": "021.7412",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_sla.021.7412.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.48_blt_rc_sla.021.7412"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 16,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7414.png",
+                    "id": 84,
+                    "length": 0.0142,
+                    "name": "021.7414",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_sla.021.7414.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.48_blt_rc_sla.021.7414"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"16.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ4.8mm x 16.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 16,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.7416.png",
+                    "id": 85,
+                    "length": 0.0162,
+                    "name": "021.7416",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_blt_rc_sla.021.7416.stl",
+                    "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.48_blt_rc_sla.021.7416"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 4,
+                "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant.48_blt_rc_sla"
+              }
+            ],
+            "name": "Bone Level Tapered Titanium SLA Loxim",
+            "type": "straumann.bone_level_tapered_titanium_sla_loxim_implant",
+            "version": 3
+          },
+          {
+            "brand_id": 1,
+            "id": 5,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2508.png",
+                "id": 17,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"8.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 17,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2508.png",
+                    "id": 86,
+                    "length": 0.0081,
+                    "name": "021.2508",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_bl_nc_yg.021.2508.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.33_bl_nc_yg.021.2508"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 17,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2510.png",
+                    "id": 87,
+                    "length": 0.0101,
+                    "name": "021.2510",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_bl_nc_yg.021.2510.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.33_bl_nc_yg.021.2510"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 17,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2512.png",
+                    "id": 88,
+                    "length": 0.0121,
+                    "name": "021.2512",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_bl_nc_yg.021.2512.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.33_bl_nc_yg.021.2512"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 17,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2514.png",
+                    "id": 89,
+                    "length": 0.0141,
+                    "name": "021.2514",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_bl_nc_yg.021.2514.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.33_bl_nc_yg.021.2514"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 5,
+                "type": "straumann.bone_level_roxolid_sla_implant.33_bl_nc_yg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4508.png",
+                "id": 18,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 18,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4508.png",
+                    "id": 90,
+                    "length": 0.0082,
+                    "name": "021.4508",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_bl_rc_yg.021.4508.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.41_bl_rc_yg.021.4508"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 18,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4510.png",
+                    "id": 91,
+                    "length": 0.0102,
+                    "name": "021.4510",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_bl_rc_yg.021.4510.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.41_bl_rc_yg.021.4510"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 18,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4512.png",
+                    "id": 92,
+                    "length": 0.0122,
+                    "name": "021.4512",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_bl_rc_yg.021.4512.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.41_bl_rc_yg.021.4512"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 18,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4514.png",
+                    "id": 93,
+                    "length": 0.0142,
+                    "name": "021.4514",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_bl_rc_yg.021.4514.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.41_bl_rc_yg.021.4514"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 5,
+                "type": "straumann.bone_level_roxolid_sla_implant.41_bl_rc_yg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6508.png",
+                "id": 19,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 19,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6508.png",
+                    "id": 94,
+                    "length": 0.0082,
+                    "name": "021.6508",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_bl_rc_yg.021.6508.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.48_bl_rc_yg.021.6508"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 19,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6510.png",
+                    "id": 95,
+                    "length": 0.0102,
+                    "name": "021.6510",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_bl_rc_yg.021.6510.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.48_bl_rc_yg.021.6510"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 19,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6512.png",
+                    "id": 96,
+                    "length": 0.0122,
+                    "name": "021.6512",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_bl_rc_yg.021.6512.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.48_bl_rc_yg.021.6512"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 19,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6514.png",
+                    "id": 97,
+                    "length": 0.0142,
+                    "name": "021.6514",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_bl_rc_yg.021.6514.stl",
+                    "type": "straumann.bone_level_roxolid_sla_implant.48_bl_rc_yg.021.6514"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 5,
+                "type": "straumann.bone_level_roxolid_sla_implant.48_bl_rc_yg"
+              }
+            ],
+            "name": "Bone Level Roxolid SLA",
+            "type": "straumann.bone_level_roxolid_sla_implant"
+          },
+          {
+            "brand_id": 1,
+            "id": 6,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2308.png",
+                "id": 20,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"8.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 20,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2308.png",
+                    "id": 98,
+                    "length": 0.0081,
+                    "name": "021.2308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_bl_nc_rg.021.2308.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.33_bl_nc_rg.021.2308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 20,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2310.png",
+                    "id": 99,
+                    "length": 0.0101,
+                    "name": "021.2310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_bl_nc_rg.021.2310.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.33_bl_nc_rg.021.2310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 20,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2312.png",
+                    "id": 100,
+                    "length": 0.0121,
+                    "name": "021.2312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_bl_nc_rg.021.2312.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.33_bl_nc_rg.021.2312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 20,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2314.png",
+                    "id": 101,
+                    "length": 0.0141,
+                    "name": "021.2314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.33_bl_nc_rg.021.2314.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.33_bl_nc_rg.021.2314"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 6,
+                "type": "straumann.bone_level_roxolid_slactive_implant.33_bl_nc_rg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4308.png",
+                "id": 21,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 21,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4308.png",
+                    "id": 102,
+                    "length": 0.0082,
+                    "name": "021.4308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_bl_rc_rg.021.4308.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.41_bl_rc_rg.021.4308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 21,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4310.png",
+                    "id": 103,
+                    "length": 0.0102,
+                    "name": "021.4310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_bl_rc_rg.021.4310.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.41_bl_rc_rg.021.4310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 21,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4312.png",
+                    "id": 104,
+                    "length": 0.0122,
+                    "name": "021.4312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_bl_rc_rg.021.4312.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.41_bl_rc_rg.021.4312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 21,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4314.png",
+                    "id": 105,
+                    "length": 0.0142,
+                    "name": "021.4314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.41_bl_rc_rg.021.4314.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.41_bl_rc_rg.021.4314"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 6,
+                "type": "straumann.bone_level_roxolid_slactive_implant.41_bl_rc_rg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6308.png",
+                "id": 22,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 22,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6308.png",
+                    "id": 106,
+                    "length": 0.0082,
+                    "name": "021.6308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_bl_rc_rg.021.6308.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.48_bl_rc_rg.021.6308"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 22,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6310.png",
+                    "id": 107,
+                    "length": 0.0102,
+                    "name": "021.6310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_bl_rc_rg.021.6310.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.48_bl_rc_rg.021.6310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 22,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6312.png",
+                    "id": 108,
+                    "length": 0.0122,
+                    "name": "021.6312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_bl_rc_rg.021.6312.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.48_bl_rc_rg.021.6312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 22,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6314.png",
+                    "id": 109,
+                    "length": 0.0142,
+                    "name": "021.6314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level.48_bl_rc_rg.021.6314.stl",
+                    "type": "straumann.bone_level_roxolid_slactive_implant.48_bl_rc_rg.021.6314"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 6,
+                "type": "straumann.bone_level_roxolid_slactive_implant.48_bl_rc_rg"
+              }
+            ],
+            "name": "Bone Level Roxolid SLActive",
+            "type": "straumann.bone_level_roxolid_slactive_implant"
+          },
+          {
+            "brand_id": 1,
+            "id": 7,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2408.png",
+                "id": 23,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"8.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 23,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2408.png",
+                    "id": 110,
+                    "length": 0.0081,
+                    "name": "021.2408",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.33_bone_level_titanium_sla.021.2408.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.33_bone_level_titanium_sla.021.2408"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 23,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2410.png",
+                    "id": 111,
+                    "length": 0.0101,
+                    "name": "021.2410",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.33_bone_level_titanium_sla.021.2410.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.33_bone_level_titanium_sla.021.2410"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 23,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2412.png",
+                    "id": 112,
+                    "length": 0.0121,
+                    "name": "021.2412",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.33_bone_level_titanium_sla.021.2412.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.33_bone_level_titanium_sla.021.2412"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 23,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2414.png",
+                    "id": 113,
+                    "length": 0.0141,
+                    "name": "021.2414",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.33_bone_level_titanium_sla.021.2414.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.33_bone_level_titanium_sla.021.2414"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 7,
+                "type": "straumann.bone_level_titanium_sla_implant.33_bone_level_titanium_sla"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4408.png",
+                "id": 24,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 24,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4408.png",
+                    "id": 114,
+                    "length": 0.0082,
+                    "name": "021.4408",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.41_bone_level_titanium_sla.021.4408.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.41_bone_level_titanium_sla.021.4408"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 24,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4410.png",
+                    "id": 115,
+                    "length": 0.0102,
+                    "name": "021.4410",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.41_bone_level_titanium_sla.021.4410.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.41_bone_level_titanium_sla.021.4410"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 24,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4412.png",
+                    "id": 116,
+                    "length": 0.0122,
+                    "name": "021.4412",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.41_bone_level_titanium_sla.021.4412.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.41_bone_level_titanium_sla.021.4412"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 24,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4414.png",
+                    "id": 117,
+                    "length": 0.0142,
+                    "name": "021.4414",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.41_bone_level_titanium_sla.021.4414.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.41_bone_level_titanium_sla.021.4414"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 7,
+                "type": "straumann.bone_level_titanium_sla_implant.41_bone_level_titanium_sla"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6408.png",
+                "id": 25,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 25,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6408.png",
+                    "id": 118,
+                    "length": 0.0082,
+                    "name": "021.6408",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.48_bone_level_titanium_sla.021.6408.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.48_bone_level_titanium_sla.021.6408"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 25,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6410.png",
+                    "id": 119,
+                    "length": 0.0102,
+                    "name": "021.6410",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.48_bone_level_titanium_sla.021.6410.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.48_bone_level_titanium_sla.021.6410"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 25,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6412.png",
+                    "id": 120,
+                    "length": 0.0122,
+                    "name": "021.6412",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.48_bone_level_titanium_sla.021.6412.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.48_bone_level_titanium_sla.021.6412"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 25,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6414.png",
+                    "id": 121,
+                    "length": 0.0142,
+                    "name": "021.6414",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_implant.48_bone_level_titanium_sla.021.6414.stl",
+                    "type": "straumann.bone_level_titanium_sla_implant.48_bone_level_titanium_sla.021.6414"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 7,
+                "type": "straumann.bone_level_titanium_sla_implant.48_bone_level_titanium_sla"
+              }
+            ],
+            "name": "Bone Level Titanium SLA",
+            "type": "straumann.bone_level_titanium_sla_implant"
+          },
+          {
+            "brand_id": 1,
+            "id": 8,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2108.png",
+                "id": 26,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"8.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 26,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2108.png",
+                    "id": 122,
+                    "length": 0.0081,
+                    "name": "021.2108",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.33_bone_level_titanium_slactive.021.2108.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.33_bone_level_titanium_slactive.021.2108"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 26,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2110.png",
+                    "id": 123,
+                    "length": 0.0101,
+                    "name": "021.2110",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.33_bone_level_titanium_slactive.021.2110.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.33_bone_level_titanium_slactive.021.2110"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 26,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2112.png",
+                    "id": 124,
+                    "length": 0.0121,
+                    "name": "021.2112",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.33_bone_level_titanium_slactive.021.2112.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.33_bone_level_titanium_slactive.021.2112"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 26,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2114.png",
+                    "id": 125,
+                    "length": 0.0141,
+                    "name": "021.2114",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.33_bone_level_titanium_slactive.021.2114.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.33_bone_level_titanium_slactive.021.2114"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 8,
+                "type": "straumann.bone_level_titanium_slactive_implant.33_bone_level_titanium_slactive"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4108.png",
+                "id": 27,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 27,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4108.png",
+                    "id": 126,
+                    "length": 0.0082,
+                    "name": "021.4108",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.41_bone_level_titanium_slactive.021.4108.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.41_bone_level_titanium_slactive.021.4108"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 27,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4110.png",
+                    "id": 127,
+                    "length": 0.0102,
+                    "name": "021.4110",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.41_bone_level_titanium_slactive.021.4110.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.41_bone_level_titanium_slactive.021.4110"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 27,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4112.png",
+                    "id": 128,
+                    "length": 0.0122,
+                    "name": "021.4112",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.41_bone_level_titanium_slactive.021.4112.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.41_bone_level_titanium_slactive.021.4112"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 27,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4114.png",
+                    "id": 129,
+                    "length": 0.0142,
+                    "name": "021.4114",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.41_bone_level_titanium_slactive.021.4114.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.41_bone_level_titanium_slactive.021.4114"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 8,
+                "type": "straumann.bone_level_titanium_slactive_implant.41_bone_level_titanium_slactive"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6108.png",
+                "id": 28,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 28,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6108.png",
+                    "id": 130,
+                    "length": 0.0082,
+                    "name": "021.6108",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.48_bone_level_titanium_slactive.021.6108.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.48_bone_level_titanium_slactive.021.6108"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 28,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6110.png",
+                    "id": 131,
+                    "length": 0.0102,
+                    "name": "021.6110",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.48_bone_level_titanium_slactive.021.6110.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.48_bone_level_titanium_slactive.021.6110"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 28,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6112.png",
+                    "id": 132,
+                    "length": 0.0122,
+                    "name": "021.6112",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.48_bone_level_titanium_slactive.021.6112.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.48_bone_level_titanium_slactive.021.6112"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 28,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6114.png",
+                    "id": 133,
+                    "length": 0.0142,
+                    "name": "021.6114",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_slactive_implant.48_bone_level_titanium_slactive.021.6114.stl",
+                    "type": "straumann.bone_level_titanium_slactive_implant.48_bone_level_titanium_slactive.021.6114"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 8,
+                "type": "straumann.bone_level_titanium_slactive_implant.48_bone_level_titanium_slactive"
+              }
+            ],
+            "name": "Bone Level Titanium SLActive",
+            "type": "straumann.bone_level_titanium_slactive_implant"
+          },
+          {
+            "brand_id": 1,
+            "id": 9,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2408.png",
+                "id": 29,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"8.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 29,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2408.png",
+                    "id": 134,
+                    "length": 0.0081,
+                    "name": "021.2408",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.33_bone_level_titanium_sla_loxim.021.2408.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.33_bone_level_titanium_sla_loxim.021.2408"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 29,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2410.png",
+                    "id": 135,
+                    "length": 0.0101,
+                    "name": "021.2410",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.33_bone_level_titanium_sla_loxim.021.2410.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.33_bone_level_titanium_sla_loxim.021.2410"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 29,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2412.png",
+                    "id": 136,
+                    "length": 0.0121,
+                    "name": "021.2412",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.33_bone_level_titanium_sla_loxim.021.2412.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.33_bone_level_titanium_sla_loxim.021.2412"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.10mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.10mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 29,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.2414.png",
+                    "id": 137,
+                    "length": 0.0141,
+                    "name": "021.2414",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.33_bone_level_titanium_sla_loxim.021.2414.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.33_bone_level_titanium_sla_loxim.021.2414"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 9,
+                "type": "straumann.bone_level_titanium_sla_loxim_implant.33_bone_level_titanium_sla_loxim"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4408.png",
+                "id": 30,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 30,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4408.png",
+                    "id": 138,
+                    "length": 0.0082,
+                    "name": "021.4408",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.41_bone_level_titanium_sla_loxim.021.4408.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.41_bone_level_titanium_sla_loxim.021.4408"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 30,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4410.png",
+                    "id": 139,
+                    "length": 0.0102,
+                    "name": "021.4410",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.41_bone_level_titanium_sla_loxim.021.4410.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.41_bone_level_titanium_sla_loxim.021.4410"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 30,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4412.png",
+                    "id": 140,
+                    "length": 0.0122,
+                    "name": "021.4412",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.41_bone_level_titanium_sla_loxim.021.4412.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.41_bone_level_titanium_sla_loxim.021.4412"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 30,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.4414.png",
+                    "id": 141,
+                    "length": 0.0142,
+                    "name": "021.4414",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.41_bone_level_titanium_sla_loxim.021.4414.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.41_bone_level_titanium_sla_loxim.021.4414"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 9,
+                "type": "straumann.bone_level_titanium_sla_loxim_implant.41_bone_level_titanium_sla_loxim"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6408.png",
+                "id": 31,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 31,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6408.png",
+                    "id": 142,
+                    "length": 0.0082,
+                    "name": "021.6408",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.48_bone_level_titanium_sla_loxim.021.6408.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.48_bone_level_titanium_sla_loxim.021.6408"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 31,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6410.png",
+                    "id": 143,
+                    "length": 0.0102,
+                    "name": "021.6410",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.48_bone_level_titanium_sla_loxim.021.6410.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.48_bone_level_titanium_sla_loxim.021.6410"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 31,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6412.png",
+                    "id": 144,
+                    "length": 0.0122,
+                    "name": "021.6412",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.48_bone_level_titanium_sla_loxim.021.6412.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.48_bone_level_titanium_sla_loxim.021.6412"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"0.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 31,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/021.6414.png",
+                    "id": 145,
+                    "length": 0.0142,
+                    "name": "021.6414",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.bone_level_titanium_sla_loxim_implant.48_bone_level_titanium_sla_loxim.021.6414.stl",
+                    "type": "straumann.bone_level_titanium_sla_loxim_implant.48_bone_level_titanium_sla_loxim.021.6414"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 9,
+                "type": "straumann.bone_level_titanium_sla_loxim_implant.48_bone_level_titanium_sla_loxim"
+              }
+            ],
+            "name": "Bone Level Titanium SLA Loxim",
+            "type": "straumann.bone_level_titanium_sla_loxim_implant"
+          },
+          {
+            "brand_id": 1,
+            "id": 10,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.255S.png",
+                "id": 32,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 32,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.255S.png",
+                    "id": 146,
+                    "length": 0.0113,
+                    "name": "043.255S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_yg.043.255S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.33_standard_rn_yg.043.255S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 32,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.256S.png",
+                    "id": 147,
+                    "length": 0.0133,
+                    "name": "043.256S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_yg.043.256S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.33_standard_rn_yg.043.256S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 32,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.257S.png",
+                    "id": 148,
+                    "length": 0.0153,
+                    "name": "043.257S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_yg.043.257S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.33_standard_rn_yg.043.257S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"17.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 32,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.258S.png",
+                    "id": 149,
+                    "length": 0.0173,
+                    "name": "043.258S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_yg.043.258S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.33_standard_rn_yg.043.258S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"19.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ3.3mm x 16.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 32,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.259S.png",
+                    "id": 150,
+                    "length": 0.0193,
+                    "name": "043.259S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_yg.043.259S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.33_standard_rn_yg.043.259S"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 10,
+                "type": "straumann.standard_roxolid_sla_impalnt.33_standard_rn_yg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.155S.png",
+                "id": 33,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"9.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.1mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 33,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.155S.png",
+                    "id": 151,
+                    "length": 0.0093,
+                    "name": "043.155S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_yg.043.155S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.41_standard_rn_yg.043.155S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 33,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.156S.png",
+                    "id": 152,
+                    "length": 0.0113,
+                    "name": "043.156S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_yg.043.156S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.41_standard_rn_yg.043.156S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 33,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.157S.png",
+                    "id": 153,
+                    "length": 0.0133,
+                    "name": "043.157S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_yg.043.157S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.41_standard_rn_yg.043.157S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 33,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.158S.png",
+                    "id": 154,
+                    "length": 0.0153,
+                    "name": "043.158S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_yg.043.158S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.41_standard_rn_yg.043.158S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"17.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 33,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.159S.png",
+                    "id": 155,
+                    "length": 0.0173,
+                    "name": "043.159S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_yg.043.159S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.41_standard_rn_yg.043.159S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"19.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ4.1mm x 16.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 33,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.160S.png",
+                    "id": 156,
+                    "length": 0.0193,
+                    "name": "043.160S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_yg.043.160S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.41_standard_rn_yg.043.160S"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 10,
+                "type": "straumann.standard_roxolid_sla_impalnt.41_standard_rn_yg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.061S.png",
+                "id": 34,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"9.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 34,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.061S.png",
+                    "id": 157,
+                    "length": 0.0093,
+                    "name": "043.061S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_yg.043.061S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.48_standard_rn_yg.043.061S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 34,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.062S.png",
+                    "id": 158,
+                    "length": 0.0113,
+                    "name": "043.062S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_yg.043.062S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.48_standard_rn_yg.043.062S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 34,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.063S.png",
+                    "id": 159,
+                    "length": 0.0133,
+                    "name": "043.063S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_yg.043.063S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.48_standard_rn_yg.043.063S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 34,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.064S.png",
+                    "id": 160,
+                    "length": 0.0153,
+                    "name": "043.064S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_yg.043.064S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.48_standard_rn_yg.043.064S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"17.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 34,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.065S.png",
+                    "id": 161,
+                    "length": 0.0173,
+                    "name": "043.065S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_yg.043.065S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.48_standard_rn_yg.043.065S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"9.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 34,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.606S.png",
+                    "id": 162,
+                    "length": 0.0093,
+                    "name": "043.606S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_yg.043.606S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.48_standard_rn_yg.043.606S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 34,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.607S.png",
+                    "id": 163,
+                    "length": 0.0113,
+                    "name": "043.607S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_yg.043.607S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.48_standard_rn_yg.043.607S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 34,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.608S.png",
+                    "id": 164,
+                    "length": 0.0133,
+                    "name": "043.608S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_yg.043.608S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.48_standard_rn_yg.043.608S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 34,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.609S.png",
+                    "id": 165,
+                    "length": 0.0153,
+                    "name": "043.609S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_yg.043.609S.stl",
+                    "type": "straumann.standard_roxolid_sla_impalnt.48_standard_rn_yg.043.609S"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 10,
+                "type": "straumann.standard_roxolid_sla_impalnt.48_standard_rn_yg"
+              }
+            ],
+            "name": "Standard Roxolid SLA",
+            "type": "straumann.standard_roxolid_sla_impalnt"
+          },
+          {
+            "brand_id": 1,
+            "id": 11,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.501S.png",
+                "id": 35,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 35,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.501S.png",
+                    "id": 166,
+                    "length": 0.0113,
+                    "name": "033.501S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_rg.033.501S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.33_standard_rn_rg.033.501S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 35,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.502S.png",
+                    "id": 167,
+                    "length": 0.0133,
+                    "name": "033.502S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_rg.033.502S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.33_standard_rn_rg.033.502S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 35,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.503S.png",
+                    "id": 168,
+                    "length": 0.0153,
+                    "name": "033.503S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_rg.033.503S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.33_standard_rn_rg.033.503S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"17.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 35,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.504S.png",
+                    "id": 169,
+                    "length": 0.0173,
+                    "name": "033.504S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_rg.033.504S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.33_standard_rn_rg.033.504S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"19.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ3.3mm x 16.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 35,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.505S.png",
+                    "id": 170,
+                    "length": 0.0193,
+                    "name": "033.505S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_rg.033.505S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.33_standard_rn_rg.033.505S"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 11,
+                "type": "straumann.standard_roxolid_slactive_implant.33_standard_rn_rg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.530S.png",
+                "id": 36,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"9.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.1mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 36,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.530S.png",
+                    "id": 171,
+                    "length": 0.0093,
+                    "name": "033.530S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_rg.033.530S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.41_standard_rn_rg.033.530S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 36,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.531S.png",
+                    "id": 172,
+                    "length": 0.0113,
+                    "name": "033.531S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_rg.033.531S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.41_standard_rn_rg.033.531S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 36,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.532S.png",
+                    "id": 173,
+                    "length": 0.0133,
+                    "name": "033.532S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_rg.033.532S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.41_standard_rn_rg.033.532S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 36,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.533S.png",
+                    "id": 174,
+                    "length": 0.0153,
+                    "name": "033.533S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_rg.033.533S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.41_standard_rn_rg.033.533S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"17.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 36,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.534S.png",
+                    "id": 175,
+                    "length": 0.0173,
+                    "name": "033.534S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_rg.033.534S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.41_standard_rn_rg.033.534S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"19.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ4.1mm x 16.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 36,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.535S.png",
+                    "id": 176,
+                    "length": 0.0193,
+                    "name": "033.535S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_rg.033.535S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.41_standard_rn_rg.033.535S"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 11,
+                "type": "straumann.standard_roxolid_slactive_implant.41_standard_rn_rg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.580S.png",
+                "id": 37,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"9.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 37,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.580S.png",
+                    "id": 177,
+                    "length": 0.0093,
+                    "name": "033.580S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_rg.033.580S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.48_standard_rn_rg.033.580S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 37,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.581S.png",
+                    "id": 178,
+                    "length": 0.0113,
+                    "name": "033.581S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_rg.033.581S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.48_standard_rn_rg.033.581S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 37,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.582S.png",
+                    "id": 179,
+                    "length": 0.0133,
+                    "name": "033.582S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_rg.033.582S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.48_standard_rn_rg.033.582S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 37,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.583S.png",
+                    "id": 180,
+                    "length": 0.0153,
+                    "name": "033.583S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_rg.033.583S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.48_standard_rn_rg.033.583S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"17.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 37,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.584S.png",
+                    "id": 181,
+                    "length": 0.0173,
+                    "name": "033.584S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_rg.033.584S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.48_standard_rn_rg.033.584S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"9.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 37,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.600S.png",
+                    "id": 182,
+                    "length": 0.0093,
+                    "name": "033.600S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_rg.033.600S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.48_standard_rn_rg.033.600S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 37,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.601S.png",
+                    "id": 183,
+                    "length": 0.0113,
+                    "name": "033.601S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_rg.033.601S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.48_standard_rn_rg.033.601S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 37,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.602S.png",
+                    "id": 184,
+                    "length": 0.0133,
+                    "name": "033.602S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_rg.033.602S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.48_standard_rn_rg.033.602S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 37,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.603S.png",
+                    "id": 185,
+                    "length": 0.0153,
+                    "name": "033.603S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_rg.033.603S.stl",
+                    "type": "straumann.standard_roxolid_slactive_implant.48_standard_rn_rg.033.603S"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 11,
+                "type": "straumann.standard_roxolid_slactive_implant.48_standard_rn_rg"
+              }
+            ],
+            "name": "Standard Roxolid SLActive",
+            "type": "straumann.standard_roxolid_slactive_implant"
+          },
+          {
+            "brand_id": 1,
+            "id": 12,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.906S.png",
+                "id": 38,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 38,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.906S.png",
+                    "id": 186,
+                    "length": 0.0113,
+                    "name": "043.906S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_sla.043.906S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.33_standard_rn_sla.043.906S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 38,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.907S.png",
+                    "id": 187,
+                    "length": 0.0133,
+                    "name": "043.907S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_sla.043.907S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.33_standard_rn_sla.043.907S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 38,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.908S.png",
+                    "id": 188,
+                    "length": 0.0153,
+                    "name": "043.908S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_sla.043.908S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.33_standard_rn_sla.043.908S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"17.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 38,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.909S.png",
+                    "id": 189,
+                    "length": 0.0173,
+                    "name": "043.909S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_sla.043.909S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.33_standard_rn_sla.043.909S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"19.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ3.3mm x 16.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 38,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.910S.png",
+                    "id": 190,
+                    "length": 0.0193,
+                    "name": "043.910S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_standard_rn_sla.043.910S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.33_standard_rn_sla.043.910S"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 12,
+                "type": "straumann.standard_titanium_sla_loxim_implant.33_standard_rn_sla"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.919S.png",
+                "id": 39,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"9.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.1mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 39,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.919S.png",
+                    "id": 191,
+                    "length": 0.0093,
+                    "name": "043.919S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_sla.043.919S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.41_standard_rn_sla.043.919S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 39,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.920S.png",
+                    "id": 192,
+                    "length": 0.0113,
+                    "name": "043.920S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_sla.043.920S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.41_standard_rn_sla.043.920S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 39,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.921S.png",
+                    "id": 193,
+                    "length": 0.0133,
+                    "name": "043.921S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_sla.043.921S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.41_standard_rn_sla.043.921S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 39,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.922S.png",
+                    "id": 194,
+                    "length": 0.0153,
+                    "name": "043.922S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_sla.043.922S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.41_standard_rn_sla.043.922S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"17.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 39,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.923S.png",
+                    "id": 195,
+                    "length": 0.0173,
+                    "name": "043.923S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_sla.043.923S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.41_standard_rn_sla.043.923S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"19.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"16.00mm\",\"规格\":\"Φ4.1mm x 16.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 39,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.924S.png",
+                    "id": 196,
+                    "length": 0.0193,
+                    "name": "043.924S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_standard_rn_sla.043.924S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.41_standard_rn_sla.043.924S"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 12,
+                "type": "straumann.standard_titanium_sla_loxim_implant.41_standard_rn_sla"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.934S.png",
+                "id": 40,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"9.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 40,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.934S.png",
+                    "id": 197,
+                    "length": 0.0093,
+                    "name": "043.934S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_sla.043.934S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.48_standard_rn_sla.043.934S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 40,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.935S.png",
+                    "id": 198,
+                    "length": 0.0113,
+                    "name": "043.935S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_sla.043.935S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.48_standard_rn_sla.043.935S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 40,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.936S.png",
+                    "id": 199,
+                    "length": 0.0133,
+                    "name": "043.936S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_sla.043.936S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.48_standard_rn_sla.043.936S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 40,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.937S.png",
+                    "id": 200,
+                    "length": 0.0153,
+                    "name": "043.937S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_sla.043.937S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.48_standard_rn_sla.043.937S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"17.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 40,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.938S.png",
+                    "id": 201,
+                    "length": 0.0173,
+                    "name": "043.938S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_sla.043.938S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.48_standard_rn_sla.043.938S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"9.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 40,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.944S.png",
+                    "id": 202,
+                    "length": 0.0093,
+                    "name": "043.944S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_sla.043.944S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.48_standard_rn_sla.043.944S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"11.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 40,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.945S.png",
+                    "id": 203,
+                    "length": 0.0113,
+                    "name": "043.945S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_sla.043.945S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.48_standard_rn_sla.043.945S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"13.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 40,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.946S.png",
+                    "id": 204,
+                    "length": 0.0133,
+                    "name": "043.946S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_sla.043.946S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.48_standard_rn_sla.043.946S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"15.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"3.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 40,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.947S.png",
+                    "id": 205,
+                    "length": 0.0153,
+                    "name": "043.947S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_standard_rn_sla.043.947S.stl",
+                    "type": "straumann.standard_titanium_sla_loxim_implant.48_standard_rn_sla.043.947S"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 12,
+                "type": "straumann.standard_titanium_sla_loxim_implant.48_standard_rn_sla"
+              }
+            ],
+            "name": "Standard Titanium SLA Loxim",
+            "type": "straumann.standard_titanium_sla_loxim_implant"
+          },
+          {
+            "brand_id": 1,
+            "id": 13,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.260S.png",
+                "id": 41,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 41,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.260S.png",
+                    "id": 206,
+                    "length": 0.0103,
+                    "name": "043.260S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_yg.043.260S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.33_aesthetics_rn_yg.043.260S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 41,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.261S.png",
+                    "id": 207,
+                    "length": 0.0123,
+                    "name": "043.261S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_yg.043.261S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.33_aesthetics_rn_yg.043.261S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 41,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.262S.png",
+                    "id": 208,
+                    "length": 0.0143,
+                    "name": "043.262S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_yg.043.262S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.33_aesthetics_rn_yg.043.262S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"16.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 41,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.263S.png",
+                    "id": 209,
+                    "length": 0.0163,
+                    "name": "043.263S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_yg.043.263S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.33_aesthetics_rn_yg.043.263S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 41,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.416S.png",
+                    "id": 210,
+                    "length": 0.0102,
+                    "name": "043.416S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_yg.043.416S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.33_aesthetics_rn_yg.043.416S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 41,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.417S.png",
+                    "id": 211,
+                    "length": 0.0122,
+                    "name": "043.417S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_yg.043.417S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.33_aesthetics_rn_yg.043.417S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 41,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.418S.png",
+                    "id": 212,
+                    "length": 0.0142,
+                    "name": "043.418S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_yg.043.418S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.33_aesthetics_rn_yg.043.418S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"16.20mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 41,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.419S.png",
+                    "id": 213,
+                    "length": 0.0162,
+                    "name": "043.419S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_yg.043.419S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.33_aesthetics_rn_yg.043.419S"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 13,
+                "type": "straumann.standard_plus_roxolid_sla_implant.33_aesthetics_rn_yg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.161S.png",
+                "id": 42,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.1mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 42,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.161S.png",
+                    "id": 214,
+                    "length": 0.0083,
+                    "name": "043.161S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_aesthetics_rn_yg.043.161S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.41_aesthetics_rn_yg.043.161S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 42,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.162S.png",
+                    "id": 215,
+                    "length": 0.0103,
+                    "name": "043.162S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_aesthetics_rn_yg.043.162S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.41_aesthetics_rn_yg.043.162S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 42,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.163S.png",
+                    "id": 216,
+                    "length": 0.0123,
+                    "name": "043.163S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_aesthetics_rn_yg.043.163S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.41_aesthetics_rn_yg.043.163S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 42,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.164S.png",
+                    "id": 217,
+                    "length": 0.0143,
+                    "name": "043.164S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_aesthetics_rn_yg.043.164S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.41_aesthetics_rn_yg.043.164S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"16.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 42,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.165S.png",
+                    "id": 218,
+                    "length": 0.0163,
+                    "name": "043.165S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_aesthetics_rn_yg.043.165S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.41_aesthetics_rn_yg.043.165S"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 13,
+                "type": "straumann.standard_plus_roxolid_sla_implant.41_aesthetics_rn_yg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.066S.png",
+                "id": 43,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 43,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.066S.png",
+                    "id": 219,
+                    "length": 0.0083,
+                    "name": "043.066S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_yg.043.066S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.48_aesthetics_rn_yg.043.066S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 43,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.067S.png",
+                    "id": 220,
+                    "length": 0.0103,
+                    "name": "043.067S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_yg.043.067S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.48_aesthetics_rn_yg.043.067S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 43,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.068S.png",
+                    "id": 221,
+                    "length": 0.0123,
+                    "name": "043.068S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_yg.043.068S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.48_aesthetics_rn_yg.043.068S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 43,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.069S.png",
+                    "id": 222,
+                    "length": 0.0143,
+                    "name": "043.069S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_yg.043.069S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.48_aesthetics_rn_yg.043.069S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"16.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 43,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.070S.png",
+                    "id": 223,
+                    "length": 0.0163,
+                    "name": "043.070S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_yg.043.070S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.48_aesthetics_rn_yg.043.070S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 43,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.655S.png",
+                    "id": 224,
+                    "length": 0.0083,
+                    "name": "043.655S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_yg.043.655S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.48_aesthetics_rn_yg.043.655S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 43,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.656S.png",
+                    "id": 225,
+                    "length": 0.0103,
+                    "name": "043.656S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_yg.043.656S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.48_aesthetics_rn_yg.043.656S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 43,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.657S.png",
+                    "id": 226,
+                    "length": 0.0123,
+                    "name": "043.657S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_yg.043.657S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.48_aesthetics_rn_yg.043.657S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 43,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.658S.png",
+                    "id": 227,
+                    "length": 0.0143,
+                    "name": "043.658S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_yg.043.658S.stl",
+                    "type": "straumann.standard_plus_roxolid_sla_implant.48_aesthetics_rn_yg.043.658S"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 13,
+                "type": "straumann.standard_plus_roxolid_sla_implant.48_aesthetics_rn_yg"
+              }
+            ],
+            "name": "Standard Plus Roxolid SLA",
+            "type": "straumann.standard_plus_roxolid_sla_implant",
+            "version": 1
+          },
+          {
+            "brand_id": 1,
+            "id": 14,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.416S.png",
+                "id": 44,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.20mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.20mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 44,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.416S.png",
+                    "id": 228,
+                    "length": 0.0102,
+                    "name": "033.416S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.33_aesthetics_nnc_rg.033.416S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.20mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.20mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 44,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.417S.png",
+                    "id": 229,
+                    "length": 0.0122,
+                    "name": "033.417S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.33_aesthetics_nnc_rg.033.417S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.20mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.20mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 44,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.418S.png",
+                    "id": 230,
+                    "length": 0.0142,
+                    "name": "033.418S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.33_aesthetics_nnc_rg.033.418S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"16.20mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.20mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 44,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.419S.png",
+                    "id": 231,
+                    "length": 0.0162,
+                    "name": "033.419S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.33_aesthetics_nnc_rg.033.419S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 44,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.511S.png",
+                    "id": 232,
+                    "length": 0.0103,
+                    "name": "033.511S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.33_aesthetics_nnc_rg.033.511S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 44,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.512S.png",
+                    "id": 233,
+                    "length": 0.0123,
+                    "name": "033.512S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.33_aesthetics_nnc_rg.033.512S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 44,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.513S.png",
+                    "id": 234,
+                    "length": 0.0143,
+                    "name": "033.513S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.33_aesthetics_nnc_rg.033.513S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"16.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 44,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.514S.png",
+                    "id": 235,
+                    "length": 0.0163,
+                    "name": "033.514S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.33_aesthetics_nnc_rg.033.514S"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 14,
+                "type": "straumann.standard_plus_roxolid_slactive_implant.33_aesthetics_nnc_rg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.560S.png",
+                "id": 45,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.1mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 45,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.560S.png",
+                    "id": 236,
+                    "length": 0.0083,
+                    "name": "033.560S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.41_aesthetics_rn_rg.033.560S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 45,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.561S.png",
+                    "id": 237,
+                    "length": 0.0103,
+                    "name": "033.561S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.41_aesthetics_rn_rg.033.561S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 45,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.562S.png",
+                    "id": 238,
+                    "length": 0.0123,
+                    "name": "033.562S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.41_aesthetics_rn_rg.033.562S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 45,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.563S.png",
+                    "id": 239,
+                    "length": 0.0143,
+                    "name": "033.563S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.41_aesthetics_rn_rg.033.563S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"16.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 45,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.564S.png",
+                    "id": 240,
+                    "length": 0.0163,
+                    "name": "033.564S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.41_aesthetics_rn_rg.033.564S"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 14,
+                "type": "straumann.standard_plus_roxolid_slactive_implant.41_aesthetics_rn_rg"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.590S.png",
+                "id": 46,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 46,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.590S.png",
+                    "id": 241,
+                    "length": 0.0083,
+                    "name": "033.590S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.48_aesthetics_rn_rg.033.590S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 46,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.591S.png",
+                    "id": 242,
+                    "length": 0.0103,
+                    "name": "033.591S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.48_aesthetics_rn_rg.033.591S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 46,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.592S.png",
+                    "id": 243,
+                    "length": 0.0123,
+                    "name": "033.592S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.48_aesthetics_rn_rg.033.592S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 46,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.593S.png",
+                    "id": 244,
+                    "length": 0.0143,
+                    "name": "033.593S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.48_aesthetics_rn_rg.033.593S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"16.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 46,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.594S.png",
+                    "id": 245,
+                    "length": 0.0163,
+                    "name": "033.594S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.48_aesthetics_rn_rg.033.594S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 46,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.610S.png",
+                    "id": 246,
+                    "length": 0.0083,
+                    "name": "033.610S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.48_aesthetics_rn_rg.033.610S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 46,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.611S.png",
+                    "id": 247,
+                    "length": 0.0103,
+                    "name": "033.611S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.48_aesthetics_rn_rg.033.611S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 46,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.612S.png",
+                    "id": 248,
+                    "length": 0.0123,
+                    "name": "033.612S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.48_aesthetics_rn_rg.033.612S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 46,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/033.613S.png",
+                    "id": 249,
+                    "length": 0.0143,
+                    "name": "033.613S",
+                    "type": "straumann.standard_plus_roxolid_slactive_implant.48_aesthetics_rn_rg.033.613S"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 14,
+                "type": "straumann.standard_plus_roxolid_slactive_implant.48_aesthetics_rn_rg"
+              }
+            ],
+            "name": "Standard Plus Roxolid SLActive",
+            "type": "straumann.standard_plus_roxolid_slactive_implant"
+          },
+          {
+            "brand_id": 1,
+            "id": 15,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.911S.png",
+                "id": 47,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ3.3mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 47,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.911S.png",
+                    "id": 250,
+                    "length": 0.0103,
+                    "name": "043.911S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_sla.043.911S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.33_aesthetics_rn_sla.043.911S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ3.3mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 47,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.912S.png",
+                    "id": 251,
+                    "length": 0.0123,
+                    "name": "043.912S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_sla.043.912S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.33_aesthetics_rn_sla.043.912S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.3mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 47,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.913S.png",
+                    "id": 252,
+                    "length": 0.0143,
+                    "name": "043.913S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_sla.043.913S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.33_aesthetics_rn_sla.043.913S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.30mm\",\"总长度\":\"16.30mm\",\"根尖直径\":\"2.80mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.3mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 47,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.914S.png",
+                    "id": 253,
+                    "length": 0.0163,
+                    "name": "043.914S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.33_aesthetics_rn_sla.043.914S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.33_aesthetics_rn_sla.043.914S"
+                  }
+                ],
+                "name": "Φ3.3mm 直径",
+                "system_id": 15,
+                "type": "straumann.standard_plus_titanium_sla_loxim_implant.33_aesthetics_rn_sla"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.925S.png",
+                "id": 48,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"8.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.1mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 48,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.925S.png",
+                    "id": 254,
+                    "length": 0.0083,
+                    "name": "043.925S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_aesthetics_rn_sla.043.925S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.41_aesthetics_rn_sla.043.925S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.1mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 48,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.926S.png",
+                    "id": 255,
+                    "length": 0.0103,
+                    "name": "043.926S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_aesthetics_rn_sla.043.926S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.41_aesthetics_rn_sla.043.926S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.1mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 48,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.927S.png",
+                    "id": 256,
+                    "length": 0.0123,
+                    "name": "043.927S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_aesthetics_rn_sla.043.927S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.41_aesthetics_rn_sla.043.927S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.1mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 48,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.928S.png",
+                    "id": 257,
+                    "length": 0.0143,
+                    "name": "043.928S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_aesthetics_rn_sla.043.928S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.41_aesthetics_rn_sla.043.928S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.10mm\",\"总长度\":\"16.30mm\",\"根尖直径\":\"3.50mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.1mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 48,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.929S.png",
+                    "id": 258,
+                    "length": 0.0163,
+                    "name": "043.929S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.41_aesthetics_rn_sla.043.929S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.41_aesthetics_rn_sla.043.929S"
+                  }
+                ],
+                "name": "Φ4.1mm 直径",
+                "system_id": 15,
+                "type": "straumann.standard_plus_titanium_sla_loxim_implant.41_aesthetics_rn_sla"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.939S.png",
+                "id": 49,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 49,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.939S.png",
+                    "id": 259,
+                    "length": 0.0083,
+                    "name": "043.939S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_sla.043.939S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.48_aesthetics_rn_sla.043.939S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 49,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.940S.png",
+                    "id": 260,
+                    "length": 0.0103,
+                    "name": "043.940S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_sla.043.940S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.48_aesthetics_rn_sla.043.940S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 49,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.941S.png",
+                    "id": 261,
+                    "length": 0.0123,
+                    "name": "043.941S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_sla.043.941S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.48_aesthetics_rn_sla.043.941S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 49,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.942S.png",
+                    "id": 262,
+                    "length": 0.0143,
+                    "name": "043.942S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_sla.043.942S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.48_aesthetics_rn_sla.043.942S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"16.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"14.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.8mm x 14.00mm\"}",
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 49,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.943S.png",
+                    "id": 263,
+                    "length": 0.0163,
+                    "name": "043.943S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_sla.043.943S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.48_aesthetics_rn_sla.043.943S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 49,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.948S.png",
+                    "id": 264,
+                    "length": 0.0083,
+                    "name": "043.948S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_sla.043.948S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.48_aesthetics_rn_sla.043.948S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"10.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"8.00mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 49,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.949S.png",
+                    "id": 265,
+                    "length": 0.0103,
+                    "name": "043.949S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_sla.043.949S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.48_aesthetics_rn_sla.043.949S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"12.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"10.00mm\",\"规格\":\"Φ4.8mm x 10.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 49,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.950S.png",
+                    "id": 266,
+                    "length": 0.0123,
+                    "name": "043.950S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_sla.043.950S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.48_aesthetics_rn_sla.043.950S"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"14.30mm\",\"根尖直径\":\"4.20mm\",\"规格长度\":\"12.00mm\",\"领圈高度\":\"2.30mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.8mm x 12.00mm\"}",
+                    "diameter": 0.0065,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 49,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/043.951S.png",
+                    "id": 267,
+                    "length": 0.0143,
+                    "name": "043.951S",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/implant/straumann.soft_tissue.48_aesthetics_rn_sla.043.951S.stl",
+                    "type": "straumann.standard_plus_titanium_sla_loxim_implant.48_aesthetics_rn_sla.043.951S"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 15,
+                "type": "straumann.standard_plus_titanium_sla_loxim_implant.48_aesthetics_rn_sla"
+              }
+            ],
+            "name": "Standard Plus Titanium SLA Loxim",
+            "type": "straumann.standard_plus_titanium_sla_loxim_implant"
+          },
+          {
+            "brand_id": 1,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.ball_drill.png",
+                "id": 50,
+                "items": [
+                  {
+                    "diameter": 0.0014,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 50,
+                    "id": 268,
+                    "length": 0.034,
+                    "name": "ball drillΦ1.4",
+                    "offset": 0.0014,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.ball.ball_drill%CE%A61.4.stl",
+                    "type": "straumann.Standard_drill.ball.ball_drillΦ1.4"
+                  },
+                  {
+                    "diameter": 0.0023,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 50,
+                    "id": 269,
+                    "length": 0.034,
+                    "name": "ball drillΦ2.3",
+                    "offset": 0.0023,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.ball.ball_drill%CE%A62.3.stl",
+                    "type": "straumann.Standard_drill.ball.ball_drillΦ2.3"
+                  },
+                  {
+                    "diameter": 0.0031,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 50,
+                    "id": 270,
+                    "length": 0.034,
+                    "name": "ball drillΦ3.1",
+                    "offset": 0.0031,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.ball.ball_drill%CE%A63.1.stl",
+                    "type": "straumann.Standard_drill.ball.ball_drillΦ3.1"
+                  }
+                ],
+                "name": "球钻",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.ball"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.BLT_expanding_drill.png",
+                "id": 53,
+                "items": [
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 53,
+                    "id": 277,
+                    "length": 0.033,
+                    "name": "BLT expanding drillΦ2.8L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.expansion.BLT_expanding_drill%CE%A62.8L33.stl",
+                    "type": "straumann.Standard_drill.expansion.BLT_expanding_drillΦ2.8L33"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 53,
+                    "id": 278,
+                    "length": 0.041,
+                    "name": "BLT expanding drillΦ2.8L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.expansion.BLT_expanding_drill%CE%A62.8L41.stl",
+                    "type": "straumann.Standard_drill.expansion.BLT_expanding_drillΦ2.8L41"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 53,
+                    "id": 279,
+                    "length": 0.033,
+                    "name": "BLT expanding drillΦ3.5L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.expansion.BLT_expanding_drill%CE%A63.5L33.stl",
+                    "type": "straumann.Standard_drill.expansion.BLT_expanding_drillΦ3.5L33"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 53,
+                    "id": 280,
+                    "length": 0.041,
+                    "name": "BLT expanding drillΦ3.5L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.expansion.BLT_expanding_drill%CE%A63.5L41.stl",
+                    "type": "straumann.Standard_drill.expansion.BLT_expanding_drillΦ3.5L41"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 53,
+                    "id": 281,
+                    "length": 0.033,
+                    "name": "BLT expanding drillΦ4.2L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.expansion.BLT_expanding_drill%CE%A64.2L33.stl",
+                    "type": "straumann.Standard_drill.expansion.BLT_expanding_drillΦ4.2L33"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 53,
+                    "id": 282,
+                    "length": 0.041,
+                    "name": "BLT expanding drillΦ4.2L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.expansion.BLT_expanding_drill%CE%A64.2L41.stl",
+                    "type": "straumann.Standard_drill.expansion.BLT_expanding_drillΦ4.2L41"
+                  }
+                ],
+                "name": "扩孔钻 BLT",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.expansion"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.expanding_drill.png",
+                "id": 54,
+                "items": [
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 54,
+                    "id": 283,
+                    "length": 0.033,
+                    "name": "expanding drillΦ3.5L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.expansion.expanding_drill%CE%A63.5L33.stl",
+                    "type": "straumann.Standard_drill.expansion.__dup2.expanding_drillΦ3.5L33"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 54,
+                    "id": 284,
+                    "length": 0.041,
+                    "name": "expanding drillΦ3.5L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.expansion.expanding_drill%CE%A63.5L41.stl",
+                    "type": "straumann.Standard_drill.expansion.__dup2.expanding_drillΦ3.5L41"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 54,
+                    "id": 285,
+                    "length": 0.033,
+                    "name": "expanding drillΦ4.2L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.expansion.expanding_drill%CE%A64.2L33.stl",
+                    "type": "straumann.Standard_drill.expansion.__dup2.expanding_drillΦ4.2L33"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 54,
+                    "id": 286,
+                    "length": 0.041,
+                    "name": "expanding drillΦ4.2L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.expansion.expanding_drill%CE%A64.2L41.stl",
+                    "type": "straumann.Standard_drill.expansion.__dup2.expanding_drillΦ4.2L41"
+                  }
+                ],
+                "name": "扩孔钻",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.expansion.__dup2"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.S-SP_Molding_drill.png",
+                "id": 55,
+                "items": [
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 55,
+                    "id": 287,
+                    "length": 0.025,
+                    "name": "S-SP Molding drillΦ3.3L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.S-SP_Molding_drill%CE%A63.3L25.stl",
+                    "type": "straumann.Standard_drill.molding.S-SP_Molding_drillΦ3.3L25"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 55,
+                    "id": 288,
+                    "length": 0.034,
+                    "name": "S-SP Molding drillΦ3.3L34",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.S-SP_Molding_drill%CE%A63.3L34.stl",
+                    "type": "straumann.Standard_drill.molding.S-SP_Molding_drillΦ3.3L34"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 55,
+                    "id": 289,
+                    "length": 0.024,
+                    "name": "S-SP Molding drillΦ4.1L24",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.S-SP_Molding_drill%CE%A64.1L24.stl",
+                    "type": "straumann.Standard_drill.molding.S-SP_Molding_drillΦ4.1L24"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 55,
+                    "id": 290,
+                    "length": 0.033,
+                    "name": "S-SP Molding drillΦ4.1L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.S-SP_Molding_drill%CE%A64.1L33.stl",
+                    "type": "straumann.Standard_drill.molding.S-SP_Molding_drillΦ4.1L33"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 55,
+                    "id": 291,
+                    "length": 0.024,
+                    "name": "S-SP Molding drillΦ4.8L24",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.S-SP_Molding_drill%CE%A64.8L24.stl",
+                    "type": "straumann.Standard_drill.molding.S-SP_Molding_drillΦ4.8L24"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 55,
+                    "id": 292,
+                    "length": 0.033,
+                    "name": "S-SP Molding drillΦ4.8L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.S-SP_Molding_drill%CE%A64.8L33.stl",
+                    "type": "straumann.Standard_drill.molding.S-SP_Molding_drillΦ4.8L33"
+                  }
+                ],
+                "name": "颈部成型钻 S-SP",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.molding"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.BL_Molding_drill.png",
+                "id": 56,
+                "items": [
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 56,
+                    "id": 293,
+                    "length": 0.025,
+                    "name": "TE Molding drillΦ3.3L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.TE_Molding_drill%CE%A63.3L25.stl",
+                    "type": "straumann.Standard_drill.molding.__dup2.TE_Molding_drillΦ3.3L25"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 56,
+                    "id": 294,
+                    "length": 0.034,
+                    "name": "TE Molding drillΦ3.3L34",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.TE_Molding_drill%CE%A63.3L34.stl",
+                    "type": "straumann.Standard_drill.molding.__dup2.TE_Molding_drillΦ3.3L34"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 56,
+                    "id": 295,
+                    "length": 0.025,
+                    "name": "TE Molding drillΦ4.1L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.TE_Molding_drill%CE%A64.1L25.stl",
+                    "type": "straumann.Standard_drill.molding.__dup2.TE_Molding_drillΦ4.1L25"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 56,
+                    "id": 296,
+                    "length": 0.034,
+                    "name": "TE Molding drillΦ4.1L34",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.TE_Molding_drill%CE%A64.1L34.stl",
+                    "type": "straumann.Standard_drill.molding.__dup2.TE_Molding_drillΦ4.1L34"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 56,
+                    "id": 297,
+                    "length": 0.025,
+                    "name": "TE Molding drillΦ4.8L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.TE_Molding_drill%CE%A64.8L25.stl",
+                    "type": "straumann.Standard_drill.molding.__dup2.TE_Molding_drillΦ4.8L25"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 56,
+                    "id": 298,
+                    "length": 0.034,
+                    "name": "TE Molding drillΦ4.8L34",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.TE_Molding_drill%CE%A64.8L34.stl",
+                    "type": "straumann.Standard_drill.molding.__dup2.TE_Molding_drillΦ4.8L34"
+                  }
+                ],
+                "name": "颈部成型钻 TE",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.molding.__dup2"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.BL_Molding_drill.png",
+                "id": 57,
+                "items": [
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 57,
+                    "id": 299,
+                    "length": 0.026,
+                    "name": "BL Molding drillΦ3.3L26",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BL_Molding_drill%CE%A63.3L26.stl",
+                    "type": "straumann.Standard_drill.molding.__dup3.BL_Molding_drillΦ3.3L26"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 57,
+                    "id": 300,
+                    "length": 0.035,
+                    "name": "BL Molding drillΦ3.3L35",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BL_Molding_drill%CE%A63.3L35.stl",
+                    "type": "straumann.Standard_drill.molding.__dup3.BL_Molding_drillΦ3.3L35"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 57,
+                    "id": 301,
+                    "length": 0.026,
+                    "name": "BL Molding drillΦ4.1L26",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BL_Molding_drill%CE%A64.1L26.stl",
+                    "type": "straumann.Standard_drill.molding.__dup3.BL_Molding_drillΦ4.1L26"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 57,
+                    "id": 302,
+                    "length": 0.035,
+                    "name": "BL Molding drillΦ4.1L35",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BL_Molding_drill%CE%A64.1L35.stl",
+                    "type": "straumann.Standard_drill.molding.__dup3.BL_Molding_drillΦ4.1L35"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 57,
+                    "id": 303,
+                    "length": 0.026,
+                    "name": "BL Molding drillΦ4.8L26",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BL_Molding_drill%CE%A64.8L26.stl",
+                    "type": "straumann.Standard_drill.molding.__dup3.BL_Molding_drillΦ4.8L26"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 57,
+                    "id": 304,
+                    "length": 0.035,
+                    "name": "BL Molding drillΦ4.8L35",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BL_Molding_drill%CE%A64.8L35.stl",
+                    "type": "straumann.Standard_drill.molding.__dup3.BL_Molding_drillΦ4.8L35"
+                  }
+                ],
+                "name": "颈部成型钻 BL",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.molding.__dup3"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.BLT_Molding_drill.png",
+                "id": 58,
+                "items": [
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 58,
+                    "id": 305,
+                    "length": 0.025,
+                    "name": "BLT Molding drillΦ3.3L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BLT_Molding_drill%CE%A63.3L25.stl",
+                    "type": "straumann.Standard_drill.molding.__dup4.BLT_Molding_drillΦ3.3L25"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 58,
+                    "id": 306,
+                    "length": 0.033,
+                    "name": "BLT Molding drillΦ3.3L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BLT_Molding_drill%CE%A63.3L33.stl",
+                    "type": "straumann.Standard_drill.molding.__dup4.BLT_Molding_drillΦ3.3L33"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 58,
+                    "id": 307,
+                    "length": 0.025,
+                    "name": "BLT Molding drillΦ4.1L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BLT_Molding_drill%CE%A64.1L25.stl",
+                    "type": "straumann.Standard_drill.molding.__dup4.BLT_Molding_drillΦ4.1L25"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 58,
+                    "id": 308,
+                    "length": 0.033,
+                    "name": "BLT Molding drillΦ4.1L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BLT_Molding_drill%CE%A64.1L33.stl",
+                    "type": "straumann.Standard_drill.molding.__dup4.BLT_Molding_drillΦ4.1L33"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 58,
+                    "id": 309,
+                    "length": 0.025,
+                    "name": "BLT Molding drillΦ4.8L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BLT_Molding_drill%CE%A64.8L25.stl",
+                    "type": "straumann.Standard_drill.molding.__dup4.BLT_Molding_drillΦ4.8L25"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 58,
+                    "id": 310,
+                    "length": 0.033,
+                    "name": "BLT Molding drillΦ4.8L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.molding.BLT_Molding_drill%CE%A64.8L33.stl",
+                    "type": "straumann.Standard_drill.molding.__dup4.BLT_Molding_drillΦ4.8L33"
+                  }
+                ],
+                "name": "颈部成型钻 BLT",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.molding.__dup4"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.pioneer_drill.png",
+                "id": 51,
+                "items": [
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 51,
+                    "id": 271,
+                    "length": 0.033,
+                    "name": "BLT Pioneer drillΦ2.2L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.pioneer.BLT_Pioneer_drill%CE%A62.2L33.stl",
+                    "type": "straumann.Standard_drill.pioneer.BLT_Pioneer_drillΦ2.2L33"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 51,
+                    "id": 272,
+                    "length": 0.041,
+                    "name": "BLT Pioneer drillΦ2.2L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.pioneer.BLT_Pioneer_drill%CE%A62.2L41.stl",
+                    "type": "straumann.Standard_drill.pioneer.BLT_Pioneer_drillΦ2.2L41"
+                  }
+                ],
+                "name": "先锋钻 BLT",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.pioneer"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.pioneer_drill.png",
+                "id": 52,
+                "items": [
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 52,
+                    "id": 273,
+                    "length": 0.033,
+                    "name": "Pioneer drillΦ2.2L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.pioneer.Pioneer_drill%CE%A62.2L33.stl",
+                    "type": "straumann.Standard_drill.pioneer.__dup2.Pioneer_drillΦ2.2L33"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 52,
+                    "id": 274,
+                    "length": 0.041,
+                    "name": "Pioneer drillΦ2.2L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.pioneer.Pioneer_drill%CE%A62.2L41.stl",
+                    "type": "straumann.Standard_drill.pioneer.__dup2.Pioneer_drillΦ2.2L41"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 52,
+                    "id": 275,
+                    "length": 0.033,
+                    "name": "Pioneer drillΦ2.8L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.pioneer.Pioneer_drill%CE%A62.8L33.stl",
+                    "type": "straumann.Standard_drill.pioneer.__dup2.Pioneer_drillΦ2.8L33"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 52,
+                    "id": 276,
+                    "length": 0.041,
+                    "name": "Pioneer drillΦ2.8L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.pioneer.Pioneer_drill%CE%A62.8L41.stl",
+                    "type": "straumann.Standard_drill.pioneer.__dup2.Pioneer_drillΦ2.8L41"
+                  }
+                ],
+                "name": "先锋钻",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.pioneer.__dup2"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.Medium_sleeve.png",
+                "id": 59,
+                "items": [
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 59,
+                    "id": 313,
+                    "is_carrier": true,
+                    "length": 0.034,
+                    "name": "Long sleeve",
+                    "offset": -0.0063,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.sleeve.Long_sleeve.stl",
+                    "type": "straumann.Standard_drill.sleeve.Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 59,
+                    "id": 312,
+                    "is_carrier": true,
+                    "length": 0.026,
+                    "name": "Medium sleeve",
+                    "offset": -0.0063,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.sleeve.Medium_sleeve.stl",
+                    "type": "straumann.Standard_drill.sleeve.Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 59,
+                    "id": 311,
+                    "is_carrier": true,
+                    "length": 0.019,
+                    "name": "Short sleeve",
+                    "offset": -0.0063,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.sleeve.Short_sleeve.stl",
+                    "type": "straumann.Standard_drill.sleeve.Short_sleeve"
+                  }
+                ],
+                "name": "套筒",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.sleeve"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.BLT_Tapping_drill.png",
+                "id": 62,
+                "items": [
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 62,
+                    "id": 334,
+                    "length": 0.0553,
+                    "name": "BLT Tapping drillΦ3.3+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_blt.BLT_Tapping_drill%CE%A63.3+Long_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_blt.BLT_Tapping_drillΦ3.3+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 62,
+                    "id": 333,
+                    "length": 0.0473,
+                    "name": "BLT Tapping drillΦ3.3+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_blt.BLT_Tapping_drill%CE%A63.3+Medium_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_blt.BLT_Tapping_drillΦ3.3+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 62,
+                    "id": 332,
+                    "length": 0.0404,
+                    "name": "BLT Tapping drillΦ3.3+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_blt.BLT_Tapping_drill%CE%A63.3+Short_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_blt.BLT_Tapping_drillΦ3.3+Short_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 62,
+                    "id": 337,
+                    "length": 0.0553,
+                    "name": "BLT Tapping drillΦ4.1+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_blt.BLT_Tapping_drill%CE%A64.1+Long_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_blt.BLT_Tapping_drillΦ4.1+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 62,
+                    "id": 336,
+                    "length": 0.0473,
+                    "name": "BLT Tapping drillΦ4.1+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_blt.BLT_Tapping_drill%CE%A64.1+Medium_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_blt.BLT_Tapping_drillΦ4.1+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 62,
+                    "id": 335,
+                    "length": 0.0404,
+                    "name": "BLT Tapping drillΦ4.1+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_blt.BLT_Tapping_drill%CE%A64.1+Short_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_blt.BLT_Tapping_drillΦ4.1+Short_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 62,
+                    "id": 340,
+                    "length": 0.0553,
+                    "name": "BLT Tapping drillΦ4.8+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_blt.BLT_Tapping_drill%CE%A64.8+Long_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_blt.BLT_Tapping_drillΦ4.8+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 62,
+                    "id": 339,
+                    "length": 0.0473,
+                    "name": "BLT Tapping drillΦ4.8+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_blt.BLT_Tapping_drill%CE%A64.8+Medium_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_blt.BLT_Tapping_drillΦ4.8+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 62,
+                    "id": 338,
+                    "length": 0.0404,
+                    "name": "BLT Tapping drillΦ4.8+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_blt.BLT_Tapping_drill%CE%A64.8+Short_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_blt.BLT_Tapping_drillΦ4.8+Short_sleeve"
+                  }
+                ],
+                "name": "攻丝钻 BLT",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.tapping_blt"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.S-SP_Tapping_drill.png",
+                "id": 60,
+                "items": [
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 60,
+                    "id": 316,
+                    "length": 0.0533,
+                    "name": "S-SP Tapping drillΦ3.3+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drill%CE%A63.3+Long_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drillΦ3.3+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 60,
+                    "id": 315,
+                    "length": 0.0453,
+                    "name": "S-SP Tapping drillΦ3.3+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drill%CE%A63.3+Medium_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drillΦ3.3+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 60,
+                    "id": 314,
+                    "length": 0.0383,
+                    "name": "S-SP Tapping drillΦ3.3+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drill%CE%A63.3+Short_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drillΦ3.3+Short_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 60,
+                    "id": 319,
+                    "length": 0.0533,
+                    "name": "S-SP Tapping drillΦ4.1+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drill%CE%A64.1+Long_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drillΦ4.1+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 60,
+                    "id": 318,
+                    "length": 0.0453,
+                    "name": "S-SP Tapping drillΦ4.1+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drill%CE%A64.1+Medium_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drillΦ4.1+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 60,
+                    "id": 317,
+                    "length": 0.0383,
+                    "name": "S-SP Tapping drillΦ4.1+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drill%CE%A64.1+Short_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drillΦ4.1+Short_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 60,
+                    "id": 322,
+                    "length": 0.0533,
+                    "name": "S-SP Tapping drillΦ4.8+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drill%CE%A64.8+Long_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drillΦ4.8+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 60,
+                    "id": 321,
+                    "length": 0.0453,
+                    "name": "S-SP Tapping drillΦ4.8+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drill%CE%A64.8+Medium_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drillΦ4.8+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 60,
+                    "id": 320,
+                    "length": 0.0383,
+                    "name": "S-SP Tapping drillΦ4.8+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drill%CE%A64.8+Short_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_s_sp.S-SP_Tapping_drillΦ4.8+Short_sleeve"
+                  }
+                ],
+                "name": "攻丝钻 S-SP",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.tapping_s_sp"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/straumann.TE-BL_Tapping_drill.png",
+                "id": 61,
+                "items": [
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 61,
+                    "id": 325,
+                    "length": 0.0533,
+                    "name": "TE-BL Tapping drillΦ3.3+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drill%CE%A63.3+Long_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drillΦ3.3+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 61,
+                    "id": 324,
+                    "length": 0.0453,
+                    "name": "TE-BL Tapping drillΦ3.3+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drill%CE%A63.3+Medium_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drillΦ3.3+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 61,
+                    "id": 323,
+                    "length": 0.0383,
+                    "name": "TE-BL Tapping drillΦ3.3+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drill%CE%A63.3+Short_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drillΦ3.3+Short_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 61,
+                    "id": 328,
+                    "length": 0.0533,
+                    "name": "TE-BL Tapping drillΦ4.1+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drill%CE%A64.1+Long_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drillΦ4.1+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 61,
+                    "id": 327,
+                    "length": 0.0453,
+                    "name": "TE-BL Tapping drillΦ4.1+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drill%CE%A64.1+Medium_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drillΦ4.1+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 61,
+                    "id": 326,
+                    "length": 0.0383,
+                    "name": "TE-BL Tapping drillΦ4.1+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drill%CE%A64.1+Short_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drillΦ4.1+Short_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 61,
+                    "id": 331,
+                    "length": 0.0533,
+                    "name": "TE-BL Tapping drillΦ4.8+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drill%CE%A64.8+Long_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drillΦ4.8+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 61,
+                    "id": 330,
+                    "length": 0.0453,
+                    "name": "TE-BL Tapping drillΦ4.8+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drill%CE%A64.8+Medium_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drillΦ4.8+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.Standard_drill",
+                    "group_id": 61,
+                    "id": 329,
+                    "length": 0.0383,
+                    "name": "TE-BL Tapping drillΦ4.8+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drill%CE%A64.8+Short_sleeve.stl",
+                    "type": "straumann.Standard_drill.tapping_te_bl.TE-BL_Tapping_drillΦ4.8+Short_sleeve"
+                  }
+                ],
+                "name": "攻丝钻 TE-BL",
+                "system_id": 16,
+                "type": "straumann.Standard_drill.tapping_te_bl"
+              }
+            ],
+            "id": 16,
+            "name": "Standard",
+            "type": "straumann.Standard_drill",
+            "version": 7
+          },
+          {
+            "brand_id": 1,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/00.png",
+                "id": 63,
+                "items": [
+                  {
+                    "diameter": 0.0023,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 63,
+                    "id": 341,
+                    "length": 0.034,
+                    "name": "blx ball drillΦ2.3",
+                    "offset": 0.0023,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.ball.blx_ball_drill%CE%A62.3.stl",
+                    "type": "straumann.blx_drill.ball.blx_ball_drillΦ2.3"
+                  },
+                  {
+                    "diameter": 0.0031,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 63,
+                    "id": 342,
+                    "length": 0.034,
+                    "name": "blx ball drillΦ3.1",
+                    "offset": 0.0031,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.ball.blx_ball_drill%CE%A63.1.stl",
+                    "type": "straumann.blx_drill.ball.blx_ball_drillΦ3.1"
+                  }
+                ],
+                "name": "球钻",
+                "system_id": 17,
+                "type": "straumann.blx_drill.ball"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/01.png",
+                "id": 64,
+                "items": [
+                  {
+                    "diameter": 0.0016,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 64,
+                    "id": 343,
+                    "length": 0.041,
+                    "name": "guild drillΦ1.6",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.guild.guild_drill%CE%A61.6.stl",
+                    "type": "straumann.blx_drill.guild.guild_drillΦ1.6"
+                  }
+                ],
+                "name": "定位钻",
+                "system_id": 17,
+                "type": "straumann.blx_drill.guild"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/2.2_02.png",
+                "id": 65,
+                "items": [
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 65,
+                    "id": 344,
+                    "length": 0.0341,
+                    "name": "BLX pioneer drillΦ2.2x13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.pioneer_1.BLX_pioneer_drill%CE%A62.2x13.stl",
+                    "type": "straumann.blx_drill.pioneer_1.BLX_pioneer_drillΦ2.2x13"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 65,
+                    "id": 345,
+                    "length": 0.0421,
+                    "name": "BLX pioneer drillΦ2.2x17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.pioneer_1.BLX_pioneer_drill%CE%A62.2x17.stl",
+                    "type": "straumann.blx_drill.pioneer_1.BLX_pioneer_drillΦ2.2x17"
+                  }
+                ],
+                "name": "1号先锋钻Φ2.2",
+                "system_id": 17,
+                "type": "straumann.blx_drill.pioneer_1"
+              },
+              {
+                "group_type": "drill",
+                "id": 74,
+                "items": [
+                  {
+                    "diameter": 0.003,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 74,
+                    "id": 361,
+                    "is_carrier": true,
+                    "length": 0.03067,
+                    "name": "BLX sleeve-l",
+                    "offset": 0.0025,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.sleeve.BLX_sleeve-l.stl",
+                    "type": "straumann.blx_drill.sleeve.BLX_sleeve-l"
+                  },
+                  {
+                    "diameter": 0.003,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 74,
+                    "id": 360,
+                    "is_carrier": true,
+                    "length": 0.02074,
+                    "name": "BLX sleeve-s",
+                    "offset": 0.0025,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.sleeve.BLX_sleeve-s.stl",
+                    "type": "straumann.blx_drill.sleeve.BLX_sleeve-s"
+                  }
+                ],
+                "name": "携带体",
+                "system_id": 17,
+                "type": "straumann.blx_drill.sleeve"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/2.8_03.png",
+                "id": 66,
+                "items": [
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 66,
+                    "id": 346,
+                    "length": 0.0341,
+                    "name": "BLX twist drillΦ2.8x13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_2.BLX_twist_drill%CE%A62.8x13.stl",
+                    "type": "straumann.blx_drill.twist_2.BLX_twist_drillΦ2.8x13"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 66,
+                    "id": 347,
+                    "length": 0.0421,
+                    "name": "BLX twist drillΦ2.8x17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_2.BLX_twist_drill%CE%A62.8x17.stl",
+                    "type": "straumann.blx_drill.twist_2.BLX_twist_drillΦ2.8x17"
+                  }
+                ],
+                "name": "2号钻",
+                "system_id": 17,
+                "type": "straumann.blx_drill.twist_2"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/3.2_10.png",
+                "id": 67,
+                "items": [
+                  {
+                    "diameter": 0.0032,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 67,
+                    "id": 348,
+                    "length": 0.0341,
+                    "name": "BLX twist drillΦ3.2x13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_3.BLX_twist_drill%CE%A63.2x13.stl",
+                    "type": "straumann.blx_drill.twist_3.BLX_twist_drillΦ3.2x13"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 67,
+                    "id": 349,
+                    "length": 0.0421,
+                    "name": "BLX twist drillΦ3.2x17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_3.BLX_twist_drill%CE%A63.2x17.stl",
+                    "type": "straumann.blx_drill.twist_3.BLX_twist_drillΦ3.2x17"
+                  }
+                ],
+                "name": "3号钻",
+                "system_id": 17,
+                "type": "straumann.blx_drill.twist_3"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/3.5_11.png",
+                "id": 68,
+                "items": [
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 68,
+                    "id": 350,
+                    "length": 0.0341,
+                    "name": "BLX twist drillΦ3.5x13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_4.BLX_twist_drill%CE%A63.5x13.stl",
+                    "type": "straumann.blx_drill.twist_4.BLX_twist_drillΦ3.5x13"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 68,
+                    "id": 351,
+                    "length": 0.0421,
+                    "name": "BLX twist drillΦ3.5x17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_4.BLX_twist_drill%CE%A63.5x17.stl",
+                    "type": "straumann.blx_drill.twist_4.BLX_twist_drillΦ3.5x17"
+                  }
+                ],
+                "name": "4号钻",
+                "system_id": 17,
+                "type": "straumann.blx_drill.twist_4"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/3.7_12.png",
+                "id": 69,
+                "items": [
+                  {
+                    "diameter": 0.0037,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 69,
+                    "id": 352,
+                    "length": 0.0341,
+                    "name": "BLX twist drillΦ3.7x13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_5.BLX_twist_drill%CE%A63.7x13.stl",
+                    "type": "straumann.blx_drill.twist_5.BLX_twist_drillΦ3.7x13"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 69,
+                    "id": 353,
+                    "length": 0.0421,
+                    "name": "BLX twist drillΦ3.7x17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_5.BLX_twist_drill%CE%A63.7x17.stl",
+                    "type": "straumann.blx_drill.twist_5.BLX_twist_drillΦ3.7x17"
+                  }
+                ],
+                "name": "5号钻",
+                "system_id": 17,
+                "type": "straumann.blx_drill.twist_5"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/4.2_13.png",
+                "id": 70,
+                "items": [
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 70,
+                    "id": 354,
+                    "length": 0.0341,
+                    "name": "BLX twist drillΦ4.2x13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_6.BLX_twist_drill%CE%A64.2x13.stl",
+                    "type": "straumann.blx_drill.twist_6.BLX_twist_drillΦ4.2x13"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 70,
+                    "id": 355,
+                    "length": 0.0421,
+                    "name": "BLX twist drillΦ4.2x17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_6.BLX_twist_drill%CE%A64.2x17.stl",
+                    "type": "straumann.blx_drill.twist_6.BLX_twist_drillΦ4.2x17"
+                  }
+                ],
+                "name": "6号钻",
+                "system_id": 17,
+                "type": "straumann.blx_drill.twist_6"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/4.7_20.png",
+                "id": 71,
+                "items": [
+                  {
+                    "diameter": 0.0047,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 71,
+                    "id": 356,
+                    "length": 0.0341,
+                    "name": "BLX twist drillΦ4.7x13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_7.BLX_twist_drill%CE%A64.7x13.stl",
+                    "type": "straumann.blx_drill.twist_7.BLX_twist_drillΦ4.7x13"
+                  },
+                  {
+                    "diameter": 0.0047,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 71,
+                    "id": 357,
+                    "length": 0.04215,
+                    "name": "BLX twist drillΦ4.7x17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_7.BLX_twist_drill%CE%A64.7x17.stl",
+                    "type": "straumann.blx_drill.twist_7.BLX_twist_drillΦ4.7x17"
+                  }
+                ],
+                "name": "7号钻",
+                "system_id": 17,
+                "type": "straumann.blx_drill.twist_7"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/5.2_21.png",
+                "id": 72,
+                "items": [
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 72,
+                    "id": 358,
+                    "length": 0.0341,
+                    "name": "BLX twist drillΦ5.2x13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_8.BLX_twist_drill%CE%A65.2x13.stl",
+                    "type": "straumann.blx_drill.twist_8.BLX_twist_drillΦ5.2x13"
+                  }
+                ],
+                "name": "8号钻",
+                "system_id": 17,
+                "type": "straumann.blx_drill.twist_8"
+              },
+              {
+                "group_type": "drill",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Straumann/drill/blx/6.2_22.png",
+                "id": 73,
+                "items": [
+                  {
+                    "diameter": 0.0062,
+                    "drill_system_type": "straumann.blx_drill",
+                    "group_id": 73,
+                    "id": 359,
+                    "length": 0.0341,
+                    "name": "BLX twist drillΦ6.2x13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.blx_drill.twist_9.BLX_twist_drill%CE%A66.2x13.stl",
+                    "type": "straumann.blx_drill.twist_9.BLX_twist_drillΦ6.2x13"
+                  }
+                ],
+                "name": "9号钻",
+                "system_id": 17,
+                "type": "straumann.blx_drill.twist_9"
+              }
+            ],
+            "id": 17,
+            "name": "BLX",
+            "type": "straumann.blx_drill",
+            "version": 2
+          },
+          {
+            "brand_id": 1,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "id": 76,
+                "items": [
+                  {
+                    "diameter": 0.0023,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 76,
+                    "id": 363,
+                    "length": 0.034,
+                    "name": "ball drillΦ2.3L34",
+                    "offset": 0.0023,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.ball.ball_drill%CE%A62.3L34.stl",
+                    "type": "straumann.bl_blt_kit_drill.ball.ball_drillΦ2.3L34"
+                  },
+                  {
+                    "diameter": 0.0031,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 76,
+                    "id": 364,
+                    "length": 0.034,
+                    "name": "ball drillΦ3.1L34",
+                    "offset": 0.0031,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.ball.ball_drill%CE%A63.1L34.stl",
+                    "type": "straumann.bl_blt_kit_drill.ball.ball_drillΦ3.1L34"
+                  }
+                ],
+                "name": "球钻",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.ball"
+              },
+              {
+                "group_type": "drill",
+                "id": 84,
+                "items": [
+                  {
+                    "diameter": 0.0023,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 84,
+                    "id": 405,
+                    "length": 0.05,
+                    "name": "ball drillΦ2.3L50",
+                    "offset": 0.0023,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.ball_ext.ball_drill%CE%A62.3L50.stl",
+                    "type": "straumann.bl_blt_kit_drill.ball_ext.ball_drillΦ2.3L50"
+                  },
+                  {
+                    "diameter": 0.0031,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 84,
+                    "id": 406,
+                    "length": 0.05,
+                    "name": "ball drillΦ3.1L50",
+                    "offset": 0.0031,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.ball_ext.ball_drill%CE%A63.1L50.stl",
+                    "type": "straumann.bl_blt_kit_drill.ball_ext.ball_drillΦ3.1L50"
+                  }
+                ],
+                "name": "球钻(延长杆)",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.ball_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 75,
+                "items": [
+                  {
+                    "diameter": 0.0016,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 75,
+                    "id": 362,
+                    "length": 0.033,
+                    "name": "Guild drillΦ1.6L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.guild.Guild_drill%CE%A61.6L33.stl",
+                    "type": "straumann.bl_blt_kit_drill.guild.Guild_drillΦ1.6L33"
+                  }
+                ],
+                "name": "定位钻",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.guild"
+              },
+              {
+                "group_type": "drill",
+                "id": 83,
+                "items": [
+                  {
+                    "diameter": 0.0016,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 83,
+                    "id": 404,
+                    "length": 0.049,
+                    "name": "Guild drillΦ1.6L49",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.guild_ext.Guild_drill%CE%A61.6L49.stl",
+                    "type": "straumann.bl_blt_kit_drill.guild_ext.Guild_drillΦ1.6L49"
+                  }
+                ],
+                "name": "定位钻(延长杆)",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.guild_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 77,
+                "items": [
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 77,
+                    "id": 365,
+                    "length": 0.0283,
+                    "name": "Pioneer drillΦ2.2L28.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.pioneer.Pioneer_drill%CE%A62.2L28.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.pioneer.Pioneer_drillΦ2.2L28.3"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 77,
+                    "id": 366,
+                    "length": 0.0303,
+                    "name": "Pioneer drillΦ2.2L30.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.pioneer.Pioneer_drill%CE%A62.2L30.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.pioneer.Pioneer_drillΦ2.2L30.3"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 77,
+                    "id": 367,
+                    "length": 0.0323,
+                    "name": "Pioneer drillΦ2.2L32.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.pioneer.Pioneer_drill%CE%A62.2L32.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.pioneer.Pioneer_drillΦ2.2L32.3"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 77,
+                    "id": 368,
+                    "length": 0.0343,
+                    "name": "Pioneer drillΦ2.2L34.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.pioneer.Pioneer_drill%CE%A62.2L34.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.pioneer.Pioneer_drillΦ2.2L34.3"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 77,
+                    "id": 369,
+                    "length": 0.0363,
+                    "name": "Pioneer drillΦ2.2L36.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.pioneer.Pioneer_drill%CE%A62.2L36.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.pioneer.Pioneer_drillΦ2.2L36.3"
+                  }
+                ],
+                "name": "先锋钻",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.pioneer"
+              },
+              {
+                "group_type": "drill",
+                "id": 85,
+                "items": [
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 85,
+                    "id": 407,
+                    "length": 0.0443,
+                    "name": "Pioneer drillΦ2.2L44.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.pioneer_ext.Pioneer_drill%CE%A62.2L44.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.pioneer_ext.Pioneer_drillΦ2.2L44.3"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 85,
+                    "id": 408,
+                    "length": 0.0463,
+                    "name": "Pioneer drillΦ2.2L46.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.pioneer_ext.Pioneer_drill%CE%A62.2L46.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.pioneer_ext.Pioneer_drillΦ2.2L46.3"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 85,
+                    "id": 409,
+                    "length": 0.0483,
+                    "name": "Pioneer drillΦ2.2L48.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.pioneer_ext.Pioneer_drill%CE%A62.2L48.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.pioneer_ext.Pioneer_drillΦ2.2L48.3"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 85,
+                    "id": 410,
+                    "length": 0.0503,
+                    "name": "Pioneer drillΦ2.2L50.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.pioneer_ext.Pioneer_drill%CE%A62.2L50.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.pioneer_ext.Pioneer_drillΦ2.2L50.3"
+                  },
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 85,
+                    "id": 411,
+                    "length": 0.0523,
+                    "name": "Pioneer drillΦ2.2L52.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.pioneer_ext.Pioneer_drill%CE%A62.2L52.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.pioneer_ext.Pioneer_drillΦ2.2L52.3"
+                  }
+                ],
+                "name": "先锋钻(延长杆)",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.pioneer_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 80,
+                "items": [
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 80,
+                    "id": 385,
+                    "length": 0.025,
+                    "name": "Profile drillΦ2.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.profile.Profile_drill%CE%A62.2L25.stl",
+                    "type": "straumann.bl_blt_kit_drill.profile.Profile_drillΦ2.2L25"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 80,
+                    "id": 386,
+                    "length": 0.025,
+                    "name": "Profile drillΦ2.8L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.profile.Profile_drill%CE%A62.8L25.stl",
+                    "type": "straumann.bl_blt_kit_drill.profile.Profile_drillΦ2.8L25"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 80,
+                    "id": 387,
+                    "length": 0.025,
+                    "name": "Profile drillΦ3.5L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.profile.Profile_drill%CE%A63.5L25.stl",
+                    "type": "straumann.bl_blt_kit_drill.profile.Profile_drillΦ3.5L25"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 80,
+                    "id": 388,
+                    "length": 0.025,
+                    "name": "Profile drillΦ4.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.profile.Profile_drill%CE%A64.2L25.stl",
+                    "type": "straumann.bl_blt_kit_drill.profile.Profile_drillΦ4.2L25"
+                  }
+                ],
+                "name": "颈部成型钻",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.profile"
+              },
+              {
+                "group_type": "drill",
+                "id": 88,
+                "items": [
+                  {
+                    "diameter": 0.0022,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 88,
+                    "id": 427,
+                    "length": 0.041,
+                    "name": "Profile drillΦ2.2L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.profile_ext.Profile_drill%CE%A62.2L41.stl",
+                    "type": "straumann.bl_blt_kit_drill.profile_ext.Profile_drillΦ2.2L41"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 88,
+                    "id": 428,
+                    "length": 0.041,
+                    "name": "Profile drillΦ2.8L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.profile_ext.Profile_drill%CE%A62.8L41.stl",
+                    "type": "straumann.bl_blt_kit_drill.profile_ext.Profile_drillΦ2.8L41"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 88,
+                    "id": 429,
+                    "length": 0.041,
+                    "name": "Profile drillΦ3.5L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.profile_ext.Profile_drill%CE%A63.5L41.stl",
+                    "type": "straumann.bl_blt_kit_drill.profile_ext.Profile_drillΦ3.5L41"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 88,
+                    "id": 430,
+                    "length": 0.041,
+                    "name": "Profile drillΦ4.2L41",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.profile_ext.Profile_drill%CE%A64.2L41.stl",
+                    "type": "straumann.bl_blt_kit_drill.profile_ext.Profile_drillΦ4.2L41"
+                  }
+                ],
+                "name": "颈部成型钻(延长杆)",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.profile_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 81,
+                "items": [
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 81,
+                    "id": 391,
+                    "is_carrier": true,
+                    "length": 0.034,
+                    "name": "Long sleeve",
+                    "offset": -0.0063,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.sleeve.Long_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.sleeve.Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 81,
+                    "id": 390,
+                    "is_carrier": true,
+                    "length": 0.026,
+                    "name": "Medium sleeve",
+                    "offset": -0.0063,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.sleeve.Medium_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.sleeve.Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 81,
+                    "id": 389,
+                    "is_carrier": true,
+                    "length": 0.019,
+                    "name": "Short sleeve",
+                    "offset": -0.0063,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.sleeve.Short_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.sleeve.Short_sleeve"
+                  }
+                ],
+                "name": "套筒",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.sleeve"
+              },
+              {
+                "group_type": "drill",
+                "id": 89,
+                "items": [
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 89,
+                    "id": 433,
+                    "is_carrier": true,
+                    "length": 0.05,
+                    "name": "Long sleeve+EXT",
+                    "offset": -0.0063,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.sleeve_ext.Long_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.sleeve_ext.Long_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 89,
+                    "id": 432,
+                    "is_carrier": true,
+                    "length": 0.042,
+                    "name": "Medium sleeve+EXT",
+                    "offset": -0.0063,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.sleeve_ext.Medium_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.sleeve_ext.Medium_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 89,
+                    "id": 431,
+                    "is_carrier": true,
+                    "length": 0.035,
+                    "name": "Short sleeve+EXT",
+                    "offset": -0.0063,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.sleeve_ext.Short_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.sleeve_ext.Short_sleeve+EXT"
+                  }
+                ],
+                "name": "套筒(延长杆)",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.sleeve_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 82,
+                "items": [
+                  {
+                    "diameter": 0.0029,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 394,
+                    "length": 0.0553,
+                    "name": "Tapping drillΦ2.9+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A62.9+Long_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ2.9+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0029,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 393,
+                    "length": 0.0473,
+                    "name": "Tapping drillΦ2.9+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A62.9+Medium_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ2.9+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0029,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 392,
+                    "length": 0.0403,
+                    "name": "Tapping drillΦ2.9+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A62.9+Short_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ2.9+Short_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 397,
+                    "length": 0.0553,
+                    "name": "Tapping drillΦ3.3+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A63.3+Long_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ3.3+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 396,
+                    "length": 0.0473,
+                    "name": "Tapping drillΦ3.3+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A63.3+Medium_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ3.3+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 395,
+                    "length": 0.0403,
+                    "name": "Tapping drillΦ3.3+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A63.3+Short_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ3.3+Short_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 400,
+                    "length": 0.0553,
+                    "name": "Tapping drillΦ4.1+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A64.1+Long_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ4.1+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 399,
+                    "length": 0.0473,
+                    "name": "Tapping drillΦ4.1+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A64.1+Medium_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ4.1+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 398,
+                    "length": 0.0403,
+                    "name": "Tapping drillΦ4.1+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A64.1+Short_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ4.1+Short_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 403,
+                    "length": 0.0553,
+                    "name": "Tapping drillΦ4.8+Long sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A64.8+Long_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ4.8+Long_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 402,
+                    "length": 0.0473,
+                    "name": "Tapping drillΦ4.8+Medium sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A64.8+Medium_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ4.8+Medium_sleeve"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 82,
+                    "id": 401,
+                    "length": 0.0403,
+                    "name": "Tapping drillΦ4.8+Short sleeve",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping.Tapping_drill%CE%A64.8+Short_sleeve.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping.Tapping_drillΦ4.8+Short_sleeve"
+                  }
+                ],
+                "name": "攻丝钻",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.tapping"
+              },
+              {
+                "group_type": "drill",
+                "id": 90,
+                "items": [
+                  {
+                    "diameter": 0.0029,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 436,
+                    "length": 0.0713,
+                    "name": "Tapping drillΦ2.9+Long sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A62.9+Long_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ2.9+Long_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0029,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 435,
+                    "length": 0.0633,
+                    "name": "Tapping drillΦ2.9+Medium sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A62.9+Medium_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ2.9+Medium_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0029,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 434,
+                    "length": 0.0563,
+                    "name": "Tapping drillΦ2.9+Short sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A62.9+Short_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ2.9+Short_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 439,
+                    "length": 0.0713,
+                    "name": "Tapping drillΦ3.3+Long sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A63.3+Long_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ3.3+Long_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 438,
+                    "length": 0.0633,
+                    "name": "Tapping drillΦ3.3+Medium sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A63.3+Medium_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ3.3+Medium_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0033,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 437,
+                    "length": 0.0563,
+                    "name": "Tapping drillΦ3.3+Short sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A63.3+Short_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ3.3+Short_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 442,
+                    "length": 0.0713,
+                    "name": "Tapping drillΦ4.1+Long sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A64.1+Long_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ4.1+Long_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 441,
+                    "length": 0.0633,
+                    "name": "Tapping drillΦ4.1+Medium sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A64.1+Medium_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ4.1+Medium_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0041,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 440,
+                    "length": 0.0563,
+                    "name": "Tapping drillΦ4.1+Short sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A64.1+Short_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ4.1+Short_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 445,
+                    "length": 0.0713,
+                    "name": "Tapping drillΦ4.8+Long sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A64.8+Long_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ4.8+Long_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 444,
+                    "length": 0.0633,
+                    "name": "Tapping drillΦ4.8+Medium sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A64.8+Medium_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ4.8+Medium_sleeve+EXT"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 90,
+                    "id": 443,
+                    "length": 0.0563,
+                    "name": "Tapping drillΦ4.8+Short sleeve+EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.tapping_ext.Tapping_drill%CE%A64.8+Short_sleeve+EXT.stl",
+                    "type": "straumann.bl_blt_kit_drill.tapping_ext.Tapping_drillΦ4.8+Short_sleeve+EXT"
+                  }
+                ],
+                "name": "攻丝钻(延长杆)",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.tapping_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 78,
+                "items": [
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 78,
+                    "id": 370,
+                    "length": 0.03285,
+                    "name": "BL Twist drillΦ2.8L32.85",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_bl.BL_Twist_drill%CE%A62.8L32.85.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_bl.BL_Twist_drillΦ2.8L32.85"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 78,
+                    "id": 371,
+                    "length": 0.033,
+                    "name": "BL Twist drillΦ3.5L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_bl.BL_Twist_drill%CE%A63.5L33.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_bl.BL_Twist_drillΦ3.5L33"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 78,
+                    "id": 372,
+                    "length": 0.033,
+                    "name": "BL Twist drillΦ4.2L33",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_bl.BL_Twist_drill%CE%A64.2L33.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_bl.BL_Twist_drillΦ4.2L33"
+                  }
+                ],
+                "name": "扩孔钻 BL",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.twist_bl"
+              },
+              {
+                "group_type": "drill",
+                "id": 79,
+                "items": [
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 373,
+                    "length": 0.0303,
+                    "name": "BLT Twist drillΦ2.8L30.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A62.8L30.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ2.8L30.3"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 374,
+                    "length": 0.0323,
+                    "name": "BLT Twist drillΦ2.8L32.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A62.8L32.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ2.8L32.3"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 375,
+                    "length": 0.0343,
+                    "name": "BLT Twist drillΦ2.8L34.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A62.8L34.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ2.8L34.3"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 376,
+                    "length": 0.0363,
+                    "name": "BLT Twist drillΦ2.8L36.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A62.8L36.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ2.8L36.3"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 377,
+                    "length": 0.0303,
+                    "name": "BLT Twist drillΦ3.5L30.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A63.5L30.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ3.5L30.3"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 378,
+                    "length": 0.0323,
+                    "name": "BLT Twist drillΦ3.5L32.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A63.5L32.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ3.5L32.3"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 379,
+                    "length": 0.0343,
+                    "name": "BLT Twist drillΦ3.5L34.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A63.5L34.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ3.5L34.3"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 380,
+                    "length": 0.0363,
+                    "name": "BLT Twist drillΦ3.5L36.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A63.5L36.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ3.5L36.3"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 381,
+                    "length": 0.0303,
+                    "name": "BLT Twist drillΦ4.2L30.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A64.2L30.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ4.2L30.3"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 382,
+                    "length": 0.0323,
+                    "name": "BLT Twist drillΦ4.2L32.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A64.2L32.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ4.2L32.3"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 383,
+                    "length": 0.0343,
+                    "name": "BLT Twist drillΦ4.2L34.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A64.2L34.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ4.2L34.3"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 79,
+                    "id": 384,
+                    "length": 0.0363,
+                    "name": "BLT Twist drillΦ4.2L36.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drill%CE%A64.2L36.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt.BLT_Twist_drillΦ4.2L36.3"
+                  }
+                ],
+                "name": "扩孔钻 BLT",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.twist_blt"
+              },
+              {
+                "group_type": "drill",
+                "id": 87,
+                "items": [
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 415,
+                    "length": 0.0463,
+                    "name": "BLT Twist drillΦ2.8L46.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A62.8L46.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ2.8L46.3"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 416,
+                    "length": 0.0483,
+                    "name": "BLT Twist drillΦ2.8L48.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A62.8L48.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ2.8L48.3"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 417,
+                    "length": 0.0503,
+                    "name": "BLT Twist drillΦ2.8L50.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A62.8L50.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ2.8L50.3"
+                  },
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 418,
+                    "length": 0.0523,
+                    "name": "BLT Twist drillΦ2.8L52.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A62.8L52.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ2.8L52.3"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 419,
+                    "length": 0.0463,
+                    "name": "BLT Twist drillΦ3.5L46.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A63.5L46.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ3.5L46.3"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 420,
+                    "length": 0.0483,
+                    "name": "BLT Twist drillΦ3.5L48.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A63.5L48.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ3.5L48.3"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 421,
+                    "length": 0.0503,
+                    "name": "BLT Twist drillΦ3.5L50.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A63.5L50.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ3.5L50.3"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 422,
+                    "length": 0.0523,
+                    "name": "BLT Twist drillΦ3.5L52.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A63.5L52.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ3.5L52.3"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 423,
+                    "length": 0.0463,
+                    "name": "BLT Twist drillΦ4.2L46.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A64.2L46.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ4.2L46.3"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 424,
+                    "length": 0.0483,
+                    "name": "BLT Twist drillΦ4.2L48.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A64.2L48.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ4.2L48.3"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 425,
+                    "length": 0.0503,
+                    "name": "BLT Twist drillΦ4.2L50.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A64.2L50.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ4.2L50.3"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 87,
+                    "id": 426,
+                    "length": 0.0523,
+                    "name": "BLT Twist drillΦ4.2L52.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drill%CE%A64.2L52.3.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_blt_ext.BLT_Twist_drillΦ4.2L52.3"
+                  }
+                ],
+                "name": "扩孔钻 BLT(延长杆)",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.twist_blt_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 86,
+                "items": [
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 86,
+                    "id": 412,
+                    "length": 0.04885,
+                    "name": "BL Twist drillΦ2.8L48.85",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_bl_ext.BL_Twist_drill%CE%A62.8L48.85.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_bl_ext.BL_Twist_drillΦ2.8L48.85"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 86,
+                    "id": 413,
+                    "length": 0.049,
+                    "name": "BL Twist drillΦ3.5L49",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_bl_ext.BL_Twist_drill%CE%A63.5L49.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_bl_ext.BL_Twist_drillΦ3.5L49"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "straumann.blt_drill",
+                    "group_id": 86,
+                    "id": 414,
+                    "length": 0.049,
+                    "name": "BL Twist drillΦ4.2L49",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Straumann/drill/straumann.bl_blt_kit_drill.twist_bl_ext.BL_Twist_drill%CE%A64.2L49.stl",
+                    "type": "straumann.bl_blt_kit_drill.twist_bl_ext.BL_Twist_drillΦ4.2L49"
+                  }
+                ],
+                "name": "扩孔钻 BL(延长杆)",
+                "system_id": 18,
+                "type": "straumann.bl_blt_kit_drill.twist_bl_ext"
+              }
+            ],
+            "id": 18,
+            "name": "BL/BLT KIT",
+            "type": "straumann.bl_blt_kit_drill",
+            "version": 7
+          }
+        ],
+        "type": "straumann"
+      },
+      {
+        "alias": "nobel biocare, 诺贝尔",
+        "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Logo/Nobel/logo.png",
+        "id": 5,
+        "name": "Nobel",
+        "systems": [
+          {
+            "brand_id": 5,
+            "id": 28,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36769.png",
+                "id": 145,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.80mm\",\"骨内长度\":\"8.70mm\",\"规格\":\"Φ3.0mm x 10.00mm\"}",
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 145,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36769.png",
+                    "id": 676,
+                    "length": 0.0095,
+                    "name": "36769",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.30_activate_tiunite.36769.stl",
+                    "type": "nobel.activate_tiunite_implant.30_activate_tiunite.36769"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"0.80mm\",\"骨内长度\":\"10.20mm\",\"规格\":\"Φ3.0mm x 11.50mm\"}",
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 145,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36770.png",
+                    "id": 677,
+                    "length": 0.011,
+                    "name": "36770",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.30_activate_tiunite.36770.stl",
+                    "type": "nobel.activate_tiunite_implant.30_activate_tiunite.36770"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.80mm\",\"骨内长度\":\"11.70mm\",\"规格\":\"Φ3.0mm x 13.00mm\"}",
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 145,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36771.png",
+                    "id": 678,
+                    "length": 0.0125,
+                    "name": "36771",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.30_activate_tiunite.36771.stl",
+                    "type": "nobel.activate_tiunite_implant.30_activate_tiunite.36771"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.80mm\",\"骨内长度\":\"13.70mm\",\"规格\":\"Φ3.0mm x 15.00mm\"}",
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 145,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36772.png",
+                    "id": 679,
+                    "length": 0.0145,
+                    "name": "36772",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.30_activate_tiunite.36772.stl",
+                    "type": "nobel.activate_tiunite_implant.30_activate_tiunite.36772"
+                  }
+                ],
+                "name": "Φ3.0mm 直径",
+                "system_id": 28,
+                "type": "nobel.activate_tiunite_implant.30_activate_tiunite"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/35221.png",
+                "id": 146,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"8.60mm\",\"规格\":\"Φ3.5mm x 10.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 146,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34125.png",
+                    "id": 681,
+                    "length": 0.0095,
+                    "name": "34125",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.35_activate_tiunite.34125.stl",
+                    "type": "nobel.activate_tiunite_implant.35_activate_tiunite.34125"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"10.10mm\",\"规格\":\"Φ3.5mm x 11.50mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 146,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34126.png",
+                    "id": 682,
+                    "length": 0.011,
+                    "name": "34126",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.35_activate_tiunite.34126.stl",
+                    "type": "nobel.activate_tiunite_implant.35_activate_tiunite.34126"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"11.60mm\",\"规格\":\"Φ3.5mm x 13.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 146,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34127.png",
+                    "id": 683,
+                    "length": 0.0125,
+                    "name": "34127",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.35_activate_tiunite.34127.stl",
+                    "type": "nobel.activate_tiunite_implant.35_activate_tiunite.34127"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"13.60mm\",\"规格\":\"Φ3.5mm x 15.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 146,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34128.png",
+                    "id": 684,
+                    "length": 0.0145,
+                    "name": "34128",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.35_activate_tiunite.34128.stl",
+                    "type": "nobel.activate_tiunite_implant.35_activate_tiunite.34128"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"17.50mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"16.60mm\",\"规格\":\"Φ3.5mm x 18.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 146,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/35215.png",
+                    "id": 685,
+                    "length": 0.0175,
+                    "name": "35215",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.35_activate_tiunite.35215.stl",
+                    "type": "nobel.activate_tiunite_implant.35_activate_tiunite.35215"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"7.10mm\",\"规格\":\"Φ3.5mm x 8.50mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 146,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/35221.png",
+                    "id": 680,
+                    "length": 0.008,
+                    "name": "35221",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.35_activate_tiunite.35221.stl",
+                    "type": "nobel.activate_tiunite_implant.35_activate_tiunite.35221"
+                  }
+                ],
+                "name": "Φ3.5mm 直径",
+                "system_id": 28,
+                "type": "nobel.activate_tiunite_implant.35_activate_tiunite"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/35223.png",
+                "id": 147,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"8.20mm\",\"规格\":\"Φ4.3mm x 10.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 147,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34131.png",
+                    "id": 687,
+                    "length": 0.0095,
+                    "name": "34131",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.43_activate_tiunite.34131.stl",
+                    "type": "nobel.activate_tiunite_implant.43_activate_tiunite.34131"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"9.70mm\",\"规格\":\"Φ4.3mm x 11.50mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 147,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34132.png",
+                    "id": 688,
+                    "length": 0.011,
+                    "name": "34132",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.43_activate_tiunite.34132.stl",
+                    "type": "nobel.activate_tiunite_implant.43_activate_tiunite.34132"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"11.20mm\",\"规格\":\"Φ4.3mm x 13.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 147,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34133.png",
+                    "id": 689,
+                    "length": 0.0125,
+                    "name": "34133",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.43_activate_tiunite.34133.stl",
+                    "type": "nobel.activate_tiunite_implant.43_activate_tiunite.34133"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"13.20mm\",\"规格\":\"Φ4.3mm x 15.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 147,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34134.png",
+                    "id": 690,
+                    "length": 0.0145,
+                    "name": "34134",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.43_activate_tiunite.34134.stl",
+                    "type": "nobel.activate_tiunite_implant.43_activate_tiunite.34134"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"17.50mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"16.20mm\",\"规格\":\"Φ4.3mm x 18.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 147,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/35219.png",
+                    "id": 691,
+                    "length": 0.0175,
+                    "name": "35219",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.43_activate_tiunite.35219.stl",
+                    "type": "nobel.activate_tiunite_implant.43_activate_tiunite.35219"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"6.70mm\",\"规格\":\"Φ4.3mm x 8.50mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 147,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/35223.png",
+                    "id": 686,
+                    "length": 0.008,
+                    "name": "35223",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.43_activate_tiunite.35223.stl",
+                    "type": "nobel.activate_tiunite_implant.43_activate_tiunite.35223"
+                  }
+                ],
+                "name": "Φ4.3mm 直径",
+                "system_id": 28,
+                "type": "nobel.activate_tiunite_implant.43_activate_tiunite"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/35225.png",
+                "id": 148,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"8.20mm\",\"规格\":\"Φ5.0mm x 10.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 148,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34137.png",
+                    "id": 693,
+                    "length": 0.0095,
+                    "name": "34137",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.50_activate_tiunite.34137.stl",
+                    "type": "nobel.activate_tiunite_implant.50_activate_tiunite.34137"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"9.70mm\",\"规格\":\"Φ5.0mm x 11.50mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 148,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34138.png",
+                    "id": 694,
+                    "length": 0.011,
+                    "name": "34138",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.50_activate_tiunite.34138.stl",
+                    "type": "nobel.activate_tiunite_implant.50_activate_tiunite.34138"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"11.20mm\",\"规格\":\"Φ5.0mm x 13.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 148,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34139.png",
+                    "id": 695,
+                    "length": 0.0125,
+                    "name": "34139",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.50_activate_tiunite.34139.stl",
+                    "type": "nobel.activate_tiunite_implant.50_activate_tiunite.34139"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"13.20mm\",\"规格\":\"Φ5.0mm x 15.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 148,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34140.png",
+                    "id": 696,
+                    "length": 0.0145,
+                    "name": "34140",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.50_activate_tiunite.34140.stl",
+                    "type": "nobel.activate_tiunite_implant.50_activate_tiunite.34140"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"17.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"16.20mm\",\"规格\":\"Φ5.0mm x 18.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 148,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/35220.png",
+                    "id": 697,
+                    "length": 0.0175,
+                    "name": "35220",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.50_activate_tiunite.35220.stl",
+                    "type": "nobel.activate_tiunite_implant.50_activate_tiunite.35220"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"6.70mm\",\"规格\":\"Φ5.0mm x 8.50mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 148,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/35225.png",
+                    "id": 692,
+                    "length": 0.008,
+                    "name": "35225",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.50_activate_tiunite.35225.stl",
+                    "type": "nobel.activate_tiunite_implant.50_activate_tiunite.35225"
+                  }
+                ],
+                "name": "Φ5.0mm 直径",
+                "system_id": 28,
+                "type": "nobel.activate_tiunite_implant.50_activate_tiunite"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/37806.png",
+                "id": 149,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"6.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"7.0mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"5.20mm\",\"规格\":\"Φ5.5mm x 7.0mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 149,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/37806.png",
+                    "id": 698,
+                    "length": 0.0065,
+                    "name": "37806",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.55_activate_tiunite.37806.stl",
+                    "type": "nobel.activate_tiunite_implant.55_activate_tiunite.37806"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"6.70mm\",\"规格\":\"Φ5.5mm x 8.50mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 149,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/37807.png",
+                    "id": 699,
+                    "length": 0.008,
+                    "name": "37807",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.55_activate_tiunite.37807.stl",
+                    "type": "nobel.activate_tiunite_implant.55_activate_tiunite.37807"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"8.20mm\",\"规格\":\"Φ5.5mm x 10.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 149,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/37808.png",
+                    "id": 700,
+                    "length": 0.0095,
+                    "name": "37808",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.55_activate_tiunite.37808.stl",
+                    "type": "nobel.activate_tiunite_implant.55_activate_tiunite.37808"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"9.70mm\",\"规格\":\"Φ5.5mm x 11.50mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 149,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/37809.png",
+                    "id": 701,
+                    "length": 0.011,
+                    "name": "37809",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.55_activate_tiunite.37809.stl",
+                    "type": "nobel.activate_tiunite_implant.55_activate_tiunite.37809"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"11.20mm\",\"规格\":\"Φ5.5mm x 13.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 149,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/37810.png",
+                    "id": 702,
+                    "length": 0.0125,
+                    "name": "37810",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.55_activate_tiunite.37810.stl",
+                    "type": "nobel.activate_tiunite_implant.55_activate_tiunite.37810"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"13.20mm\",\"规格\":\"Φ5.5mm x 15.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 149,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/37811.png",
+                    "id": 703,
+                    "length": 0.0145,
+                    "name": "37811",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiunite_implant.55_activate_tiunite.37811.stl",
+                    "type": "nobel.activate_tiunite_implant.55_activate_tiunite.37811"
+                  }
+                ],
+                "name": "Φ5.5mm 直径",
+                "system_id": 28,
+                "type": "nobel.activate_tiunite_implant.55_activate_tiunite"
+              }
+            ],
+            "name": "Nobel Active TiUltra",
+            "type": "nobel.activate_tiunite_implant"
+          },
+          {
+            "brand_id": 5,
+            "id": 29,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300240.png",
+                "id": 150,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.80mm\",\"骨内长度\":\"8.70mm\",\"规格\":\"Φ3.0mm x 10.00mm\"}",
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 150,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300240.png",
+                    "id": 704,
+                    "length": 0.0095,
+                    "name": "300240",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.30_activate_tiultra.300240.stl",
+                    "type": "nobel.activate_tiultra_implant.30_activate_tiultra.300240"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"0.80mm\",\"骨内长度\":\"10.20mm\",\"规格\":\"Φ3.0mm x 11.50mm\"}",
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 150,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300241.png",
+                    "id": 705,
+                    "length": 0.011,
+                    "name": "300241",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.30_activate_tiultra.300241.stl",
+                    "type": "nobel.activate_tiultra_implant.30_activate_tiultra.300241"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.80mm\",\"骨内长度\":\"11.70mm\",\"规格\":\"Φ3.0mm x 13.00mm\"}",
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 150,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300242.png",
+                    "id": 706,
+                    "length": 0.0125,
+                    "name": "300242",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.30_activate_tiultra.300242.stl",
+                    "type": "nobel.activate_tiultra_implant.30_activate_tiultra.300242"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.80mm\",\"骨内长度\":\"13.70mm\",\"规格\":\"Φ3.0mm x 15.00mm\"}",
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 150,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300243.png",
+                    "id": 707,
+                    "length": 0.0145,
+                    "name": "300243",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.30_activate_tiultra.300243.stl",
+                    "type": "nobel.activate_tiultra_implant.30_activate_tiultra.300243"
+                  }
+                ],
+                "name": "Φ3.0mm 直径",
+                "system_id": 29,
+                "type": "nobel.activate_tiultra_implant.30_activate_tiultra"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300244.png",
+                "id": 151,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"7.10mm\",\"规格\":\"Φ3.5mm x 8.50mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 151,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300244.png",
+                    "id": 708,
+                    "length": 0.008,
+                    "name": "300244",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.35_activate_tiultra.300244.stl",
+                    "type": "nobel.activate_tiultra_implant.35_activate_tiultra.300244"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"8.60mm\",\"规格\":\"Φ3.5mm x 10.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 151,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300245.png",
+                    "id": 709,
+                    "length": 0.0095,
+                    "name": "300245",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.35_activate_tiultra.300245.stl",
+                    "type": "nobel.activate_tiultra_implant.35_activate_tiultra.300245"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"10.10mm\",\"规格\":\"Φ3.5mm x 11.50mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 151,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300246.png",
+                    "id": 710,
+                    "length": 0.011,
+                    "name": "300246",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.35_activate_tiultra.300246.stl",
+                    "type": "nobel.activate_tiultra_implant.35_activate_tiultra.300246"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"11.60mm\",\"规格\":\"Φ3.5mm x 13.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 151,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300247.png",
+                    "id": 711,
+                    "length": 0.0125,
+                    "name": "300247",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.35_activate_tiultra.300247.stl",
+                    "type": "nobel.activate_tiultra_implant.35_activate_tiultra.300247"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"13.60mm\",\"规格\":\"Φ3.5mm x 15.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 151,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300248.png",
+                    "id": 712,
+                    "length": 0.0145,
+                    "name": "300248",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.35_activate_tiultra.300248.stl",
+                    "type": "nobel.activate_tiultra_implant.35_activate_tiultra.300248"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"17.50mm\",\"根尖直径\":\"2.60mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"0.90mm\",\"骨内长度\":\"16.60mm\",\"规格\":\"Φ3.5mm x 18.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 151,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300249.png",
+                    "id": 713,
+                    "length": 0.0175,
+                    "name": "300249",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.35_activate_tiultra.300249.stl",
+                    "type": "nobel.activate_tiultra_implant.35_activate_tiultra.300249"
+                  }
+                ],
+                "name": "Φ3.5mm 直径",
+                "system_id": 29,
+                "type": "nobel.activate_tiultra_implant.35_activate_tiultra"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300250.png",
+                "id": 152,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"6.70mm\",\"规格\":\"Φ4.3mm x 8.50mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 152,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300250.png",
+                    "id": 714,
+                    "length": 0.008,
+                    "name": "300250",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.43_activate_tiultra.300250.stl",
+                    "type": "nobel.activate_tiultra_implant.43_activate_tiultra.300250"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"8.20mm\",\"规格\":\"Φ4.3mm x 10.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 152,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300251.png",
+                    "id": 715,
+                    "length": 0.0095,
+                    "name": "300251",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.43_activate_tiultra.300251.stl",
+                    "type": "nobel.activate_tiultra_implant.43_activate_tiultra.300251"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"9.70mm\",\"规格\":\"Φ4.3mm x 11.50mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 152,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300252.png",
+                    "id": 716,
+                    "length": 0.011,
+                    "name": "300252",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.43_activate_tiultra.300252.stl",
+                    "type": "nobel.activate_tiultra_implant.43_activate_tiultra.300252"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"11.20mm\",\"规格\":\"Φ4.3mm x 13.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 152,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300253.png",
+                    "id": 717,
+                    "length": 0.0125,
+                    "name": "300253",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.43_activate_tiultra.300253.stl",
+                    "type": "nobel.activate_tiultra_implant.43_activate_tiultra.300253"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"13.20mm\",\"规格\":\"Φ4.3mm x 15.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 152,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300254.png",
+                    "id": 718,
+                    "length": 0.0145,
+                    "name": "300254",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.43_activate_tiultra.300254.stl",
+                    "type": "nobel.activate_tiultra_implant.43_activate_tiultra.300254"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"17.50mm\",\"根尖直径\":\"3.20mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"16.20mm\",\"规格\":\"Φ4.3mm x 18.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 152,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300255.png",
+                    "id": 719,
+                    "length": 0.0175,
+                    "name": "300255",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.43_activate_tiultra.300255.stl",
+                    "type": "nobel.activate_tiultra_implant.43_activate_tiultra.300255"
+                  }
+                ],
+                "name": "Φ4.3mm 直径",
+                "system_id": 29,
+                "type": "nobel.activate_tiultra_implant.43_activate_tiultra"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300256.png",
+                "id": 153,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"6.70mm\",\"规格\":\"Φ5.0mm x 8.50mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 153,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300256.png",
+                    "id": 720,
+                    "length": 0.008,
+                    "name": "300256",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.50_activate_tiultra.300256.stl",
+                    "type": "nobel.activate_tiultra_implant.50_activate_tiultra.300256"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"8.20mm\",\"规格\":\"Φ5.0mm x 10.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 153,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300257.png",
+                    "id": 721,
+                    "length": 0.0095,
+                    "name": "300257",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.50_activate_tiultra.300257.stl",
+                    "type": "nobel.activate_tiultra_implant.50_activate_tiultra.300257"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"9.70mm\",\"规格\":\"Φ5.0mm x 11.50mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 153,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300258.png",
+                    "id": 722,
+                    "length": 0.011,
+                    "name": "300258",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.50_activate_tiultra.300258.stl",
+                    "type": "nobel.activate_tiultra_implant.50_activate_tiultra.300258"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"11.20mm\",\"规格\":\"Φ5.0mm x 13.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 153,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300259.png",
+                    "id": 723,
+                    "length": 0.0125,
+                    "name": "300259",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.50_activate_tiultra.300259.stl",
+                    "type": "nobel.activate_tiultra_implant.50_activate_tiultra.300259"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"13.20mm\",\"规格\":\"Φ5.0mm x 15.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 153,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300260.png",
+                    "id": 724,
+                    "length": 0.0145,
+                    "name": "300260",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.50_activate_tiultra.300260.stl",
+                    "type": "nobel.activate_tiultra_implant.50_activate_tiultra.300260"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"17.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"16.20mm\",\"规格\":\"Φ5.0mm x 18.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 153,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300261.png",
+                    "id": 725,
+                    "length": 0.0175,
+                    "name": "300261",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.50_activate_tiultra.300261.stl",
+                    "type": "nobel.activate_tiultra_implant.50_activate_tiultra.300261"
+                  }
+                ],
+                "name": "Φ5.0mm 直径",
+                "system_id": 29,
+                "type": "nobel.activate_tiultra_implant.50_activate_tiultra"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300262.png",
+                "id": 154,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"6.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"7.0mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"5.20mm\",\"规格\":\"Φ5.5mm x 7.0mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 154,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300262.png",
+                    "id": 726,
+                    "length": 0.0065,
+                    "name": "300262",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.55_activate_tiultra.300262.stl",
+                    "type": "nobel.activate_tiultra_implant.55_activate_tiultra.300262"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"6.70mm\",\"规格\":\"Φ5.5mm x 8.50mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 154,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300263.png",
+                    "id": 727,
+                    "length": 0.008,
+                    "name": "300263",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.55_activate_tiultra.300263.stl",
+                    "type": "nobel.activate_tiultra_implant.55_activate_tiultra.300263"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"8.20mm\",\"规格\":\"Φ5.5mm x 10.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 154,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300264.png",
+                    "id": 728,
+                    "length": 0.0095,
+                    "name": "300264",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.55_activate_tiultra.300264.stl",
+                    "type": "nobel.activate_tiultra_implant.55_activate_tiultra.300264"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"9.70mm\",\"规格\":\"Φ5.5mm x 11.50mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 154,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300265.png",
+                    "id": 729,
+                    "length": 0.011,
+                    "name": "300265",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.55_activate_tiultra.300265.stl",
+                    "type": "nobel.activate_tiultra_implant.55_activate_tiultra.300265"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"11.20mm\",\"规格\":\"Φ5.5mm x 13.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 154,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300266.png",
+                    "id": 730,
+                    "length": 0.0125,
+                    "name": "300266",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.55_activate_tiultra.300266.stl",
+                    "type": "nobel.activate_tiultra_implant.55_activate_tiultra.300266"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.5mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"3.60mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"1.30mm\",\"骨内长度\":\"13.20mm\",\"规格\":\"Φ5.5mm x 15.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 154,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300267.png",
+                    "id": 731,
+                    "length": 0.0145,
+                    "name": "300267",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.activate_tiultra_implant.55_activate_tiultra.300267.stl",
+                    "type": "nobel.activate_tiultra_implant.55_activate_tiultra.300267"
+                  }
+                ],
+                "name": "Φ5.5mm 直径",
+                "system_id": 29,
+                "type": "nobel.activate_tiultra_implant.55_activate_tiultra"
+              }
+            ],
+            "name": "Nobel Active TiUnite",
+            "type": "nobel.activate_tiultra_implant"
+          },
+          {
+            "brand_id": 5,
+            "id": 30,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300295.png",
+                "id": 155,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.75mm\",\"总长度\":\"6.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"7.00mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ3.75mm x 7.00mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 155,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300295.png",
+                    "id": 732,
+                    "length": 0.0065,
+                    "name": "300295",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.375_pcc_tiultra.300295.stl",
+                    "type": "nobel.pcc_tiultra_implant.375_pcc_tiultra.300295"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.75mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"7.50mm\",\"规格\":\"Φ3.75mm x 8.50mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 155,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300296.png",
+                    "id": 733,
+                    "length": 0.008,
+                    "name": "300296",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.375_pcc_tiultra.300296.stl",
+                    "type": "nobel.pcc_tiultra_implant.375_pcc_tiultra.300296"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.75mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"9.00mm\",\"规格\":\"Φ3.75mm x 10.00mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 155,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300297.png",
+                    "id": 734,
+                    "length": 0.0095,
+                    "name": "300297",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.375_pcc_tiultra.300297.stl",
+                    "type": "nobel.pcc_tiultra_implant.375_pcc_tiultra.300297"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.75mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"10.50mm\",\"规格\":\"Φ3.75mm x 11.50mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 155,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300298.png",
+                    "id": 735,
+                    "length": 0.011,
+                    "name": "300298",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.375_pcc_tiultra.300298.stl",
+                    "type": "nobel.pcc_tiultra_implant.375_pcc_tiultra.300298"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.75mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ3.75mm x 13.00mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 155,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300299.png",
+                    "id": 736,
+                    "length": 0.0125,
+                    "name": "300299",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.375_pcc_tiultra.300299.stl",
+                    "type": "nobel.pcc_tiultra_implant.375_pcc_tiultra.300299"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.75mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ3.75mm x 15.00mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 155,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300300.png",
+                    "id": 737,
+                    "length": 0.0145,
+                    "name": "300300",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.375_pcc_tiultra.300300.stl",
+                    "type": "nobel.pcc_tiultra_implant.375_pcc_tiultra.300300"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.75mm\",\"总长度\":\"17.50mm\",\"根尖直径\":\"2.00mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"17.00mm\",\"规格\":\"Φ3.75mm x 18.00mm\"}",
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 155,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300301.png",
+                    "id": 738,
+                    "length": 0.0175,
+                    "name": "300301",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.375_pcc_tiultra.300301.stl",
+                    "type": "nobel.pcc_tiultra_implant.375_pcc_tiultra.300301"
+                  }
+                ],
+                "name": "Φ3.75mm 直径",
+                "system_id": 30,
+                "type": "nobel.pcc_tiultra_implant.375_pcc_tiultra"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300302.png",
+                "id": 156,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"6.50mm\",\"根尖直径\":\"2.40mm\",\"规格长度\":\"7.00mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"6.00mm\",\"规格\":\"Φ4.3mm x 7.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 156,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300302.png",
+                    "id": 739,
+                    "length": 0.0065,
+                    "name": "300302",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.43_pcc_tiultra.300302.stl",
+                    "type": "nobel.pcc_tiultra_implant.43_pcc_tiultra.300302"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"2.40mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"7.50mm\",\"规格\":\"Φ4.3mm x 8.50mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 156,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300303.png",
+                    "id": 740,
+                    "length": 0.008,
+                    "name": "300303",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.43_pcc_tiultra.300303.stl",
+                    "type": "nobel.pcc_tiultra_implant.43_pcc_tiultra.300303"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"2.40mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"9.00mm\",\"规格\":\"Φ4.3mm x 10.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 156,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300304.png",
+                    "id": 741,
+                    "length": 0.0095,
+                    "name": "300304",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.43_pcc_tiultra.300304.stl",
+                    "type": "nobel.pcc_tiultra_implant.43_pcc_tiultra.300304"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"2.40mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"10.50mm\",\"规格\":\"Φ4.3mm x 11.50mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 156,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300305.png",
+                    "id": 742,
+                    "length": 0.011,
+                    "name": "300305",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.43_pcc_tiultra.300305.stl",
+                    "type": "nobel.pcc_tiultra_implant.43_pcc_tiultra.300305"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"2.40mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"12.00mm\",\"规格\":\"Φ4.3mm x 13.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 156,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300306.png",
+                    "id": 743,
+                    "length": 0.0125,
+                    "name": "300306",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.43_pcc_tiultra.300306.stl",
+                    "type": "nobel.pcc_tiultra_implant.43_pcc_tiultra.300306"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"2.40mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"14.00mm\",\"规格\":\"Φ4.3mm x 15.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 156,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300307.png",
+                    "id": 744,
+                    "length": 0.0145,
+                    "name": "300307",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.43_pcc_tiultra.300307.stl",
+                    "type": "nobel.pcc_tiultra_implant.43_pcc_tiultra.300307"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.30mm\",\"总长度\":\"17.50mm\",\"根尖直径\":\"2.40mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"0.50mm\",\"骨内长度\":\"17.00mm\",\"规格\":\"Φ4.3mm x 18.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 156,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300308.png",
+                    "id": 745,
+                    "length": 0.0175,
+                    "name": "300308",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.43_pcc_tiultra.300308.stl",
+                    "type": "nobel.pcc_tiultra_implant.43_pcc_tiultra.300308"
+                  }
+                ],
+                "name": "Φ4.3mm 直径",
+                "system_id": 30,
+                "type": "nobel.pcc_tiultra_implant.43_pcc_tiultra"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300309.png",
+                "id": 157,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"5.00mm\",\"总长度\":\"6.50mm\",\"根尖直径\":\"2.70mm\",\"规格长度\":\"7.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"5.90mm\",\"规格\":\"Φ5.0mm x 7.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 157,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300309.png",
+                    "id": 746,
+                    "length": 0.0065,
+                    "name": "300309",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.50_pcc_tiultra.300309.stl",
+                    "type": "nobel.pcc_tiultra_implant.50_pcc_tiultra.300309"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.00mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"2.70mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"7.40mm\",\"规格\":\"Φ5.0mm x 8.50mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 157,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300310.png",
+                    "id": 747,
+                    "length": 0.008,
+                    "name": "300310",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.50_pcc_tiultra.300310.stl",
+                    "type": "nobel.pcc_tiultra_implant.50_pcc_tiultra.300310"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.00mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"2.70mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"8.90mm\",\"规格\":\"Φ5.0mm x 10.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 157,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300311.png",
+                    "id": 748,
+                    "length": 0.0095,
+                    "name": "300311",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.50_pcc_tiultra.300311.stl",
+                    "type": "nobel.pcc_tiultra_implant.50_pcc_tiultra.300311"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.00mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"2.70mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"10.40mm\",\"规格\":\"Φ5.0mm x 11.50mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 157,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300312.png",
+                    "id": 749,
+                    "length": 0.011,
+                    "name": "300312",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.50_pcc_tiultra.300312.stl",
+                    "type": "nobel.pcc_tiultra_implant.50_pcc_tiultra.300312"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.00mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"2.70mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"11.90mm\",\"规格\":\"Φ5.0mm x 13.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 157,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300313.png",
+                    "id": 750,
+                    "length": 0.0125,
+                    "name": "300313",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.50_pcc_tiultra.300313.stl",
+                    "type": "nobel.pcc_tiultra_implant.50_pcc_tiultra.300313"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.00mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"2.70mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"13.90mm\",\"规格\":\"Φ5.0mm x 15.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 157,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300314.png",
+                    "id": 751,
+                    "length": 0.0145,
+                    "name": "300314",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.50_pcc_tiultra.300314.stl",
+                    "type": "nobel.pcc_tiultra_implant.50_pcc_tiultra.300314"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.00mm\",\"总长度\":\"17.50mm\",\"根尖直径\":\"2.70mm\",\"规格长度\":\"18.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"16.90mm\",\"规格\":\"Φ5.0mm x 18.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 157,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300315.png",
+                    "id": 752,
+                    "length": 0.0175,
+                    "name": "300315",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.50_pcc_tiultra.300315.stl",
+                    "type": "nobel.pcc_tiultra_implant.50_pcc_tiultra.300315"
+                  }
+                ],
+                "name": "Φ5.0mm 直径",
+                "system_id": 30,
+                "type": "nobel.pcc_tiultra_implant.50_pcc_tiultra"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300316.png",
+                "id": 158,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"5.50mm\",\"总长度\":\"6.50mm\",\"根尖直径\":\"3.00mm\",\"规格长度\":\"7.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"5.90mm\",\"规格\":\"Φ5.5mm x 7.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 158,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300316.png",
+                    "id": 753,
+                    "length": 0.0065,
+                    "name": "300316",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.55_pcc_tiultra.300316.stl",
+                    "type": "nobel.pcc_tiultra_implant.55_pcc_tiultra.300316"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.50mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"3.00mm\",\"规格长度\":\"8.50mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"7.40mm\",\"规格\":\"Φ5.5mm x 8.50mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 158,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300317.png",
+                    "id": 754,
+                    "length": 0.008,
+                    "name": "300317",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.55_pcc_tiultra.300317.stl",
+                    "type": "nobel.pcc_tiultra_implant.55_pcc_tiultra.300317"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.50mm\",\"总长度\":\"9.50mm\",\"根尖直径\":\"3.00mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"8.90mm\",\"规格\":\"Φ5.5mm x 10.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 158,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300318.png",
+                    "id": 755,
+                    "length": 0.0095,
+                    "name": "300318",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.55_pcc_tiultra.300318.stl",
+                    "type": "nobel.pcc_tiultra_implant.55_pcc_tiultra.300318"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.50mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"3.00mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"10.40mm\",\"规格\":\"Φ5.5mm x 11.50mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 158,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300319.png",
+                    "id": 756,
+                    "length": 0.011,
+                    "name": "300319",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.55_pcc_tiultra.300319.stl",
+                    "type": "nobel.pcc_tiultra_implant.55_pcc_tiultra.300319"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.50mm\",\"总长度\":\"12.50mm\",\"根尖直径\":\"3.00mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"11.90mm\",\"规格\":\"Φ5.5mm x 13.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 158,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300320.png",
+                    "id": 757,
+                    "length": 0.0125,
+                    "name": "300320",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.55_pcc_tiultra.300320.stl",
+                    "type": "nobel.pcc_tiultra_implant.55_pcc_tiultra.300320"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.50mm\",\"总长度\":\"14.50mm\",\"根尖直径\":\"3.00mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"13.90mm\",\"规格\":\"Φ5.5mm x 15.00mm\"}",
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 158,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/300321.png",
+                    "id": 758,
+                    "length": 0.0145,
+                    "name": "300321",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.pcc_tiultra_implant.55_pcc_tiultra.300321.stl",
+                    "type": "nobel.pcc_tiultra_implant.55_pcc_tiultra.300321"
+                  }
+                ],
+                "name": "Φ5.5mm 直径",
+                "system_id": 30,
+                "type": "nobel.pcc_tiultra_implant.55_pcc_tiultra"
+              }
+            ],
+            "name": "Nobel Parallel CC TiUltra",
+            "type": "nobel.pcc_tiultra_implant"
+          },
+          {
+            "brand_id": 5,
+            "id": 31,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36699.png",
+                "id": 159,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"8.60mm\",\"根尖直径\":\"2.11mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"7.10mm\",\"规格\":\"Φ3.5mm x 8.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 159,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36699.png",
+                    "id": 759,
+                    "length": 0.0086,
+                    "name": "36699",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.35_rcc_tiunite.36699.stl",
+                    "type": "nobel.rcc_tiunite_implant.35_rcc_tiunite.36699"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"10.60mm\",\"根尖直径\":\"2.11mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"9.10mm\",\"规格\":\"Φ3.5mm x 10.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 159,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36700.png",
+                    "id": 760,
+                    "length": 0.0106,
+                    "name": "36700",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.35_rcc_tiunite.36700.stl",
+                    "type": "nobel.rcc_tiunite_implant.35_rcc_tiunite.36700"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.11mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"10.60mm\",\"规格\":\"Φ3.5mm x 11.50mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 159,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36701.png",
+                    "id": 761,
+                    "length": 0.0121,
+                    "name": "36701",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.35_rcc_tiunite.36701.stl",
+                    "type": "nobel.rcc_tiunite_implant.35_rcc_tiunite.36701"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"13.60mm\",\"根尖直径\":\"2.11mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"12.10mm\",\"规格\":\"Φ3.5mm x 13.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 159,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36702.png",
+                    "id": 762,
+                    "length": 0.0136,
+                    "name": "36702",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.35_rcc_tiunite.36702.stl",
+                    "type": "nobel.rcc_tiunite_implant.35_rcc_tiunite.36702"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.50mm\",\"总长度\":\"16.60mm\",\"根尖直径\":\"2.11mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"15.10mm\",\"规格\":\"Φ3.5mm x 16.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 159,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36703.png",
+                    "id": 763,
+                    "length": 0.0166,
+                    "name": "36703",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.35_rcc_tiunite.36703.stl",
+                    "type": "nobel.rcc_tiunite_implant.35_rcc_tiunite.36703"
+                  }
+                ],
+                "name": "Φ3.5mm 直径",
+                "system_id": 31,
+                "type": "nobel.rcc_tiunite_implant.35_rcc_tiunite"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36704.png",
+                "id": 160,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.3mm\",\"总长度\":\"8.60mm\",\"根尖直径\":\"2.56mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"7.10mm\",\"规格\":\"Φ4.3mm x 8.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 160,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36704.png",
+                    "id": 764,
+                    "length": 0.0086,
+                    "name": "36704",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.43_rcc_tiunite.36704.stl",
+                    "type": "nobel.rcc_tiunite_implant.43_rcc_tiunite.36704"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.3mm\",\"总长度\":\"10.60mm\",\"根尖直径\":\"2.56mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"9.10mm\",\"规格\":\"Φ4.3mm x 10.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 160,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36705.png",
+                    "id": 765,
+                    "length": 0.0106,
+                    "name": "36705",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.43_rcc_tiunite.36705.stl",
+                    "type": "nobel.rcc_tiunite_implant.43_rcc_tiunite.36705"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.3mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.56mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"10.60mm\",\"规格\":\"Φ4.3mm x 11.50mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 160,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36707.png",
+                    "id": 766,
+                    "length": 0.0121,
+                    "name": "36707",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.43_rcc_tiunite.36707.stl",
+                    "type": "nobel.rcc_tiunite_implant.43_rcc_tiunite.36707"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.3mm\",\"总长度\":\"13.60mm\",\"根尖直径\":\"2.56mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"12.10mm\",\"规格\":\"Φ4.3mm x 13.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 160,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36708.png",
+                    "id": 767,
+                    "length": 0.0136,
+                    "name": "36708",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.43_rcc_tiunite.36708.stl",
+                    "type": "nobel.rcc_tiunite_implant.43_rcc_tiunite.36708"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.3mm\",\"总长度\":\"16.60mm\",\"根尖直径\":\"2.56mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"15.10mm\",\"规格\":\"Φ4.3mm x 16.00mm\"}",
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 160,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36709.png",
+                    "id": 768,
+                    "length": 0.0166,
+                    "name": "36709",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.43_rcc_tiunite.36709.stl",
+                    "type": "nobel.rcc_tiunite_implant.43_rcc_tiunite.36709"
+                  }
+                ],
+                "name": "Φ4.3mm 直径",
+                "system_id": 31,
+                "type": "nobel.rcc_tiunite_implant.43_rcc_tiunite"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36710.png",
+                "id": 161,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"8.60mm\",\"根尖直径\":\"2.98mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"7.10mm\",\"规格\":\"Φ5.0mm x 8.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 161,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36710.png",
+                    "id": 769,
+                    "length": 0.0086,
+                    "name": "36710",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.50_rcc_tiunite.36710.stl",
+                    "type": "nobel.rcc_tiunite_implant.50_rcc_tiunite.36710"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"10.60mm\",\"根尖直径\":\"2.98mm\",\"规格长度\":\"10.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"9.10mm\",\"规格\":\"Φ5.0mm x 10.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 161,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36711.png",
+                    "id": 770,
+                    "length": 0.0106,
+                    "name": "36711",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.50_rcc_tiunite.36711.stl",
+                    "type": "nobel.rcc_tiunite_implant.50_rcc_tiunite.36711"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"12.10mm\",\"根尖直径\":\"2.98mm\",\"规格长度\":\"11.50mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"10.60mm\",\"规格\":\"Φ5.0mm x 11.50mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 161,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36712.png",
+                    "id": 771,
+                    "length": 0.0121,
+                    "name": "36712",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.50_rcc_tiunite.36712.stl",
+                    "type": "nobel.rcc_tiunite_implant.50_rcc_tiunite.36712"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"13.60mm\",\"根尖直径\":\"2.98mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"12.10mm\",\"规格\":\"Φ5.0mm x 13.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 161,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36713.png",
+                    "id": 772,
+                    "length": 0.0136,
+                    "name": "36713",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.50_rcc_tiunite.36713.stl",
+                    "type": "nobel.rcc_tiunite_implant.50_rcc_tiunite.36713"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.0mm\",\"总长度\":\"16.60mm\",\"根尖直径\":\"2.98mm\",\"规格长度\":\"16.00mm\",\"领圈高度\":\"1.50mm\",\"骨内长度\":\"15.10mm\",\"规格\":\"Φ5.0mm x 16.00mm\"}",
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 161,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/36714.png",
+                    "id": 773,
+                    "length": 0.0166,
+                    "name": "36714",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.rcc_tiunite_implant.50_rcc_tiunite.36714.stl",
+                    "type": "nobel.rcc_tiunite_implant.50_rcc_tiunite.36714"
+                  }
+                ],
+                "name": "Φ5.0mm 直径",
+                "system_id": 31,
+                "type": "nobel.rcc_tiunite_implant.50_rcc_tiunite"
+              }
+            ],
+            "name": "Nobel Replace CC TiUnite",
+            "type": "nobel.rcc_tiunite_implant"
+          },
+          {
+            "brand_id": 5,
+            "comment": "Branemark System Zygoma TiUnite RP 4.0",
+            "id": 32,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34723.png",
+                "id": 162,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"34.70mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"30.00mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"31.00mm\",\"规格\":\"Φ4.0mm x 30.00mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "Unknown",
+                    "group_id": 162,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34723.png",
+                    "id": 774,
+                    "length": 0.0347,
+                    "name": "34723",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34723.stl",
+                    "type": "nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34723"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"39.70mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"35.00mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"36.00mm\",\"规格\":\"Φ4.0mm x 35.00mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "Unknown",
+                    "group_id": 162,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34724.png",
+                    "id": 775,
+                    "length": 0.0397,
+                    "name": "34724",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34724.stl",
+                    "type": "nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34724"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"44.70mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"40.00mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"41.00mm\",\"规格\":\"Φ4.0mm x 40.00mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "Unknown",
+                    "group_id": 162,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34735.png",
+                    "id": 776,
+                    "length": 0.0447,
+                    "name": "34735",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34735.stl",
+                    "type": "nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34735"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"47.20mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"42.50mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"43.50mm\",\"规格\":\"Φ4.0mm x 42.50mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "Unknown",
+                    "group_id": 162,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34736.png",
+                    "id": 777,
+                    "length": 0.0472,
+                    "name": "34736",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34736.stl",
+                    "type": "nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34736"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"49.70mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"45.00mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"46.00mm\",\"规格\":\"Φ4.0mm x 45.00mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "Unknown",
+                    "group_id": 162,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34737.png",
+                    "id": 778,
+                    "length": 0.0497,
+                    "name": "34737",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34737.stl",
+                    "type": "nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34737"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"52.20mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"47.50mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"48.50mm\",\"规格\":\"Φ4.0mm x 47.50mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "Unknown",
+                    "group_id": 162,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34738.png",
+                    "id": 779,
+                    "length": 0.0522,
+                    "name": "34738",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34738.stl",
+                    "type": "nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34738"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"54.70mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"50.00mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"51.00mm\",\"规格\":\"Φ4.0mm x 50.00mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "Unknown",
+                    "group_id": 162,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34739.png",
+                    "id": 780,
+                    "length": 0.0547,
+                    "name": "34739",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34739.stl",
+                    "type": "nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34739"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.0mm\",\"总长度\":\"57.20mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"52.50mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"53.50mm\",\"规格\":\"Φ4.0mm x 52.50mm\"}",
+                    "diameter": 0.004,
+                    "drill_system_type": "Unknown",
+                    "group_id": 162,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/34740.png",
+                    "id": 781,
+                    "length": 0.0572,
+                    "name": "34740",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34740.stl",
+                    "type": "nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40.34740"
+                  }
+                ],
+                "name": "Φ4.0mm 直径",
+                "system_id": 32,
+                "type": "nobel.branemark_system_zygoma_tiunite_rp_40_implant.40_branemark_system_zygoma_tiunite_rp_40"
+              }
+            ],
+            "name": "Branemark System Zygoma TiUnite RP 4.0",
+            "type": "nobel.branemark_system_zygoma_tiunite_rp_40_implant"
+          },
+          {
+            "brand_id": 5,
+            "comment": "Zygoma 45° TiUnite 4.4",
+            "id": 33,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38283.png",
+                "id": 163,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.4mm\",\"总长度\":\"34.70mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"30.00mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"31.00mm\",\"规格\":\"Φ4.4mm x 30.00mm\"}",
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 163,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38283.png",
+                    "id": 782,
+                    "length": 0.0347,
+                    "name": "38283",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38283.stl",
+                    "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38283"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.40mm\",\"总长度\":\"37.20mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"32.50mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"33.50mm\",\"规格\":\"Φ4.4mm x 32.50mm\"}",
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 163,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38284.png",
+                    "id": 783,
+                    "length": 0.0372,
+                    "name": "38284",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38284.stl",
+                    "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38284"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.40mm\",\"总长度\":\"39.70mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"35.00mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"36.00mm\",\"规格\":\"Φ4.4mm x 35.00mm\"}",
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 163,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38285.png",
+                    "id": 784,
+                    "length": 0.0397,
+                    "name": "38285",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38285.stl",
+                    "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38285"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.40mm\",\"总长度\":\"42.20mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"37.50mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"38.50mm\",\"规格\":\"Φ4.4mm x 37.50mm\"}",
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 163,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38286.png",
+                    "id": 785,
+                    "length": 0.0422,
+                    "name": "38286",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38286.stl",
+                    "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38286"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.40mm\",\"总长度\":\"44.70mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"40.00mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"41.00mm\",\"规格\":\"Φ4.4mm x 40.00mm\"}",
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 163,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38287.png",
+                    "id": 786,
+                    "length": 0.0447,
+                    "name": "38287",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38287.stl",
+                    "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38287"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.40mm\",\"总长度\":\"47.20mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"42.50mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"43.50mm\",\"规格\":\"Φ4.4mm x 42.50mm\"}",
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 163,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38288.png",
+                    "id": 787,
+                    "length": 0.0472,
+                    "name": "38288",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38288.stl",
+                    "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38288"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.40mm\",\"总长度\":\"49.70mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"45.00mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"46.00mm\",\"规格\":\"Φ4.4mm x 45.00mm\"}",
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 163,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38289.png",
+                    "id": 788,
+                    "length": 0.0497,
+                    "name": "38289",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38289.stl",
+                    "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38289"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.40mm\",\"总长度\":\"52.20mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"47.50mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"48.50mm\",\"规格\":\"Φ4.4mm x 47.50mm\"}",
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 163,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38290.png",
+                    "id": 789,
+                    "length": 0.0522,
+                    "name": "38290",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38290.stl",
+                    "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38290"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.40mm\",\"总长度\":\"54.70mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"50.00mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"51.00mm\",\"规格\":\"Φ4.4mm x 50.00mm\"}",
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 163,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38291.png",
+                    "id": 790,
+                    "length": 0.0547,
+                    "name": "38291",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38291.stl",
+                    "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38291"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.40mm\",\"总长度\":\"57.20mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"52.50mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"53.50mm\",\"规格\":\"Φ4.4mm x 52.50mm\"}",
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 163,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/38292.png",
+                    "id": 791,
+                    "length": 0.0572,
+                    "name": "38292",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/implant/nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38292.stl",
+                    "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44.38292"
+                  }
+                ],
+                "name": "Φ4.4mm 直径",
+                "system_id": 33,
+                "type": "nobel.zygoma_45_tiunite_44_implant.44_zygoma_45_tiunite_44"
+              }
+            ],
+            "name": "Zygoma 45° TiUnite 4.4",
+            "type": "nobel.zygoma_45_tiunite_44_implant"
+          },
+          {
+            "brand_id": 5,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "id": 168,
+                "items": [
+                  {
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 168,
+                    "id": 801,
+                    "is_carrier": true,
+                    "length": 0.025,
+                    "name": "A-P Bone NP drillΦ4.4L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.bone.A-P_Bone_NP_drill%CE%A64.4L25.stl",
+                    "type": "nobel.activate.bone.A-P_Bone_NP_drillΦ4.4L25"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 168,
+                    "id": 802,
+                    "length": 0.025,
+                    "name": "A-P Bone NP drillΦ5.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.bone.A-P_Bone_NP_drill%CE%A65.2L25.stl",
+                    "type": "nobel.activate.bone.A-P_Bone_NP_drillΦ5.2L25"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 168,
+                    "id": 803,
+                    "is_carrier": true,
+                    "length": 0.025,
+                    "name": "A-P Bone RP drillΦ5.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.bone.A-P_Bone_RP_drill%CE%A65.2L25.stl",
+                    "type": "nobel.activate.bone.A-P_Bone_RP_drillΦ5.2L25"
+                  },
+                  {
+                    "diameter": 0.0062,
+                    "drill_system_type": "Unknown",
+                    "group_id": 168,
+                    "id": 804,
+                    "is_carrier": true,
+                    "length": 0.025,
+                    "name": "A-P Bone RP drillΦ6.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.bone.A-P_Bone_RP_drill%CE%A66.2L25.stl",
+                    "type": "nobel.activate.bone.A-P_Bone_RP_drillΦ6.2L25"
+                  },
+                  {
+                    "diameter": 0.0067,
+                    "drill_system_type": "Unknown",
+                    "group_id": 168,
+                    "id": 805,
+                    "length": 0.025,
+                    "name": "A-P Bone WP drillΦ6.7L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.bone.A-P_Bone_WP_drill%CE%A66.7L25.stl",
+                    "type": "nobel.activate.bone.A-P_Bone_WP_drillΦ6.7L25"
+                  }
+                ],
+                "name": "骨磨",
+                "system_id": 34,
+                "type": "nobel.activate.bone"
+              },
+              {
+                "group_type": "drill",
+                "id": 174,
+                "items": [
+                  {
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 174,
+                    "id": 821,
+                    "length": 0.04,
+                    "name": "A-P EXT Bone NP drillΦ4.4L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.bone_ext.A-P_EXT_Bone_NP_drill%CE%A64.4L40.stl",
+                    "type": "nobel.activate.bone_ext.A-P_EXT_Bone_NP_drillΦ4.4L40"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 174,
+                    "id": 822,
+                    "length": 0.04,
+                    "name": "A-P EXT Bone NP drillΦ5.2L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.bone_ext.A-P_EXT_Bone_NP_drill%CE%A65.2L40.stl",
+                    "type": "nobel.activate.bone_ext.A-P_EXT_Bone_NP_drillΦ5.2L40"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 174,
+                    "id": 823,
+                    "length": 0.04,
+                    "name": "A-P EXT Bone RP drillΦ5.2L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.bone_ext.A-P_EXT_Bone_RP_drill%CE%A65.2L40.stl",
+                    "type": "nobel.activate.bone_ext.A-P_EXT_Bone_RP_drillΦ5.2L40"
+                  },
+                  {
+                    "diameter": 0.0062,
+                    "drill_system_type": "Unknown",
+                    "group_id": 174,
+                    "id": 824,
+                    "length": 0.04,
+                    "name": "A-P EXT Bone RP drillΦ6.2L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.bone_ext.A-P_EXT_Bone_RP_drill%CE%A66.2L40.stl",
+                    "type": "nobel.activate.bone_ext.A-P_EXT_Bone_RP_drillΦ6.2L40"
+                  },
+                  {
+                    "diameter": 0.0067,
+                    "drill_system_type": "Unknown",
+                    "group_id": 174,
+                    "id": 825,
+                    "length": 0.04,
+                    "name": "A-P EXT Bone WP drillΦ6.7L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.bone_ext.A-P_EXT_Bone_WP_drill%CE%A66.7L40.stl",
+                    "type": "nobel.activate.bone_ext.A-P_EXT_Bone_WP_drillΦ6.7L40"
+                  }
+                ],
+                "name": "骨磨(延长杆)",
+                "system_id": 34,
+                "type": "nobel.activate.bone_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 164,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 164,
+                    "id": 792,
+                    "length": 0.0329,
+                    "name": "A-P Guild drillΦ2.0L32.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.guild.A-P_Guild_drill%CE%A62.0L32.9.stl",
+                    "type": "nobel.activate.guild.A-P_Guild_drillΦ2.0L32.9"
+                  }
+                ],
+                "name": "定位钻",
+                "system_id": 34,
+                "type": "nobel.activate.guild"
+              },
+              {
+                "group_type": "drill",
+                "id": 170,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 170,
+                    "id": 812,
+                    "length": 0.0479,
+                    "name": "A-P EXT Guild drillΦ2.0L47.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.guild_ext.A-P_EXT_Guild_drill%CE%A62.0L47.9.stl",
+                    "type": "nobel.activate.guild_ext.A-P_EXT_Guild_drillΦ2.0L47.9"
+                  }
+                ],
+                "name": "定位钻(延长杆)",
+                "system_id": 34,
+                "type": "nobel.activate.guild_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 169,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 169,
+                    "id": 806,
+                    "is_carrier": true,
+                    "length": 0.028,
+                    "name": "A-P Implant drill-NPL28",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant.A-P_Implant_drill-NPL28.stl",
+                    "type": "nobel.activate.implant.A-P_Implant_drill-NPL28"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 169,
+                    "id": 807,
+                    "is_carrier": true,
+                    "length": 0.037,
+                    "name": "A-P Implant drill-NPL37",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant.A-P_Implant_drill-NPL37.stl",
+                    "type": "nobel.activate.implant.A-P_Implant_drill-NPL37"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 169,
+                    "id": 808,
+                    "is_carrier": true,
+                    "length": 0.028,
+                    "name": "A-P Implant drill-RPL28",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant.A-P_Implant_drill-RPL28.stl",
+                    "type": "nobel.activate.implant.A-P_Implant_drill-RPL28"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 169,
+                    "id": 809,
+                    "is_carrier": true,
+                    "length": 0.037,
+                    "name": "A-P Implant drill-RPL37",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant.A-P_Implant_drill-RPL37.stl",
+                    "type": "nobel.activate.implant.A-P_Implant_drill-RPL37"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 169,
+                    "id": 810,
+                    "is_carrier": true,
+                    "length": 0.028,
+                    "name": "A-P Implant drill-WPL28",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant.A-P_Implant_drill-WPL28.stl",
+                    "type": "nobel.activate.implant.A-P_Implant_drill-WPL28"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 169,
+                    "id": 811,
+                    "is_carrier": true,
+                    "length": 0.037,
+                    "name": "A-P Implant drill-WPL37",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant.A-P_Implant_drill-WPL37.stl",
+                    "type": "nobel.activate.implant.A-P_Implant_drill-WPL37"
+                  }
+                ],
+                "name": "携带体",
+                "system_id": 34,
+                "type": "nobel.activate.implant"
+              },
+              {
+                "group_type": "drill",
+                "id": 175,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 175,
+                    "id": 826,
+                    "is_carrier": true,
+                    "length": 0.043,
+                    "name": "A-P EXT Implant drill-NPL43",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant_ext.A-P_EXT_Implant_drill-NPL43.stl",
+                    "type": "nobel.activate.implant_ext.A-P_EXT_Implant_drill-NPL43"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 175,
+                    "id": 827,
+                    "is_carrier": true,
+                    "length": 0.052,
+                    "name": "A-P EXT Implant drill-NPL52",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant_ext.A-P_EXT_Implant_drill-NPL52.stl",
+                    "type": "nobel.activate.implant_ext.A-P_EXT_Implant_drill-NPL52"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 175,
+                    "id": 828,
+                    "is_carrier": true,
+                    "length": 0.043,
+                    "name": "A-P EXT Implant drill-RPL43",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant_ext.A-P_EXT_Implant_drill-RPL43.stl",
+                    "type": "nobel.activate.implant_ext.A-P_EXT_Implant_drill-RPL43"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 175,
+                    "id": 829,
+                    "is_carrier": true,
+                    "length": 0.052,
+                    "name": "A-P EXT Implant drill-RPL52",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant_ext.A-P_EXT_Implant_drill-RPL52.stl",
+                    "type": "nobel.activate.implant_ext.A-P_EXT_Implant_drill-RPL52"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 175,
+                    "id": 830,
+                    "is_carrier": true,
+                    "length": 0.043,
+                    "name": "A-P EXT Implant drill-WPL43",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant_ext.A-P_EXT_Implant_drill-WPL43.stl",
+                    "type": "nobel.activate.implant_ext.A-P_EXT_Implant_drill-WPL43"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 175,
+                    "id": 831,
+                    "is_carrier": true,
+                    "length": 0.052,
+                    "name": "A-P EXT Implant drill-WPL52",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.implant_ext.A-P_EXT_Implant_drill-WPL52.stl",
+                    "type": "nobel.activate.implant_ext.A-P_EXT_Implant_drill-WPL52"
+                  }
+                ],
+                "name": "携带体(延长杆)",
+                "system_id": 34,
+                "type": "nobel.activate.implant_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 166,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 166,
+                    "id": 794,
+                    "length": 0.032,
+                    "name": "A-P Pilot drillΦ2.0L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.pilot.A-P_Pilot_drill%CE%A62.0L32.stl",
+                    "type": "nobel.activate.pilot.A-P_Pilot_drillΦ2.0L32"
+                  }
+                ],
+                "name": "先锋钻",
+                "system_id": 34,
+                "type": "nobel.activate.pilot"
+              },
+              {
+                "group_type": "drill",
+                "id": 172,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 172,
+                    "id": 814,
+                    "length": 0.047,
+                    "name": "A-P EXT Pilot drillΦ2.0L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.pilot_ext.A-P_EXT_Pilot_drill%CE%A62.0L47.stl",
+                    "type": "nobel.activate.pilot_ext.A-P_EXT_Pilot_drillΦ2.0L47"
+                  }
+                ],
+                "name": "先锋钻(延长杆)",
+                "system_id": 34,
+                "type": "nobel.activate.pilot_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 165,
+                "items": [
+                  {
+                    "diameter": 0.0015,
+                    "drill_system_type": "Unknown",
+                    "group_id": 165,
+                    "id": 793,
+                    "length": 0.0265,
+                    "name": "A-P Round drillΦ1.5L26.5",
+                    "offset": 0.0015,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.round.A-P_Round_drill%CE%A61.5L26.5.stl",
+                    "type": "nobel.activate.round.A-P_Round_drillΦ1.5L26.5"
+                  }
+                ],
+                "name": "球钻",
+                "system_id": 34,
+                "type": "nobel.activate.round"
+              },
+              {
+                "group_type": "drill",
+                "id": 171,
+                "items": [
+                  {
+                    "diameter": 0.0015,
+                    "drill_system_type": "Unknown",
+                    "group_id": 171,
+                    "id": 813,
+                    "length": 0.0415,
+                    "name": "A-P EXT Round drillΦ1.5L41.5",
+                    "offset": -0.0015,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.round_ext.A-P_EXT_Round_drill%CE%A61.5L41.5.stl",
+                    "type": "nobel.activate.round_ext.A-P_EXT_Round_drillΦ1.5L41.5"
+                  }
+                ],
+                "name": "球钻(延长杆)",
+                "system_id": 34,
+                "type": "nobel.activate.round_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 167,
+                "items": [
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "Unknown",
+                    "group_id": 167,
+                    "id": 795,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ2.8L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist.A-P_Twist_drill%CE%A62.8L32.stl",
+                    "type": "nobel.activate.twist.A-P_Twist_drillΦ2.8L32"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "drill_system_type": "Unknown",
+                    "group_id": 167,
+                    "id": 796,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ3.2L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist.A-P_Twist_drill%CE%A63.2L32.stl",
+                    "type": "nobel.activate.twist.A-P_Twist_drillΦ3.2L32"
+                  },
+                  {
+                    "diameter": 0.0036,
+                    "drill_system_type": "Unknown",
+                    "group_id": 167,
+                    "id": 797,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ3.6L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist.A-P_Twist_drill%CE%A63.6L32.stl",
+                    "type": "nobel.activate.twist.A-P_Twist_drillΦ3.6L32"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 167,
+                    "id": 798,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ4.2L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist.A-P_Twist_drill%CE%A64.2L32.stl",
+                    "type": "nobel.activate.twist.A-P_Twist_drillΦ4.2L32"
+                  },
+                  {
+                    "diameter": 0.0046,
+                    "drill_system_type": "Unknown",
+                    "group_id": 167,
+                    "id": 799,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ4.6L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist.A-P_Twist_drill%CE%A64.6L32.stl",
+                    "type": "nobel.activate.twist.A-P_Twist_drillΦ4.6L32"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 167,
+                    "id": 800,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ5.0L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist.A-P_Twist_drill%CE%A65.0L32.stl",
+                    "type": "nobel.activate.twist.A-P_Twist_drillΦ5.0L32"
+                  }
+                ],
+                "name": "扩孔钻",
+                "system_id": 34,
+                "type": "nobel.activate.twist"
+              },
+              {
+                "group_type": "drill",
+                "id": 173,
+                "items": [
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "Unknown",
+                    "group_id": 173,
+                    "id": 815,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ2.8L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist_ext.A-P_EXT_Twist_drill%CE%A62.8L47.stl",
+                    "type": "nobel.activate.twist_ext.A-P_EXT_Twist_drillΦ2.8L47"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "drill_system_type": "Unknown",
+                    "group_id": 173,
+                    "id": 816,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ3.2L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist_ext.A-P_EXT_Twist_drill%CE%A63.2L47.stl",
+                    "type": "nobel.activate.twist_ext.A-P_EXT_Twist_drillΦ3.2L47"
+                  },
+                  {
+                    "diameter": 0.0036,
+                    "drill_system_type": "Unknown",
+                    "group_id": 173,
+                    "id": 817,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ3.6L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist_ext.A-P_EXT_Twist_drill%CE%A63.6L47.stl",
+                    "type": "nobel.activate.twist_ext.A-P_EXT_Twist_drillΦ3.6L47"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 173,
+                    "id": 818,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ4.2L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist_ext.A-P_EXT_Twist_drill%CE%A64.2L47.stl",
+                    "type": "nobel.activate.twist_ext.A-P_EXT_Twist_drillΦ4.2L47"
+                  },
+                  {
+                    "diameter": 0.0046,
+                    "drill_system_type": "Unknown",
+                    "group_id": 173,
+                    "id": 819,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ4.6L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist_ext.A-P_EXT_Twist_drill%CE%A64.6L47.stl",
+                    "type": "nobel.activate.twist_ext.A-P_EXT_Twist_drillΦ4.6L47"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 173,
+                    "id": 820,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ5.0L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.activate.twist_ext.A-P_EXT_Twist_drill%CE%A65.0L47.stl",
+                    "type": "nobel.activate.twist_ext.A-P_EXT_Twist_drillΦ5.0L47"
+                  }
+                ],
+                "name": "扩孔钻(延长杆)",
+                "system_id": 34,
+                "type": "nobel.activate.twist_ext"
+              }
+            ],
+            "id": 34,
+            "name": "Activate",
+            "type": "nobel.activate",
+            "version": 27
+          },
+          {
+            "brand_id": 5,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "id": 182,
+                "items": [
+                  {
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 182,
+                    "id": 850,
+                    "length": 0.025,
+                    "name": "A-P Bone NP drillΦ4.4L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.bone.A-P_Bone_NP_drill%CE%A64.4L25.stl",
+                    "type": "nobel.pcc.bone.A-P_Bone_NP_drillΦ4.4L25"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 182,
+                    "id": 851,
+                    "length": 0.025,
+                    "name": "A-P Bone NP drillΦ5.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.bone.A-P_Bone_NP_drill%CE%A65.2L25.stl",
+                    "type": "nobel.pcc.bone.A-P_Bone_NP_drillΦ5.2L25"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 182,
+                    "id": 852,
+                    "length": 0.025,
+                    "name": "A-P Bone RP drillΦ5.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.bone.A-P_Bone_RP_drill%CE%A65.2L25.stl",
+                    "type": "nobel.pcc.bone.A-P_Bone_RP_drillΦ5.2L25"
+                  },
+                  {
+                    "diameter": 0.0062,
+                    "drill_system_type": "Unknown",
+                    "group_id": 182,
+                    "id": 853,
+                    "length": 0.025,
+                    "name": "A-P Bone RP drillΦ6.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.bone.A-P_Bone_RP_drill%CE%A66.2L25.stl",
+                    "type": "nobel.pcc.bone.A-P_Bone_RP_drillΦ6.2L25"
+                  },
+                  {
+                    "diameter": 0.0067,
+                    "drill_system_type": "Unknown",
+                    "group_id": 182,
+                    "id": 854,
+                    "length": 0.025,
+                    "name": "A-P Bone WP drillΦ6.7L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.bone.A-P_Bone_WP_drill%CE%A66.7L25.stl",
+                    "type": "nobel.pcc.bone.A-P_Bone_WP_drillΦ6.7L25"
+                  }
+                ],
+                "name": "骨磨",
+                "system_id": 35,
+                "type": "nobel.pcc.bone"
+              },
+              {
+                "group_type": "drill",
+                "id": 190,
+                "items": [
+                  {
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 190,
+                    "id": 879,
+                    "length": 0.04,
+                    "name": "A-P EXT Bone NP drillΦ4.4L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.bone_ext.A-P_EXT_Bone_NP_drill%CE%A64.4L40.stl",
+                    "type": "nobel.pcc.bone_ext.A-P_EXT_Bone_NP_drillΦ4.4L40"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 190,
+                    "id": 880,
+                    "length": 0.04,
+                    "name": "A-P EXT Bone NP drillΦ5.2L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.bone_ext.A-P_EXT_Bone_NP_drill%CE%A65.2L40.stl",
+                    "type": "nobel.pcc.bone_ext.A-P_EXT_Bone_NP_drillΦ5.2L40"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 190,
+                    "id": 881,
+                    "length": 0.04,
+                    "name": "A-P EXT Bone RP drillΦ5.2L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.bone_ext.A-P_EXT_Bone_RP_drill%CE%A65.2L40.stl",
+                    "type": "nobel.pcc.bone_ext.A-P_EXT_Bone_RP_drillΦ5.2L40"
+                  },
+                  {
+                    "diameter": 0.0062,
+                    "drill_system_type": "Unknown",
+                    "group_id": 190,
+                    "id": 882,
+                    "length": 0.04,
+                    "name": "A-P EXT Bone RP drillΦ6.2L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.bone_ext.A-P_EXT_Bone_RP_drill%CE%A66.2L40.stl",
+                    "type": "nobel.pcc.bone_ext.A-P_EXT_Bone_RP_drillΦ6.2L40"
+                  },
+                  {
+                    "diameter": 0.0067,
+                    "drill_system_type": "Unknown",
+                    "group_id": 190,
+                    "id": 883,
+                    "length": 0.04,
+                    "name": "A-P EXT Bone WP drillΦ6.7L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.bone_ext.A-P_EXT_Bone_WP_drill%CE%A66.7L40.stl",
+                    "type": "nobel.pcc.bone_ext.A-P_EXT_Bone_WP_drillΦ6.7L40"
+                  }
+                ],
+                "name": "骨磨(延长杆)",
+                "system_id": 35,
+                "type": "nobel.pcc.bone_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 176,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 176,
+                    "id": 832,
+                    "length": 0.0329,
+                    "name": "A-P Guild drillΦ2.0L32.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.guild.A-P_Guild_drill%CE%A62.0L32.9.stl",
+                    "type": "nobel.pcc.guild.A-P_Guild_drillΦ2.0L32.9"
+                  }
+                ],
+                "name": "定位钻",
+                "system_id": 35,
+                "type": "nobel.pcc.guild"
+              },
+              {
+                "group_type": "drill",
+                "id": 184,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 184,
+                    "id": 861,
+                    "length": 0.0479,
+                    "name": "A-P EXT Guild drillΦ2.0L47.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.guild_ext.A-P_EXT_Guild_drill%CE%A62.0L47.9.stl",
+                    "type": "nobel.pcc.guild_ext.A-P_EXT_Guild_drillΦ2.0L47.9"
+                  }
+                ],
+                "name": "定位钻(延长杆)",
+                "system_id": 35,
+                "type": "nobel.pcc.guild_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 183,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 183,
+                    "id": 855,
+                    "is_carrier": true,
+                    "length": 0.028,
+                    "name": "A-P Implant drill-NPL28",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant.A-P_Implant_drill-NPL28.stl",
+                    "type": "nobel.pcc.implant.A-P_Implant_drill-NPL28"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 183,
+                    "id": 856,
+                    "is_carrier": true,
+                    "length": 0.037,
+                    "name": "A-P Implant drill-NPL37",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant.A-P_Implant_drill-NPL37.stl",
+                    "type": "nobel.pcc.implant.A-P_Implant_drill-NPL37"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 183,
+                    "id": 857,
+                    "is_carrier": true,
+                    "length": 0.028,
+                    "name": "A-P Implant drill-RPL28",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant.A-P_Implant_drill-RPL28.stl",
+                    "type": "nobel.pcc.implant.A-P_Implant_drill-RPL28"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 183,
+                    "id": 858,
+                    "is_carrier": true,
+                    "length": 0.037,
+                    "name": "A-P Implant drill-RPL37",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant.A-P_Implant_drill-RPL37.stl",
+                    "type": "nobel.pcc.implant.A-P_Implant_drill-RPL37"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 183,
+                    "id": 859,
+                    "is_carrier": true,
+                    "length": 0.028,
+                    "name": "A-P Implant drill-WPL28",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant.A-P_Implant_drill-WPL28.stl",
+                    "type": "nobel.pcc.implant.A-P_Implant_drill-WPL28"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 183,
+                    "id": 860,
+                    "is_carrier": true,
+                    "length": 0.037,
+                    "name": "A-P Implant drill-WPL37",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant.A-P_Implant_drill-WPL37.stl",
+                    "type": "nobel.pcc.implant.A-P_Implant_drill-WPL37"
+                  }
+                ],
+                "name": "携带体",
+                "system_id": 35,
+                "type": "nobel.pcc.implant"
+              },
+              {
+                "group_type": "drill",
+                "id": 191,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 191,
+                    "id": 884,
+                    "is_carrier": true,
+                    "length": 0.043,
+                    "name": "A-P EXT Implant drill-NPL43",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant_ext.A-P_EXT_Implant_drill-NPL43.stl",
+                    "type": "nobel.pcc.implant_ext.A-P_EXT_Implant_drill-NPL43"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 191,
+                    "id": 885,
+                    "is_carrier": true,
+                    "length": 0.052,
+                    "name": "A-P EXT Implant drill-NPL52",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant_ext.A-P_EXT_Implant_drill-NPL52.stl",
+                    "type": "nobel.pcc.implant_ext.A-P_EXT_Implant_drill-NPL52"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 191,
+                    "id": 886,
+                    "is_carrier": true,
+                    "length": 0.043,
+                    "name": "A-P EXT Implant drill-RPL43",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant_ext.A-P_EXT_Implant_drill-RPL43.stl",
+                    "type": "nobel.pcc.implant_ext.A-P_EXT_Implant_drill-RPL43"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 191,
+                    "id": 887,
+                    "is_carrier": true,
+                    "length": 0.052,
+                    "name": "A-P EXT Implant drill-RPL52",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant_ext.A-P_EXT_Implant_drill-RPL52.stl",
+                    "type": "nobel.pcc.implant_ext.A-P_EXT_Implant_drill-RPL52"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 191,
+                    "id": 888,
+                    "is_carrier": true,
+                    "length": 0.043,
+                    "name": "A-P EXT Implant drill-WPL43",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant_ext.A-P_EXT_Implant_drill-WPL43.stl",
+                    "type": "nobel.pcc.implant_ext.A-P_EXT_Implant_drill-WPL43"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 191,
+                    "id": 889,
+                    "is_carrier": true,
+                    "length": 0.052,
+                    "name": "A-P EXT Implant drill-WPL52",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.implant_ext.A-P_EXT_Implant_drill-WPL52.stl",
+                    "type": "nobel.pcc.implant_ext.A-P_EXT_Implant_drill-WPL52"
+                  }
+                ],
+                "name": "携带体(延长杆)",
+                "system_id": 35,
+                "type": "nobel.pcc.implant_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 178,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 178,
+                    "id": 834,
+                    "length": 0.032,
+                    "name": "A-P Pilot drillΦ2.0L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.pilot.A-P_Pilot_drill%CE%A62.0L32.stl",
+                    "type": "nobel.pcc.pilot.A-P_Pilot_drillΦ2.0L32"
+                  }
+                ],
+                "name": "先锋钻",
+                "system_id": 35,
+                "type": "nobel.pcc.pilot"
+              },
+              {
+                "group_type": "drill",
+                "id": 186,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 186,
+                    "id": 863,
+                    "length": 0.047,
+                    "name": "A-P EXT Pilot drillΦ2.0L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.pilot_ext.A-P_EXT_Pilot_drill%CE%A62.0L47.stl",
+                    "type": "nobel.pcc.pilot_ext.A-P_EXT_Pilot_drillΦ2.0L47"
+                  }
+                ],
+                "name": "先锋钻(延长杆)",
+                "system_id": 35,
+                "type": "nobel.pcc.pilot_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 180,
+                "items": [
+                  {
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 180,
+                    "id": 841,
+                    "length": 0.023,
+                    "name": "A-P Profile drillΦ3.75L23",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.profile.A-P_Profile_drill%CE%A63.75L23.stl",
+                    "type": "nobel.pcc.profile.A-P_Profile_drillΦ3.75L23"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 180,
+                    "id": 842,
+                    "length": 0.023,
+                    "name": "A-P Profile drillΦ4.3L23",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.profile.A-P_Profile_drill%CE%A64.3L23.stl",
+                    "type": "nobel.pcc.profile.A-P_Profile_drillΦ4.3L23"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 180,
+                    "id": 843,
+                    "length": 0.023,
+                    "name": "A-P Profile drillΦ5.0L23",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.profile.A-P_Profile_drill%CE%A65.0L23.stl",
+                    "type": "nobel.pcc.profile.A-P_Profile_drillΦ5.0L23"
+                  },
+                  {
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 180,
+                    "id": 844,
+                    "length": 0.023,
+                    "name": "A-P Profile drillΦ5.5L23",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.profile.A-P_Profile_drill%CE%A65.5L23.stl",
+                    "type": "nobel.pcc.profile.A-P_Profile_drillΦ5.5L23"
+                  }
+                ],
+                "name": "颈部成型钻",
+                "system_id": 35,
+                "type": "nobel.pcc.profile"
+              },
+              {
+                "group_type": "drill",
+                "id": 188,
+                "items": [
+                  {
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 188,
+                    "id": 870,
+                    "length": 0.038,
+                    "name": "A-P EXT Profile drillΦ3.75L38",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.profile_ext.A-P_EXT_Profile_drill%CE%A63.75L38.stl",
+                    "type": "nobel.pcc.profile_ext.A-P_EXT_Profile_drillΦ3.75L38"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 188,
+                    "id": 871,
+                    "length": 0.038,
+                    "name": "A-P EXT Profile drillΦ4.3L38",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.profile_ext.A-P_EXT_Profile_drill%CE%A64.3L38.stl",
+                    "type": "nobel.pcc.profile_ext.A-P_EXT_Profile_drillΦ4.3L38"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 188,
+                    "id": 872,
+                    "length": 0.038,
+                    "name": "A-P EXT Profile drillΦ5.0L38",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.profile_ext.A-P_EXT_Profile_drill%CE%A65.0L38.stl",
+                    "type": "nobel.pcc.profile_ext.A-P_EXT_Profile_drillΦ5.0L38"
+                  },
+                  {
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 188,
+                    "id": 873,
+                    "length": 0.038,
+                    "name": "A-P EXT Profile drillΦ5.5L38",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.profile_ext.A-P_EXT_Profile_drill%CE%A65.5L38.stl",
+                    "type": "nobel.pcc.profile_ext.A-P_EXT_Profile_drillΦ5.5L38"
+                  }
+                ],
+                "name": "延长杆(延长杆)",
+                "system_id": 35,
+                "type": "nobel.pcc.profile_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 177,
+                "items": [
+                  {
+                    "diameter": 0.0015,
+                    "drill_system_type": "Unknown",
+                    "group_id": 177,
+                    "id": 833,
+                    "length": 0.0265,
+                    "name": "A-P Round drillΦ1.5L26.5",
+                    "offset": 0.0015,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.round.A-P_Round_drill%CE%A61.5L26.5.stl",
+                    "type": "nobel.pcc.round.A-P_Round_drillΦ1.5L26.5"
+                  }
+                ],
+                "name": "球钻",
+                "system_id": 35,
+                "type": "nobel.pcc.round"
+              },
+              {
+                "group_type": "drill",
+                "id": 185,
+                "items": [
+                  {
+                    "diameter": 0.0015,
+                    "drill_system_type": "Unknown",
+                    "group_id": 185,
+                    "id": 862,
+                    "length": 0.0415,
+                    "name": "A-P EXT Round drillΦ1.5L41.5",
+                    "offset": 0.0015,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.round_ext.A-P_EXT_Round_drill%CE%A61.5L41.5.stl",
+                    "type": "nobel.pcc.round_ext.A-P_EXT_Round_drillΦ1.5L41.5"
+                  }
+                ],
+                "name": "球钻(延长杆)",
+                "system_id": 35,
+                "type": "nobel.pcc.round_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 181,
+                "items": [
+                  {
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 181,
+                    "id": 845,
+                    "length": 0.032,
+                    "name": "A-P Tapping drillΦ3.75L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.tap.A-P_Tapping_drill%CE%A63.75L32.stl",
+                    "type": "nobel.pcc.tap.A-P_Tapping_drillΦ3.75L32"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 181,
+                    "id": 846,
+                    "length": 0.032,
+                    "name": "A-P Tapping drillΦ4.3L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.tap.A-P_Tapping_drill%CE%A64.3L32.stl",
+                    "type": "nobel.pcc.tap.A-P_Tapping_drillΦ4.3L32"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 181,
+                    "id": 847,
+                    "length": 0.032,
+                    "name": "A-P Tapping drillΦ5.0L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.tap.A-P_Tapping_drill%CE%A65.0L32.stl",
+                    "type": "nobel.pcc.tap.A-P_Tapping_drillΦ5.0L32"
+                  },
+                  {
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 181,
+                    "id": 848,
+                    "length": 0.032,
+                    "name": "A-P Tapping drillΦ5.5L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.tap.A-P_Tapping_drill%CE%A65.5L32.stl",
+                    "type": "nobel.pcc.tap.A-P_Tapping_drillΦ5.5L32"
+                  },
+                  {
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 181,
+                    "id": 849,
+                    "length": 0.032,
+                    "name": "A-P Tapping drillΦ5.5L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.tap.A-P_Tapping_drill%CE%A65.5L32.stl",
+                    "type": "nobel.pcc.tap.A-P_Tapping_drillΦ5.5L32.__dup2"
+                  }
+                ],
+                "name": "攻丝",
+                "system_id": 35,
+                "type": "nobel.pcc.tap"
+              },
+              {
+                "group_type": "drill",
+                "id": 189,
+                "items": [
+                  {
+                    "diameter": 0.00375,
+                    "drill_system_type": "Unknown",
+                    "group_id": 189,
+                    "id": 874,
+                    "length": 0.047,
+                    "name": "A-P EXT Tapping drillΦ3.75L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.tap_ext.A-P_EXT_Tapping_drill%CE%A63.75L47.stl",
+                    "type": "nobel.pcc.tap_ext.A-P_EXT_Tapping_drillΦ3.75L47"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 189,
+                    "id": 875,
+                    "length": 0.047,
+                    "name": "A-P EXT Tapping drillΦ4.3L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.tap_ext.A-P_EXT_Tapping_drill%CE%A64.3L47.stl",
+                    "type": "nobel.pcc.tap_ext.A-P_EXT_Tapping_drillΦ4.3L47"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 189,
+                    "id": 876,
+                    "length": 0.047,
+                    "name": "A-P EXT Tapping drillΦ5.0L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.tap_ext.A-P_EXT_Tapping_drill%CE%A65.0L47.stl",
+                    "type": "nobel.pcc.tap_ext.A-P_EXT_Tapping_drillΦ5.0L47"
+                  },
+                  {
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 189,
+                    "id": 877,
+                    "length": 0.047,
+                    "name": "A-P EXT Tapping drillΦ5.5L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.tap_ext.A-P_EXT_Tapping_drill%CE%A65.5L47.stl",
+                    "type": "nobel.pcc.tap_ext.A-P_EXT_Tapping_drillΦ5.5L47"
+                  },
+                  {
+                    "diameter": 0.0055,
+                    "drill_system_type": "Unknown",
+                    "group_id": 189,
+                    "id": 878,
+                    "length": 0.047,
+                    "name": "A-P EXT Tapping drillΦ5.5L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.tap_ext.A-P_EXT_Tapping_drill%CE%A65.5L47.stl",
+                    "type": "nobel.pcc.tap_ext.A-P_EXT_Tapping_drillΦ5.5L47.__dup2"
+                  }
+                ],
+                "name": "攻丝(延长杆)",
+                "system_id": 35,
+                "type": "nobel.pcc.tap_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 179,
+                "items": [
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "Unknown",
+                    "group_id": 179,
+                    "id": 835,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ2.8L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist.A-P_Twist_drill%CE%A62.8L32.stl",
+                    "type": "nobel.pcc.twist.A-P_Twist_drillΦ2.8L32"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "drill_system_type": "Unknown",
+                    "group_id": 179,
+                    "id": 836,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ3.2L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist.A-P_Twist_drill%CE%A63.2L32.stl",
+                    "type": "nobel.pcc.twist.A-P_Twist_drillΦ3.2L32"
+                  },
+                  {
+                    "diameter": 0.0036,
+                    "drill_system_type": "Unknown",
+                    "group_id": 179,
+                    "id": 837,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ3.6L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist.A-P_Twist_drill%CE%A63.6L32.stl",
+                    "type": "nobel.pcc.twist.A-P_Twist_drillΦ3.6L32"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 179,
+                    "id": 838,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ4.2L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist.A-P_Twist_drill%CE%A64.2L32.stl",
+                    "type": "nobel.pcc.twist.A-P_Twist_drillΦ4.2L32"
+                  },
+                  {
+                    "diameter": 0.0046,
+                    "drill_system_type": "Unknown",
+                    "group_id": 179,
+                    "id": 839,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ4.6L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist.A-P_Twist_drill%CE%A64.6L32.stl",
+                    "type": "nobel.pcc.twist.A-P_Twist_drillΦ4.6L32"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 179,
+                    "id": 840,
+                    "length": 0.032,
+                    "name": "A-P Twist drillΦ5.0L32",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist.A-P_Twist_drill%CE%A65.0L32.stl",
+                    "type": "nobel.pcc.twist.A-P_Twist_drillΦ5.0L32"
+                  }
+                ],
+                "name": "扩孔钻",
+                "system_id": 35,
+                "type": "nobel.pcc.twist"
+              },
+              {
+                "group_type": "drill",
+                "id": 187,
+                "items": [
+                  {
+                    "diameter": 0.0028,
+                    "drill_system_type": "Unknown",
+                    "group_id": 187,
+                    "id": 864,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ2.8L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist_ext.A-P_EXT_Twist_drill%CE%A62.8L47.stl",
+                    "type": "nobel.pcc.twist_ext.A-P_EXT_Twist_drillΦ2.8L47"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "drill_system_type": "Unknown",
+                    "group_id": 187,
+                    "id": 865,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ3.2L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist_ext.A-P_EXT_Twist_drill%CE%A63.2L47.stl",
+                    "type": "nobel.pcc.twist_ext.A-P_EXT_Twist_drillΦ3.2L47"
+                  },
+                  {
+                    "diameter": 0.0036,
+                    "drill_system_type": "Unknown",
+                    "group_id": 187,
+                    "id": 866,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ3.6L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist_ext.A-P_EXT_Twist_drill%CE%A63.6L47.stl",
+                    "type": "nobel.pcc.twist_ext.A-P_EXT_Twist_drillΦ3.6L47"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 187,
+                    "id": 867,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ4.2L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist_ext.A-P_EXT_Twist_drill%CE%A64.2L47.stl",
+                    "type": "nobel.pcc.twist_ext.A-P_EXT_Twist_drillΦ4.2L47"
+                  },
+                  {
+                    "diameter": 0.0046,
+                    "drill_system_type": "Unknown",
+                    "group_id": 187,
+                    "id": 868,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ4.6L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist_ext.A-P_EXT_Twist_drill%CE%A64.6L47.stl",
+                    "type": "nobel.pcc.twist_ext.A-P_EXT_Twist_drillΦ4.6L47"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 187,
+                    "id": 869,
+                    "length": 0.047,
+                    "name": "A-P EXT Twist drillΦ5.0L47",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pcc.twist_ext.A-P_EXT_Twist_drill%CE%A65.0L47.stl",
+                    "type": "nobel.pcc.twist_ext.A-P_EXT_Twist_drillΦ5.0L47"
+                  }
+                ],
+                "name": "扩孔钻(延长杆)",
+                "system_id": 35,
+                "type": "nobel.pcc.twist_ext"
+              }
+            ],
+            "id": 35,
+            "name": "PCC",
+            "type": "nobel.pcc",
+            "version": 14
+          },
+          {
+            "brand_id": 5,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "id": 195,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 195,
+                    "id": 897,
+                    "is_carrier": true,
+                    "length": 0.0216,
+                    "name": "Connection to Handpiece 1",
+                    "offset": -0.00385,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/Nobel_NobelZygoma_植体连接杆_29081.stl",
+                    "type": "nobel.zygoma.ljg.Connection to Handpiece 1"
+                  }
+                ],
+                "name": "套筒",
+                "system_id": 36,
+                "type": "nobel.zygoma.ljg"
+              },
+              {
+                "group_type": "drill",
+                "id": 193,
+                "items": [
+                  {
+                    "diameter": 0.0029,
+                    "drill_system_type": "Unknown",
+                    "group_id": 193,
+                    "id": 893,
+                    "length": 0.1,
+                    "name": "Twist Drill 2.9mm",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/Nobel_NobelZygoma_麻花钻_2.9mm_32628.stl",
+                    "type": "nobel.zygoma.mhz.guild.Twist Drill 2.9mm"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 193,
+                    "id": 894,
+                    "length": 0.1,
+                    "name": "Twist Drill 3.5mm",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/Nobel_NobelZygoma_麻花钻_3.5mm_32631.stl",
+                    "type": "nobel.zygoma.mhz.guild.Twist Drill 3.5mm"
+                  },
+                  {
+                    "diameter": 0.0029,
+                    "drill_system_type": "Unknown",
+                    "group_id": 193,
+                    "id": 891,
+                    "length": 0.0675,
+                    "name": "Twist Drill 2.9mm Short",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/Nobel_NobelZygoma_麻花钻_2.9mm_短_32629.stl",
+                    "type": "nobel.zygoma.mhz.Twist Drill 2.9mm Short"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 193,
+                    "id": 892,
+                    "length": 0.0675,
+                    "name": "Twist Drill 3.5mm Short",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/Nobel_NobelZygoma_麻花钻_3.5mm_短_32632.stl",
+                    "type": "nobel.zygoma.mhz.Twist Drill 3.5mm Short"
+                  }
+                ],
+                "name": "麻花钻",
+                "system_id": 36,
+                "type": "nobel.zygoma.mhz"
+              },
+              {
+                "group_type": "drill",
+                "id": 194,
+                "items": [
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 194,
+                    "id": 896,
+                    "length": 0.1,
+                    "name": "Pilot Drill 3.5mm",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/Nobel_NobelZygoma_先锋钻_3.5mm_32630.stl",
+                    "type": "nobel.zygoma.Pilot Drill 3.5mm"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 194,
+                    "id": 895,
+                    "length": 0.075,
+                    "name": "Pilot Drill 3.5mm Short",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/Nobel_NobelZygoma_先锋钻_3.5mm_短_32791.stl",
+                    "type": "nobel.zygoma.Pilot Drill 3.5mm Short"
+                  }
+                ],
+                "name": "先锋钻",
+                "system_id": 36,
+                "type": "nobel.zygoma.pilot"
+              },
+              {
+                "group_type": "drill",
+                "id": 192,
+                "items": [
+                  {
+                    "diameter": 0.0018,
+                    "drill_system_type": "Unknown",
+                    "group_id": 192,
+                    "id": 890,
+                    "length": 0.06985,
+                    "name": "Round Bur",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/Nobel_NobelZygoma_球钻_DIA_578-0.stl",
+                    "type": "nobel.zygoma.round.Round Bur"
+                  }
+                ],
+                "name": "球钻",
+                "system_id": 36,
+                "type": "nobel.zygoma.round"
+              }
+            ],
+            "id": 36,
+            "name": "Zygoma",
+            "type": "nobel.zygoma",
+            "version": 1
+          },
+          {
+            "brand_id": 5,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "id": 202,
+                "items": [
+                  {
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 202,
+                    "id": 925,
+                    "length": 0.025,
+                    "name": "P-C Bone NP drillΦ4.4L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.bone.P-C_Bone_NP_drill%CE%A64.4L25.stl",
+                    "type": "nobel.pmc-cc.bone.P-C_Bone_NP_drillΦ4.4L25"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 202,
+                    "id": 926,
+                    "length": 0.025,
+                    "name": "P-C Bone NP drillΦ5.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.bone.P-C_Bone_NP_drill%CE%A65.2L25.stl",
+                    "type": "nobel.pmc-cc.bone.P-C_Bone_NP_drillΦ5.2L25"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 202,
+                    "id": 927,
+                    "length": 0.025,
+                    "name": "P-C Bone RP drillΦ5.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.bone.P-C_Bone_RP_drill%CE%A65.2L25.stl",
+                    "type": "nobel.pmc-cc.bone.P-C_Bone_RP_drillΦ5.2L25"
+                  },
+                  {
+                    "diameter": 0.0062,
+                    "drill_system_type": "Unknown",
+                    "group_id": 202,
+                    "id": 928,
+                    "length": 0.025,
+                    "name": "P-C Bone RP drillΦ6.2L25",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.bone.P-C_Bone_RP_drill%CE%A66.2L25.stl",
+                    "type": "nobel.pmc-cc.bone.P-C_Bone_RP_drillΦ6.2L25"
+                  }
+                ],
+                "name": "骨磨",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.bone"
+              },
+              {
+                "group_type": "drill",
+                "id": 210,
+                "items": [
+                  {
+                    "diameter": 0.0044,
+                    "drill_system_type": "Unknown",
+                    "group_id": 210,
+                    "id": 960,
+                    "length": 0.04,
+                    "name": "P-C EXT Bone NP drillΦ4.4L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.bone_ext.P-C_EXT_Bone_NP_drill%CE%A64.4L40.stl",
+                    "type": "nobel.pmc-cc.bone_ext.P-C_EXT_Bone_NP_drillΦ4.4L40"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 210,
+                    "id": 961,
+                    "length": 0.04,
+                    "name": "P-C EXT Bone NP drillΦ5.2L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.bone_ext.P-C_EXT_Bone_NP_drill%CE%A65.2L40.stl",
+                    "type": "nobel.pmc-cc.bone_ext.P-C_EXT_Bone_NP_drillΦ5.2L40"
+                  },
+                  {
+                    "diameter": 0.0052,
+                    "drill_system_type": "Unknown",
+                    "group_id": 210,
+                    "id": 962,
+                    "length": 0.04,
+                    "name": "P-C EXT Bone RP drillΦ5.2L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.bone_ext.P-C_EXT_Bone_RP_drill%CE%A65.2L40.stl",
+                    "type": "nobel.pmc-cc.bone_ext.P-C_EXT_Bone_RP_drillΦ5.2L40"
+                  },
+                  {
+                    "diameter": 0.0062,
+                    "drill_system_type": "Unknown",
+                    "group_id": 210,
+                    "id": 963,
+                    "length": 0.04,
+                    "name": "P-C EXT Bone RP drillΦ6.2L40",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.bone_ext.P-C_EXT_Bone_RP_drill%CE%A66.2L40.stl",
+                    "type": "nobel.pmc-cc.bone_ext.P-C_EXT_Bone_RP_drillΦ6.2L40"
+                  }
+                ],
+                "name": "骨磨(延长杆)",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.bone_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 197,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 197,
+                    "id": 899,
+                    "length": 0.0329,
+                    "name": "P-C Guild drillΦ2.0L32.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.guild.P-C_Guild_drill%CE%A62.0L32.9.stl",
+                    "type": "nobel.pmc-cc.guild.P-C_Guild_drillΦ2.0L32.9"
+                  }
+                ],
+                "name": "定位钻",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.guild"
+              },
+              {
+                "group_type": "drill",
+                "id": 205,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 205,
+                    "id": 934,
+                    "length": 0.0479,
+                    "name": "P-C EXT Guild drillΦ2.0L47.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.guild_ext.P-C_EXT_Guild_drill%CE%A62.0L47.9.stl",
+                    "type": "nobel.pmc-cc.guild_ext.P-C_EXT_Guild_drillΦ2.0L47.9"
+                  }
+                ],
+                "name": "定位钻(延长杆)",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.guild_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 203,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 203,
+                    "id": 929,
+                    "is_carrier": true,
+                    "length": 0.028,
+                    "name": "P-C Implant drill-NPL28",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.implant.P-C_Implant_drill-NPL28.stl",
+                    "type": "nobel.pmc-cc.implant.P-C_Implant_drill-NPL28"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 203,
+                    "id": 930,
+                    "is_carrier": true,
+                    "length": 0.037,
+                    "name": "P-C Implant drill-NPL37",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.implant.P-C_Implant_drill-NPL37.stl",
+                    "type": "nobel.pmc-cc.implant.P-C_Implant_drill-NPL37"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 203,
+                    "id": 931,
+                    "is_carrier": true,
+                    "length": 0.028,
+                    "name": "P-C Implant drill-RPL28",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.implant.P-C_Implant_drill-RPL28.stl",
+                    "type": "nobel.pmc-cc.implant.P-C_Implant_drill-RPL28"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 203,
+                    "id": 932,
+                    "is_carrier": true,
+                    "length": 0.037,
+                    "name": "P-C Implant drill-RPL37",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.implant.P-C_Implant_drill-RPL37.stl",
+                    "type": "nobel.pmc-cc.implant.P-C_Implant_drill-RPL37"
+                  }
+                ],
+                "name": "携带体",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.implant"
+              },
+              {
+                "group_type": "drill",
+                "id": 211,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 211,
+                    "id": 964,
+                    "is_carrier": true,
+                    "length": 0.043,
+                    "name": "P-C EXT Implant drill-NPL43",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.implant_ext.P-C_EXT_Implant_drill-NPL43.stl",
+                    "type": "nobel.pmc-cc.implant_ext.P-C_EXT_Implant_drill-NPL43"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 211,
+                    "id": 965,
+                    "is_carrier": true,
+                    "length": 0.052,
+                    "name": "P-C EXT Implant drill-NPL52",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.implant_ext.P-C_EXT_Implant_drill-NPL52.stl",
+                    "type": "nobel.pmc-cc.implant_ext.P-C_EXT_Implant_drill-NPL52"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 211,
+                    "id": 966,
+                    "is_carrier": true,
+                    "length": 0.043,
+                    "name": "P-C EXT Implant drill-RPL43",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.implant_ext.P-C_EXT_Implant_drill-RPL43.stl",
+                    "type": "nobel.pmc-cc.implant_ext.P-C_EXT_Implant_drill-RPL43"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 211,
+                    "id": 967,
+                    "is_carrier": true,
+                    "length": 0.052,
+                    "name": "P-C EXT Implant drill-RPL52",
+                    "offset": 0.0053,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.implant_ext.P-C_EXT_Implant_drill-RPL52.stl",
+                    "type": "nobel.pmc-cc.implant_ext.P-C_EXT_Implant_drill-RPL52"
+                  }
+                ],
+                "name": "携带体(延长杆)",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.implant_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 198,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 198,
+                    "id": 900,
+                    "length": 0.0325,
+                    "name": "P-C Pilot drillΦ2.0L32.5",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.pilot.P-C_Pilot_drill%CE%A62.0L32.5.stl",
+                    "type": "nobel.pmc-cc.pilot.P-C_Pilot_drillΦ2.0L32.5"
+                  }
+                ],
+                "name": "先锋钻",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.pilot"
+              },
+              {
+                "group_type": "drill",
+                "id": 206,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 206,
+                    "id": 935,
+                    "length": 0.0475,
+                    "name": "P-C EXT Pilot drillΦ2.0L47.5",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.pilot_ext.P-C_EXT_Pilot_drill%CE%A62.0L47.5.stl",
+                    "type": "nobel.pmc-cc.pilot_ext.P-C_EXT_Pilot_drillΦ2.0L47.5"
+                  }
+                ],
+                "name": "先锋钻(延长杆)",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.pilot_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 196,
+                "items": [
+                  {
+                    "diameter": 0.0018,
+                    "drill_system_type": "Unknown",
+                    "group_id": 196,
+                    "id": 898,
+                    "length": 0.0265,
+                    "name": "P-C Round drillΦ1.8L26.5",
+                    "offset": 0.0018,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.round.P-C_Round_drill%CE%A61.8L26.5.stl",
+                    "type": "nobel.pmc-cc.round.P-C_Round_drillΦ1.8L26.5"
+                  }
+                ],
+                "name": "球钻",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.round"
+              },
+              {
+                "group_type": "drill",
+                "id": 204,
+                "items": [
+                  {
+                    "diameter": 0.0018,
+                    "drill_system_type": "Unknown",
+                    "group_id": 204,
+                    "id": 933,
+                    "length": 0.0415,
+                    "name": "P-C EXT Round drillΦ1.8L41.5",
+                    "offset": 0.0018,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.round_ext.P-C_EXT_Round_drill%CE%A61.8L41.5.stl",
+                    "type": "nobel.pmc-cc.round_ext.P-C_EXT_Round_drillΦ1.8L41.5"
+                  }
+                ],
+                "name": "球钻(延长杆)",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.round_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 201,
+                "items": [
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 201,
+                    "id": 922,
+                    "length": 0.03165,
+                    "name": "P-C Tapping drillΦ3.5L31.65",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.tap.P-C_Tapping_drill%CE%A63.5L31.65.stl",
+                    "type": "nobel.pmc-cc.tap.P-C_Tapping_drillΦ3.5L31.65"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 201,
+                    "id": 923,
+                    "length": 0.03165,
+                    "name": "P-C Tapping drillΦ4.3L31.65",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.tap.P-C_Tapping_drill%CE%A64.3L31.65.stl",
+                    "type": "nobel.pmc-cc.tap.P-C_Tapping_drillΦ4.3L31.65"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 201,
+                    "id": 924,
+                    "length": 0.03165,
+                    "name": "P-C Tapping drillΦ5.0L31.65",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.tap.P-C_Tapping_drill%CE%A65.0L31.65.stl",
+                    "type": "nobel.pmc-cc.tap.P-C_Tapping_drillΦ5.0L31.65"
+                  }
+                ],
+                "name": "攻丝",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.tap"
+              },
+              {
+                "group_type": "drill",
+                "id": 209,
+                "items": [
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 209,
+                    "id": 957,
+                    "length": 0.04665,
+                    "name": "P-C EXT Tapping drillΦ3.5L46.65",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.tap_ext.P-C_EXT_Tapping_drill%CE%A63.5L46.65.stl",
+                    "type": "nobel.pmc-cc.tap_ext.P-C_EXT_Tapping_drillΦ3.5L46.65"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 209,
+                    "id": 958,
+                    "length": 0.04665,
+                    "name": "P-C EXT Tapping drillΦ4.3L46.65",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.tap_ext.P-C_EXT_Tapping_drill%CE%A64.3L46.65.stl",
+                    "type": "nobel.pmc-cc.tap_ext.P-C_EXT_Tapping_drillΦ4.3L46.65"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 209,
+                    "id": 959,
+                    "length": 0.04665,
+                    "name": "P-C EXT Tapping drillΦ5.0L46.65",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.tap_ext.P-C_EXT_Tapping_drill%CE%A65.0L46.65.stl",
+                    "type": "nobel.pmc-cc.tap_ext.P-C_EXT_Tapping_drillΦ5.0L46.65"
+                  }
+                ],
+                "name": "攻丝(延长杆)",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.tap_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 199,
+                "items": [
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 901,
+                    "length": 0.0283,
+                    "name": "P-C Twist drillΦ3.5L28.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A63.5L28.3.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ3.5L28.3"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 902,
+                    "length": 0.031,
+                    "name": "P-C Twist drillΦ3.5L31",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A63.5L31.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ3.5L31"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 903,
+                    "length": 0.0324,
+                    "name": "P-C Twist drillΦ3.5L32.4",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A63.5L32.4.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ3.5L32.4"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 904,
+                    "length": 0.0339,
+                    "name": "P-C Twist drillΦ3.5L33.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A63.5L33.9.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ3.5L33.9"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 905,
+                    "length": 0.037,
+                    "name": "P-C Twist drillΦ3.5L37",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A63.5L37.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ3.5L37"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 906,
+                    "length": 0.0283,
+                    "name": "P-C Twist drillΦ4.3L28.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A64.3L28.3.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ4.3L28.3"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 907,
+                    "length": 0.031,
+                    "name": "P-C Twist drillΦ4.3L31",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A64.3L31.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ4.3L31"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 908,
+                    "length": 0.0324,
+                    "name": "P-C Twist drillΦ4.3L32.4",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A64.3L32.4.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ4.3L32.4"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 909,
+                    "length": 0.0339,
+                    "name": "P-C Twist drillΦ4.3L33.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A64.3L33.9.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ4.3L33.9"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 910,
+                    "length": 0.037,
+                    "name": "P-C Twist drillΦ4.3L37",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A64.3L37.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ4.3L37"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 911,
+                    "length": 0.0283,
+                    "name": "P-C Twist drillΦ5.0L28.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A65.0L28.3.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ5.0L28.3"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 912,
+                    "length": 0.031,
+                    "name": "P-C Twist drillΦ5.0L31",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A65.0L31.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ5.0L31"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 913,
+                    "length": 0.0324,
+                    "name": "P-C Twist drillΦ5.0L32.4",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A65.0L32.4.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ5.0L32.4"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 914,
+                    "length": 0.0339,
+                    "name": "P-C Twist drillΦ5.0L33.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A65.0L33.9.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ5.0L33.9"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 199,
+                    "id": 915,
+                    "length": 0.037,
+                    "name": "P-C Twist drillΦ5.0L37",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist.P-C_Twist_drill%CE%A65.0L37.stl",
+                    "type": "nobel.pmc-cc.twist.P-C_Twist_drillΦ5.0L37"
+                  }
+                ],
+                "name": "扩孔钻",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.twist"
+              },
+              {
+                "group_type": "drill",
+                "id": 200,
+                "items": [
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 200,
+                    "id": 916,
+                    "is_carrier": true,
+                    "length": 0.034,
+                    "name": "P-C Twist DB drillΦ3.5L34",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db.P-C_Twist_DB_drill%CE%A63.5L34.stl",
+                    "type": "nobel.pmc-cc.twist_db.P-C_Twist_DB_drillΦ3.5L34"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 200,
+                    "id": 917,
+                    "length": 0.037,
+                    "name": "P-C Twist DB drillΦ3.5L37",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db.P-C_Twist_DB_drill%CE%A63.5L37.stl",
+                    "type": "nobel.pmc-cc.twist_db.P-C_Twist_DB_drillΦ3.5L37"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 200,
+                    "id": 918,
+                    "length": 0.034,
+                    "name": "P-C Twist DB drillΦ4.3L34",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db.P-C_Twist_DB_drill%CE%A64.3L34.stl",
+                    "type": "nobel.pmc-cc.twist_db.P-C_Twist_DB_drillΦ4.3L34"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 200,
+                    "id": 919,
+                    "length": 0.037,
+                    "name": "P-C Twist DB drillΦ4.3L37",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db.P-C_Twist_DB_drill%CE%A64.3L37.stl",
+                    "type": "nobel.pmc-cc.twist_db.P-C_Twist_DB_drillΦ4.3L37"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 200,
+                    "id": 920,
+                    "length": 0.034,
+                    "name": "P-C Twist DB drillΦ5.0L34",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db.P-C_Twist_DB_drill%CE%A65.0L34.stl",
+                    "type": "nobel.pmc-cc.twist_db.P-C_Twist_DB_drillΦ5.0L34"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 200,
+                    "id": 921,
+                    "length": 0.037,
+                    "name": "P-C Twist DB drillΦ5.0L37",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db.P-C_Twist_DB_drill%CE%A65.0L37.stl",
+                    "type": "nobel.pmc-cc.twist_db.P-C_Twist_DB_drillΦ5.0L37"
+                  }
+                ],
+                "name": "硬骨钻",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.twist_db"
+              },
+              {
+                "group_type": "drill",
+                "id": 208,
+                "items": [
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 208,
+                    "id": 951,
+                    "length": 0.049,
+                    "name": "P-C EXT Twist DB drillΦ3.5L49",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drill%CE%A63.5L49.stl",
+                    "type": "nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drillΦ3.5L49"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 208,
+                    "id": 952,
+                    "length": 0.052,
+                    "name": "P-C EXT Twist DB drillΦ3.5L52",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drill%CE%A63.5L52.stl",
+                    "type": "nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drillΦ3.5L52"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 208,
+                    "id": 953,
+                    "length": 0.049,
+                    "name": "P-C EXT Twist DB drillΦ4.3L49",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drill%CE%A64.3L49.stl",
+                    "type": "nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drillΦ4.3L49"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 208,
+                    "id": 954,
+                    "length": 0.052,
+                    "name": "P-C EXT Twist DB drillΦ4.3L52",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drill%CE%A64.3L52.stl",
+                    "type": "nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drillΦ4.3L52"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 208,
+                    "id": 955,
+                    "length": 0.049,
+                    "name": "P-C EXT Twist DB drillΦ5.0L49",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drill%CE%A65.0L49.stl",
+                    "type": "nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drillΦ5.0L49"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 208,
+                    "id": 956,
+                    "length": 0.052,
+                    "name": "P-C EXT Twist DB drillΦ5.0L52",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drill%CE%A65.0L52.stl",
+                    "type": "nobel.pmc-cc.twist_db_ext.P-C_EXT_Twist_DB_drillΦ5.0L52"
+                  }
+                ],
+                "name": "硬骨钻(延长杆)",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.twist_db_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 207,
+                "items": [
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 936,
+                    "length": 0.0433,
+                    "name": "P-C EXT Twist drillΦ3.5L43.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A63.5L43.3.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ3.5L43.3"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 937,
+                    "length": 0.046,
+                    "name": "P-C EXT Twist drillΦ3.5L46",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A63.5L46.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ3.5L46"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 938,
+                    "length": 0.0474,
+                    "name": "P-C EXT Twist drillΦ3.5L47.4",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A63.5L47.4.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ3.5L47.4"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 939,
+                    "length": 0.0489,
+                    "name": "P-C EXT Twist drillΦ3.5L48.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A63.5L48.9.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ3.5L48.9"
+                  },
+                  {
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 940,
+                    "length": 0.052,
+                    "name": "P-C EXT Twist drillΦ3.5L52",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A63.5L52.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ3.5L52"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 941,
+                    "length": 0.0433,
+                    "name": "P-C EXT Twist drillΦ4.3L43.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A64.3L43.3.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ4.3L43.3"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 942,
+                    "length": 0.046,
+                    "name": "P-C EXT Twist drillΦ4.3L46",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A64.3L46.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ4.3L46"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 943,
+                    "length": 0.0474,
+                    "name": "P-C EXT Twist drillΦ4.3L47.4",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A64.3L47.4.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ4.3L47.4"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 944,
+                    "length": 0.0489,
+                    "name": "P-C EXT Twist drillΦ4.3L48.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A64.3L48.9.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ4.3L48.9"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 945,
+                    "length": 0.052,
+                    "name": "P-C EXT Twist drillΦ4.3L52",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A64.3L52.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ4.3L52"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 946,
+                    "length": 0.0433,
+                    "name": "P-C EXT Twist drillΦ5.0L43.3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A65.0L43.3.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ5.0L43.3"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 947,
+                    "length": 0.046,
+                    "name": "P-C EXT Twist drillΦ5.0L46",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A65.0L46.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ5.0L46"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 948,
+                    "length": 0.0474,
+                    "name": "P-C EXT Twist drillΦ5.0L47.4",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A65.0L47.4.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ5.0L47.4"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 949,
+                    "length": 0.0489,
+                    "name": "P-C EXT Twist drillΦ5.0L48.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A65.0L48.9.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ5.0L48.9"
+                  },
+                  {
+                    "diameter": 0.005,
+                    "drill_system_type": "Unknown",
+                    "group_id": 207,
+                    "id": 950,
+                    "length": 0.052,
+                    "name": "P-C EXT Twist drillΦ5.0L52",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Nobel/drill/nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drill%CE%A65.0L52.stl",
+                    "type": "nobel.pmc-cc.twist_ext.P-C_EXT_Twist_drillΦ5.0L52"
+                  }
+                ],
+                "name": "扩孔钻(延长杆)",
+                "system_id": 37,
+                "type": "nobel.pmc-cc.twist_ext"
+              }
+            ],
+            "id": 37,
+            "name": "PMC-CC",
+            "type": "nobel.pmc-cc",
+            "version": 13
+          }
+        ],
+        "type": "nobel"
+      },
+      {
+        "alias": "Dentsply, dentsply",
+        "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Logo/Dentsply/logo.png",
+        "id": 7,
+        "name": "Dentsply",
+        "systems": [
+          {
+            "brand_id": 7,
+            "id": 39,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25214.png",
+                "id": 213,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"1.80mm\",\"规格长度\":\"11.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"10.7mm\",\"规格\":\"Φ3.0mm x 11.00mm\"}",
+                    "diameter": 0.0025,
+                    "drill_system_type": "Unknown",
+                    "group_id": 213,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25214.png",
+                    "id": 969,
+                    "length": 0.011,
+                    "name": "25214",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.30_osseospeed_ev.25214.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.30_osseospeed_ev.25214"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"13.00mm\",\"根尖直径\":\"1.80mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"12.7mm\",\"规格\":\"Φ3.0mm x 13.00mm\"}",
+                    "diameter": 0.0025,
+                    "drill_system_type": "Unknown",
+                    "group_id": 213,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25215.png",
+                    "id": 970,
+                    "length": 0.013,
+                    "name": "25215",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.30_osseospeed_ev.25215.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.30_osseospeed_ev.25215"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.00mm\",\"总长度\":\"15.00mm\",\"根尖直径\":\"1.80mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"14.7mm\",\"规格\":\"Φ3.0mm x 15.00mm\"}",
+                    "diameter": 0.0025,
+                    "drill_system_type": "Unknown",
+                    "group_id": 213,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25216.png",
+                    "id": 971,
+                    "length": 0.015,
+                    "name": "25216",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.30_osseospeed_ev.25216.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.30_osseospeed_ev.25216"
+                  }
+                ],
+                "name": "Φ3.0mm 直径",
+                "system_id": 39,
+                "type": "dentsply.osseospeed_ev_straight_implant.30_osseospeed_ev"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25222.png",
+                "id": 214,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.60mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"7.7mm\",\"规格\":\"Φ3.6mm x 8.00mm\"}",
+                    "diameter": 0.0029,
+                    "drill_system_type": "Unknown",
+                    "group_id": 214,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25222.png",
+                    "id": 972,
+                    "length": 0.008,
+                    "name": "25222",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.36_osseospeed_ev.25222.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.36_osseospeed_ev.25222"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.60mm\",\"总长度\":\"9.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"9.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"8.7mm\",\"规格\":\"Φ3.6mm x 9.00mm\"}",
+                    "diameter": 0.0029,
+                    "drill_system_type": "Unknown",
+                    "group_id": 214,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25223.png",
+                    "id": 973,
+                    "length": 0.009,
+                    "name": "25223",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.36_osseospeed_ev.25223.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.36_osseospeed_ev.25223"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.60mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"11.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"10.7mm\",\"规格\":\"Φ3.6mm x 11.00mm\"}",
+                    "diameter": 0.0029,
+                    "drill_system_type": "Unknown",
+                    "group_id": 214,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25224.png",
+                    "id": 974,
+                    "length": 0.011,
+                    "name": "25224",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.36_osseospeed_ev.25224.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.36_osseospeed_ev.25224"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.60mm\",\"总长度\":\"13.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"12.7mm\",\"规格\":\"Φ3.6mm x 13.00mm\"}",
+                    "diameter": 0.0029,
+                    "drill_system_type": "Unknown",
+                    "group_id": 214,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25225.png",
+                    "id": 975,
+                    "length": 0.013,
+                    "name": "25225",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.36_osseospeed_ev.25225.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.36_osseospeed_ev.25225"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.60mm\",\"总长度\":\"15.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"14.7mm\",\"规格\":\"Φ3.6mm x 15.00mm\"}",
+                    "diameter": 0.0029,
+                    "drill_system_type": "Unknown",
+                    "group_id": 214,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25226.png",
+                    "id": 976,
+                    "length": 0.015,
+                    "name": "25226",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.36_osseospeed_ev.25226.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.36_osseospeed_ev.25226"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"3.60mm\",\"总长度\":\"17.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"17.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"16.7mm\",\"规格\":\"Φ3.6mm x 17.00mm\"}",
+                    "diameter": 0.0029,
+                    "drill_system_type": "Unknown",
+                    "group_id": 214,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25227.png",
+                    "id": 977,
+                    "length": 0.017,
+                    "name": "25227",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.36_osseospeed_ev.25227.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.36_osseospeed_ev.25227"
+                  }
+                ],
+                "name": "Φ3.6mm 直径",
+                "system_id": 39,
+                "type": "dentsply.osseospeed_ev_straight_implant.36_osseospeed_ev"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25231.png",
+                "id": 215,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"6.30mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"5.7mm\",\"规格\":\"Φ4.2mm x 6.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 215,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25231.png",
+                    "id": 978,
+                    "length": 0.0063,
+                    "name": "25231",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42s_osseospeed_ev.25231.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.42s_osseospeed_ev.25231"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"7.7mm\",\"规格\":\"Φ4.2mm x 8.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 215,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25232.png",
+                    "id": 979,
+                    "length": 0.008,
+                    "name": "25232",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42s_osseospeed_ev.25232.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.42s_osseospeed_ev.25232"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"9.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"9.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"8.7mm\",\"规格\":\"Φ4.2mm x 9.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 215,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25233.png",
+                    "id": 980,
+                    "length": 0.009,
+                    "name": "25233",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42s_osseospeed_ev.25233.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.42s_osseospeed_ev.25233"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"11.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"10.7mm\",\"规格\":\"Φ4.2mm x 11.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 215,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25234.png",
+                    "id": 981,
+                    "length": 0.011,
+                    "name": "25234",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42s_osseospeed_ev.25234.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.42s_osseospeed_ev.25234"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"13.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"12.7mm\",\"规格\":\"Φ4.2mm x 13.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 215,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25235.png",
+                    "id": 982,
+                    "length": 0.013,
+                    "name": "25235",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42s_osseospeed_ev.25235.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.42s_osseospeed_ev.25235"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"15.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"14.7mm\",\"规格\":\"Φ4.2mm x 15.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 215,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25236.png",
+                    "id": 983,
+                    "length": 0.015,
+                    "name": "25236",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42s_osseospeed_ev.25236.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.42s_osseospeed_ev.25236"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"17.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"17.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"16.7mm\",\"规格\":\"Φ4.2mm x 17.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 215,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25237.png",
+                    "id": 984,
+                    "length": 0.017,
+                    "name": "25237",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42s_osseospeed_ev.25237.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.42s_osseospeed_ev.25237"
+                  }
+                ],
+                "name": "Φ4.2mm 直径",
+                "system_id": 39,
+                "type": "dentsply.osseospeed_ev_straight_implant.42s_osseospeed_ev"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25241.png",
+                "id": 216,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"6.30mm\",\"根尖直径\":\"3.70mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"5.7mm\",\"规格\":\"Φ4.8mm x 6.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 216,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25241.png",
+                    "id": 985,
+                    "length": 0.0063,
+                    "name": "25241",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48s_osseospeed_ev.25241.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.48s_osseospeed_ev.25241"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"3.70mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"7.7mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 216,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25242.png",
+                    "id": 986,
+                    "length": 0.008,
+                    "name": "25242",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48s_osseospeed_ev.25242.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.48s_osseospeed_ev.25242"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"9.00mm\",\"根尖直径\":\"3.70mm\",\"规格长度\":\"9.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"8.7mm\",\"规格\":\"Φ4.8mm x 9.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 216,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25243.png",
+                    "id": 987,
+                    "length": 0.009,
+                    "name": "25243",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48s_osseospeed_ev.25243.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.48s_osseospeed_ev.25243"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"3.70mm\",\"规格长度\":\"11.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"10.7mm\",\"规格\":\"Φ4.8mm x 11.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 216,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25244.png",
+                    "id": 988,
+                    "length": 0.011,
+                    "name": "25244",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48s_osseospeed_ev.25244.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.48s_osseospeed_ev.25244"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"13.00mm\",\"根尖直径\":\"3.70mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"12.7mm\",\"规格\":\"Φ4.8mm x 13.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 216,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25245.png",
+                    "id": 989,
+                    "length": 0.013,
+                    "name": "25245",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48s_osseospeed_ev.25245.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.48s_osseospeed_ev.25245"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"15.00mm\",\"根尖直径\":\"3.70mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"14.7mm\",\"规格\":\"Φ4.8mm x 15.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 216,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25246.png",
+                    "id": 990,
+                    "length": 0.015,
+                    "name": "25246",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48s_osseospeed_ev.25246.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.48s_osseospeed_ev.25246"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"17.00mm\",\"根尖直径\":\"3.70mm\",\"规格长度\":\"17.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"16.7mm\",\"规格\":\"Φ4.8mm x 17.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 216,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25247.png",
+                    "id": 991,
+                    "length": 0.017,
+                    "name": "25247",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48s_osseospeed_ev.25247.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.48s_osseospeed_ev.25247"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 39,
+                "type": "dentsply.osseospeed_ev_straight_implant.48s_osseospeed_ev"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25251.png",
+                "id": 217,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"5.40mm\",\"总长度\":\"6.30mm\",\"根尖直径\":\"4.30mm\",\"规格长度\":\"6.00mm\",\"领圈高度\":\"0.60mm\",\"骨内长度\":\"5.7mm\",\"规格\":\"Φ5.4mm x 6.00mm\"}",
+                    "diameter": 0.0046,
+                    "drill_system_type": "Unknown",
+                    "group_id": 217,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25251.png",
+                    "id": 992,
+                    "length": 0.0063,
+                    "name": "25251",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.54_osseospeed_ev.25251.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.54_osseospeed_ev.25251"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.40mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"4.30mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"7.7mm\",\"规格\":\"Φ5.4mm x 8.00mm\"}",
+                    "diameter": 0.0046,
+                    "drill_system_type": "Unknown",
+                    "group_id": 217,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25252.png",
+                    "id": 993,
+                    "length": 0.008,
+                    "name": "25252",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.54_osseospeed_ev.25252.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.54_osseospeed_ev.25252"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.40mm\",\"总长度\":\"9.00mm\",\"根尖直径\":\"4.30mm\",\"规格长度\":\"9.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"8.7mm\",\"规格\":\"Φ5.4mm x 9.00mm\"}",
+                    "diameter": 0.0046,
+                    "drill_system_type": "Unknown",
+                    "group_id": 217,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25253.png",
+                    "id": 994,
+                    "length": 0.009,
+                    "name": "25253",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.54_osseospeed_ev.25253.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.54_osseospeed_ev.25253"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.40mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"4.30mm\",\"规格长度\":\"11.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"10.7mm\",\"规格\":\"Φ5.4mm x 11.00mm\"}",
+                    "diameter": 0.0046,
+                    "drill_system_type": "Unknown",
+                    "group_id": 217,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25254.png",
+                    "id": 995,
+                    "length": 0.011,
+                    "name": "25254",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.54_osseospeed_ev.25254.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.54_osseospeed_ev.25254"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.40mm\",\"总长度\":\"13.00mm\",\"根尖直径\":\"4.30mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"12.7mm\",\"规格\":\"Φ5.4mm x 13.00mm\"}",
+                    "diameter": 0.0046,
+                    "drill_system_type": "Unknown",
+                    "group_id": 217,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25255.png",
+                    "id": 996,
+                    "length": 0.013,
+                    "name": "25255",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.54_osseospeed_ev.25255.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.54_osseospeed_ev.25255"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"5.40mm\",\"总长度\":\"15.00mm\",\"根尖直径\":\"4.30mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"14.7mm\",\"规格\":\"Φ5.4mm x 15.00mm\"}",
+                    "diameter": 0.0046,
+                    "drill_system_type": "Unknown",
+                    "group_id": 217,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25256.png",
+                    "id": 997,
+                    "length": 0.015,
+                    "name": "25256",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.54_osseospeed_ev.25256.stl",
+                    "type": "dentsply.osseospeed_ev_straight_implant.54_osseospeed_ev.25256"
+                  }
+                ],
+                "name": "Φ5.4mm 直径",
+                "system_id": 39,
+                "type": "dentsply.osseospeed_ev_straight_implant.54_osseospeed_ev"
+              }
+            ],
+            "name": "OsseoSpeed EV Straight",
+            "type": "dentsply.osseospeed_ev_straight_implant"
+          },
+          {
+            "brand_id": 7,
+            "id": 40,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25262.png",
+                "id": 218,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"7.7mm\",\"规格\":\"Φ4.2mm x 8.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 218,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25262.png",
+                    "id": 998,
+                    "length": 0.008,
+                    "name": "25262",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42c_osseospeed_ev.25262.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.42c_osseospeed_ev.25262"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"9.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"9.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"8.7mm\",\"规格\":\"Φ4.2mm x 9.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 218,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25263.png",
+                    "id": 999,
+                    "length": 0.009,
+                    "name": "25263",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42c_osseospeed_ev.25263.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.42c_osseospeed_ev.25263"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"11.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"10.7mm\",\"规格\":\"Φ4.2mm x 11.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 218,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25264.png",
+                    "id": 1000,
+                    "length": 0.011,
+                    "name": "25264",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42c_osseospeed_ev.25264.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.42c_osseospeed_ev.25264"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"13.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"12.7mm\",\"规格\":\"Φ4.2mm x 13.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 218,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25265.png",
+                    "id": 1001,
+                    "length": 0.013,
+                    "name": "25265",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42c_osseospeed_ev.25265.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.42c_osseospeed_ev.25265"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"15.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"14.7mm\",\"规格\":\"Φ4.2mm x 15.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 218,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25266.png",
+                    "id": 1002,
+                    "length": 0.015,
+                    "name": "25266",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42c_osseospeed_ev.25266.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.42c_osseospeed_ev.25266"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.20mm\",\"总长度\":\"17.00mm\",\"根尖直径\":\"2.50mm\",\"规格长度\":\"17.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"16.7mm\",\"规格\":\"Φ4.2mm x 17.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 218,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25267.png",
+                    "id": 1003,
+                    "length": 0.017,
+                    "name": "25267",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.42c_osseospeed_ev.25267.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.42c_osseospeed_ev.25267"
+                  }
+                ],
+                "name": "Φ4.2mm 直径",
+                "system_id": 40,
+                "type": "dentsply.osseospeed_ev_conical_implant.42c_osseospeed_ev"
+              },
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25272.png",
+                "id": 219,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"8.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"8.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"7.7mm\",\"规格\":\"Φ4.8mm x 8.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 219,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25272.png",
+                    "id": 1004,
+                    "length": 0.008,
+                    "name": "25272",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48c_osseospeed_ev.25272.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.48c_osseospeed_ev.25272"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"9.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"9.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"8.7mm\",\"规格\":\"Φ4.8mm x 9.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 219,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25273.png",
+                    "id": 1005,
+                    "length": 0.009,
+                    "name": "25273",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48c_osseospeed_ev.25273.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.48c_osseospeed_ev.25273"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"11.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"11.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"10.7mm\",\"规格\":\"Φ4.8mm x 11.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 219,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25274.png",
+                    "id": 1006,
+                    "length": 0.011,
+                    "name": "25274",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48c_osseospeed_ev.25274.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.48c_osseospeed_ev.25274"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"13.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"13.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"12.7mm\",\"规格\":\"Φ4.8mm x 13.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 219,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25275.png",
+                    "id": 1007,
+                    "length": 0.013,
+                    "name": "25275",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48c_osseospeed_ev.25275.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.48c_osseospeed_ev.25275"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"15.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"15.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"14.7mm\",\"规格\":\"Φ4.8mm x 15.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 219,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25276.png",
+                    "id": 1008,
+                    "length": 0.015,
+                    "name": "25276",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48c_osseospeed_ev.25276.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.48c_osseospeed_ev.25276"
+                  },
+                  {
+                    "detail": "{\"咬合直径\":\"4.80mm\",\"总长度\":\"17.00mm\",\"根尖直径\":\"3.10mm\",\"规格长度\":\"17.00mm\",\"领圈高度\":\"0.30mm\",\"骨内长度\":\"16.7mm\",\"规格\":\"Φ4.8mm x 17.00mm\"}",
+                    "diameter": 0.0041,
+                    "drill_system_type": "Unknown",
+                    "group_id": 219,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/25277.png",
+                    "id": 1009,
+                    "length": 0.017,
+                    "name": "25277",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/implant/dentsply.osseospeed_ev_implant.48c_osseospeed_ev.25277.stl",
+                    "type": "dentsply.osseospeed_ev_conical_implant.48c_osseospeed_ev.25277"
+                  }
+                ],
+                "name": "Φ4.8mm 直径",
+                "system_id": 40,
+                "type": "dentsply.osseospeed_ev_conical_implant.48c_osseospeed_ev"
+              }
+            ],
+            "name": "OsseoSpeed EV Conical",
+            "type": "dentsply.osseospeed_ev_conical_implant"
+          },
+          {
+            "brand_id": 7,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "id": 220,
+                "items": [
+                  {
+                    "diameter": 0.0019,
+                    "drill_system_type": "Unknown",
+                    "group_id": 220,
+                    "id": 1010,
+                    "length": 0.0264,
+                    "name": "dxz",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.guild.dxz.stl",
+                    "type": "dentsply.astra_ev.guild.dxz"
+                  }
+                ],
+                "name": "定位钻",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.guild"
+              },
+              {
+                "group_type": "drill",
+                "id": 232,
+                "items": [
+                  {
+                    "diameter": 0.0019,
+                    "drill_system_type": "Unknown",
+                    "group_id": 232,
+                    "id": 1059,
+                    "length": 0.04295,
+                    "name": "dxz_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.guild_ext.dxz_EXT.stl",
+                    "type": "dentsply.astra_ev.guild_ext.dxz_EXT"
+                  }
+                ],
+                "name": "定位钻(延长杆)",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.guild_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 231,
+                "items": [
+                  {
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 231,
+                    "id": 1054,
+                    "is_carrier": true,
+                    "length": 0.03225,
+                    "name": "Implant Long DrillΦ3.0",
+                    "offset": 0.0048,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_l.Implant_Long_Drill%CE%A63.0.stl",
+                    "type": "dentsply.astra_ev.implant_l.Implant_Long_DrillΦ3.0"
+                  },
+                  {
+                    "diameter": 0.0036,
+                    "drill_system_type": "Unknown",
+                    "group_id": 231,
+                    "id": 1055,
+                    "is_carrier": true,
+                    "length": 0.033,
+                    "name": "Implant Long DrillΦ3.6",
+                    "offset": 0.0051,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_l.Implant_Long_Drill%CE%A63.6.stl",
+                    "type": "dentsply.astra_ev.implant_l.Implant_Long_DrillΦ3.6"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 231,
+                    "id": 1056,
+                    "is_carrier": true,
+                    "length": 0.0331,
+                    "name": "Implant Long DrillΦ4.2",
+                    "offset": 0.00525,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_l.Implant_Long_Drill%CE%A64.2.stl",
+                    "type": "dentsply.astra_ev.implant_l.Implant_Long_DrillΦ4.2"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "Unknown",
+                    "group_id": 231,
+                    "id": 1057,
+                    "is_carrier": true,
+                    "length": 0.0332,
+                    "name": "Implant Long DrillΦ4.8",
+                    "offset": 0.00525,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_l.Implant_Long_Drill%CE%A64.8.stl",
+                    "type": "dentsply.astra_ev.implant_l.Implant_Long_DrillΦ4.8"
+                  },
+                  {
+                    "diameter": 0.0054,
+                    "drill_system_type": "Unknown",
+                    "group_id": 231,
+                    "id": 1058,
+                    "is_carrier": true,
+                    "length": 0.0333,
+                    "name": "Implant Long DrillΦ5.4",
+                    "offset": 0.00535,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_l.Implant_Long_Drill%CE%A65.4.stl",
+                    "type": "dentsply.astra_ev.implant_l.Implant_Long_DrillΦ5.4"
+                  }
+                ],
+                "name": "携带体-长型",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.implant_l"
+              },
+              {
+                "group_type": "drill",
+                "id": 243,
+                "items": [
+                  {
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 243,
+                    "id": 1103,
+                    "is_carrier": true,
+                    "length": 0.0485,
+                    "name": "Implant Long DrillΦ3.0_EXT",
+                    "offset": 0.0048,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_l_ext.Implant_Long_Drill%CE%A63.0_EXT.stl",
+                    "type": "dentsply.astra_ev.implant_l_ext.Implant_Long_DrillΦ3.0_EXT"
+                  },
+                  {
+                    "diameter": 0.0036,
+                    "drill_system_type": "Unknown",
+                    "group_id": 243,
+                    "id": 1104,
+                    "is_carrier": true,
+                    "length": 0.04925,
+                    "name": "Implant Long DrillΦ3.6_EXT",
+                    "offset": 0.0051,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_l_ext.Implant_Long_Drill%CE%A63.6_EXT.stl",
+                    "type": "dentsply.astra_ev.implant_l_ext.Implant_Long_DrillΦ3.6_EXT"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 243,
+                    "id": 1105,
+                    "is_carrier": true,
+                    "length": 0.04935,
+                    "name": "Implant Long DrillΦ4.2_EXT",
+                    "offset": 0.00525,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_l_ext.Implant_Long_Drill%CE%A64.2_EXT.stl",
+                    "type": "dentsply.astra_ev.implant_l_ext.Implant_Long_DrillΦ4.2_EXT"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "Unknown",
+                    "group_id": 243,
+                    "id": 1106,
+                    "is_carrier": true,
+                    "length": 0.04945,
+                    "name": "Implant Long DrillΦ4.8_EXT",
+                    "offset": 0.00525,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_l_ext.Implant_Long_Drill%CE%A64.8_EXT.stl",
+                    "type": "dentsply.astra_ev.implant_l_ext.Implant_Long_DrillΦ4.8_EXT"
+                  },
+                  {
+                    "diameter": 0.0054,
+                    "drill_system_type": "Unknown",
+                    "group_id": 243,
+                    "id": 1107,
+                    "is_carrier": true,
+                    "length": 0.04955,
+                    "name": "Implant Long DrillΦ5.4_EXT",
+                    "offset": 0.00535,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_l_ext.Implant_Long_Drill%CE%A65.4_EXT.stl",
+                    "type": "dentsply.astra_ev.implant_l_ext.Implant_Long_DrillΦ5.4_EXT"
+                  }
+                ],
+                "name": "携带体-长型(延长杆)",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.implant_l_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 230,
+                "items": [
+                  {
+                    "diameter": 0.0036,
+                    "drill_system_type": "Unknown",
+                    "group_id": 230,
+                    "id": 1050,
+                    "is_carrier": true,
+                    "length": 0.0228,
+                    "name": "Implant Short DrillΦ3.6",
+                    "offset": 0.0051,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_s.Implant_Short_Drill%CE%A63.6.stl",
+                    "type": "dentsply.astra_ev.implant_s.Implant_Short_DrillΦ3.6"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 230,
+                    "id": 1051,
+                    "is_carrier": true,
+                    "length": 0.023,
+                    "name": "Implant Short DrillΦ4.2",
+                    "offset": 0.00525,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_s.Implant_Short_Drill%CE%A64.2.stl",
+                    "type": "dentsply.astra_ev.implant_s.Implant_Short_DrillΦ4.2"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "Unknown",
+                    "group_id": 230,
+                    "id": 1052,
+                    "is_carrier": true,
+                    "length": 0.0231,
+                    "name": "Implant Short DrillΦ4.8",
+                    "offset": 0.00525,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_s.Implant_Short_Drill%CE%A64.8.stl",
+                    "type": "dentsply.astra_ev.implant_s.Implant_Short_DrillΦ4.8"
+                  },
+                  {
+                    "diameter": 0.0054,
+                    "drill_system_type": "Unknown",
+                    "group_id": 230,
+                    "id": 1053,
+                    "is_carrier": true,
+                    "length": 0.02315,
+                    "name": "Implant Short DrillΦ5.4",
+                    "offset": 0.00535,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_s.Implant_Short_Drill%CE%A65.4.stl",
+                    "type": "dentsply.astra_ev.implant_s.Implant_Short_DrillΦ5.4"
+                  }
+                ],
+                "name": "携带体-短型",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.implant_s"
+              },
+              {
+                "group_type": "drill",
+                "id": 242,
+                "items": [
+                  {
+                    "diameter": 0.0036,
+                    "drill_system_type": "Unknown",
+                    "group_id": 242,
+                    "id": 1099,
+                    "is_carrier": true,
+                    "length": 0.03905,
+                    "name": "Implant Short DrillΦ3.6_EXT",
+                    "offset": 0.0051,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_s_ext.Implant_Short_Drill%CE%A63.6_EXT.stl",
+                    "type": "dentsply.astra_ev.implant_s_ext.Implant_Short_DrillΦ3.6_EXT"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 242,
+                    "id": 1100,
+                    "is_carrier": true,
+                    "length": 0.03925,
+                    "name": "Implant Short DrillΦ4.2_EXT",
+                    "offset": 0.00525,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_s_ext.Implant_Short_Drill%CE%A64.2_EXT.stl",
+                    "type": "dentsply.astra_ev.implant_s_ext.Implant_Short_DrillΦ4.2_EXT"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "Unknown",
+                    "group_id": 242,
+                    "id": 1101,
+                    "is_carrier": true,
+                    "length": 0.03935,
+                    "name": "Implant Short DrillΦ4.8_EXT",
+                    "offset": 0.00525,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_s_ext.Implant_Short_Drill%CE%A64.8_EXT.stl",
+                    "type": "dentsply.astra_ev.implant_s_ext.Implant_Short_DrillΦ4.8_EXT"
+                  },
+                  {
+                    "diameter": 0.0054,
+                    "drill_system_type": "Unknown",
+                    "group_id": 242,
+                    "id": 1102,
+                    "is_carrier": true,
+                    "length": 0.0394,
+                    "name": "Implant Short DrillΦ5.4_EXT",
+                    "offset": 0.00535,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.implant_s_ext.Implant_Short_Drill%CE%A65.4_EXT.stl",
+                    "type": "dentsply.astra_ev.implant_s_ext.Implant_Short_DrillΦ5.4_EXT"
+                  }
+                ],
+                "name": "携带体-短型(延长杆)",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.implant_s_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 227,
+                "items": [
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 227,
+                    "id": 1038,
+                    "length": 0.03,
+                    "name": "A-B-jbzΦ3.1~4.2",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jbz_A_B.A-B-jbz%CE%A63.1~4.2.stl",
+                    "type": "dentsply.astra_ev.jbz_A_B.A-B-jbzΦ3.1~4.2"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "Unknown",
+                    "group_id": 227,
+                    "id": 1039,
+                    "length": 0.02995,
+                    "name": "A-B-jbzΦ3.7~4.8",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jbz_A_B.A-B-jbz%CE%A63.7~4.8.stl",
+                    "type": "dentsply.astra_ev.jbz_A_B.A-B-jbzΦ3.7~4.8"
+                  }
+                ],
+                "name": "颈部锥形钻-A/B",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.jbz_A_B"
+              },
+              {
+                "group_type": "drill",
+                "id": 239,
+                "items": [
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 239,
+                    "id": 1087,
+                    "length": 0.04645,
+                    "name": "A-B-jbzΦ3.1~4.2_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jbz_A_B_ext.A-B-jbz%CE%A63.1~4.2_EXT.stl",
+                    "type": "dentsply.astra_ev.jbz_A_B_ext.A-B-jbzΦ3.1~4.2_EXT"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "Unknown",
+                    "group_id": 239,
+                    "id": 1088,
+                    "length": 0.0464,
+                    "name": "A-B-jbzΦ3.7~4.8_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jbz_A_B_ext.A-B-jbz%CE%A63.7~4.8_EXT.stl",
+                    "type": "dentsply.astra_ev.jbz_A_B_ext.A-B-jbzΦ3.7~4.8_EXT"
+                  }
+                ],
+                "name": "颈部锥形钻-A/B(延长杆)",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.jbz_A_B_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 222,
+                "items": [
+                  {
+                    "diameter": 0.0025,
+                    "drill_system_type": "Unknown",
+                    "group_id": 222,
+                    "id": 1013,
+                    "length": 0.0299,
+                    "name": "jtzΦ1.9/2.5-13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz.jtz%CE%A61.9%2F2.5-13.stl",
+                    "type": "dentsply.astra_ev.jtz.jtzΦ1.9/2.5-13"
+                  },
+                  {
+                    "diameter": 0.0025,
+                    "drill_system_type": "Unknown",
+                    "group_id": 222,
+                    "id": 1014,
+                    "length": 0.03592,
+                    "name": "jtzΦ1.9/2.5-17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz.jtz%CE%A61.9%2F2.5-17.stl",
+                    "type": "dentsply.astra_ev.jtz.jtzΦ1.9/2.5-17"
+                  },
+                  {
+                    "diameter": 0.0031,
+                    "drill_system_type": "Unknown",
+                    "group_id": 222,
+                    "id": 1015,
+                    "length": 0.02994,
+                    "name": "jtzΦ2.5~3.1-13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz.jtz%CE%A62.5~3.1-13.stl",
+                    "type": "dentsply.astra_ev.jtz.jtzΦ2.5~3.1-13"
+                  },
+                  {
+                    "diameter": 0.0031,
+                    "drill_system_type": "Unknown",
+                    "group_id": 222,
+                    "id": 1016,
+                    "length": 0.03594,
+                    "name": "jtzΦ2.5~3.1-17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz.jtz%CE%A62.5~3.1-17.stl",
+                    "type": "dentsply.astra_ev.jtz.jtzΦ2.5~3.1-17"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "drill_system_type": "Unknown",
+                    "group_id": 222,
+                    "id": 1017,
+                    "length": 0.03,
+                    "name": "jtzΦ3.1~3.7-13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz.jtz%CE%A63.1~3.7-13.stl",
+                    "type": "dentsply.astra_ev.jtz.jtzΦ3.1~3.7-13"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "drill_system_type": "Unknown",
+                    "group_id": 222,
+                    "id": 1018,
+                    "length": 0.03597,
+                    "name": "jtzΦ3.1~3.7-17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz.jtz%CE%A63.1~3.7-17.stl",
+                    "type": "dentsply.astra_ev.jtz.jtzΦ3.1~3.7-17"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 222,
+                    "id": 1019,
+                    "length": 0.03,
+                    "name": "jtzΦ3.7~4.3-13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz.jtz%CE%A63.7~4.3-13.stl",
+                    "type": "dentsply.astra_ev.jtz.jtzΦ3.7~4.3-13"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 222,
+                    "id": 1020,
+                    "length": 0.03597,
+                    "name": "jtzΦ3.7~4.3-17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz.jtz%CE%A63.7~4.3-17.stl",
+                    "type": "dentsply.astra_ev.jtz.jtzΦ3.7~4.3-17"
+                  },
+                  {
+                    "diameter": 0.0049,
+                    "drill_system_type": "Unknown",
+                    "group_id": 222,
+                    "id": 1021,
+                    "length": 0.03047,
+                    "name": "jtzΦ4.3~4.9-13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz.jtz%CE%A64.3~4.9-13.stl",
+                    "type": "dentsply.astra_ev.jtz.jtzΦ4.3~4.9-13"
+                  },
+                  {
+                    "diameter": 0.0049,
+                    "drill_system_type": "Unknown",
+                    "group_id": 222,
+                    "id": 1022,
+                    "length": 0.03592,
+                    "name": "jtzΦ4.3~4.9-17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz.jtz%CE%A64.3~4.9-17.stl",
+                    "type": "dentsply.astra_ev.jtz.jtzΦ4.3~4.9-17"
+                  }
+                ],
+                "name": "阶梯钻",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.jtz"
+              },
+              {
+                "group_type": "drill",
+                "id": 234,
+                "items": [
+                  {
+                    "diameter": 0.0025,
+                    "drill_system_type": "Unknown",
+                    "group_id": 234,
+                    "id": 1062,
+                    "length": 0.04635,
+                    "name": "jtzΦ1.9/2.5-13_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz_ext.jtz%CE%A61.9%2F2.5-13_EXT.stl",
+                    "type": "dentsply.astra_ev.jtz_ext.jtzΦ1.9/2.5-13_EXT"
+                  },
+                  {
+                    "diameter": 0.0025,
+                    "drill_system_type": "Unknown",
+                    "group_id": 234,
+                    "id": 1063,
+                    "length": 0.05232,
+                    "name": "jtzΦ1.9/2.5-17_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz_ext.jtz%CE%A61.9%2F2.5-17_EXT.stl",
+                    "type": "dentsply.astra_ev.jtz_ext.jtzΦ1.9/2.5-17_EXT"
+                  },
+                  {
+                    "diameter": 0.0031,
+                    "drill_system_type": "Unknown",
+                    "group_id": 234,
+                    "id": 1064,
+                    "length": 0.04632,
+                    "name": "jtzΦ2.5~3.1-13_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz_ext.jtz%CE%A62.5~3.1-13_EXT.stl",
+                    "type": "dentsply.astra_ev.jtz_ext.jtzΦ2.5~3.1-13_EXT"
+                  },
+                  {
+                    "diameter": 0.0031,
+                    "drill_system_type": "Unknown",
+                    "group_id": 234,
+                    "id": 1065,
+                    "length": 0.05235,
+                    "name": "jtzΦ2.5~3.1-17_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz_ext.jtz%CE%A62.5~3.1-17_EXT.stl",
+                    "type": "dentsply.astra_ev.jtz_ext.jtzΦ2.5~3.1-17_EXT"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "drill_system_type": "Unknown",
+                    "group_id": 234,
+                    "id": 1066,
+                    "length": 0.0465,
+                    "name": "jtzΦ3.1~3.7-13_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz_ext.jtz%CE%A63.1~3.7-13_EXT.stl",
+                    "type": "dentsply.astra_ev.jtz_ext.jtzΦ3.1~3.7-13_EXT"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "drill_system_type": "Unknown",
+                    "group_id": 234,
+                    "id": 1067,
+                    "length": 0.05235,
+                    "name": "jtzΦ3.1~3.7-17_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz_ext.jtz%CE%A63.1~3.7-17_EXT.stl",
+                    "type": "dentsply.astra_ev.jtz_ext.jtzΦ3.1~3.7-17_EXT"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 234,
+                    "id": 1068,
+                    "length": 0.0465,
+                    "name": "jtzΦ3.7~4.3-13_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz_ext.jtz%CE%A63.7~4.3-13_EXT.stl",
+                    "type": "dentsply.astra_ev.jtz_ext.jtzΦ3.7~4.3-13_EXT"
+                  },
+                  {
+                    "diameter": 0.0043,
+                    "drill_system_type": "Unknown",
+                    "group_id": 234,
+                    "id": 1069,
+                    "length": 0.05242,
+                    "name": "jtzΦ3.7~4.3-17_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz_ext.jtz%CE%A63.7~4.3-17_EXT.stl",
+                    "type": "dentsply.astra_ev.jtz_ext.jtzΦ3.7~4.3-17_EXT"
+                  },
+                  {
+                    "diameter": 0.0049,
+                    "drill_system_type": "Unknown",
+                    "group_id": 234,
+                    "id": 1070,
+                    "length": 0.04695,
+                    "name": "jtzΦ4.3~4.9-13_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz_ext.jtz%CE%A64.3~4.9-13_EXT.stl",
+                    "type": "dentsply.astra_ev.jtz_ext.jtzΦ4.3~4.9-13_EXT"
+                  },
+                  {
+                    "diameter": 0.0049,
+                    "drill_system_type": "Unknown",
+                    "group_id": 234,
+                    "id": 1071,
+                    "length": 0.0524,
+                    "name": "jtzΦ4.3~4.9-17_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.jtz_ext.jtz%CE%A64.3~4.9-17_EXT.stl",
+                    "type": "dentsply.astra_ev.jtz_ext.jtzΦ4.3~4.9-17_EXT"
+                  }
+                ],
+                "name": "阶梯钻(延长杆)",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.jtz_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 221,
+                "items": [
+                  {
+                    "diameter": 0.0019,
+                    "drill_system_type": "Unknown",
+                    "group_id": 221,
+                    "id": 1011,
+                    "length": 0.03095,
+                    "name": "mhzΦ1.9-13",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.mhz.mhz%CE%A61.9-13.stl",
+                    "type": "dentsply.astra_ev.mhz.mhzΦ1.9-13"
+                  },
+                  {
+                    "diameter": 0.0019,
+                    "drill_system_type": "Unknown",
+                    "group_id": 221,
+                    "id": 1012,
+                    "length": 0.036,
+                    "name": "mhzΦ1.9-17",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.mhz.mhz%CE%A61.9-17.stl",
+                    "type": "dentsply.astra_ev.mhz.mhzΦ1.9-17"
+                  }
+                ],
+                "name": "麻花钻",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.mhz"
+              },
+              {
+                "group_type": "drill",
+                "id": 233,
+                "items": [
+                  {
+                    "diameter": 0.0019,
+                    "drill_system_type": "Unknown",
+                    "group_id": 233,
+                    "id": 1060,
+                    "length": 0.0474,
+                    "name": "mhzΦ1.9-13_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.mhz_ext.mhz%CE%A61.9-13_EXT.stl",
+                    "type": "dentsply.astra_ev.mhz_ext.mhzΦ1.9-13_EXT"
+                  },
+                  {
+                    "diameter": 0.0019,
+                    "drill_system_type": "Unknown",
+                    "group_id": 233,
+                    "id": 1061,
+                    "length": 0.05235,
+                    "name": "mhzΦ1.9-17_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.mhz_ext.mhz%CE%A61.9-17_EXT.stl",
+                    "type": "dentsply.astra_ev.mhz_ext.mhzΦ1.9-17_EXT"
+                  }
+                ],
+                "name": "麻花钻(延长杆)",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.mhz_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 223,
+                "items": [
+                  {
+                    "diameter": 0.0027,
+                    "drill_system_type": "Unknown",
+                    "group_id": 223,
+                    "id": 1023,
+                    "length": 0.02895,
+                    "name": "pzgz-AΦ2.5~2.7",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a.pzgz-A%CE%A62.5~2.7.stl",
+                    "type": "dentsply.astra_ev.profile_a.pzgz-AΦ2.5~2.7"
+                  },
+                  {
+                    "diameter": 0.0039,
+                    "drill_system_type": "Unknown",
+                    "group_id": 223,
+                    "id": 1024,
+                    "length": 0.02895,
+                    "name": "pzgz-AΦ3.7~3.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a.pzgz-A%CE%A63.7~3.9.stl",
+                    "type": "dentsply.astra_ev.profile_a.pzgz-AΦ3.7~3.9"
+                  },
+                  {
+                    "diameter": 0.0045,
+                    "drill_system_type": "Unknown",
+                    "group_id": 223,
+                    "id": 1025,
+                    "length": 0.02895,
+                    "name": "pzgz-AΦ4.3~4.5",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a.pzgz-A%CE%A64.3~4.5.stl",
+                    "type": "dentsply.astra_ev.profile_a.pzgz-AΦ4.3~4.5"
+                  },
+                  {
+                    "diameter": 0.0051,
+                    "drill_system_type": "Unknown",
+                    "group_id": 223,
+                    "id": 1026,
+                    "length": 0.02895,
+                    "name": "pzgz-AΦ4.9~5.1",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a.pzgz-A%CE%A64.9~5.1.stl",
+                    "type": "dentsply.astra_ev.profile_a.pzgz-AΦ4.9~5.1"
+                  }
+                ],
+                "name": "皮质骨钻-A",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.profile_a"
+              },
+              {
+                "group_type": "drill",
+                "id": 225,
+                "items": [
+                  {
+                    "diameter": 0.0039,
+                    "drill_system_type": "Unknown",
+                    "group_id": 225,
+                    "id": 1032,
+                    "length": 0.02895,
+                    "name": "pzgz-A6mmΦ3.7~3.9",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a6.pzgz-A6mm%CE%A63.7~3.9.stl",
+                    "type": "dentsply.astra_ev.profile_a6.pzgz-A6mmΦ3.7~3.9"
+                  },
+                  {
+                    "diameter": 0.0045,
+                    "drill_system_type": "Unknown",
+                    "group_id": 225,
+                    "id": 1033,
+                    "length": 0.02895,
+                    "name": "pzgz-A6mmΦ4.3~4.5",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a6.pzgz-A6mm%CE%A64.3~4.5.stl",
+                    "type": "dentsply.astra_ev.profile_a6.pzgz-A6mmΦ4.3~4.5"
+                  },
+                  {
+                    "diameter": 0.0051,
+                    "drill_system_type": "Unknown",
+                    "group_id": 225,
+                    "id": 1034,
+                    "length": 0.02895,
+                    "name": "pzgz-A6mmΦ4.9~5.1",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a6.pzgz-A6mm%CE%A64.9~5.1.stl",
+                    "type": "dentsply.astra_ev.profile_a6.pzgz-A6mmΦ4.9~5.1"
+                  }
+                ],
+                "name": "皮质骨钻-A6mm",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.profile_a6"
+              },
+              {
+                "group_type": "drill",
+                "id": 237,
+                "items": [
+                  {
+                    "diameter": 0.0039,
+                    "drill_system_type": "Unknown",
+                    "group_id": 237,
+                    "id": 1081,
+                    "length": 0.0454,
+                    "name": "pzgz-A6mmΦ3.7~3.9_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a6_ext.pzgz-A6mm%CE%A63.7~3.9_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_a6_ext.pzgz-A6mmΦ3.7~3.9_EXT"
+                  },
+                  {
+                    "diameter": 0.0045,
+                    "drill_system_type": "Unknown",
+                    "group_id": 237,
+                    "id": 1082,
+                    "length": 0.04535,
+                    "name": "pzgz-A6mmΦ4.3~4.5_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a6_ext.pzgz-A6mm%CE%A64.3~4.5_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_a6_ext.pzgz-A6mmΦ4.3~4.5_EXT"
+                  },
+                  {
+                    "diameter": 0.0051,
+                    "drill_system_type": "Unknown",
+                    "group_id": 237,
+                    "id": 1083,
+                    "length": 0.0454,
+                    "name": "pzgz-A6mmΦ4.9~5.1_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a6_ext.pzgz-A6mm%CE%A64.9~5.1_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_a6_ext.pzgz-A6mmΦ4.9~5.1_EXT"
+                  }
+                ],
+                "name": "皮质骨钻-A6mm(延长杆)",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.profile_a6_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 235,
+                "items": [
+                  {
+                    "diameter": 0.0027,
+                    "drill_system_type": "Unknown",
+                    "group_id": 235,
+                    "id": 1072,
+                    "length": 0.0454,
+                    "name": "pzgz-AΦ2.5~2.7_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a_ext.pzgz-A%CE%A62.5~2.7_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_a_ext.pzgz-AΦ2.5~2.7_EXT"
+                  },
+                  {
+                    "diameter": 0.0039,
+                    "drill_system_type": "Unknown",
+                    "group_id": 235,
+                    "id": 1073,
+                    "length": 0.0454,
+                    "name": "pzgz-AΦ3.7~3.9_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a_ext.pzgz-A%CE%A63.7~3.9_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_a_ext.pzgz-AΦ3.7~3.9_EXT"
+                  },
+                  {
+                    "diameter": 0.0045,
+                    "drill_system_type": "Unknown",
+                    "group_id": 235,
+                    "id": 1074,
+                    "length": 0.0454,
+                    "name": "pzgz-AΦ4.3~4.5_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a_ext.pzgz-A%CE%A64.3~4.5_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_a_ext.pzgz-AΦ4.3~4.5_EXT"
+                  },
+                  {
+                    "diameter": 0.0051,
+                    "drill_system_type": "Unknown",
+                    "group_id": 235,
+                    "id": 1075,
+                    "length": 0.0454,
+                    "name": "pzgz-AΦ4.9~5.1_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_a_ext.pzgz-A%CE%A64.9~5.1_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_a_ext.pzgz-AΦ4.9~5.1_EXT"
+                  }
+                ],
+                "name": "皮质骨钻-A(延长杆)",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.profile_a_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 224,
+                "items": [
+                  {
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 224,
+                    "id": 1027,
+                    "length": 0.02895,
+                    "name": "pzgz-BΦ2.5~3.0",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b.pzgz-B%CE%A62.5~3.0.stl",
+                    "type": "dentsply.astra_ev.profile_b.pzgz-BΦ2.5~3.0"
+                  },
+                  {
+                    "diameter": 0.0036,
+                    "drill_system_type": "Unknown",
+                    "group_id": 224,
+                    "id": 1028,
+                    "length": 0.02895,
+                    "name": "pzgz-BΦ3.1~3.6",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b.pzgz-B%CE%A63.1~3.6.stl",
+                    "type": "dentsply.astra_ev.profile_b.pzgz-BΦ3.1~3.6"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 224,
+                    "id": 1029,
+                    "length": 0.02895,
+                    "name": "pzgz-BΦ3.7~4.2",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b.pzgz-B%CE%A63.7~4.2.stl",
+                    "type": "dentsply.astra_ev.profile_b.pzgz-BΦ3.7~4.2"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "Unknown",
+                    "group_id": 224,
+                    "id": 1030,
+                    "length": 0.02895,
+                    "name": "pzgz-BΦ4.3~4.8",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b.pzgz-B%CE%A64.3~4.8.stl",
+                    "type": "dentsply.astra_ev.profile_b.pzgz-BΦ4.3~4.8"
+                  },
+                  {
+                    "diameter": 0.0054,
+                    "drill_system_type": "Unknown",
+                    "group_id": 224,
+                    "id": 1031,
+                    "length": 0.02895,
+                    "name": "pzgz-BΦ4.9~5.4",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b.pzgz-B%CE%A64.9~5.4.stl",
+                    "type": "dentsply.astra_ev.profile_b.pzgz-BΦ4.9~5.4"
+                  }
+                ],
+                "name": "皮质骨钻-B",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.profile_b"
+              },
+              {
+                "group_type": "drill",
+                "id": 226,
+                "items": [
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 226,
+                    "id": 1035,
+                    "length": 0.02895,
+                    "name": "pzgz-B6mmΦ3.7~4.2",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b6.pzgz-B6mm%CE%A63.7~4.2.stl",
+                    "type": "dentsply.astra_ev.profile_b6.pzgz-B6mmΦ3.7~4.2"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 226,
+                    "id": 1036,
+                    "length": 0.02895,
+                    "name": "pzgz-B6mmΦ4.3~4.8",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b6.pzgz-B6mm%CE%A64.3~4.8.stl",
+                    "type": "dentsply.astra_ev.profile_b6.pzgz-B6mmΦ4.3~4.8"
+                  },
+                  {
+                    "diameter": 0.0054,
+                    "drill_system_type": "Unknown",
+                    "group_id": 226,
+                    "id": 1037,
+                    "length": 0.02895,
+                    "name": "pzgz-B6mmΦ4.9~5.4",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b6.pzgz-B6mm%CE%A64.9~5.4.stl",
+                    "type": "dentsply.astra_ev.profile_b6.pzgz-B6mmΦ4.9~5.4"
+                  }
+                ],
+                "name": "皮质骨钻-B6mm",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.profile_b6"
+              },
+              {
+                "group_type": "drill",
+                "id": 238,
+                "items": [
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 238,
+                    "id": 1084,
+                    "length": 0.0454,
+                    "name": "pzgz-B6mmΦ3.7~4.2_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b6_ext.pzgz-B6mm%CE%A63.7~4.2_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_b6_ext.pzgz-B6mmΦ3.7~4.2_EXT"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 238,
+                    "id": 1085,
+                    "length": 0.0454,
+                    "name": "pzgz-B6mmΦ4.3~4.8_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b6_ext.pzgz-B6mm%CE%A64.3~4.8_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_b6_ext.pzgz-B6mmΦ4.3~4.8_EXT"
+                  },
+                  {
+                    "diameter": 0.0054,
+                    "drill_system_type": "Unknown",
+                    "group_id": 238,
+                    "id": 1086,
+                    "length": 0.0454,
+                    "name": "pzgz-B6mmΦ4.9~5.4_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b6_ext.pzgz-B6mm%CE%A64.9~5.4_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_b6_ext.pzgz-B6mmΦ4.9~5.4_EXT"
+                  }
+                ],
+                "name": "皮质骨钻-B6mm(延长杆)",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.profile_b6_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 236,
+                "items": [
+                  {
+                    "diameter": 0.003,
+                    "drill_system_type": "Unknown",
+                    "group_id": 236,
+                    "id": 1076,
+                    "length": 0.0454,
+                    "name": "pzgz-BΦ2.5~3.0_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b_ext.pzgz-B%CE%A62.5~3.0_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_b_ext.pzgz-BΦ2.5~3.0_EXT"
+                  },
+                  {
+                    "diameter": 0.0036,
+                    "drill_system_type": "Unknown",
+                    "group_id": 236,
+                    "id": 1077,
+                    "length": 0.04545,
+                    "name": "pzgz-BΦ3.1~3.6_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b_ext.pzgz-B%CE%A63.1~3.6_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_b_ext.pzgz-BΦ3.1~3.6_EXT"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "drill_system_type": "Unknown",
+                    "group_id": 236,
+                    "id": 1078,
+                    "length": 0.04532,
+                    "name": "pzgz-BΦ3.7~4.2_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b_ext.pzgz-B%CE%A63.7~4.2_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_b_ext.pzgz-BΦ3.7~4.2_EXT"
+                  },
+                  {
+                    "diameter": 0.0048,
+                    "drill_system_type": "Unknown",
+                    "group_id": 236,
+                    "id": 1079,
+                    "length": 0.04535,
+                    "name": "pzgz-BΦ4.3~4.8_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b_ext.pzgz-B%CE%A64.3~4.8_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_b_ext.pzgz-BΦ4.3~4.8_EXT"
+                  },
+                  {
+                    "diameter": 0.0054,
+                    "drill_system_type": "Unknown",
+                    "group_id": 236,
+                    "id": 1080,
+                    "length": 0.04545,
+                    "name": "pzgz-BΦ4.9~5.4_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Dentsply/drill/dentsply.astra_ev.profile_b_ext.pzgz-B%CE%A64.9~5.4_EXT.stl",
+                    "type": "dentsply.astra_ev.profile_b_ext.pzgz-BΦ4.9~5.4_EXT"
+                  }
+                ],
+                "name": "皮质骨钻-B(延长杆)",
+                "system_id": 41,
+                "type": "dentsply.astra_ev.profile_b_ext"
+              }
+            ],
+            "id": 41,
+            "name": "Astra Tech EV",
+            "type": "dentsply.astra_ev",
+            "version": 19
+          }
+        ],
+        "type": "dentsply"
+      },
+      {
+        "alias": "Astra",
+        "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Logo/Astra_Tech/logo.png",
+        "id": 37,
+        "name": "Astra Tech",
+        "systems": [
+          {
+            "brand_id": 37,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "id": 901,
+                "items": [
+                  {
+                    "diameter": 0.0018,
+                    "group_id": 901,
+                    "id": 4333,
+                    "length": 0.0265,
+                    "name": "Guide drillΦ1.8",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.guild.Guide_drill%CE%A61.8.stl",
+                    "type": "Astra.default.guild.Guide_drillΦ1.8"
+                  }
+                ],
+                "name": "定位钻",
+                "system_id": 146,
+                "type": "Astra.default.guild"
+              },
+              {
+                "group_type": "drill",
+                "id": 906,
+                "items": [
+                  {
+                    "diameter": 0.0018,
+                    "group_id": 906,
+                    "id": 4370,
+                    "length": 0.043,
+                    "name": "Guide drillΦ1.8_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.guild_ext.Guide_drill%CE%A61.8_EXT.stl",
+                    "type": "Astra.default.guild_ext.Guide_drillΦ1.8_EXT"
+                  }
+                ],
+                "name": "定位钻(延长杆)",
+                "system_id": 146,
+                "type": "Astra.default.guild_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 902,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "group_id": 902,
+                    "id": 4334,
+                    "length": 0.029,
+                    "name": "Pilot drillΦ2.0_2.7",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pilot.Pilot_drill%CE%A62.0_2.7.stl",
+                    "type": "Astra.default.pilot.Pilot_drillΦ2.0_2.7"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "group_id": 902,
+                    "id": 4335,
+                    "length": 0.029,
+                    "name": "Pilot drillΦ2.0_3.2",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pilot.Pilot_drill%CE%A62.0_3.2.stl",
+                    "type": "Astra.default.pilot.Pilot_drillΦ2.0_3.2"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 902,
+                    "id": 4336,
+                    "length": 0.029,
+                    "name": "Pilot drillΦ3.2_3.7",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pilot.Pilot_drill%CE%A63.2_3.7.stl",
+                    "type": "Astra.default.pilot.Pilot_drillΦ3.2_3.7"
+                  }
+                ],
+                "name": "先锋钻",
+                "system_id": 146,
+                "type": "Astra.default.pilot"
+              },
+              {
+                "group_type": "drill",
+                "id": 907,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "group_id": 907,
+                    "id": 4371,
+                    "length": 0.0455,
+                    "name": "Pilot drillΦ2.0_2.7_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pilot_ext.Pilot_drill%CE%A62.0_2.7_EXT.stl",
+                    "type": "Astra.default.pilot_ext.Pilot_drillΦ2.0_2.7_EXT"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "group_id": 907,
+                    "id": 4372,
+                    "length": 0.0454,
+                    "name": "Pilot drillΦ2.0_3.2_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pilot_ext.Pilot_drill%CE%A62.0_3.2_EXT.stl",
+                    "type": "Astra.default.pilot_ext.Pilot_drillΦ2.0_3.2_EXT"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 907,
+                    "id": 4373,
+                    "length": 0.0454,
+                    "name": "Pilot drillΦ3.2_3.7_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pilot_ext.Pilot_drill%CE%A63.2_3.7_EXT.stl",
+                    "type": "Astra.default.pilot_ext.Pilot_drillΦ3.2_3.7_EXT"
+                  }
+                ],
+                "name": "先锋钻(延长杆)",
+                "system_id": 146,
+                "type": "Astra.default.pilot_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 904,
+                "items": [
+                  {
+                    "diameter": 0.0025,
+                    "group_id": 904,
+                    "id": 4359,
+                    "length": 0.029,
+                    "name": "Cortical bone molding drillΦ2.5_3.2",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pzg.Cortical_bone_molding_drill%CE%A62.5_3.2.stl",
+                    "type": "Astra.default.pzg.Cortical_bone_molding_drillΦ2.5_3.2"
+                  },
+                  {
+                    "diameter": 0.0027,
+                    "group_id": 904,
+                    "id": 4360,
+                    "length": 0.029,
+                    "name": "Cortical bone molding drillΦ2.7_3.0",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pzg.Cortical_bone_molding_drill%CE%A62.7_3.0.stl",
+                    "type": "Astra.default.pzg.Cortical_bone_molding_drillΦ2.7_3.0"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 904,
+                    "id": 4361,
+                    "length": 0.029,
+                    "name": "Cortical bone molding drillΦ3.2_3.5",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pzg.Cortical_bone_molding_drill%CE%A63.2_3.5.stl",
+                    "type": "Astra.default.pzg.Cortical_bone_molding_drillΦ3.2_3.5"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "group_id": 904,
+                    "id": 4362,
+                    "length": 0.029,
+                    "name": "Cortical bone molding drillΦ3.7_4.0",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pzg.Cortical_bone_molding_drill%CE%A63.7_4.0.stl",
+                    "type": "Astra.default.pzg.Cortical_bone_molding_drillΦ3.7_4.0"
+                  },
+                  {
+                    "diameter": 0.0047,
+                    "group_id": 904,
+                    "id": 4363,
+                    "length": 0.029,
+                    "name": "Cortical bone molding drillΦ4.7_5.0",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pzg.Cortical_bone_molding_drill%CE%A64.7_5.0.stl",
+                    "type": "Astra.default.pzg.Cortical_bone_molding_drillΦ4.7_5.0"
+                  }
+                ],
+                "name": "皮质骨成型钻",
+                "system_id": 146,
+                "type": "Astra.default.pzg"
+              },
+              {
+                "group_type": "drill",
+                "id": 909,
+                "items": [
+                  {
+                    "diameter": 0.0025,
+                    "group_id": 909,
+                    "id": 4396,
+                    "length": 0.0445,
+                    "name": "Cortical bone molding drillΦ2.5_3.2_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pzg_ext.Cortical_bone_molding_drill%CE%A62.5_3.2_EXT.stl",
+                    "type": "Astra.default.pzg_ext.Cortical_bone_molding_drillΦ2.5_3.2_EXT"
+                  },
+                  {
+                    "diameter": 0.0027,
+                    "group_id": 909,
+                    "id": 4397,
+                    "length": 0.0445,
+                    "name": "Cortical bone molding drillΦ2.7_3.0_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pzg_ext.Cortical_bone_molding_drill%CE%A62.7_3.0_EXT.stl",
+                    "type": "Astra.default.pzg_ext.Cortical_bone_molding_drillΦ2.7_3.0_EXT"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 909,
+                    "id": 4398,
+                    "length": 0.0445,
+                    "name": "Cortical bone molding drillΦ3.2_3.5_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pzg_ext.Cortical_bone_molding_drill%CE%A63.2_3.5_EXT.stl",
+                    "type": "Astra.default.pzg_ext.Cortical_bone_molding_drillΦ3.2_3.5_EXT"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "group_id": 909,
+                    "id": 4399,
+                    "length": 0.0445,
+                    "name": "Cortical bone molding drillΦ3.7_4.0_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pzg_ext.Cortical_bone_molding_drill%CE%A63.7_4.0_EXT.stl",
+                    "type": "Astra.default.pzg_ext.Cortical_bone_molding_drillΦ3.7_4.0_EXT"
+                  },
+                  {
+                    "diameter": 0.0047,
+                    "group_id": 909,
+                    "id": 4400,
+                    "length": 0.0445,
+                    "name": "Cortical bone molding drillΦ4.7_5.0_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.pzg_ext.Cortical_bone_molding_drill%CE%A64.7_5.0_EXT.stl",
+                    "type": "Astra.default.pzg_ext.Cortical_bone_molding_drillΦ4.7_5.0_EXT"
+                  }
+                ],
+                "name": "皮质骨成型钻(延长杆)",
+                "system_id": 146,
+                "type": "Astra.default.pzg_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 905,
+                "items": [
+                  {
+                    "diameter": 0.00265,
+                    "group_id": 905,
+                    "id": 4366,
+                    "length": 0.02775,
+                    "name": "Taper drillΦ2.7_4.5s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap.Taper_drill%CE%A62.7_4.5s.stl",
+                    "type": "Astra.default.tap.Taper_drillΦ2.7_4.5s"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 905,
+                    "id": 4365,
+                    "length": 0.03596,
+                    "name": "Taper drillΦ3.2_4.5l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap.Taper_drill%CE%A63.2_4.5l.stl",
+                    "type": "Astra.default.tap.Taper_drillΦ3.2_4.5l"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 905,
+                    "id": 4364,
+                    "length": 0.02776,
+                    "name": "Taper drillΦ3.2_4.5s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap.Taper_drill%CE%A63.2_4.5s.stl",
+                    "type": "Astra.default.tap.Taper_drillΦ3.2_4.5s"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 905,
+                    "id": 4367,
+                    "length": 0.0278,
+                    "name": "Taper drillΦ3.2_5.0s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap.Taper_drill%CE%A63.2_5.0s.stl",
+                    "type": "Astra.default.tap.Taper_drillΦ3.2_5.0s"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "group_id": 905,
+                    "id": 4369,
+                    "length": 0.036,
+                    "name": "Taper drillΦ3.7_5.0l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap.Taper_drill%CE%A63.7_5.0l.stl",
+                    "type": "Astra.default.tap.Taper_drillΦ3.7_5.0l"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "group_id": 905,
+                    "id": 4368,
+                    "length": 0.02775,
+                    "name": "Taper drillΦ3.7_5.0s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap.Taper_drill%CE%A63.7_5.0s.stl",
+                    "type": "Astra.default.tap.Taper_drillΦ3.7_5.0s"
+                  }
+                ],
+                "name": "攻丝钻",
+                "system_id": 146,
+                "type": "Astra.default.tap"
+              },
+              {
+                "group_type": "drill",
+                "id": 910,
+                "items": [
+                  {
+                    "diameter": 0.00265,
+                    "group_id": 910,
+                    "id": 4403,
+                    "length": 0.0433,
+                    "name": "Taper drillΦ2.7_4.5s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap_ext.Taper_drill%CE%A62.7_4.5s_EXT.stl",
+                    "type": "Astra.default.tap_ext.Taper_drillΦ2.7_4.5s_EXT"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 910,
+                    "id": 4402,
+                    "length": 0.0515,
+                    "name": "Taper drillΦ3.2_4.5l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap_ext.Taper_drill%CE%A63.2_4.5l_EXT.stl",
+                    "type": "Astra.default.tap_ext.Taper_drillΦ3.2_4.5l_EXT"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 910,
+                    "id": 4401,
+                    "length": 0.0433,
+                    "name": "Taper drillΦ3.2_4.5s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap_ext.Taper_drill%CE%A63.2_4.5s_EXT.stl",
+                    "type": "Astra.default.tap_ext.Taper_drillΦ3.2_4.5s_EXT"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 910,
+                    "id": 4404,
+                    "length": 0.04336,
+                    "name": "Taper drillΦ3.2_5.0s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap_ext.Taper_drill%CE%A63.2_5.0s_EXT.stl",
+                    "type": "Astra.default.tap_ext.Taper_drillΦ3.2_5.0s_EXT"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "group_id": 910,
+                    "id": 4406,
+                    "length": 0.05153,
+                    "name": "Taper drillΦ3.7_5.0l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap_ext.Taper_drill%CE%A63.7_5.0l_EXT.stl",
+                    "type": "Astra.default.tap_ext.Taper_drillΦ3.7_5.0l_EXT"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "group_id": 910,
+                    "id": 4405,
+                    "length": 0.04334,
+                    "name": "Taper drillΦ3.7_5.0s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.tap_ext.Taper_drill%CE%A63.7_5.0s_EXT.stl",
+                    "type": "Astra.default.tap_ext.Taper_drillΦ3.7_5.0s_EXT"
+                  }
+                ],
+                "name": "攻丝钻(延长杆)",
+                "system_id": 146,
+                "type": "Astra.default.tap_ext"
+              },
+              {
+                "group_type": "drill",
+                "id": 903,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "group_id": 903,
+                    "id": 4338,
+                    "length": 0.036,
+                    "name": "Twist drillΦ2.0l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A62.0l.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ2.0l"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "group_id": 903,
+                    "id": 4337,
+                    "length": 0.0291,
+                    "name": "Twist drillΦ2.0s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A62.0s.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ2.0s"
+                  },
+                  {
+                    "diameter": 0.0025,
+                    "group_id": 903,
+                    "id": 4340,
+                    "length": 0.0353,
+                    "name": "Twist drillΦ2.5l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A62.5l.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ2.5l"
+                  },
+                  {
+                    "diameter": 0.0025,
+                    "group_id": 903,
+                    "id": 4339,
+                    "length": 0.0283,
+                    "name": "Twist drillΦ2.5s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A62.5s.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ2.5s"
+                  },
+                  {
+                    "diameter": 0.00271,
+                    "group_id": 903,
+                    "id": 4342,
+                    "length": 0.0357,
+                    "name": "Twist drillΦ2.7l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A62.7l.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ2.7l"
+                  },
+                  {
+                    "diameter": 0.00271,
+                    "group_id": 903,
+                    "id": 4341,
+                    "length": 0.02897,
+                    "name": "Twist drillΦ2.7s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A62.7s.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ2.7s"
+                  },
+                  {
+                    "diameter": 0.00287,
+                    "group_id": 903,
+                    "id": 4344,
+                    "length": 0.03582,
+                    "name": "Twist drillΦ2.85l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A62.85l.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ2.85l"
+                  },
+                  {
+                    "diameter": 0.00287,
+                    "group_id": 903,
+                    "id": 4343,
+                    "length": 0.029,
+                    "name": "Twist drillΦ2.85s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A62.85s.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ2.85s"
+                  },
+                  {
+                    "diameter": 0.00321,
+                    "group_id": 903,
+                    "id": 4346,
+                    "length": 0.03606,
+                    "name": "Twist drillΦ3.2l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A63.2l.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ3.2l"
+                  },
+                  {
+                    "diameter": 0.00321,
+                    "group_id": 903,
+                    "id": 4345,
+                    "length": 0.02913,
+                    "name": "Twist drillΦ3.2s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A63.2s.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ3.2s"
+                  },
+                  {
+                    "diameter": 0.00336,
+                    "group_id": 903,
+                    "id": 4348,
+                    "length": 0.0362,
+                    "name": "Twist drillΦ3.35l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A63.35l.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ3.35l"
+                  },
+                  {
+                    "diameter": 0.00336,
+                    "group_id": 903,
+                    "id": 4347,
+                    "length": 0.02914,
+                    "name": "Twist drillΦ3.35s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A63.35s.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ3.35s"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "group_id": 903,
+                    "id": 4350,
+                    "length": 0.0364,
+                    "name": "Twist drillΦ3.7l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A63.7l.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ3.7l"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "group_id": 903,
+                    "id": 4349,
+                    "length": 0.0294,
+                    "name": "Twist drillΦ3.7s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A63.7s.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ3.7s"
+                  },
+                  {
+                    "diameter": 0.00386,
+                    "group_id": 903,
+                    "id": 4352,
+                    "length": 0.0365,
+                    "name": "Twist drillΦ3.85l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A63.85l.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ3.85l"
+                  },
+                  {
+                    "diameter": 0.00386,
+                    "group_id": 903,
+                    "id": 4351,
+                    "length": 0.02952,
+                    "name": "Twist drillΦ3.85s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A63.85s.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ3.85s"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "group_id": 903,
+                    "id": 4354,
+                    "length": 0.0368,
+                    "name": "Twist drillΦ4.2l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A64.2l.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ4.2l"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "group_id": 903,
+                    "id": 4353,
+                    "length": 0.0298,
+                    "name": "Twist drillΦ4.2s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A64.2s.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ4.2s"
+                  },
+                  {
+                    "diameter": 0.0047,
+                    "group_id": 903,
+                    "id": 4356,
+                    "length": 0.0369,
+                    "name": "Twist drillΦ4.7l",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A64.7l.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ4.7l"
+                  },
+                  {
+                    "diameter": 0.0047,
+                    "group_id": 903,
+                    "id": 4355,
+                    "length": 0.0299,
+                    "name": "Twist drillΦ4.7s",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist.Twist_drill%CE%A64.7s.stl",
+                    "type": "Astra.default.twist.Twist_drillΦ4.7s"
+                  }
+                ],
+                "name": "扩孔钻",
+                "system_id": 146,
+                "type": "Astra.default.twist"
+              },
+              {
+                "group_type": "drill",
+                "id": 908,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "group_id": 908,
+                    "id": 4375,
+                    "length": 0.0523,
+                    "name": "Twist drillΦ2.0l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A62.0l_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ2.0l_EXT"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "group_id": 908,
+                    "id": 4374,
+                    "length": 0.0456,
+                    "name": "Twist drillΦ2.0s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A62.0s_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ2.0s_EXT"
+                  },
+                  {
+                    "diameter": 0.0025,
+                    "group_id": 908,
+                    "id": 4377,
+                    "length": 0.0515,
+                    "name": "Twist drillΦ2.5l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A62.5l_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ2.5l_EXT"
+                  },
+                  {
+                    "diameter": 0.0025,
+                    "group_id": 908,
+                    "id": 4376,
+                    "length": 0.04485,
+                    "name": "Twist drillΦ2.5s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A62.5s_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ2.5s_EXT"
+                  },
+                  {
+                    "diameter": 0.0027,
+                    "group_id": 908,
+                    "id": 4379,
+                    "length": 0.0521,
+                    "name": "Twist drillΦ2.7l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A62.7l_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ2.7l_EXT"
+                  },
+                  {
+                    "diameter": 0.0027,
+                    "group_id": 908,
+                    "id": 4378,
+                    "length": 0.04535,
+                    "name": "Twist drillΦ2.7s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A62.7s_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ2.7s_EXT"
+                  },
+                  {
+                    "diameter": 0.00285,
+                    "group_id": 908,
+                    "id": 4381,
+                    "length": 0.0522,
+                    "name": "Twist drillΦ2.85l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A62.85l_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ2.85l_EXT"
+                  },
+                  {
+                    "diameter": 0.00285,
+                    "group_id": 908,
+                    "id": 4380,
+                    "length": 0.0455,
+                    "name": "Twist drillΦ2.85s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A62.85s_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ2.85s_EXT"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 908,
+                    "id": 4383,
+                    "length": 0.0524,
+                    "name": "Twist drillΦ3.2l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A63.2l_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ3.2l_EXT"
+                  },
+                  {
+                    "diameter": 0.0032,
+                    "group_id": 908,
+                    "id": 4382,
+                    "length": 0.0456,
+                    "name": "Twist drillΦ3.2s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A63.2s_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ3.2s_EXT"
+                  },
+                  {
+                    "diameter": 0.00335,
+                    "group_id": 908,
+                    "id": 4385,
+                    "length": 0.05265,
+                    "name": "Twist drillΦ3.35l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A63.35l_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ3.35l_EXT"
+                  },
+                  {
+                    "diameter": 0.00335,
+                    "group_id": 908,
+                    "id": 4384,
+                    "length": 0.0455,
+                    "name": "Twist drillΦ3.35s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A63.35s_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ3.35s_EXT"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "group_id": 908,
+                    "id": 4387,
+                    "length": 0.0529,
+                    "name": "Twist drillΦ3.7l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A63.7l_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ3.7l_EXT"
+                  },
+                  {
+                    "diameter": 0.0037,
+                    "group_id": 908,
+                    "id": 4386,
+                    "length": 0.0457,
+                    "name": "Twist drillΦ3.7s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A63.7s_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ3.7s_EXT"
+                  },
+                  {
+                    "diameter": 0.00385,
+                    "group_id": 908,
+                    "id": 4389,
+                    "length": 0.0529,
+                    "name": "Twist drillΦ3.85l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A63.85l_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ3.85l_EXT"
+                  },
+                  {
+                    "diameter": 0.00385,
+                    "group_id": 908,
+                    "id": 4388,
+                    "length": 0.046,
+                    "name": "Twist drillΦ3.85s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A63.85s_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ3.85s_EXT"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "group_id": 908,
+                    "id": 4391,
+                    "length": 0.0533,
+                    "name": "Twist drillΦ4.2l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A64.2l_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ4.2l_EXT"
+                  },
+                  {
+                    "diameter": 0.0042,
+                    "group_id": 908,
+                    "id": 4390,
+                    "length": 0.0463,
+                    "name": "Twist drillΦ4.2s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A64.2s_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ4.2s_EXT"
+                  },
+                  {
+                    "diameter": 0.0047,
+                    "group_id": 908,
+                    "id": 4393,
+                    "length": 0.0534,
+                    "name": "Twist drillΦ4.7l_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A64.7l_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ4.7l_EXT"
+                  },
+                  {
+                    "diameter": 0.0047,
+                    "group_id": 908,
+                    "id": 4392,
+                    "length": 0.0464,
+                    "name": "Twist drillΦ4.7s_EXT",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Astra/drill/Astra.default.twist_ext.Twist_drill%CE%A64.7s_EXT.stl",
+                    "type": "Astra.default.twist_ext.Twist_drillΦ4.7s_EXT"
+                  }
+                ],
+                "name": "扩孔钻(延长杆)",
+                "system_id": 146,
+                "type": "Astra.default.twist_ext"
+              }
+            ],
+            "id": 146,
+            "name": "default",
+            "type": "Astra.default"
+          }
+        ],
+        "type": "Astra"
+      },
+      {
+        "alias": "coxo",
+        "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Logo/Coxo/logo.png",
+        "id": 41,
+        "name": "宇森",
+        "systems": [
+          {
+            "brand_id": 41,
+            "id": 160,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/Cutter_Implant.png",
+                "id": 1041,
+                "items": [
+                  {
+                    "detail": "{\"咬合直径\":\"3.5mm\",\"总长度\":\"8.0mm\",\"根尖直径\":\"3.5mm\",\"领圈高度\":\"0.00mm\",\"骨内长度\":\"0.00mm\"}",
+                    "diameter": 0.0035,
+                    "drill_system_type": "Unknown",
+                    "group_id": 1041,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/Cutter_Implant.png",
+                    "id": 4878,
+                    "length": 0.008,
+                    "name": "Cutter_Implant",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Coxo/implant/coxo.cutter_implant_implant.cutter_implant.Cutter_Implant.stl",
+                    "type": "coxo.cutter_implant_implant.cutter_implant.Cutter_Implant"
+                  }
+                ],
+                "name": "超声骨刀设计体",
+                "system_id": 160,
+                "type": "coxo.cutter_implant_implant.cutter_implant"
+              }
+            ],
+            "name": "超声骨刀设计体",
+            "type": "coxo.cutter_implant_implant"
+          },
+          {
+            "brand_id": 41,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "id": 1042,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 1042,
+                    "id": 4879,
+                    "is_cut": true,
+                    "length": 0.0095,
+                    "name": "US1",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Coxo/drill/coxo.coxo_bone_cut.cut.US1.stl",
+                    "type": "coxo.coxo_bone_cut.cut.US1"
+                  },
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 1042,
+                    "id": 4880,
+                    "is_cut": true,
+                    "length": 0.0085,
+                    "name": "US2",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Coxo/drill/coxo.coxo_bone_cut.cut.US2.stl",
+                    "type": "coxo.coxo_bone_cut.cut.US2"
+                  }
+                ],
+                "name": "US",
+                "system_id": 161,
+                "type": "coxo.coxo_bone_cut.cut"
+              },
+              {
+                "group_type": "drill",
+                "id": 1043,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 1043,
+                    "id": 4881,
+                    "is_cut": true,
+                    "length": 0.008,
+                    "name": "UL3",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Coxo/drill/coxo.coxo_bone_cut.cut.UL3.stl",
+                    "type": "coxo.coxo_bone_cut.cut.__dup2.UL3"
+                  }
+                ],
+                "name": "UL",
+                "system_id": 161,
+                "type": "coxo.coxo_bone_cut.cut.__dup2"
+              },
+              {
+                "group_type": "drill",
+                "id": 1044,
+                "items": [
+                  {
+                    "diameter": 0.002,
+                    "drill_system_type": "Unknown",
+                    "group_id": 1044,
+                    "id": 4882,
+                    "is_cut": true,
+                    "length": 0.008,
+                    "name": "UC1",
+                    "offset": -1,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Model/Coxo/drill/coxo.coxo_bone_cut.cut.UC1.stl",
+                    "type": "coxo.coxo_bone_cut.cut.__dup3.UC1"
+                  }
+                ],
+                "name": "UC",
+                "system_id": 161,
+                "type": "coxo.coxo_bone_cut.cut.__dup3"
+              }
+            ],
+            "id": 161,
+            "name": "超声骨刀工作尖",
+            "type": "coxo.coxo_bone_cut",
+            "version": 1
+          }
+        ],
+        "type": "coxo"
+      },
+      {
+        "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Brand/ec4580ad-2710-4965-a4ad-dce16dac9752.jpg",
+        "id": 46,
+        "name": "方田医创",
+        "systems": [
+          {
+            "brand_id": 46,
+            "drill_groups": [
+              {
+                "group_type": "drill",
+                "id": 1055,
+                "items": [
+                  {
+                    "diameter": 0.0046,
+                    "group_id": 1055,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/drill/19eb6e1c-6a8a-44e7-b68a-d466157653fe.png",
+                    "id": 4918,
+                    "is_carrier": true,
+                    "length": 0.0217,
+                    "name": "正畸支抗钉套筒",
+                    "offset": 0.002,
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/modelv2/645d14cf-d3ae-4048-bed6-8b7c589ec09f.stl",
+                    "type": "1111111"
+                  }
+                ],
+                "name": "套筒",
+                "system_id": 165,
+                "type": "fyton.anchorage_screw.sleeve"
+              }
+            ],
+            "id": 165,
+            "implant_groups": [
+              {
+                "group_type": "implant",
+                "id": 1050,
+                "items": [
+                  {
+                    "diameter": 0.0018,
+                    "group_id": 1050,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/c1eb0d90-f8cd-4b26-ab91-0213c6a65279.png",
+                    "id": 4889,
+                    "length": 0.0111,
+                    "name": "正畸支抗钉 11.1M",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/modelv2/2312b770-85f6-4214-aeb0-0944c1bb4998.stl",
+                    "type": "fyton.anchorage_screw_implant.11.1m"
+                  },
+                  {
+                    "diameter": 0.0018,
+                    "group_id": 1050,
+                    "icon_url": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/Icon/Default/implant/3a3630f0-7d1b-40b1-bbdc-984adbb9b232.png",
+                    "id": 4932,
+                    "length": 0.0131,
+                    "name": "正畸支抗钉 13.1M",
+                    "stl_path": "https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/tars/implant-system/modelv2/5302c8f9-f7e9-4fba-a0f0-9ec01734035c.stl",
+                    "type": "fyton.anchorage_screw_implant.13.1m"
+                  }
+                ],
+                "name": "正畸支抗钉",
+                "system_id": 165,
+                "type": "fyton.anchorage_screw.zhengji"
+              }
+            ],
+            "name": "支抗钉系统",
+            "type": "fyton.anchorage_screw",
+            "version": 28
+          }
+        ],
+        "type": "fyton"
+      }
+    ],
+    "FeatureConfig": {
+      "edentulousJaw": {},
+      "offlineUse": {},
+      "planMigration": {},
+      "precisionVerification": {},
+      "tarsDesignHelp": {},
+      "tarsHandpieceHelp": {},
+      "tarsJawboneHelp": {},
+      "tarsLogin": {},
+      "tarsLoginHelp": {},
+      "tarsNavigationHelp": {},
+      "tarsOfflineAuth": {},
+      "tarsPatientManagementHelp": {},
+      "tarsRegisterScanHelp": {},
+      "tarsRegistrationVersionFeature": {},
+      "tarsScreenShareHelp": {},
+      "tarsSettingHelp": {},
+      "tarsSwitchCalibrationPin": {},
+      "tarsToothPointHelp": {},
+      "tarsUploadHelp": {}
+    },
+    "Courses": [
+      {
+        "id": 21,
+        "name": "离线版本",
+        "status": 2,
+        "featureKey": "offlineUse",
+        "content": "<h1><span style=\"font-size: 24px;\"><strong>离线版本功能教程</strong></span></h1><h2><span style=\"font-size: 19px;\"><strong>功能说明</strong></span></h2><p><span style=\"font-size: 16px;\">离线版本适合在无网或弱网环境下使用基础设计能力。 &nbsp;</span></p><p><span style=\"font-size: 16px;\">使用前建议先在联网环境下完成数据准备，并开启本地缓存。</span></p><p><span style=\"font-size: 16px;\">需要注意：离线版本新建的设计不支持 AI 相关功能，例如依赖在线服务的 AI 分割、AI 异常检测、在线 AI 结果获取等能力。</span></p><h2><span style=\"font-size: 19px;\"><strong>怎么开启设计缓存</strong></span></h2><ol><li><span style=\"font-size: 16px;\">进入系统设置。</span></li><li><span style=\"font-size: 16px;\">找到缓存配置。</span></li><li><span style=\"font-size: 16px;\">打开本地缓存开关。</span></li><li><span style=\"font-size: 16px;\">在联网状态下，把后续需要使用的数据先缓存到本地。</span></li></ol><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260512/d725f456-2fe5-44aa-87bb-308bcc177f2e.png\" alt=\"开启缓存.png\" data-href=\"\" style=\"\"/><br></p><h2><span style=\"font-size: 19px;\"><strong>怎么开启离线版本</strong></span></h2><ol><li><span style=\"font-size: 16px;\">进入系统设置。</span></li><li><span style=\"font-size: 16px;\">找到启用离线版本开关。</span></li><li><span style=\"font-size: 16px;\">打开后，系统会提示离线模式已开启，3 秒后刷新页面。</span></li><li><span style=\"font-size: 16px;\">页面自动刷新后，即进入离线版本流程。</span></li><li><span style=\"font-size: 16px;\">如果开启失败，系统会提示失败原因，需要先排查本地离线环境是否初始化成功。</span></li></ol><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260512/4a48a575-e761-40dc-ab4b-999b3e0a0283.png\" alt=\"开启离线.png\" data-href=\"\" style=\"\"/><br></p><h2><span style=\"font-size: 19px;\"><strong>怎么登录</strong></span></h2><ol><li><span style=\"font-size: 16p... <truncated 26 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1778578727000
+      },
+      {
+        "id": 20,
+        "name": "配准界面切面精度确认",
+        "status": 1,
+        "featureKey": "precisionVerification",
+        "content": "<h1><strong>导航配准页确认精度时的切面视图教程</strong></h1><h2><strong>1. 功能说明</strong></h2><p>在导航配准页进入确认精度阶段后，系统支持显示切面视图。</p><p>这个功能主要用于：</p><ul><li>在确认精度时同步查看当前牙位附近的切面情况</li><li>辅助判断标定针与牙面位置关系</li><li>让确认过程更直观</li></ul><h2><strong>2. 进入方式</strong></h2><ol><li>进入导航配准页。</li><li>按正常流程完成前面的配准步骤。</li><li>进入确认精度阶段后，继续按提示进行牙面确认。</li><li>当标定针接近目标牙面时，切面视图会自动显示。</li><li>这个视图不需要手动打开。</li></ol><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260512/508ffb1f-36ac-4c36-94f4-c210d793ab55.png\" alt=\"精度确认.png\" data-href=\"\" style=\"\"/><br></p><h2><strong>3. 交互流程</strong></h2><p>实际使用时可以按下面理解：</p><ol><li>医生在配准页按照提示进入确认精度。</li><li>系统提示将标定针靠近黄色牙齿表面。</li><li>当位置接近可确认范围时，页面会自动弹出切面视图。</li><li>医生一边看主视图，一边结合切面视图确认当前位置关系。</li><li>确认完成后，继续后续流程即可。</li></ol><h2><strong>4. 显示效果说明</strong></h2><p>切面视图的特点是：</p><ul><li>自动出现，无需额外操作</li><li>主要用于确认精度阶段</li><li>用来辅助观察当前确认位置的局部切面关系</li><li>离开该确认场景后会自动消失</li></ul><p><br></p>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1778578489000
+      },
+      {
+        "id": 19,
+        "name": "无牙颌教程",
+        "status": 2,
+        "featureKey": "edentulousJaw",
+        "content": "<h1><span style=\"font-size: 24px;\"><strong>无牙颌设计功能教程</strong></span></h1><p><span style=\"font-size: 19px;\"><strong>功能说明</strong></span></p><p><span style=\"font-size: 16px;\">系统支持无牙颌病例设计。</span></p><p><span style=\"font-size: 16px;\">在无牙颌场景下，除了牙尖点外，还支持使用钛钉点参与设计与后续配准。 &nbsp;</span></p><p><span style=\"font-size: 16px;\">如果后续进行钛钉点配准，设计阶段需要先完成对应点位标记。</span></p><h2><span style=\"font-size: 19px;\"><strong>进入方式</strong></span></h2><ol><li><span style=\"font-size: 16px;\">新建或编辑病例时，将病例类型选择为无牙颌病例。</span></li><li><span style=\"font-size: 16px;\">进入设计页面后，打开点位标记界面。</span></li><li><span style=\"font-size: 16px;\">页面会支持两类点位操作：牙尖点钛钉</span></li></ol><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260512/e47471a0-ab16-4a5a-9df8-9434fc2eda7c.png\" alt=\"无牙颌病例选择.png\" data-href=\"\" style=\"\"/><br></p><h2><span style=\"font-size: 19px;\"><strong>交互流程</strong></span></h2><p><span style=\"font-size: 16px;\">推荐按下面流程操作：</span></p><ol><li><span style=\"font-size: 16px;\">先把病例类型设为无牙颌病例。</span></li><li><span style=\"font-size: 16px;\">进入设计页后，按需要切换到牙尖点或钛钉模式。</span></li><li><span style=\"font-size: 16px;\">在模型上逐个标记对应点位。</span></li><li><span style=\"font-size: 16px;\">如果要用于后续钛钉点配准，需要提前把钛钉点标好。</span></li><li><span style=\"font-size: 16px;\">点位标记完成后，再继续后续设计流程。</span></li></ol><h2><span style=\"font-size: 19px;\"><strong>使用说明</strong></span></h2><ul><li><span style=\"font-size: 16px;\">无牙颌病例下，系统支持牙尖点和钛钉点两种点位</span></li><li><span style=\"font-size: 16px;\">钛钉点需要在设计阶段先完成标记，后续配准时才能使用</span></li><li><span style=\"font-size: 16px;\">如果进入配准微调，牙尖点和钛钉点合计至少需要4 个点</span></li><li><span style=\"font-size: 16px;\">标记点位... <truncated 25 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1778578373000
+      },
+      {
+        "id": 18,
+        "name": "手动切换标定针",
+        "status": 2,
+        "featureKey": "tarsSwitchCalibrationPin",
+        "content": "<h1><span style=\"font-size: 24px;\"><strong>标定针手动切换功能教程</strong></span></h1><h2><span style=\"font-size: 19px;\"><strong>功能说明</strong></span></h2><p><span style=\"font-size: 16px;\">在配准页面中，支持手动切换当前使用的标定针类型。</span></p><p><span style=\"font-size: 16px;\">目前可切换的类型有：</span></p><ul><li><span style=\"font-size: 16px;\">标定针</span></li><li><span style=\"font-size: 16px;\">标定球钻</span></li><li><span style=\"font-size: 16px;\">这个功能主要用于根据当前配准步骤或实际装配情况，手动指定系统正在使用的标定针类型。</span></li></ul><h2><span style=\"font-size: 19px;\"><strong>入口位置</strong></span></h2><ol><li><span style=\"font-size: 16px;\">进入导航配准页。</span></li><li><span style=\"font-size: 16px;\">在左侧手机配准区域右上角，找到标定针切换按钮组。</span></li><li><span style=\"font-size: 16px;\">按钮会直接显示当前可选的两种类型。</span></li></ol><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260528/bcb8fda4-cfa2-4a12-9aa9-457b9fa12d60.jpg\" alt=\"配准-标定针切换.jpg\" data-href=\"\" style=\"\"/></p><h2><span style=\"font-size: 19px;\"><strong>交互流程</strong></span></h2><p><span style=\"font-size: 16px;\">实际使用时可以按下面操作：</span></p><ol><li><span style=\"font-size: 16px;\">进入配准页面。</span></li><li><span style=\"font-size: 16px;\">确认当前实际安装的是哪一种标定针。</span></li><li><span style=\"font-size: 16px;\">在手机配准区域点击对应按钮。</span></li><li><span style=\"font-size: 16px;\">系统收到切换指令后，会把当前标定针类型切换到所选项。</span></li><li><span style=\"font-size: 16px;\">切换成功后，当前选中的按钮会保持高亮显示。</span></li></ol><h2><span style=\"font-size: 19px;\"><strong>使用说明</strong></span></h2><ul><li><span style=\"font-size: 16px;\">如果当前已经是目标类型，再次点击不会重复切换</span></li><li><span style=\"font-size: 16px;\">如果设备未连接，不能进行切换</span></li><li><span style=\"font-size... <truncated 25 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1778578238000
+      },
+      {
+        "id": 17,
+        "name": "方案迁移",
+        "status": 2,
+        "featureKey": "planMigration",
+        "content": "<h1><span style=\"font-size: 24px;\"><strong>方案迁功能教程</strong></span></h1><h2><span style=\"font-size: 19px;\"><strong>功能说明</strong></span></h2><p><span style=\"font-size: 16px;\">方案迁功能用于把当前方案迁移到目标模型上。</span></p><p><span style=\"font-size: 16px;\">这个功能主要适用于：</span></p><ul><li><span style=\"font-size: 16px;\">当前方案已经完成设计</span></li><li><span style=\"font-size: 16px;\">需要把同一套设计迁到另一份模型数据上</span></li><li><span style=\"font-size: 16px;\">希望减少重新设计的工作量</span></li></ul><h2><span style=\"font-size: 19px;\"><strong>进入方式</strong></span></h2><ol><li><span style=\"font-size: 16px;\">进入种植体设计页面。</span></li><li><span style=\"font-size: 16px;\">打开模型管理相关面板。</span></li><li><span style=\"font-size: 16px;\">点击模型迁移。</span></li><li><span style=\"font-size: 16px;\">进入方案迁操作界面。</span></li></ol><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260512/4404e6bc-9a56-4678-9817-c44cdce8fac6.png\" alt=\"入口.png\" data-href=\"\" style=\"\"/><br></p><h2><span style=\"font-size: 19px;\"><strong>交互流程</strong></span></h2><p><span style=\"font-size: 16px;\">整个流程可以按下面理解：</span></p><ol><li><span style=\"font-size: 16px;\">先确认左侧是当前方案模型。</span></li><li><span style=\"font-size: 16px;\">在右侧选择一个迁移模型作为目标模型。</span></li><li><span style=\"font-size: 16px;\">分别在当前模型和目标模型上，按对应顺序选点。</span></li><li><span style=\"font-size: 16px;\">每边至少选择4 对对应点，建议多选一些更稳。</span></li><li><span style=\"font-size: 16px;\">选点完成后，点击模型配准。</span></li><li><span style=\"font-size: 16px;\">系统进入同屏对照页面，检查两个模型是否已经对齐。</span></li><li><span style=\"font-size: 16px;\">确认没问题后，点击设计迁移。</span></li><li><span style=\"font-size: 16px;\">系统会自动生成一份迁移后的新设计。</span></li></ol><h2><span s... <truncated 25 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1778578158000
+      },
+      {
+        "id": 16,
+        "name": "屏幕共享教程",
+        "status": 2,
+        "featureKey": "tarsScreenShareHelp",
+        "content": "<p style=\"text-align: start;\"><span style=\"font-size: 24px;\"><strong>画面共享功能说明</strong></span></p><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>功能入口</strong></span><span style=\"font-size: 16px;\"><br>在系统页面顶部栏点击</span><span style=\"background-color: oklab(0.999994 0.0000455678 0.0000200868 / 0.0470588); font-size: 16px;\">屏幕共享</span><span style=\"font-size: 16px;\">图标，进入屏幕共享界面。</span></p><p style=\"text-align: start;\"><span style=\"font-size: 16px;\">在屏幕共享界面，您可以完成设备连接管理、MR视角切换，并实时查看设备相机拍摄的视频画面。</span></p><p style=\"text-align: start;\"><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260318/f46b93bf-b785-496f-a396-77630c72a007.png\" alt=\"共享屏幕.png\" data-href=\"\" style=\"\"></p><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>设备列表与连接</strong></span></p><ol><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">通过开关可展开或收起设备列表。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">点击设备卡片可查看对应设备信息与状态。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">再次点击设备卡片即可发起连接。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">连接成功后，界面会展示相机拍摄视频、术区画面及眼镜数据。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">默认可先以“相机术区”视角进行查看。</span></li></ol><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>画面查看与视角切换</strong></span></p><ol><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">在共享画面区域可实时查看术区视频。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">通过顶部面板可快速切换不同视野（如相机术区/眼镜术区）。</span></li><li s... <truncated 25 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1773816127000
+      },
+      {
+        "id": 15,
+        "name": "牙尖点标记教程",
+        "status": 2,
+        "featureKey": "tarsToothPointHelp",
+        "content": "<p style=\"text-align: start;\"><span style=\"font-size: 24px;\"><strong>牙尖点标记功能</strong></span></p><p style=\"text-align: start;\"><span style=\"font-size: 16px;\">在牙尖点标记界面，您可以完成配准关键点选择、模型显示切换和标记点管理，为后续颌骨配准与手术导航建立可靠基础。</span></p><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>功能用途</strong></span><span style=\"font-size: 16px;\"><br>牙尖点是系统配准的重要参考点。通过合理标记牙尖点，可提升配准稳定性与导航准确性。</span></p><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>牙尖点选择与管理</strong></span></p><ol><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">在3D模型中直接点击目标牙齿，即可选中对应牙尖点。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">已选中的牙尖点会同步显示在牙尖点管理面板中。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">如需修改，可在管理面板中删除不需要的点并重新选择。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">建议牙尖点分布均匀，数量不少于4个（系统最多支持20个）。</span></li></ol><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260318/1f8c76c5-3561-45f9-8459-ddab7b6c661b.png\" alt=\"牙尖点关联面板.png\" data-href=\"\" style=\"\"/></p><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>模型查看与显示控制</strong></span></p><ol><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">点击蓝色切换按钮，可在分割模型与点云模型之间切换。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">在分割面板中点击对应区域，可隐藏该部分分割模型，便于观察目标结构。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">侧边栏显示患者信息，并提供全局模型设置。</span></li></ol><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260318/67434805-822... <truncated 26 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1773813789000
+      },
+      {
+        "id": 14,
+        "name": "导航页教程帮助",
+        "status": 1,
+        "featureKey": "tarsNavigationHelp",
+        "content": "<p><span style=\"font-size: 24px;\"><strong>术中导航</strong></span></p><p><span style=\"font-size: 16px;\">配准流程完成后，点击页面上方的“下一步：进入手术”按钮，即可进入术中导航界面，具体展示效果如下图所示。</span></p><p style=\"text-align: left;\"><span style=\"font-size: 19px;\"><strong>钻针选择</strong></span></p><p><span style=\"font-size: 16px;\">点击页面右下角对应功能按钮，将弹出钻针选择弹框；在弹框中选择与实际手术使用一致的钻针型号，即可完成钻针选择，具体操作效果如下图所示。</span></p><p><span style=\"font-size: 16px;\">【注意】请务必确认选择的钻针与实际使用的钻针型号一致，否则导航提示信息将出现偏差，影响手术精度。</span></p><p style=\"text-align: left;\"><span style=\"font-size: 19px;\"><strong>CT截面视图</strong></span></p><p><span style=\"font-size: 16px;\">对于通过DICOM数据设计的手术，页面左侧二维视图将实时显示当前钻针在不同CT截面上的位置，包含轴状面、冠状面和矢状面三个视图，各视图功能如下：</span></p><ul><li style=\"text-align: left;\"><span style=\"font-size: 16px;\">轴状面：显示当前种植体的位置及指示器，医生可通过对应操作对切面视图进行旋转，便于观察细节；</span></li><li style=\"text-align: left;\"><span style=\"font-size: 16px;\">冠状面：清晰展示当前钻针在冠状面上的具体位置，辅助判断钻针植入方向；</span></li><li style=\"text-align: left;\"><span style=\"font-size: 16px;\">矢状面：直观呈现当前钻针在矢状面上的位置，助力医生把控钻针深度和角度。</span></li></ul><p style=\"text-align: left;\"><span style=\"font-size: 19px;\"><strong>指示器</strong></span></p><p><span style=\"font-size: 16px;\">指示器样式如上图所示，其各组成部分及含义如下：</span></p><ul><li style=\"text-align: left;\"><span style=\"font-size: 16px;\">黄色十字：表示钻针针尖的实时位置；</span></li><li style=\"text-align: left;\"><span style=\"font-size: 16px;\">固定圆环中心：表示预设的种植体位置；</span></li><li style=\"text-align: left;\"><span style=\"font-size: 16px;\">跟随手机的圆环：表示手机的水平位置。</span></li><li style=\"text-align: left;\"><span style=\"font-size: 16px;\">圆环上的文字代表不同方向，具体含义如下：</span></li><ul><li style=\"text-align: left;\"><span style=\"font-size: 16p... <truncated 26 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448490000
+      },
+      {
+        "id": 13,
+        "name": "配准页颌骨配准教程帮助",
+        "status": 2,
+        "featureKey": "tarsJawboneHelp",
+        "content": "<p style=\"text-align: start;\"><span style=\"font-size: 24px;\"><strong>颌骨配准功能</strong></span></p><p style=\"text-align: start;\"><span style=\"font-size: 16px;\">颌骨配准支持</span><span style=\"background-color: oklab(0.999994 0.0000455678 0.0000200868 / 0.0470588); font-size: 16px;\">手动配准</span><span style=\"font-size: 16px;\">与</span><span style=\"background-color: oklab(0.999994 0.0000455678 0.0000200868 / 0.0470588); font-size: 16px;\">自动配准</span><span style=\"font-size: 16px;\">两种方式，可通过“颌骨配准”标题旁按钮进行切换。</span></p><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>手动配准</strong></span><span style=\"font-size: 16px;\"><br>进入手动配准后，系统会按牙尖点顺序引导操作。</span></p><p style=\"text-align: start;\"><span style=\"font-size: 16px;\">操作人员需根据牙尖标记位置，在患者牙齿上依次点击对应牙尖点完成配准。</span></p><p style=\"text-align: start;\"><span style=\"font-size: 16px;\">如标记位置不合适，可先使用“微调牙尖点”功能调整并重新标记，再继续配准。</span></p><p style=\"text-align: start;\"><span style=\"font-size: 16px;\">页面底部面板提供牙尖点序号按钮，可快速切换当前牙尖点，并支持随时重新配准。</span></p><p style=\"text-align: start;\"><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260528/46e171a0-2bbd-4fbf-8ade-06e560e9a754.jpg\" alt=\"配准-手机手动配准.jpg\" data-href=\"\" style=\"\"><span style=\"font-size: 16px;\"><br></span><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260528/68399403-7f37-4c96-88fa-39abaa4e88f2.jpg\" alt=\"配准-手动配准中.jpg\" data-href=\"\" style=\"\"></p><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>自动配准</strong></span><span style=\"font-size: 16px;\"><br>启动自动配准后，可轻微晃动患者在术区中的牙齿位置，按系统提示完成自动配准流程。</span></p><p style=\"t... <truncated 25 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448472000
+      },
+      {
+        "id": 12,
+        "name": "配准页手机配准说明",
+        "status": 2,
+        "featureKey": "tarsHandpieceHelp",
+        "content": "<p style=\"text-align: start;\"><span style=\"font-size: 24px;\"><strong>手机配准功能说明</strong></span></p><p style=\"text-align: start;\"><span style=\"font-size: 16px;\">目前手机配准支持两种方式：</span><span style=\"background-color: oklab(0.999994 0.0000455678 0.0000200868 / 0.0470588); font-size: 16px;\">自动配准</span><span style=\"font-size: 16px;\"> 与 </span><span style=\"background-color: oklab(0.999994 0.0000455678 0.0000200868 / 0.0470588); font-size: 16px;\">手动配准</span><span style=\"font-size: 16px;\">。<br>两种方式均需在完成</span><span style=\"background-color: oklab(0.999994 0.0000455678 0.0000200868 / 0.0470588); font-size: 16px;\">设计加载</span><span style=\"font-size: 16px;\">与</span><span style=\"background-color: oklab(0.999994 0.0000455678 0.0000200868 / 0.0470588); font-size: 16px;\">配附件编码设置</span><span style=\"font-size: 16px;\">后进行，并点击</span><span style=\"background-color: oklab(0.999994 0.0000455678 0.0000200868 / 0.0470588); font-size: 16px;\">开始配准</span><span style=\"font-size: 16px;\">按钮进入流程。<br>可通过标题旁切换按钮在两种模式间切换。</span></p><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>使用前准备</strong></span><span style=\"font-size: 16px;\"><br>确认以下条件全部满足：</span></p><ul><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">已进入手术导航/配准流程页面。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">相机状态正常，术区与相机距离处于系统工作范围内（建议绿色）。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">多功能标定板可正常放置并被识别。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">参考装置已正确安装到手机上。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">已按所选模式安装对应配... <truncated 26 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448430000
+      },
+      {
+        "id": 11,
+        "name": "配准页扫码说明",
+        "status": 2,
+        "featureKey": "tarsRegisterScanHelp",
+        "content": "<p style=\"text-align: start;\"><span style=\"font-size: 24px;\"><strong>扫码配置</strong></span></p><p style=\"text-align: start;\"><span style=\"font-size: 16px;\">在手术过程中，需先完成配附件编码设置。操作时可取出参考装置并放置于术区，设备将自动扫描参考装置上的二维码，自动完成配附件信息设置。设置成功后，系统会显示设备配准相关信息。（如图）</span></p><p style=\"text-align: start;\"><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260318/e2922cdd-7565-4d3d-8ce3-7e4bc90d6872.png\" alt=\"扫码配置.png\" data-href=\"\" style=\"\"></p><p style=\"text-align: start;\"><span style=\"font-size: 16px;\">操作人员也可选择手动设置：在编号设置区域点击对应下拉框，分别选择标定板、参考装置、定位装置的编号，确认后进入下一步配准流程。（如图）</span></p><p style=\"text-align: start;\"><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260528/6fb0b460-fa5b-43bb-b966-613e88e15d5f.jpg\" alt=\"配准页-选择配附件.jpg\" data-href=\"\" style=\"\"></p><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>操作流程</strong></span></p><ol><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">进入手术导航/配准流程页面。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">将参考装置放入术区可识别范围，触发自动扫码。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">系统自动写入配附件编号并显示设置结果。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">若自动扫码失败或需修正，切换为手动设置完成编号配置。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">编码设置完成后，点击“开始配准”，继续配准流程。</span></li><li style=\"text-align: start;\"><span style=\"font-size: 16px;\">如果设计时上传了口扫，颌骨配准可以切换成以颌骨或口扫为准。</span></li></ol><p style=\"text-align: start;\"><span style=\"font-size: 19px;\"><strong>结果判定</strong></span></p><ul><li style=\"t... <truncated 25 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448419000
+      },
+      {
+        "id": 9,
+        "name": "test",
+        "status": 1,
+        "featureKey": "tarsToothPointHelp",
+        "content": "<p><span style=\"color: rgb(31, 31, 31); background-color: rgb(255, 255, 255); font-size: 24px;\"><strong>选择牙尖点页</strong></span></p><p><span style=\"color: rgb(31, 31, 31); background-color: rgb(255, 255, 255); font-size: 16px;\">进入牙尖点选择页后，可直接查看当前牙尖点信息，并对其进行调整操作。</span></p><p><span style=\"color: rgb(31, 31, 31); background-color: rgb(255, 255, 255); font-size: 16px;\">若模型分割功能已执行完成，系统将自动推荐最优牙尖点位，具体效果如图所示。</span></p><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260318/2793445c-cba2-4fb3-b73a-dea5161e9cd3.png\" alt=\"选择牙尖点页.png\" data-href=\"\" style=\"\"/></p><p>若需手动添加牙尖点，可通过鼠标左键点击牙面完成点位添加；需注意，手动添加时至少需添加4个牙尖点，且所有点位不可处于同一直线上，确保后续操作准确性。</p><p>若牙尖点分布存在异常（如点位共线等），系统会自动弹出提示，如下图所示。此时需及时调整牙尖点的位置或数量，避免影响手术精度。</p><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260318/52698533-8da3-48de-939e-ed5954b6adb5.png\" alt=\"牙尖点分布异常.png\" data-href=\"\" style=\"\"/></p><p><br></p><p><br></p>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448392000
+      },
+      {
+        "id": 8,
+        "name": "设计页功能说明",
+        "status": 2,
+        "featureKey": "tarsDesignHelp",
+        "content": "<p><span style=\"color: rgb(31, 31, 31); background-color: rgb(255, 255, 255); font-size: 24px;\"><strong>手术方案设计</strong></span></p><p><span style=\"font-size: 16px;\">进入手术设计页后，可开展完整的手术方案设计操作。当模型加载完成后，页面将同步展示三维视图、三视图(横断面、冠状面、矢状面)及全景片视图，方便医生全面观察模型，具体展示效果如下图所示。</span></p><h4 style=\"text-align: left;\"><span style=\"font-size: 19px;\"><strong>模型分割</strong></span></h4><p><span style=\"font-size: 16px;\">模型分割模式可帮助医生更清晰地观察模型结构。操作时，点击下图中不同颜色的区域，即可对三维视图中对应的模块进行显示或隐藏操作，便于精准观察目标部位。</span></p><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260324/b2b51041-185d-41c6-ad28-11035c0fcd79.png\" alt=\"3D分割显隐.png\" data-href=\"\" style=\"width: 50%;\"/></p><h4 style=\"text-align: left;\"><span style=\"font-size: 19px;\"><strong>咬合平面调整</strong></span></h4><p><span style=\"font-size: 16px;\">在三维视图中，医生将看到一个可交互的圆环（如下图“咬合平面三维视图”所示），该圆环代表咬合平面的截面；同时，通过下图“牙弓曲线视图”，可查看咬合平面的截面细节。在种植体设计过程中，医生可通过以下步骤调整轴状面视图，确保其满足手术设计需求：</span></p><ul><li style=\"text-align: left;\"><span style=\"font-size: 16px;\">控制圆环上下移动：使用鼠标左键点击并拖动绿色箭头，可控制圆环在垂直方向上上下移动，调整咬合平面高度；</span></li><li style=\"text-align: left;\"><span style=\"font-size: 16px;\">控制圆环倾斜：通过鼠标左键点击并拖动红色箭头，可调整圆环的倾斜角度，贴合实际咬合需求；</span></li><li style=\"text-align: left;\"><span style=\"font-size: 16px;\">旋转模型：点击鼠标左键并拖动模型，可使整个三维模型在空间中旋转，便于从不同角度观察咬合平面。</span></li></ul><p><span style=\"font-size: 16px;\">下图为咬合平面三维视图：</span></p><p style=\"text-align: left;\"><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260324/c2570f9a-d05d-4293-a6aa-dc4e6cd4413e.png\" alt=\"咬合平面图.png\" data-href=\"\" style=\"width: 50%;\"></p><p><span style=\"font-size:... <truncated 26 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448378000
+      },
+      {
+        "id": 6,
+        "name": "浏览器兼容性说明-旧版本",
+        "status": 2,
+        "featureKey": "tarsLogin",
+        "content": "<h1 style=\"text-align: start;\">用户使用环境帮助说明</h1><p style=\"text-align: start;\">为确保本系统在使用过程中<strong>稳定、准确、流畅运行</strong>，请在使用前确认您的设备和浏览器环境符合以下要求。</p><hr/><p><br></p><h2 style=\"text-align: start;\">一、推荐使用环境</h2><h3 style=\"text-align: start;\">1. 浏览器要求</h3><p style=\"text-align: start;\">系统支持主流现代浏览器，但<strong>推荐优先使用 Google Chrome 浏览器以获得最佳体验</strong>。</p><blockquote style=\"text-align: start;\">若使用非 Chrome 浏览器时出现显示异常、交互异常或性能问题，建议切换至 Chrome 浏览器重新访问系统。</blockquote><hr/><p><br></p><h3 style=\"text-align: start;\">2. 浏览器版本要求</h3><ul><li style=\"text-align: start;\">请使用各浏览器的<strong>最新稳定版本</strong></li><li style=\"text-align: start;\">过旧版本可能导致页面无法正常显示或操作失败</li></ul><hr/><p><br></p><h3 style=\"text-align: start;\">3. 设备要求</h3><p style=\"text-align: start;\">建议使用：</p><ul><li style=\"text-align: start;\"><strong>台式电脑或笔记本电脑</strong></li><li style=\"text-align: start;\">操作系统：</li></ul><p style=\"text-align: start;\">不建议使用：</p><ul><li style=\"text-align: start;\">手机</li><li style=\"text-align: start;\">平板</li><li style=\"text-align: start;\">虚拟机</li><li style=\"text-align: start;\">远程桌面环境</li></ul><hr/><p><br></p><h2 style=\"text-align: start;\">二、浏览器设置要求</h2><p style=\"text-align: start;\">为了确保本系统的 3D 渲染和交互性能，请在开始前确认以下设置：</p><hr/><p><br></p><h3 style=\"text-align: start;\">1. 开启 WebGL 硬件加速（必要）</h3><h4 style=\"text-align: start;\">Chrome 浏览器设置方法</h4><p style=\"text-align: start;\">若在使用过程中感到卡顿，请按以下步骤优化浏览器：</p><ol><li style=\"text-align: start;\">进入 <strong>“设置” -&gt; “系统”</strong>。</li><li style=\"text-align: start;\">开启 <strong>“使用图形加速功能（如果可用）”</strong>。</li><li style=\"text-align: start;\">在地址栏输入：chrome://flags/<br>搜索 <strong>Override sof... <truncated 26 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448355000
+      },
+      {
+        "id": 5,
+        "name": "CT上传功能说明",
+        "status": 2,
+        "featureKey": "tarsUploadHelp",
+        "content": "<p><span style=\"font-size: 24px;\"><strong>CT上传功能说明</strong></span></p><p><span style=\"font-size: 19px;\"><strong>导入患者模型数据</strong></span></p><p><span style=\"font-size: 16px;\">将存储有患者模型文件的U盘或移动硬盘插入设备控制面板的USB接口。</span></p><p><span style=\"font-size: 16px;\">进入系统后，打开患者数据模块。</span></p><p><span style=\"font-size: 16px;\">点击【上传模型】按钮。</span></p><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260528/b8018419-8f73-476a-bad5-d9ab302103eb.jpg\" alt=\"病患管理-导入数据.jpg\" data-href=\"\" style=\"\"/></p><p><span style=\"font-size: 16px;\">在弹出的文件选择窗口中，选择需要导入的文件。</span></p><p><span style=\"font-size: 16px;\">点击【确认上传】，系统开始导入数据。</span></p><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260324/2be3ab16-24bd-4047-a121-1b8f3362cad9.png\" alt=\"患者详情-确认导入.png\" data-href=\"\" style=\"\"/></p><h3><span style=\"font-size: 16px;\">支持的文件类型</span></h3><ul><li><span style=\"font-size: 16px;\">患者CT数据：标准 DICOM格式（.dcm）</span></li><li><span style=\"font-size: 16px;\">上下颌口扫数据：STL格式（.stl）</span></li></ul><blockquote><span style=\"font-size: 16px;\">⚠️ 注意：系统仅支持 .dcm 和 .stl 格式文件，其他格式无法导入。</span></blockquote><p><br></p><h2><span style=\"font-size: 19px;\"><strong>模型加载与自动跳转</strong></span></h2><ul><li><span style=\"font-size: 16px;\">模型上传完成后，系统会自动进入“裁剪模型”模块；</span></li><li><span style=\"font-size: 16px;\">医生可以在该界面查看： 三维模型视图（3D） 三视图（轴状 / 冠状 / 矢状）；</span></li><li><span style=\"font-size: 16px;\">输入模型名称后即可点击“确定”，保存裁切模型。</span></li></ul><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260324/66c9d523-2f87-4d3e-ab41-f9ad2e1569be.png\" alt... <truncated 26 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448342000
+      },
+      {
+        "id": 4,
+        "name": "设置页帮助说明",
+        "status": 2,
+        "featureKey": "tarsSettingHelp",
+        "content": "<p><span style=\"font-size: 24px;\"><strong>设置页帮助说明</strong></span></p><p><span style=\"font-size: 16px;\">设置弹窗包含以下功能模块：</span><span style=\"font-size: 16px;\"><strong>网络设置、文件管理、MR配置、系统配置、OTP登录、离线设置、语言设置、关于</strong></span></p><p><br></p><h2><span style=\"font-size: 19px;\"><strong>网络设置</strong></span></h2><p><span style=\"font-size: 16px;\">用于设备网络连接管理。</span></p><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260511/c2a1c1f2-6ede-4fa0-93c5-39157d865df9.png\" alt=\"设置-网络配置.png\" data-href=\"\" style=\"\"/></p><h3><span style=\"font-size: 16px;\"><strong>功能说明</strong></span></h3><ul><li><span style=\"font-size: 16px;\">展示当前设备可搜索到的 Wi-Fi 列表</span></li><li><span style=\"font-size: 16px;\">支持连接无线网络</span></li></ul><h3><span style=\"font-size: 16px;\"><strong>操作步骤</strong></span></h3><ol><li><span style=\"font-size: 16px;\">在列表中选择需要连接的Wi-Fi</span></li><li><span style=\"font-size: 16px;\">点击【连接】按钮</span></li><li><span style=\"font-size: 16px;\">输入对应密码</span></li><li><span style=\"font-size: 16px;\">连接成功后即可使用网络</span></li></ol><p><br></p><h2><span style=\"font-size: 19px;\"><strong>文件管理</strong></span></h2><p><span style=\"font-size: 16px;\">用于管理系统中保存的手术设计文件及录屏文件。</span></p><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260511/713483fd-b8c0-4c9d-83c7-bee77094a247.png\" alt=\"设置-文件管理.png\" data-href=\"\" style=\"\"/></p><h3><span style=\"font-size: 16px;\"><strong>功能说明</strong></span></h3><h4><span style=\"font-size: 16px;\">手术设计文件：</span></h4><ul><li><span style=\"font-size: 16px;\">支持【导出】</span></li><li><span style=\"font-size: 16px;\">支持【删除】</span... <truncated 26 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448329000
+      },
+      {
+        "id": 3,
+        "name": "病患管理页帮助说明",
+        "status": 2,
+        "featureKey": "tarsPatientManagementHelp",
+        "content": "<p><span style=\"font-size: 24px;\"><strong>病患管理页帮助说明</strong></span></p><h2><span style=\"font-size: 19px;\"><strong>病例管理</strong></span></h2><p><span style=\"font-size: 16px;\">在患者详情页面中，可对病例进行新增、编辑及删除操作。</span></p><h3><span style=\"font-size: 16px;\"><strong>新增病例</strong></span></h3><ul><li><span style=\"font-size: 16px;\">点击【新增病例】按钮</span></li><li><span style=\"font-size: 16px;\">打开病例创建弹窗</span></li><li><span style=\"font-size: 16px;\">填写相关信息后保存，即可完成创建</span></li></ul><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260514/44d6c83d-0610-485b-b271-5d9cb8e41ce9.png\" alt=\"患者详情-新建病历.png\" data-href=\"\" style=\"\"/></p><h3><span style=\"font-size: 16px;\"><strong>编辑病例</strong></span></h3><ul><li><span style=\"font-size: 16px;\">在病例列表中找到目标病例</span></li><li><span style=\"font-size: 16px;\">点击对应的【编辑】按钮</span></li><li><span style=\"font-size: 16px;\">在弹窗中修改信息并保存</span></li></ul><h3><span style=\"font-size: 16px;\"><strong>删除病例</strong></span></h3><ul><li><span style=\"font-size: 16px;\">在病例列表中执行删除操作，即可移除对应病例</span></li></ul><p><br></p><h2><span style=\"font-size: 19px;\"><strong>查看病例内容</strong></span></h2><ul><li>点击病例列表中的任意病例</li><li>可查看该病例下的： 治疗路径 手术方案</li></ul><p><img src=\"https://tars-frontend-res-1303037276.cos.ap-chengdu.myqcloud.com/materials/20260515/61138d9b-1f42-4b93-9f01-38e09662eb66.png\" alt=\"病患管理-查看病例内容.png\" data-href=\"\" style=\"\"/></p><h2><span style=\"font-size: 19px;\"><strong>创建设计（进入手术设计页）</strong></span></h2><p><span style=\"font-size: 16px;\">在治疗路径中点击【创建设计】</span></p><p><span style=\"font-size: 16px;\">系统将跳转至手术设计页面</span></p><p><span style=\"font-size: 16px;\">选... <truncated 26 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448311000
+      },
+      {
+        "id": 2,
+        "name": "浏览器兼容说明教程",
+        "status": 2,
+        "featureKey": "tarsLoginHelp",
+        "content": "<h1 style=\"text-align: start;\">用户使用环境帮助说明</h1><p style=\"text-align: start;\">为确保本系统在使用过程中<strong>稳定、准确、流畅运行</strong>，请在使用前确认您的设备和浏览器环境符合以下要求。</p><hr/><p><br></p><h2 style=\"text-align: start;\">一、推荐使用环境</h2><h3 style=\"text-align: start;\">1. 浏览器要求</h3><p style=\"text-align: start;\">系统支持主流现代浏览器，但<strong>推荐优先使用 Google Chrome 浏览器以获得最佳体验</strong>。</p><blockquote style=\"text-align: start;\">若使用非 Chrome 浏览器时出现显示异常、交互异常或性能问题，建议切换至 Chrome 浏览器重新访问系统。</blockquote><hr/><p><br></p><h3 style=\"text-align: start;\">2. 浏览器版本要求</h3><ul><li style=\"text-align: start;\">请使用各浏览器的<strong>最新稳定版本</strong></li><li style=\"text-align: start;\">过旧版本可能导致页面无法正常显示或操作失败</li></ul><hr/><p><br></p><h3 style=\"text-align: start;\">3. 设备要求</h3><p style=\"text-align: start;\">建议使用：</p><ul><li style=\"text-align: start;\"><strong>台式电脑或笔记本电脑</strong></li><li style=\"text-align: start;\">操作系统：</li></ul><p style=\"text-align: start;\">不建议使用：</p><ul><li style=\"text-align: start;\">手机</li><li style=\"text-align: start;\">平板</li><li style=\"text-align: start;\">虚拟机</li><li style=\"text-align: start;\">远程桌面环境</li></ul><hr/><p><br></p><h2 style=\"text-align: start;\">二、浏览器设置要求</h2><p style=\"text-align: start;\">为了确保本系统的 3D 渲染和交互性能，请在开始前确认以下设置：</p><hr/><p><br></p><h3 style=\"text-align: start;\">1. 开启 WebGL 硬件加速（必要）</h3><h4 style=\"text-align: start;\">Chrome 浏览器设置方法</h4><p style=\"text-align: start;\">若在使用过程中感到卡顿，请按以下步骤优化浏览器：</p><ol><li style=\"text-align: start;\">进入 <strong>“设置” -&gt; “系统”</strong>。</li><li style=\"text-align: start;\">开启 <strong>“使用图形加速功能（如果可用）”</strong>。</li><li style=\"text-align: start;\">在地址栏输入：chrome://flags/<br>搜索 <strong>Override sof... <truncated 26 chars>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772448299000
+      },
+      {
+        "id": 1,
+        "name": "test",
+        "status": 1,
+        "featureKey": "tarsScreenShareHelp",
+        "content": "<p>撒打算</p>",
+        "creatorID": "",
+        "creator": "",
+        "createTime": 1772447680000
+      }
+    ]
+  }
+}
+```
+
+### 11. `GET /assets/login-CAs8E3FN.js`
+
+- Origin: `https://x.finetool.cn`
+- Observed count: `3`
+- Trigger actions: `open and close user agreement, open surgical design list, reload business list`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `application/javascript`
+
+Response body sample:
+
+```json
+"const e={backToAccountLogin:\"账号登录\",countdown:\"{{count}} 秒\",getCaptcha:\"获取验证码\",resetPassword:\"重置密码\",submit:{login:\"登录\",reset:\"重置\"}},i={content:{line001:\"口腔种植导航系统用户协议\",line002:\"更新日期：2024年08月02日\",line003:\"生效日期：2024年08月02日\",line004:\"前言\",line005:\"欢迎使用方田医创（成都）科技有限公司（以下简称“方田医创”）提供的口腔种植导航系统（以下简称“本系统”或“本服务”）。本系统系已取得《医疗器械注册证》的正式医疗辅助产品（注册证号：国械注准20263010120），旨在为执业医生提供口腔种植手术规划、导航辅助等服务，助力提升口腔种植手术的精准度与效率。\",line006:\"请您在使用本系统前，仔细阅读并充分理解本协议全部条款，特别是免除或限制方田医创责任的条款、数据隐私与安全条款、法律适用与争议解决条款。前述条款将以加粗形式提示，您应重点阅读。\",line007:\"您确认，代表您使用本系统的人员已获得充分授权，并有权代表您接受并履行本协议。您明白并同意，本系统仅向年满18周岁、具备完全民事行为能力且持有中国大陆执业医师资格证书的自然人或医疗机构授权人员开放使用。\",line008:\"如您不同意本协议任何条款，请勿下载、安装、登录或使用本系统；您一旦开始使用本系统，即视为已充分阅读、理解并自愿接受本协议全部条款的约束，包括方田医创后续对本协议的修订与更新。\",line009:\"一、定义与解释\",line010:\"1.1 【系统/本系统】：指由方田医创（成都）科技有限公司研发、生产并提供的口腔种植导航系统，含配套云服务、软件程序、硬件设备及后续推出的纳入本系统服务范畴的所有功能模块，该系统已取得《医疗器械注册证》，符合国家医疗器械相关标准及技术规范。\",line011:\"1.2 【用户/您】：指注册并使用本系统的中国大陆执业医生或医疗机构授权人员，且已取得合法执业资质，具备使用本系统的专业能力。\",line012:\"1.3 【患者数据】：指用户在使用本系统过程中，主动导入的患者口腔影像、病历资料、手术相关记录（含手术视频）等个人信息及医疗数据。\",line013:\"1.4 【衍生数据】：指方田医创通过本系统对用户导入的原始患者数据进行处理、分析后生成的匿名化模型、算法、统计数据等，该数据已去除所有可识别个人身份的信息，无法反向关联具体患者或用户。\",line014:\"1.5 【AI输出内容】：指本系统基于人工智能算法、医疗大数据及用户输入的患者数据，生成的手术规划方案、导航辅助提示、参数建议等所有输出结果。\",line015:\"二、账号注册与使用规范\",line016:\"2.1 用户资质：您承诺在注册账号时，提供真实、准确、完整的个人信息（含执业医师资格证编号、所在医疗机构信息等），确保自身具备中国大陆合法执业医师资质，或已获得医疗机构的合法授权。您应及时更新注册信息，若信息虚假、失效或不完整，方田医创有权暂停或终止您的账号使用权，由此产生的一切损失由您自行承担。\",line017:\"2.2 账号管理：您应对自己的账号及密码承担全部责任，严禁将账号出借、赠予、转让、售卖或与他人共享。如因您自身操作不当、账号泄露或他人盗用账号导致的任何风险、损失，均由您自行承担，方田医创不承担任何责任。\",line018:\"2.3 数据导入责任：您确认，在导入任何患者数据前，已依法获得患者的书面知情同意，明确告知患者数据导入本系统的目的、范围及使用方式，且已对患者数据进行合规脱敏处理（删除姓名、身份证号、联系方式、面部特征等直接或间接可识别... <truncated 27 chars>"
+```
+
+### 12. `GET /assets/login-bg-B9IJCfeq.jpg`
+
+- Origin: `https://x.finetool.cn`
+- Observed count: `1`
+- Trigger actions: `open and close user agreement`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `image/jpeg`
+
+### 13. `GET /itk/itk-wasm-pipeline.min.worker.js`
+
+- Origin: `https://x.finetool.cn`
+- Observed count: `3`
+- Trigger actions: `open and close user agreement, open surgical design list, reload business list`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `application/javascript`
+
+Response body sample:
+
+```json
+{
+  "var tt": "Object.defineProperty;var et=(A,I)=>{for(var t in I)tt(A,t,{get:I[t],enumerable:!0})};var vA=Symbol(\"Comlink.proxy\"),gt=Symbol(\"Comlink.endpoint\"),rt=Symbol(\"Comlink.releaseProxy\"),mA=Symbol(\"Comlink.finalizer\"),eA=Symbol(\"Comlink.thrown\"),$A=A=>typeof A==\"object\"",
+  "A!": [
+    "=null||typeof A==\"function\",it={canHandle:A=>$A(A)",
+    "=sI;function RA(){let{caseless:A}=nI(this)",
+    "=Object.prototype);return I},Lt=(A,I,t)=>{A=String(A),(t===void 0||t>A.length)"
+  ],
+  "A[vA],serialize(A){let{port1:I,port2:t}": "new MessageChannel;return oA(A,I),[t,[t]]},deserialize(A){return A.start(),st(A)}},ot={canHandle:A=>$A(A)",
+  "eA in A,serialize({value:A}){let I;return A instanceof Error?I": "{isError:!0,value:{message:A.message,name:A.name,stack:A.stack}}:I={isError:!1,value:A},[I,[]]},deserialize(A){throw A.isError?Object.assign(new Error(A.value.message),A.value):A.value}},AI=new Map([[\"proxy\",it],[\"throw\",ot]]);function Bt(A,I){for(let t of A)if(I===t||t===\"*\"||t instanceof RegExp",
+  "t.test(I))return!0;return!1}function oA(A,I": "globalThis,t=[\"*\"]){I.addEventListener(\"message\",function e(g){if(!g||!g.data)return;if(!Bt(t,g.origin)){console.warn(`Invalid origin '${g.origin}' for comlink proxy`);return}let{id:r,type:i,path:s}=Object.assign({path:[]},g.data),a=(g.data.argumentList||[]).map(b),Q;try{let C=s.slice(0,-1).reduce((f,n)=>f[n],A),o=s.reduce((f,n)=>f[n],A);switch(i){case\"GET\":Q=o;break;case\"SET\":C[s.slice(-1)[0]]=b(g.data.value),Q=!0;break;case\"APPLY\":Q=o.apply(C,a);break;case\"CONSTRUCT\":{let f=new o(...a);Q=at(f)}break;case\"ENDPOINT\":{let{port1:f,port2:n}=new MessageChannel;oA(A,n),Q=FA(f,[f])}break;case\"RELEASE\":Q=void 0;break;default:return}}catch(C){Q={value:C,[eA]:0}}Promise.resolve(Q).catch(C=>({value:C,[eA]:0})).then(C=>{let[o,f]=iA(C);I.postMessage(Object.assign(Object.assign({},o),{id:r}),f),i===\"RELEASE\"",
+  "(I.removeEventListener(\"message\",e),II(I),mA in A": "",
+  "typeof A[mA]": "=\"function\"",
+  "A[mA]())}).catch(C": ">{let[o,f]=iA({value:new TypeError(\"Unserializable return value\"),[eA]:0});I.postMessage(Object.assign(Object.assign({},o),{id:r}),f)})}),I.start",
+  "I.start()}function Ct(A){return A.constructor.name": "==\"MessagePort\"}function II(A){Ct(A)",
+  "A.close()}function st(A,I){return pA(A,[],I)}function tA(A){if(A)throw new Error(\"Proxy has been released and is not useable\")}function tI(A){return M(A,{type:\"RELEASE\"}).then(()": ">{II(A)})}var gA=new WeakMap,rA=\"FinalizationRegistry\"in globalThis",
+  "new FinalizationRegistry(A": ">{let I=(gA.get(A)||0)-1;gA.set(A,I),I===0",
+  "tI(A)});function nt(A,I){let t": "(gA.get(I)||0) 1;gA.set(I,t),rA",
+  "rA.register(A,I,A)}function Qt(A){rA": "",
+  "rA.unregister(A)}function pA(A,I": "[],t=function(){}){let e=!1,g=new Proxy(t,{get(r,i){if(tA(e),i===rt)return()=>{Qt(g),tI(A),e=!0};if(i===\"then\"){if(I.length===0)return{then:()=>g};let s=M(A,{type:\"GET\",path:I.map(a=>a.toString())}).then(b);return s.then.bind(s)}return pA(A,[...I,i])},set(r,i,s){tA(e);let[a,Q]=iA(s);return M(A,{type:\"SET\",path:[...I,i].map(C=>C.toString()),value:a},Q).then(b)},apply(r,i,s){tA(e);let a=I[I.length-1];if(a===gt)return M(A,{type:\"ENDPOINT\"}).then(b);if(a===\"bind\")return pA(A,I.slice(0,-1));let[Q,C]=_A(s);return M(A,{type:\"APPLY\",path:I.map(o=>o.toString()),argumentList:Q},C).then(b)},construct(r,i){tA(e);let[s,a]=_A(i);return M(A,{type:\"CONSTRUCT\",path:I.map(Q=>Q.toString()),argumentList:s},a).then(b)}});return nt(g,A),g}function Et(A){return Array.prototype.concat.apply([],A)}function _A(A){let I=A.map(iA);return[I.map(t=>t[0]),Et(I.map(t=>t[1]))]}var eI=new WeakMap;function FA(A,I){return eI.set(A,I),A}function at(A){return Object.assign(A,{[vA]:!0})}function iA(A){for(let[I,t]of AI)if(t.canHandle(A)){let[e,g]=t.serialize(A);return[{type:\"HANDLER\",name:I,value:e},g]}return[{type:\"RAW\",value:A},eI.get(A)||[]]}function b(A){switch(A.type){case\"HANDLER\":return AI.get(A.name).deserialize(A.value);case\"RAW\":return A.value}}function M(A,I,t){return new Promise(e=>{let g=ct();A.addEventListener(\"message\",function r(i){!i.data||!i.data.id||i.data.id!==g||(A.removeEventListener(\"message\",r),e(i.data))}),A.start",
+  "A.start(),A.postMessage(Object.assign({id:g},I),t)})}function ct(){return new Array(4).fill(0).map(()": ">Math.floor(Math.random()*Number.MAX_SAFE_INTEGER).toString(16)).join(\"-\")}function W(A,I){return function(){return A.apply(I,arguments)}}var{toString:ft}=Object.prototype,{getPrototypeOf:NA}=Object,CA=(A=>I=>{let t=ft.call(I);return A[t]||(A[t]=t.slice(8,-1).toLowerCase())})(Object.create(null)),U=A=>(A=A.toLowerCase(),I=>CA(I)===A),sA=A=>I=>typeof I===A,{isArray:q}=Array,Z=sA(\"undefined\");function lt(A){return A!==null",
+  "!Z(A)": "",
+  "A.constructor!": "=null",
+  "!Z(A.constructor)": "",
+  "S(A.constructor.isBuffer)": "",
+  "A.constructor.isBuffer(A)}var oI": "U(\"ArrayBuffer\");function Dt(A){let I;return typeof ArrayBuffer<\"u\"",
+  "ArrayBuffer.isView?I": "ArrayBuffer.isView(A):I=A",
+  "A.buffer": "",
+  "oI(A.buffer),I}var ut": "sA(\"string\"),S=sA(\"function\"),BI=sA(\"number\"),nA=A=>A!==null",
+  "typeof A": "=\"object\",ht=A=>A===!0||A===!1,BA=A=>{if(CA(A)!==\"object\")return!1;let I=NA(A);return(I===null||I===Object.prototype||Object.getPrototypeOf(I)===null)",
+  "!(Symbol.toStringTag in A)": "",
+  "!(Symbol.iterator in A)},dt": "U(\"Date\"),yt=U(\"File\"),wt=U(\"Blob\"),mt=U(\"FileList\"),pt=A=>nA(A)",
+  "S(A.pipe),Ft": "A=>{let I;return A",
+  "(typeof FormData": "=\"function\"",
+  "A instanceof FormData||S(A.append)": "",
+  "((I": "CA(A))===\"formdata\"||I===\"object\"",
+  "S(A.toString)": "",
+  "A.toString()": "==\"[object FormData]\"))},St=U(\"URLSearchParams\"),Rt=A=>A.trim?A.trim():A.replace(/^[\\s\\uFEFF\\xA0] |[\\s\\uFEFF\\xA0] $/g,\"\");function V(A,I,{allOwnKeys:t=!1}={}){if(A===null||typeof A>\"u\")return;let e,g;if(typeof A!=\"object\"",
+  "(A": [
+    "[A]),q(A))for(e=0,g=A.length;e<g;e  )I.call(null,A[e],e,A);else{let r=t?Object.getOwnPropertyNames(A):Object.keys(A),i=r.length,s;for(e=0;e<i;e  )s=r[e],I.call(null,A[s],s,A)}}function CI(A,I){I=I.toLowerCase();let t=Object.keys(A),e=t.length,g;for(;e-- >0;)if(g=t[e],I===g.toLowerCase())return g;return null}var sI=typeof globalThis<\"u\"?globalThis:typeof self<\"u\"?self:typeof window<\"u\"?window:global,nI=A=>!Z(A)",
+    "A.slice(1)),A),Gt=(A,I,t,e)=>{A.prototype=Object.create(I.prototype,e),A.prototype.constructor=A,Object.defineProperty(A,\"super\",{value:I.prototype}),t",
+    "A.slice(0,i)),A =(A.indexOf(\"?\")===-1?\"?\":\""
+  ],
+  "this||{},I": "{},t=(e,g)=>{let r=A",
+  "CI(I,g)||g;BA(I[r])": "",
+  "BA(e)?I[r]": "RA(I[r],e):BA(e)?I[r]=RA({},e):q(e)?I[r]=e.slice():I[r]=e};for(let e=0,g=arguments.length;e<g;e  )arguments[e]",
+  "V(arguments[e],t);return I}var Nt": "(A,I,t,{allOwnKeys:e}={})=>(V(I,(g,r)=>{t",
+  "S(g)?A[r]": "W(g,t):A[r]=g},{allOwnKeys:e}),A),Ut=A=>(A.charCodeAt(0)===65279",
+  "Object.assign(A.prototype,t)},kt": "(A,I,t,e)=>{let g,r,i,s={};if(I=I||{},A==null)return I;do{for(g=Object.getOwnPropertyNames(A),r=g.length;r-- >0;)i=g[r],(!e||e(i,A,I))",
+  "!s[i]": ""
+}
+```
+
+### 14. `GET /itk/pipelines/read-image-dicom-file-series.wasm.zst`
+
+- Origin: `https://x.finetool.cn`
+- Observed count: `3`
+- Trigger actions: `open and close user agreement, open surgical design list, reload business list`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `application/x-compressed`
+
+### 15. `GET /login`
+
+- Origin: `https://x.finetool.cn`
+- Observed count: `1`
+- Trigger actions: `open login page`
+- Status codes: `200`
+- Request content type: ``
+- Response content type: `text/html`
+
+Response body sample:
+
+```json
+"<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\">\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"description\" content=\"Web site created using create-react-app\" />\n\n    <meta http-equiv=\"Cache-Control\" content=\"no-cache, no-store, must-revalidate\" />\n    <meta http-equiv=\"Pragma\" content=\"no-cache\" />\n    <meta http-equiv=\"Expires\" content=\"0\" />\n\n    <link rel=\"apple-touch-icon\" href=\"/logo192.png\" />\n    <!--\n      manifest.json provides metadata used when your web app is installed on a\n      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/\n    -->\n    <link rel=\"manifest\" href=\"/manifest.json\" />\n    <!--\n      Notice the use of ./public in the tags above.\n      It will be replaced with the URL of the `public` folder during the build.\n      Only files inside the `public` folder can be referenced from the HTML.\n\n      Unlike \"/favicon.ico\" or \"favicon.ico\", \"./public/favicon.ico\" will\n      work correctly both with client-side routing and a non-root public URL.\n      Learn how to configure a non-root public URL by running `npm run build`.\n    -->\n    <title>Fyton</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-VwKoHDCR.js\"></script>\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/vendor-U4tORuDQ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/vtk.js-BqUM2PVR.js\">\n    <link rel=\"stylesheet\" c... <truncated 25 chars>"
+```
+
+### 16. `POST /tars/v1/otp/generate_secret`
+
+- Origin: `http://localhost:38080`
+- Observed count: `1`
+- Trigger actions: `login`
+- Status codes: `n/a`
+- Request content type: `application/json`
+- Response content type: ``
+
+Request body sample:
+
+```json
+{
+  "username": "<redacted>",
+  "serverSecretVersion": "<redacted>"
+}
+```
+
+### 17. `POST /tars/v1/gateway`
+
+- Origin: `https://tars.finetool.cn`
+- Observed count: `14`
+- Trigger actions: `design tab search, login, open surgical design list, patient tab search, reload business list`
+- Status codes: `200, n/a`
+- Request content type: `application/json`
+- Response content type: `application/json; charset=utf-8`
+
+Request body sample:
+
+```json
+{
+  "pageIndex": 1,
+  "pageSize": 10
+}
+```
+
+Response body sample:
+
+```json
+{
+  "code": 0,
+  "data": {
+    "pageIndex": 1,
+    "pageSize": 10,
+    "total": 962,
+    "data": [
+      {
+        "surgicalDesignDetail": {
+          "id": "690512947470909440",
+          "medicalRecordID": "690512921659252736",
+          "status": 1,
+          "approveStatus": 1,
+          "content": "",
+          "createTime": 1780386287552,
+          "thumbnailFileURL": "https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com/surgical_design_thumbnail/1780281474_ae30f238-19b1-471d-be19-fe233a0f44ee_1?q-sign-algorithm=sha1&q-ak=<redacted>&q-sign-time=<redacted>&q-key-time=<redacted>&q-header-list=host&q-url-param-list=&q-signature=<redacted>",
+          "modelFileStatus": 2,
+          "modelFileKey": "1780281415_3e41cdb6-cdef-4e11-be92-09d955b6c888",
+          "createUserID": "3",
+          "createUserName": "test",
+          "type": "",
+          "FDINotation": null,
+          "images": null,
+          "modelImages": null,
+          "compressModelFiles": null
+        },
+        "patientInfo": {
+          "id": "687677736440250368",
+          "dateOfBirth": 0,
+          "gender": 0,
+          "identityCard": "",
+          "name": "数据",
+          "telephone": "",
+          "desc": "",
+          "files": null,
+          "medicalRecords": null
+        },
+        "medicalRecordInfo": {
+          "id": "690512921659252736",
+          "patientID": "687677736440250368",
+          "FDINotation": "42",
+          "record": "",
+          "status": 1,
+          "diagnosis": "",
+          "tags": null,
+          "treatments": null
+        }
+      },
+      {
+        "surgicalDesignDetail": {
+          "id": "689885375486263296",
+          "medicalRecordID": "689885057658527744",
+          "status": 1,
+          "approveStatus": 1,
+          "content": "",
+          "createTime": 1780313228790,
+          "thumbnailFileURL": "https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com/surgical_design_thumbnail/1779872568_4c401bb2-1a6f-424c-adbf-12b87d0f7d43_1?q-sign-algorithm=sha1&q-ak=<redacted>&q-sign-time=<redacted>&q-key-time=<redacted>&q-header-list=host&q-url-param-list=&q-signature=<redacted>",
+          "modelFileStatus": 2,
+          "modelFileKey": "1779872554_9ed8a79f-2253-4d93-988f-dc94d24dc269",
+          "createUserID": "3",
+          "createUserName": "test",
+          "type": "",
+          "FDINotation": null,
+          "images": null,
+          "modelImages": null,
+          "compressModelFiles": null
+        },
+        "patientInfo": {
+          "id": "686099645219176448",
+          "dateOfBirth": 0,
+          "gender": 0,
+          "identityCard": "",
+          "name": "stl",
+          "telephone": "",
+          "desc": "",
+          "files": null,
+          "medicalRecords": null
+        },
+        "medicalRecordInfo": {
+          "id": "689885057658527744",
+          "patientID": "686099645219176448",
+          "FDINotation": "15",
+          "record": "",
+          "status": 1,
+          "diagnosis": "",
+          "tags": null,
+          "treatments": null
+        }
+      },
+      {
+        "surgicalDesignDetail": {
+          "id": "689885083428405248",
+          "medicalRecordID": "689885057658527744",
+          "status": 1,
+          "approveStatus": 1,
+          "content": "",
+          "createTime": 1780313194897,
+          "thumbnailFileURL": "",
+          "modelFileStatus": 2,
+          "modelFileKey": "",
+          "createUserID": "3",
+          "createUserName": "test",
+          "type": "",
+          "FDINotation": null,
+          "images": null,
+          "modelImages": null,
+          "compressModelFiles": null
+        },
+        "patientInfo": {
+          "id": "686099645219176448",
+          "dateOfBirth": 0,
+          "gender": 0,
+          "identityCard": "",
+          "name": "stl",
+          "telephone": "",
+          "desc": "",
+          "files": null,
+          "medicalRecords": null
+        },
+        "medicalRecordInfo": {
+          "id": "689885057658527744",
+          "patientID": "686099645219176448",
+          "FDINotation": "15",
+          "record": "",
+          "status": 1,
+          "diagnosis": "",
+          "tags": null,
+          "treatments": null
+        }
+      },
+      {
+        "surgicalDesignDetail": {
+          "id": "689879972414840832",
+          "medicalRecordID": "686100358186827776",
+          "status": 1,
+          "approveStatus": 1,
+          "content": "",
+          "createTime": 1780312599075,
+          "thumbnailFileURL": "https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com/surgical_design_thumbnail/1779872568_4c401bb2-1a6f-424c-adbf-12b87d0f7d43_1?q-sign-algorithm=sha1&q-ak=<redacted>&q-sign-time=<redacted>&q-key-time=<redacted>&q-header-list=host&q-url-param-list=&q-signature=<redacted>",
+          "modelFileStatus": 2,
+          "modelFileKey": "1779872554_9ed8a79f-2253-4d93-988f-dc94d24dc269",
+          "createUserID": "3",
+          "createUserName": "test",
+          "type": "",
+          "FDINotation": null,
+          "images": null,
+          "modelImages": null,
+          "compressModelFiles": null
+        },
+        "patientInfo": {
+          "id": "686099645219176448",
+          "dateOfBirth": 0,
+          "gender": 0,
+          "identityCard": "",
+          "name": "stl",
+          "telephone": "",
+          "desc": "",
+          "files": null,
+          "medicalRecords": null
+        },
+        "medicalRecordInfo": {
+          "id": "686100358186827776",
+          "patientID": "686099645219176448",
+          "FDINotation": "46",
+          "record": "",
+          "status": 1,
+          "diagnosis": "",
+          "tags": null,
+          "treatments": null
+        }
+      },
+      {
+        "surgicalDesignDetail": {
+          "id": "689849495323836416",
+          "medicalRecordID": "689849443784163328",
+          "status": 3,
+          "approveStatus": 2,
+          "content": "{\"designCommonState\":{\"modelState\":{\"modelTranslateMat\":{\"0\":1,\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":1,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":1,\"11\":0,\"12\":0.125,\"13\":0.125,\"14\":0.125,\"15\":1},\"oralScanFusionState\":{\"showInToothCusp\":false,\"items\":[]}},\"volumeProperty\":{\"name\":\"model\",\"opacity\":61,\"visible\":true,\"volumeData\":null,\"cropRange\":[0,280,0,280,0,199],\"modelOpacity\":0},\"sliceViewerProperty\":{\"colorWindow\":2400,\"colorLevel\":900,\"colorLevelRange\":[-1251,4175],\"colorWindowRange\":[0,5426]}},\"designImplantMessage\":[{\"toothIndex\":47,\"length\":0.0095,\"diameter\":0.003,\"range\":1.5,\"toothName\":\"47号植体\",\"T\":0.03571428571428571,\"jawboneType\":\"jawbone\",\"implantMat\":{\"0\":0.9963765740394592,\"1\":0.031181512400507927,\"2\":-0.07913026213645935,\"3\":0,\"4\":-0.0015276159392669797,\"5\":0.9367830753326416,\"6\":0.3499074876308441,\"7\":0,\"8\":0.08503853529691696,\"9\":-0.3485186696052551,\"10\":0.9334362149238586,\"11\":0,\"12\":-26.97500228881836,\"13\":-7.674106597900391,\"14\":-20.806711196899414,\"15\":1},\"initCrossMat\":{\"0\":0.9963765740394592,\"1\":0.031181512400507927,\"2\":-0.07913026213645935,\"3\":0,\"4\":-0.0015276159392669797,\"5\":0.9367830753326416,\"6\":0.3499074876308441,\"7\":0,\"8\":0.08503853529691696,\"9\":-0.3485186696052551,\"10\":0.9334362149238586,\"11\":0,\"12\":-26.97500228881836,\"13\":-7.674106597900391,\"14\":-20.806711196899414,\"15\":1},\"initPlantMat\":{\"0\":0.9963765740394592,\"1\":0.031181512400507927,\"2\":-0.07913026213645935,\"3\":0,\"4\":-0.0015276159392669797,\"5\":0.9367830753326416,\"6\":0.3499074876308441,\"7\":0,\"8\":0.08503853529691696,\"9\":-0.3485186696052551,\"10\":0.9334362149238586,\"11\":0,\"12\":-26.97500228881836,\"13\":-7.67410659790039... <truncated 27 chars>",
+          "createTime": 1780309051013,
+          "thumbnailFileURL": "https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com/surgical_design_thumbnail/1780300083_f33e2e90-54db-4e29-8432-d7b63c4fefc1_1?q-sign-algorithm=sha1&q-ak=<redacted>&q-sign-time=<redacted>&q-key-time=<redacted>&q-header-list=host&q-url-param-list=&q-signature=<redacted>",
+          "modelFileStatus": 2,
+          "modelFileKey": "1780300025_66337c31-be2f-45f8-9260-36afff9edc0e",
+          "createUserID": "3",
+          "createUserName": "test",
+          "type": "",
+          "FDINotation": null,
+          "images": null,
+          "modelImages": null,
+          "compressModelFiles": null
+        },
+        "patientInfo": {
+          "id": "689760443388731392",
+          "dateOfBirth": 0,
+          "gender": 0,
+          "identityCard": "",
+          "name": "线上设计",
+          "telephone": "",
+          "desc": "",
+          "files": null,
+          "medicalRecords": null
+        },
+        "medicalRecordInfo": {
+          "id": "689849443784163328",
+          "patientID": "689760443388731392",
+          "FDINotation": "47",
+          "record": "",
+          "status": 1,
+          "diagnosis": "",
+          "tags": null,
+          "treatments": null
+        }
+      },
+      {
+        "surgicalDesignDetail": {
+          "id": "689845483824095232",
+          "medicalRecordID": "689845449464291328",
+          "status": 3,
+          "approveStatus": 2,
+          "content": "{\"designCommonState\":{\"modelState\":{\"modelTranslateMat\":{\"0\":1,\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":1,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":1,\"11\":0,\"12\":0.375,\"13\":0.375,\"14\":0.125,\"15\":1},\"oralScanFusionState\":{\"showInToothCusp\":false,\"items\":[]}},\"volumeProperty\":{\"name\":\"model\",\"opacity\":61,\"visible\":true,\"volumeData\":null,\"cropRange\":[0,280,0,280,0,199],\"modelOpacity\":0},\"sliceViewerProperty\":{\"colorWindow\":2400,\"colorLevel\":900,\"colorLevelRange\":[-1251,4175],\"colorWindowRange\":[0,5426]}},\"designImplantMessage\":[{\"toothIndex\":15,\"length\":0.0081,\"diameter\":0.0035,\"range\":1.5,\"toothName\":\"15号植体\",\"T\":0.17857142857142855,\"jawboneType\":\"maxillary\",\"implantMat\":{\"0\":0.990259051322937,\"1\":1.3146790433400115e-16,\"2\":-0.13923737406730652,\"3\":0,\"4\":0.019206074997782707,\"5\":0.9904409050941467,\"6\":0.1365939825773239,\"7\":0,\"8\":0.13790640234947205,\"9\":-0.13793763518333435,\"10\":0.9807930588722229,\"11\":0,\"12\":-21.369564056396484,\"13\":-25.468833923339844,\"14\":-28.86202049255371,\"15\":1},\"initCrossMat\":{\"0\":0.990259051322937,\"1\":1.3146790433400115e-16,\"2\":-0.13923737406730652,\"3\":0,\"4\":0.010643720626831055,\"5\":-0.9970739483833313,\"6\":0.0756983608007431,\"7\":0,\"8\":-0.13882996141910553,\"9\":-0.07644298672676086,\"10\":-0.987361490726471,\"11\":0,\"12\":-17.625,\"13\":-29.625,\"14\":9.875,\"15\":1},\"initPlantMat\":{\"0\":0.990259051322937,\"1\":1.3146790433400115e-16,\"2\":-0.13923737406730652,\"3\":0,\"4\":0.010643720626831055,\"5\":-0.9970739483833313,\"6\":0.0756983608007431,\"7\":0,\"8\":-0.13882996141910553,\"9\":-0.07644298672676086,\"10\":-0.987361490726471,\"11\":0,\"12\":-17.625,\"13\":-29.625,\"14\":9.875,\"15\":1},\"implant_brand_type\":\"strauma... <truncated 27 chars>",
+          "createTime": 1780308584916,
+          "thumbnailFileURL": "https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com/surgical_design_thumbnail/1780300083_f33e2e90-54db-4e29-8432-d7b63c4fefc1_1?q-sign-algorithm=sha1&q-ak=<redacted>&q-sign-time=<redacted>&q-key-time=<redacted>&q-header-list=host&q-url-param-list=&q-signature=<redacted>",
+          "modelFileStatus": 2,
+          "modelFileKey": "1780300025_66337c31-be2f-45f8-9260-36afff9edc0e",
+          "createUserID": "3",
+          "createUserName": "test",
+          "type": "",
+          "FDINotation": null,
+          "images": null,
+          "modelImages": null,
+          "compressModelFiles": null
+        },
+        "patientInfo": {
+          "id": "689760443388731392",
+          "dateOfBirth": 0,
+          "gender": 0,
+          "identityCard": "",
+          "name": "线上设计",
+          "telephone": "",
+          "desc": "",
+          "files": null,
+          "medicalRecords": null
+        },
+        "medicalRecordInfo": {
+          "id": "689845449464291328",
+          "patientID": "689760443388731392",
+          "FDINotation": "44",
+          "record": "",
+          "status": 1,
+          "diagnosis": "",
+          "tags": null,
+          "treatments": null
+        }
+      },
+      {
+        "surgicalDesignDetail": {
+          "id": "689845380736589824",
+          "medicalRecordID": "689775063494410240",
+          "status": 1,
+          "approveStatus": 1,
+          "content": "",
+          "createTime": 1780308572388,
+          "thumbnailFileURL": "https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com/surgical_design_thumbnail/1780300083_f33e2e90-54db-4e29-8432-d7b63c4fefc1_1?q-sign-algorithm=sha1&q-ak=<redacted>&q-sign-time=<redacted>&q-key-time=<redacted>&q-header-list=host&q-url-param-list=&q-signature=<redacted>",
+          "modelFileStatus": 2,
+          "modelFileKey": "1780300025_66337c31-be2f-45f8-9260-36afff9edc0e",
+          "createUserID": "3",
+          "createUserName": "test",
+          "type": "",
+          "FDINotation": null,
+          "images": null,
+          "modelImages": null,
+          "compressModelFiles": null
+        },
+        "patientInfo": {
+          "id": "689760443388731392",
+          "dateOfBirth": 0,
+          "gender": 0,
+          "identityCard": "",
+          "name": "线上设计",
+          "telephone": "",
+          "desc": "",
+          "files": null,
+          "medicalRecords": null
+        },
+        "medicalRecordInfo": {
+          "id": "689775063494410240",
+          "patientID": "689760443388731392",
+          "FDINotation": "44,35",
+          "record": "",
+          "status": 1,
+          "diagnosis": "",
+          "tags": null,
+          "treatments": null
+        }
+      },
+      {
+        "surgicalDesignDetail": {
+          "id": "689775080674344960",
+          "medicalRecordID": "689775063494410240",
+          "status": 4,
+          "approveStatus": 2,
+          "content": "{\"designCommonState\":{\"modelState\":{\"modelTranslateMat\":{\"0\":1,\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":1,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":1,\"11\":0,\"12\":0.125,\"13\":0.125,\"14\":0.125,\"15\":1},\"oralScanFusionState\":{\"showInToothCusp\":false,\"items\":[]}},\"volumeProperty\":{\"name\":\"model\",\"opacity\":61,\"visible\":true,\"volumeData\":null,\"cropRange\":[0,280,0,280,0,199],\"modelOpacity\":0},\"sliceViewerProperty\":{\"colorWindow\":2400,\"colorLevel\":900,\"colorLevelRange\":[-1251,4175],\"colorWindowRange\":[0,5426]}},\"designImplantMessage\":[{\"toothIndex\":44,\"length\":0.0101,\"diameter\":0.0035,\"range\":1.5,\"toothName\":\"44号植体\",\"T\":0.25,\"jawboneType\":\"jawbone\",\"implantMat\":{\"0\":0.9999791383743286,\"1\":0,\"2\":-0.0064558968879282475,\"3\":0,\"4\":0.0009303237311542034,\"5\":0.989562451839447,\"6\":0.14410148561000824,\"7\":0,\"8\":0.006388513371348381,\"9\":-0.1441044956445694,\"10\":0.9895418286323547,\"11\":0,\"12\":-16.875,\"13\":-32.625,\"14\":-26.875,\"15\":1},\"initCrossMat\":{\"0\":0.9999791383743286,\"1\":0,\"2\":-0.0064558968879282475,\"3\":0,\"4\":0.0009303237311542034,\"5\":0.989562451839447,\"6\":0.14410148561000824,\"7\":0,\"8\":0.006388513371348381,\"9\":-0.1441044956445694,\"10\":0.9895418286323547,\"11\":0,\"12\":-16.875,\"13\":-32.625,\"14\":-26.875,\"15\":1},\"initPlantMat\":{\"0\":0.9999791383743286,\"1\":0,\"2\":-0.0064558968879282475,\"3\":0,\"4\":0.0009303237311542034,\"5\":0.989562451839447,\"6\":0.14410148561000824,\"7\":0,\"8\":0.006388513371348381,\"9\":-0.1441044956445694,\"10\":0.9895418286323547,\"11\":0,\"12\":-16.875,\"13\":-32.625,\"14\":-26.875,\"15\":1},\"implant_brand_type\":\"straumann\",\"implant_system_type\":\"straumann.bone_level_x_roxolid_slactive_implant\",\"implant_type\":\"straumann.b... <truncated 27 chars>",
+          "createTime": 1780300388578,
+          "thumbnailFileURL": "https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com/surgical_design_thumbnail/1780300083_f33e2e90-54db-4e29-8432-d7b63c4fefc1_1?q-sign-algorithm=sha1&q-ak=<redacted>&q-sign-time=<redacted>&q-key-time=<redacted>&q-header-list=host&q-url-param-list=&q-signature=<redacted>",
+          "modelFileStatus": 2,
+          "modelFileKey": "1780300025_66337c31-be2f-45f8-9260-36afff9edc0e",
+          "createUserID": "3",
+          "createUserName": "test",
+          "type": "",
+          "FDINotation": null,
+          "images": null,
+          "modelImages": null,
+          "compressModelFiles": null
+        },
+        "patientInfo": {
+          "id": "689760443388731392",
+          "dateOfBirth": 0,
+          "gender": 0,
+          "identityCard": "",
+          "name": "线上设计",
+          "telephone": "",
+          "desc": "",
+          "files": null,
+          "medicalRecords": null
+        },
+        "medicalRecordInfo": {
+          "id": "689775063494410240",
+          "patientID": "689760443388731392",
+          "FDINotation": "44,35",
+          "record": "",
+          "status": 1,
+          "diagnosis": "",
+          "tags": null,
+          "treatments": null
+        }
+      },
+      {
+        "surgicalDesignDetail": {
+          "id": "689734519021772800",
+          "medicalRecordID": "689734501841838080",
+          "status": 3,
+          "approveStatus": 2,
+          "content": "{\"designCommonState\":{\"modelState\":{\"modelTranslateMat\":{\"0\":1,\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":1,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":1,\"11\":0,\"12\":0.125,\"13\":0.125,\"14\":0.125,\"15\":1},\"oralScanFusionState\":{\"showInToothCusp\":false,\"items\":[]}},\"volumeProperty\":{\"name\":\"model\",\"opacity\":61,\"visible\":true,\"volumeData\":null,\"cropRange\":[0,280,0,280,0,199],\"modelOpacity\":0},\"sliceViewerProperty\":{\"colorWindow\":2400,\"colorLevel\":900,\"colorLevelRange\":[-1251,4175],\"colorWindowRange\":[0,5426]}},\"designImplantMessage\":[{\"toothIndex\":15,\"length\":0.0081,\"diameter\":0.0035,\"range\":1.5,\"toothName\":\"15号植体\",\"T\":0.17857142857142855,\"jawboneType\":\"maxillary\",\"implantMat\":{\"0\":0.990259051322937,\"1\":1.3146790433400115e-16,\"2\":-0.13923737406730652,\"3\":0,\"4\":0.010643720626831055,\"5\":-0.9970739483833313,\"6\":0.0756983608007431,\"7\":0,\"8\":-0.13882996141910553,\"9\":-0.07644298672676086,\"10\":-0.987361490726471,\"11\":0,\"12\":-17.625,\"13\":-29.625,\"14\":9.875,\"15\":1},\"initCrossMat\":{\"0\":0.990259051322937,\"1\":1.3146790433400115e-16,\"2\":-0.13923737406730652,\"3\":0,\"4\":0.010643720626831055,\"5\":-0.9970739483833313,\"6\":0.0756983608007431,\"7\":0,\"8\":-0.13882996141910553,\"9\":-0.07644298672676086,\"10\":-0.987361490726471,\"11\":0,\"12\":-17.625,\"13\":-29.625,\"14\":9.875,\"15\":1},\"initPlantMat\":{\"0\":0.990259051322937,\"1\":1.3146790433400115e-16,\"2\":-0.13923737406730652,\"3\":0,\"4\":0.010643720626831055,\"5\":-0.9970739483833313,\"6\":0.0756983608007431,\"7\":0,\"8\":-0.13882996141910553,\"9\":-0.07644298672676086,\"10\":-0.987361490726471,\"11\":0,\"12\":-17.625,\"13\":-29.625,\"14\":9.875,\"15\":1},\"implant_brand_type\":\"straumann\",\"implant_system_type\":\"strauman... <truncated 27 chars>",
+          "createTime": 1780295666590,
+          "thumbnailFileURL": "https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com/surgical_design_thumbnail/1780295584_04cc0775-3aa7-4408-97fc-0c647e8611d1_1?q-sign-algorithm=sha1&q-ak=<redacted>&q-sign-time=<redacted>&q-key-time=<redacted>&q-header-list=host&q-url-param-list=&q-signature=<redacted>",
+          "modelFileStatus": 2,
+          "modelFileKey": "1780295503_120e0477-c8e8-40a8-bbf0-a7a6e1dca0cd",
+          "createUserID": "3",
+          "createUserName": "test",
+          "type": "",
+          "FDINotation": null,
+          "images": null,
+          "modelImages": null,
+          "compressModelFiles": null
+        },
+        "patientInfo": {
+          "id": "689733058693226496",
+          "dateOfBirth": 0,
+          "gender": 0,
+          "identityCard": "",
+          "name": "T_韩婷博",
+          "telephone": "",
+          "desc": "",
+          "files": null,
+          "medicalRecords": null
+        },
+        "medicalRecordInfo": {
+          "id": "689734501841838080",
+          "patientID": "689733058693226496",
+          "FDINotation": "15",
+          "record": "",
+          "status": 1,
+          "diagnosis": "",
+          "tags": null,
+          "treatments": null
+        }
+      },
+      {
+        "surgicalDesignDetail": {
+          "id": "689732723719757824",
+          "medicalRecordID": "689732706539823104",
+          "status": 3,
+          "approveStatus": 2,
+          "content": "{\"designCommonState\":{\"modelState\":{\"modelTranslateMat\":{\"0\":1,\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":1,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":1,\"11\":0,\"12\":0.125,\"13\":0.125,\"14\":0.125,\"15\":1},\"oralScanFusionState\":{\"showInToothCusp\":false,\"items\":[]}},\"volumeProperty\":{\"name\":\"model\",\"opacity\":61,\"visible\":true,\"volumeData\":null,\"cropRange\":[0,280,0,280,0,199],\"modelOpacity\":0},\"sliceViewerProperty\":{\"colorWindow\":2400,\"colorLevel\":900,\"colorLevelRange\":[-1251,4175],\"colorWindowRange\":[0,5426]}},\"designImplantMessage\":[{\"toothIndex\":46,\"length\":0.0081,\"diameter\":0.0035,\"range\":1.5,\"toothName\":\"46号植体\",\"T\":0.10714285714285714,\"jawboneType\":\"jawbone\",\"implantMat\":{\"0\":0.7922263741493225,\"1\":0.5987023115158081,\"2\":0.11803771555423737,\"3\":0,\"4\":-0.6094415783882141,\"5\":0.7860761880874634,\"6\":0.10327249020338058,\"7\":0,\"8\":-0.03095715120434761,\"9\":-0.15375228226184845,\"10\":0.9876243472099304,\"11\":0,\"12\":-36.68325424194336,\"13\":6.043256759643555,\"14\":-15.560653686523438,\"15\":1},\"initCrossMat\":{\"0\":0.7922263741493225,\"1\":0.5987023115158081,\"2\":0.11803771555423737,\"3\":0,\"4\":-0.6094415783882141,\"5\":0.7860761880874634,\"6\":0.10327249020338058,\"7\":0,\"8\":-0.03095715120434761,\"9\":-0.15375228226184845,\"10\":0.9876243472099304,\"11\":0,\"12\":-36.68325424194336,\"13\":6.043256759643555,\"14\":-15.560653686523438,\"15\":1},\"initPlantMat\":{\"0\":0.7922263741493225,\"1\":0.5987023115158081,\"2\":0.11803771555423737,\"3\":0,\"4\":-0.6094415783882141,\"5\":0.7860761880874634,\"6\":0.10327249020338058,\"7\":0,\"8\":-0.03095715120434761,\"9\":-0.15375228226184845,\"10\":0.9876243472099304,\"11\":0,\"12\":-36.68325424194336,\"13\":6.043256759643555,\"14\":-15.... <truncated 27 chars>",
+          "createTime": 1780295457488,
+          "thumbnailFileURL": "https://tars-test-data-1303037276.cos.ap-chengdu.myqcloud.com/surgical_design_thumbnail/1780295374_dc7d3fdb-98ee-415b-bed8-0f880b3d0d68_1?q-sign-algorithm=sha1&q-ak=<redacted>&q-sign-time=<redacted>&q-key-time=<redacted>&q-header-list=host&q-url-param-list=&q-signature=<redacted>",
+          "modelFileStatus": 2,
+          "modelFileKey": "1780295332_a60173cb-1e3b-4731-b617-0a3c5d8d1a2e",
+          "createUserID": "3",
+          "createUserName": "test",
+          "type": "",
+          "FDINotation": null,
+          "images": null,
+          "modelImages": null,
+          "compressModelFiles": null
+        },
+        "patientInfo": {
+          "id": "689731606990987264",
+          "dateOfBirth": 0,
+          "gender": 0,
+          "identityCard": "",
+          "name": "T_韩婷博",
+          "telephone": "",
+          "desc": "",
+          "files": null,
+          "medicalRecords": null
+        },
+        "medicalRecordInfo": {
+          "id": "689732706539823104",
+          "patientID": "689731606990987264",
+          "FDINotation": "46",
+          "record": "",
+          "status": 1,
+          "diagnosis": "",
+          "tags": null,
+          "treatments": null
+        }
+      }
+    ]
+  }
+}
+```
+
+### 18. `POST /tars/v1/login_by_username`
+
+- Origin: `https://tars.finetool.cn`
+- Observed count: `1`
+- Trigger actions: `login`
+- Status codes: `200`
+- Request content type: `application/json`
+- Response content type: `application/json; charset=utf-8`
+
+Request body sample:
+
+```json
+{
+  "username": "<redacted>",
+  "password": "<redacted>"
+}
+```
+
+Response body sample:
+
+```json
+{
+  "code": 0,
+  "data": {
+    "userID": 665147265784766464,
+    "tenantID": 1,
+    "name": "<redacted>",
+    "username": "<redacted>",
+    "accountID": 665147265784758272,
+    "token": "<redacted>"
+  }
+}
+```
+
