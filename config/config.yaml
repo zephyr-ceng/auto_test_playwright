@@ -1,5 +1,5 @@
 base_url: "https://x.finetool.cn"
 username: "admin"
 password: "fyton@202602"
-cookies_write_time: '2026-05-21 16:02:42'
-cookies: [{name: session, value: 492e4364-a88a-43ad-a4e6-d7216c76e9d6, domain: tars.finetool.cn, path: /, expires: 1780646560.987534, httpOnly: false, secure: true, sameSite: None}]
+cookies_write_time: '2026-06-01 14:28:53'
+cookies: [{name: session, value: d5ad1528-50ce-4f6e-95f2-01fd11b4c6a6, domain: tars.finetool.cn, path: /, expires: 1781591332.265717, httpOnly: false, secure: true, sameSite: None}]
