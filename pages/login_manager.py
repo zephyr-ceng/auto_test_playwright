@@ -1,11 +1,12 @@
 import time
 from typing import Any, List, Optional
 
+from core.read_config import ConfigValue
 from core.base_page import BasePage
 from utils.yaml_reader import YamlManager
 
 
-class LoginPage(BasePage):
+class LoginPage(BasePage, ConfigValue):
     def __init__(
             self,
             driver: Any,
@@ -13,23 +14,24 @@ class LoginPage(BasePage):
             locators_path: str = "data/login_data.yaml",
             config_path: str = "config/config.yaml",
     ):
-        super().__init__(driver, logger)
-        self._config = YamlManager(self.logger)
+        BasePage.__init__(self, driver, logger)
+        ConfigValue.__init__(self, config_path, logger)
+        self._config = YamlManager(logger)
 
         # config.yaml
         self._config_path = config_path
-        shared_cfg = self._config.read(self._config_path)
-        if shared_cfg is None:
-            raise RuntimeError(f"failed to read yaml config: {self._config_path}")
+        # shared_cfg = self._config.read(self._config_path)
+        # if shared_cfg is None:
+        #     raise RuntimeError(f"failed to read yaml config: {self._config_path}")
 
-        self.login_username = shared_cfg.get("username")
-        self.login_password = shared_cfg.get("password")
-        self.base_url = shared_cfg.get("base_url")  # config中的url
-        self.cookies = shared_cfg.get("cookies")
-        self.cookies_write_time = shared_cfg.get("cookies_write_time")
+        # self.login_username = shared_cfg.get("username")
+        # self.login_password = shared_cfg.get("password")
+        # self.base_url = shared_cfg.get("base_url")  # config中的url
+        # self.cookies = shared_cfg.get("cookies")
+        # self.cookies_write_time = shared_cfg.get("cookies_write_time")
 
-        if not self.login_username or not self.login_password or not self.base_url:
-            raise RuntimeError(f"username/password/base_url not configured in {config_path}")
+        # if not self.username or not self.password or not self.base_url:
+        #     raise RuntimeError(f"username/password/base_url not configured in {config_path}")
 
         # login_data.yaml
         login_cfg = self._config.read(locators_path)
@@ -142,7 +144,7 @@ class LoginPage(BasePage):
         if not is_expired:
             return
         new_cookies = LoginPage(self.driver, self.logger).get_cookies(
-            self.login_username, self.login_password
+            self.username, self.password
         )
         self.cookies = new_cookies
         local_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))

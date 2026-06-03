@@ -108,4 +108,9 @@ python -m playwright install
 python run_tests.py
 ```
 
+远程运行
+
+- linux 执行 `playwright run-server --port 3000 --host 0.0.0.0`
+- 配置 `/config/config.yaml` 的 `remote_url`
+
 执行完成后，可在 `reports/html/` 查看生成的 Allure 报告。

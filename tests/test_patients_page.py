@@ -2,6 +2,7 @@ import allure
 import pytest
 
 from core.browser_manager import BrowserManager
+from core.read_config import ConfigValue
 from pages.patient_manager import PatientsPage
 from utils.csv_manager import CSVManager
 from utils.logger import Logger
@@ -41,7 +42,8 @@ def _prepare_patients_test_data() -> list[dict]:
 @pytest.fixture(scope="class")
 def page():
     log = Logger("patients_test")
-    manager = BrowserManager(browser_type="chromium", headless=True, logger=log)
+    cv = ConfigValue()
+    manager = BrowserManager(browser_type="chromium", headless=True, logger=log, remote_url=cv.remote_url)
     # browser_page = manager.start()
     browser_page = manager.new_page()
     patients = PatientsPage(browser_page, log)

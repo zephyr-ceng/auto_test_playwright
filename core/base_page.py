@@ -1,10 +1,7 @@
 import os
-# from os import name
 from pathlib import Path
 from functools import wraps
 from typing import Any, Optional
-from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
-from playwright.sync_api import Error as PlaywrightError
 
 
 def _handle_role_action(action_name: str):
