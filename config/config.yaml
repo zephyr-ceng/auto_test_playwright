@@ -1,5 +1,6 @@
+remote_url: "ws://IP:3000/?browser=chromium" # 远程地址
 base_url: "https://x.finetool.cn"
 username: "admin"
 password: "fyton@202602"
-cookies_write_time: '2026-06-01 14:28:53'
-cookies: [{name: session, value: d5ad1528-50ce-4f6e-95f2-01fd11b4c6a6, domain: tars.finetool.cn, path: /, expires: 1781591332.265717, httpOnly: false, secure: true, sameSite: None}]
+cookies_write_time: '2026-06-03 18:51:26'
+cookies: [ { name: session, value: 43570234-e9ce-4876-9052-8ec06684eb33, domain: tars.finetool.cn, path: /, expires: 1781779889.652484, httpOnly: false, secure: true, sameSite: None } ]

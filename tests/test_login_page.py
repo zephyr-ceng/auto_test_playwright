@@ -5,6 +5,7 @@ from core.browser_manager import BrowserManager
 from pages.login_manager import LoginPage
 from utils.csv_manager import CSVManager
 from utils.logger import Logger
+from core.read_config import ConfigValue
 
 
 def _prepare_login_test_data() -> list[dict]:
@@ -31,7 +32,8 @@ def _prepare_login_test_data() -> list[dict]:
 @pytest.fixture(scope="class")
 def login_page():
     log = Logger("login_test")
-    manager = BrowserManager(browser_type="chromium", headless=False, logger=log)
+    cv = ConfigValue()
+    manager = BrowserManager(browser_type="chromium", headless=True, logger=log, remote_url=cv.remote_url)
     # page = manager.start()
     page = manager.new_page()
     login = LoginPage(page, logger=log)
