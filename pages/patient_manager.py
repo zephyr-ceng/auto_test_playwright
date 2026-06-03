@@ -150,8 +150,10 @@ class PatientsPage(BasePage):
             raise RuntimeError("failed to open page size dropdown")
         if not self.click_by_text(options, str(number)):
             raise RuntimeError(f"failed to select page size option: {number}")
-        self.wait_for_time(800)
-        return self.count_elements(rows_selector)
+        self.wait_for_time(1000)
+        count = self.count_elements(rows_selector)
+        print(count)
+        return count
 
     """  ************************************************  测试函数  **********************************************************************************  """
 
@@ -283,6 +285,8 @@ if __name__ == "__main__":
     try:
         page = manager.start()
         pp = PatientsPage(page, log)
+        for i in range(1, 5):
+            pp.count_page_designs(100)
         # pp.create_patient_invalid('test')
     finally:
         manager.close()

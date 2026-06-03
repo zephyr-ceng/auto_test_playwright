@@ -604,6 +604,11 @@ class DesignManager(BasePage):
         return not (after == before)
 
     def case_create_tooth(self, tooth_position_list: list) -> list:
+        """
+        创建完整手术患者后创建牙位病例
+        Args:
+            tooth_position: 目标牙位编号。
+        """
         msg_list = []
         self._patients_page.create_patient(self._random.random_chinese_name())
         for tooth_position in tooth_position_list:
