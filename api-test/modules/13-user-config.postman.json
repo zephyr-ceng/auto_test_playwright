@@ -1,0 +1,353 @@
+{
+  "info": {
+    "name": "TARS Admin Frontend APIs - 用户配置",
+    "description": "用户级配置读取和保存。\n\n此文件用于按模块导入 Apifox。变量不写入模块集合，请先导入 api-docs/apifox-shared-environment.postman_environment.json，或在 Apifox 项目/环境变量中维护同名变量。\n接口依赖变量会通过前置/后置脚本写入环境变量和全局变量，不会写入模块变量。",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "读取用户配置 [command=18002]",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": "JSON 请求体"
+          },
+          {
+            "key": "command",
+            "value": "18002",
+            "description": "网关分发指令，CommandId.getUserConfig = 18002"
+          }
+        ],
+        "url": "{{gatewayUrl}}",
+        "description": "接口名称：getUserConfig\n接口描述：按 user_id 读取网关侧用户配置。\n分组：用户配置\n网关分发指令：command=18002 (CommandId.getUserConfig)\n代码来源：src/api/user/index.ts\nReq:\n{\n  \"user_id\": \"{{userId}}\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"configs\": {\n      \"key\": {\n        \"value\": 1\n      }\n    }\n  },\n  \"message\": \"success\"\n}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"{{userId}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "function getScopeValue(key) {",
+              "  if (pm.environment && pm.environment.get(key)) return pm.environment.get(key);",
+              "  if (pm.globals && pm.globals.get(key)) return pm.globals.get(key);",
+              "  if (pm.collectionVariables && pm.collectionVariables.get(key)) return pm.collectionVariables.get(key);",
+              "  return \"\";",
+              "}",
+              "var requiredVars = [\"userId\"];",
+              "var missingVars = requiredVars.filter(function(key) { return !getScopeValue(key); });",
+              "pm.test(\"依赖变量已设置\", function() {",
+              "  pm.expect(missingVars, \"缺少变量: \" + missingVars.join(\", \")).to.eql([]);",
+              "});",
+              "if (missingVars.length) throw new Error(\"缺少依赖变量: \" + missingVars.join(\", \"));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "function setScopeValue(key, value) {",
+              "  if (value === undefined || value === null || value === \"\") return;",
+              "  var stringValue = String(value);",
+              "  if (pm.environment) pm.environment.set(key, stringValue);",
+              "  if (pm.globals) pm.globals.set(key, stringValue);",
+              "}",
+              "function getScopeValue(key) {",
+              "  if (pm.environment && pm.environment.get(key)) return pm.environment.get(key);",
+              "  if (pm.globals && pm.globals.get(key)) return pm.globals.get(key);",
+              "  if (pm.collectionVariables && pm.collectionVariables.get(key)) return pm.collectionVariables.get(key);",
+              "  return \"\";",
+              "}",
+              "function getIterationValue(columnName) {",
+              "  if (!pm.iterationData || !pm.iterationData.get) return undefined;",
+              "  var value = pm.iterationData.get(columnName);",
+              "  return value === null ? undefined : value;",
+              "}",
+              "function getFirstIterationValue(columnNames) {",
+              "  for (var index = 0; index < columnNames.length; index += 1) {",
+              "    var value = getIterationValue(columnNames[index]);",
+              "    if (value !== undefined && value !== null && value !== \"\") return String(value);",
+              "  }",
+              "  return \"\";",
+              "}",
+              "function getPath(source, path) {",
+              "  return path.split(\".\").reduce(function(current, key) {",
+              "    if (current === undefined || current === null) return undefined;",
+              "    var match = key.match(/^([^\\[]+)\\[(\\d+)\\]$/);",
+              "    if (match) {",
+              "      var arrayValue = current[match[1]];",
+              "      return Array.isArray(arrayValue) ? arrayValue[Number(match[2])] : undefined;",
+              "    }",
+              "    return current[key];",
+              "  }, source);",
+              "}",
+              "function setFirst(key, paths) {",
+              "  for (var index = 0; index < paths.length; index += 1) {",
+              "    var value = getPath(responseBody, paths[index]);",
+              "    if (value !== undefined && value !== null && value !== \"\") {",
+              "      setScopeValue(key, value);",
+              "      return value;",
+              "    }",
+              "  }",
+              "  return \"\";",
+              "}",
+              "var responseBody = {};",
+              "try { responseBody = pm.response.json(); } catch (error) { responseBody = {}; }",
+              "var expectsJson = true;",
+              "var consumesCsvExpectation = false;",
+              "var expectedResultOverrides = {};",
+              "var expectedResult = consumesCsvExpectation ? getFirstIterationValue([\"预期结果\", \"expectedResult\", \"expectedMessage\"]) : getFirstIterationValue([\"expectedResult\", \"expectedMessage\"]);",
+              "if (expectedResult && Object.prototype.hasOwnProperty.call(expectedResultOverrides, expectedResult)) expectedResult = expectedResultOverrides[expectedResult];",
+              "var expectedValid = consumesCsvExpectation ? getFirstIterationValue([\"是否有效\", \"valid\", \"isValid\"]) : getFirstIterationValue([\"valid\", \"isValid\"]);",
+              "var expectedInvalid = String(expectedValid).toLowerCase() === \"false\";",
+              "var expectedSuccess = String(expectedValid).toLowerCase() === \"true\";",
+              "if (expectedResult === \"patientID\") { expectedInvalid = false; expectedSuccess = true; }",
+              "var hasBusinessCode = Object.prototype.hasOwnProperty.call(responseBody, \"code\");",
+              "pm.test(\"HTTP 状态码为 2xx\", function() {",
+              "  pm.expect(pm.response.code).to.be.within(200, 299);",
+              "});",
+              "if (expectsJson) {",
+              "  pm.test(\"响应体为 JSON 对象\", function() {",
+              "    pm.expect(responseBody).to.be.an(\"object\");",
+              "  });",
+              "}",
+              "if (expectsJson && hasBusinessCode) {",
+              "  if (expectedResult && expectedResult !== \"patientID\") {",
+              "    pm.test(\"业务 message 符合预期\", function() {",
+              "      pm.expect(responseBody.message).to.eql(expectedResult);",
+              "    });",
+              "  } else if (expectedInvalid) {",
+              "    pm.test(\"无效用例业务 code 非 0\", function() {",
+              "      pm.expect(Number(responseBody.code)).to.not.eql(0);",
+              "    });",
+              "  } else {",
+              "    pm.test(\"业务 code 为 0\", function() {",
+              "      pm.expect(Number(responseBody.code)).to.eql(0);",
+              "    });",
+              "  }",
+              "}",
+              "if (expectsJson && hasBusinessCode && expectedInvalid) {",
+              "  pm.test(\"无效用例业务 code 非 0\", function() {",
+              "    pm.expect(Number(responseBody.code)).to.not.eql(0);",
+              "  });",
+              "}",
+              "function shouldAssertSuccessShape() {",
+              "  return !expectedInvalid && (!expectedResult || expectedResult === \"patientID\");",
+              "}",
+              "function assertAnyPath(label, paths) {",
+              "  if (!shouldAssertSuccessShape()) return;",
+              "  pm.test(label, function() {",
+              "    var found = paths.some(function(path) {",
+              "      var value = getPath(responseBody, path);",
+              "      return value !== undefined && value !== null && value !== \"\";",
+              "    });",
+              "    pm.expect(found, \"任一字段存在: \" + paths.join(\", \")).to.eql(true);",
+              "  });",
+              "}",
+              "assertAnyPath(\"用户配置已返回\", [\"data.configs\",\"data\"]);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "保存用户配置 [command=18003]",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": "JSON 请求体"
+          },
+          {
+            "key": "command",
+            "value": "18003",
+            "description": "网关分发指令，CommandId.saveUserConfig = 18003"
+          }
+        ],
+        "url": "{{gatewayUrl}}",
+        "description": "接口名称：saveUserConfig\n接口描述：保存用户配置键值列表。\n分组：用户配置\n网关分发指令：command=18003 (CommandId.saveUserConfig)\n代码来源：src/api/user/index.ts\nReq:\n{\n  \"user_id\": \"{{userId}}\",\n  \"configs\": [\n    {\n      \"key\": \"theme\",\n      \"value\": \"dark\"\n    }\n  ]\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"{{userId}}\",\n  \"configs\": [\n    {\n      \"key\": \"theme\",\n      \"value\": \"dark\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "function getScopeValue(key) {",
+              "  if (pm.environment && pm.environment.get(key)) return pm.environment.get(key);",
+              "  if (pm.globals && pm.globals.get(key)) return pm.globals.get(key);",
+              "  if (pm.collectionVariables && pm.collectionVariables.get(key)) return pm.collectionVariables.get(key);",
+              "  return \"\";",
+              "}",
+              "var requiredVars = [\"userId\"];",
+              "var missingVars = requiredVars.filter(function(key) { return !getScopeValue(key); });",
+              "pm.test(\"依赖变量已设置\", function() {",
+              "  pm.expect(missingVars, \"缺少变量: \" + missingVars.join(\", \")).to.eql([]);",
+              "});",
+              "if (missingVars.length) throw new Error(\"缺少依赖变量: \" + missingVars.join(\", \"));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "function setScopeValue(key, value) {",
+              "  if (value === undefined || value === null || value === \"\") return;",
+              "  var stringValue = String(value);",
+              "  if (pm.environment) pm.environment.set(key, stringValue);",
+              "  if (pm.globals) pm.globals.set(key, stringValue);",
+              "}",
+              "function getScopeValue(key) {",
+              "  if (pm.environment && pm.environment.get(key)) return pm.environment.get(key);",
+              "  if (pm.globals && pm.globals.get(key)) return pm.globals.get(key);",
+              "  if (pm.collectionVariables && pm.collectionVariables.get(key)) return pm.collectionVariables.get(key);",
+              "  return \"\";",
+              "}",
+              "function getIterationValue(columnName) {",
+              "  if (!pm.iterationData || !pm.iterationData.get) return undefined;",
+              "  var value = pm.iterationData.get(columnName);",
+              "  return value === null ? undefined : value;",
+              "}",
+              "function getFirstIterationValue(columnNames) {",
+              "  for (var index = 0; index < columnNames.length; index += 1) {",
+              "    var value = getIterationValue(columnNames[index]);",
+              "    if (value !== undefined && value !== null && value !== \"\") return String(value);",
+              "  }",
+              "  return \"\";",
+              "}",
+              "function getPath(source, path) {",
+              "  return path.split(\".\").reduce(function(current, key) {",
+              "    if (current === undefined || current === null) return undefined;",
+              "    var match = key.match(/^([^\\[]+)\\[(\\d+)\\]$/);",
+              "    if (match) {",
+              "      var arrayValue = current[match[1]];",
+              "      return Array.isArray(arrayValue) ? arrayValue[Number(match[2])] : undefined;",
+              "    }",
+              "    return current[key];",
+              "  }, source);",
+              "}",
+              "function setFirst(key, paths) {",
+              "  for (var index = 0; index < paths.length; index += 1) {",
+              "    var value = getPath(responseBody, paths[index]);",
+              "    if (value !== undefined && value !== null && value !== \"\") {",
+              "      setScopeValue(key, value);",
+              "      return value;",
+              "    }",
+              "  }",
+              "  return \"\";",
+              "}",
+              "var responseBody = {};",
+              "try { responseBody = pm.response.json(); } catch (error) { responseBody = {}; }",
+              "var expectsJson = true;",
+              "var consumesCsvExpectation = false;",
+              "var expectedResultOverrides = {};",
+              "var expectedResult = consumesCsvExpectation ? getFirstIterationValue([\"预期结果\", \"expectedResult\", \"expectedMessage\"]) : getFirstIterationValue([\"expectedResult\", \"expectedMessage\"]);",
+              "if (expectedResult && Object.prototype.hasOwnProperty.call(expectedResultOverrides, expectedResult)) expectedResult = expectedResultOverrides[expectedResult];",
+              "var expectedValid = consumesCsvExpectation ? getFirstIterationValue([\"是否有效\", \"valid\", \"isValid\"]) : getFirstIterationValue([\"valid\", \"isValid\"]);",
+              "var expectedInvalid = String(expectedValid).toLowerCase() === \"false\";",
+              "var expectedSuccess = String(expectedValid).toLowerCase() === \"true\";",
+              "if (expectedResult === \"patientID\") { expectedInvalid = false; expectedSuccess = true; }",
+              "var hasBusinessCode = Object.prototype.hasOwnProperty.call(responseBody, \"code\");",
+              "pm.test(\"HTTP 状态码为 2xx\", function() {",
+              "  pm.expect(pm.response.code).to.be.within(200, 299);",
+              "});",
+              "if (expectsJson) {",
+              "  pm.test(\"响应体为 JSON 对象\", function() {",
+              "    pm.expect(responseBody).to.be.an(\"object\");",
+              "  });",
+              "}",
+              "if (expectsJson && hasBusinessCode) {",
+              "  if (expectedResult && expectedResult !== \"patientID\") {",
+              "    pm.test(\"业务 message 符合预期\", function() {",
+              "      pm.expect(responseBody.message).to.eql(expectedResult);",
+              "    });",
+              "  } else if (expectedInvalid) {",
+              "    pm.test(\"无效用例业务 code 非 0\", function() {",
+              "      pm.expect(Number(responseBody.code)).to.not.eql(0);",
+              "    });",
+              "  } else {",
+              "    pm.test(\"业务 code 为 0\", function() {",
+              "      pm.expect(Number(responseBody.code)).to.eql(0);",
+              "    });",
+              "  }",
+              "}",
+              "if (expectsJson && hasBusinessCode && expectedInvalid) {",
+              "  pm.test(\"无效用例业务 code 非 0\", function() {",
+              "    pm.expect(Number(responseBody.code)).to.not.eql(0);",
+              "  });",
+              "}",
+              "function shouldAssertSuccessShape() {",
+              "  return !expectedInvalid && (!expectedResult || expectedResult === \"patientID\");",
+              "}",
+              "function assertAnyPath(label, paths) {",
+              "  if (!shouldAssertSuccessShape()) return;",
+              "  pm.test(label, function() {",
+              "    var found = paths.some(function(path) {",
+              "      var value = getPath(responseBody, path);",
+              "      return value !== undefined && value !== null && value !== \"\";",
+              "    });",
+              "    pm.expect(found, \"任一字段存在: \" + paths.join(\", \")).to.eql(true);",
+              "  });",
+              "}",
+              "assertAnyPath(\"保存用户配置结果已返回\", [\"data\",\"message\"]);"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "function getScopeValue(key) {",
+          "  if (pm.environment && pm.environment.get(key)) return pm.environment.get(key);",
+          "  if (pm.globals && pm.globals.get(key)) return pm.globals.get(key);",
+          "  if (pm.collectionVariables && pm.collectionVariables.get(key)) return pm.collectionVariables.get(key);",
+          "  return \"\";",
+          "}",
+          "function setScopeValue(key, value) {",
+          "  if (value === undefined || value === null || value === \"\") return;",
+          "  var stringValue = String(value);",
+          "  if (pm.environment) pm.environment.set(key, stringValue);",
+          "  if (pm.globals) pm.globals.set(key, stringValue);",
+          "}",
+          "var defaults = {\n  \"baseUrl\": \"http://localhost:3000/tars/v1\",\n  \"gatewayUrl\": \"http://localhost:3000/tars/v1/gateway\",\n  \"controlNodeBaseUrl\": \"http://192.168.0.52:38080/tars/v1\",\n  \"rosBaseUrl\": \"http://192.168.0.52:38081/ros_api/v1\",\n  \"chatBaseUrl\": \"http://192.168.2.159:9999/api/v3\",\n  \"frontendBaseUrl\": \"http://localhost:3000\",\n  \"internetPingUrl\": \"https://tars.finetool.cn/ping\",\n  \"username\": \"admin\",\n  \"password\": \"admin\",\n  \"userId\": \"1\",\n  \"tenantId\": \"1\",\n  \"accountId\": \"5\",\n  \"patientID\": \"692776867656982528\",\n  \"patientName\": \"李松\",\n  \"patientIdentityCard\": \"110101199001010011\",\n  \"patientTelephone\": \"13800138000\",\n  \"designVersion\": \"0\",\n  \"filename\": \"model.stl\",\n  \"streamId\": \"1710000000000\"\n};",
+          "Object.keys(defaults).forEach(function(key) {",
+          "  if (!getScopeValue(key)) setScopeValue(key, defaults[key]);",
+          "});"
+        ]
+      }
+    }
+  ]
+}
