@@ -1,0 +1,301 @@
+{
+  "info": {
+    "name": "TARS Admin Frontend APIs - 聊天与助手",
+    "description": "聊天补全流式接口和全局助手 SSE。\n\n此文件用于按模块导入 Apifox。变量不写入模块集合，请先导入 api-docs/apifox-shared-environment.postman_environment.json，或在 Apifox 项目/环境变量中维护同名变量。\n接口依赖变量会通过前置/后置脚本写入环境变量和全局变量，不会写入模块变量。",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "聊天补全流",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": "JSON 请求体"
+          }
+        ],
+        "url": "{{chatBaseUrl}}/bots/chat/completions",
+        "description": "接口名称：addChat\n接口描述：调用聊天节点 /api/v3/bots/chat/completions，返回 stream。\n分组：聊天与助手\n代码来源：src/api/chat/index.ts\nReq:\n{\n  \"model\": \"test\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"你好\"\n    }\n  ],\n  \"stream\": true,\n  \"patients_info\": [],\n  \"machine_info\": {\n    \"lamp_brightness\": 50\n  },\n  \"cur_patients_info\": null\n}\nRes:\n{\n  \"choices\": [\n    {\n      \"delta\": {\n        \"content\": \"你好\"\n      },\n      \"finish_reason\": null\n    }\n  ]\n}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"test\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"你好\"\n    }\n  ],\n  \"stream\": true,\n  \"patients_info\": [],\n  \"machine_info\": {\n    \"lamp_brightness\": 50\n  },\n  \"cur_patients_info\": null\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "function setScopeValue(key, value) {",
+              "  if (value === undefined || value === null || value === \"\") return;",
+              "  var stringValue = String(value);",
+              "  if (pm.environment) pm.environment.set(key, stringValue);",
+              "  if (pm.globals) pm.globals.set(key, stringValue);",
+              "}",
+              "function getScopeValue(key) {",
+              "  if (pm.environment && pm.environment.get(key)) return pm.environment.get(key);",
+              "  if (pm.globals && pm.globals.get(key)) return pm.globals.get(key);",
+              "  if (pm.collectionVariables && pm.collectionVariables.get(key)) return pm.collectionVariables.get(key);",
+              "  return \"\";",
+              "}",
+              "function getIterationValue(columnName) {",
+              "  if (!pm.iterationData || !pm.iterationData.get) return undefined;",
+              "  var value = pm.iterationData.get(columnName);",
+              "  return value === null ? undefined : value;",
+              "}",
+              "function getFirstIterationValue(columnNames) {",
+              "  for (var index = 0; index < columnNames.length; index += 1) {",
+              "    var value = getIterationValue(columnNames[index]);",
+              "    if (value !== undefined && value !== null && value !== \"\") return String(value);",
+              "  }",
+              "  return \"\";",
+              "}",
+              "function getPath(source, path) {",
+              "  return path.split(\".\").reduce(function(current, key) {",
+              "    if (current === undefined || current === null) return undefined;",
+              "    var match = key.match(/^([^\\[]+)\\[(\\d+)\\]$/);",
+              "    if (match) {",
+              "      var arrayValue = current[match[1]];",
+              "      return Array.isArray(arrayValue) ? arrayValue[Number(match[2])] : undefined;",
+              "    }",
+              "    return current[key];",
+              "  }, source);",
+              "}",
+              "function setFirst(key, paths) {",
+              "  for (var index = 0; index < paths.length; index += 1) {",
+              "    var value = getPath(responseBody, paths[index]);",
+              "    if (value !== undefined && value !== null && value !== \"\") {",
+              "      setScopeValue(key, value);",
+              "      return value;",
+              "    }",
+              "  }",
+              "  return \"\";",
+              "}",
+              "var responseBody = {};",
+              "try { responseBody = pm.response.json(); } catch (error) { responseBody = {}; }",
+              "var expectsJson = false;",
+              "var consumesCsvExpectation = false;",
+              "var expectedResultOverrides = {};",
+              "var expectedResult = consumesCsvExpectation ? getFirstIterationValue([\"预期结果\", \"expectedResult\", \"expectedMessage\"]) : getFirstIterationValue([\"expectedResult\", \"expectedMessage\"]);",
+              "if (expectedResult && Object.prototype.hasOwnProperty.call(expectedResultOverrides, expectedResult)) expectedResult = expectedResultOverrides[expectedResult];",
+              "var expectedValid = consumesCsvExpectation ? getFirstIterationValue([\"是否有效\", \"valid\", \"isValid\"]) : getFirstIterationValue([\"valid\", \"isValid\"]);",
+              "var expectedInvalid = String(expectedValid).toLowerCase() === \"false\";",
+              "var expectedSuccess = String(expectedValid).toLowerCase() === \"true\";",
+              "if (expectedResult === \"patientID\") { expectedInvalid = false; expectedSuccess = true; }",
+              "var hasBusinessCode = Object.prototype.hasOwnProperty.call(responseBody, \"code\");",
+              "pm.test(\"HTTP 状态码为 2xx\", function() {",
+              "  pm.expect(pm.response.code).to.be.within(200, 299);",
+              "});",
+              "if (expectsJson) {",
+              "  pm.test(\"响应体为 JSON 对象\", function() {",
+              "    pm.expect(responseBody).to.be.an(\"object\");",
+              "  });",
+              "}",
+              "if (expectsJson && hasBusinessCode) {",
+              "  if (expectedResult && expectedResult !== \"patientID\") {",
+              "    pm.test(\"业务 message 符合预期\", function() {",
+              "      pm.expect(responseBody.message).to.eql(expectedResult);",
+              "    });",
+              "  } else if (expectedInvalid) {",
+              "    pm.test(\"无效用例业务 code 非 0\", function() {",
+              "      pm.expect(Number(responseBody.code)).to.not.eql(0);",
+              "    });",
+              "  } else {",
+              "    pm.test(\"业务 code 为 0\", function() {",
+              "      pm.expect(Number(responseBody.code)).to.eql(0);",
+              "    });",
+              "  }",
+              "}",
+              "if (expectsJson && hasBusinessCode && expectedInvalid) {",
+              "  pm.test(\"无效用例业务 code 非 0\", function() {",
+              "    pm.expect(Number(responseBody.code)).to.not.eql(0);",
+              "  });",
+              "}",
+              "function shouldAssertSuccessShape() {",
+              "  return !expectedInvalid && (!expectedResult || expectedResult === \"patientID\");",
+              "}",
+              "function assertAnyPath(label, paths) {",
+              "  if (!shouldAssertSuccessShape()) return;",
+              "  pm.test(label, function() {",
+              "    var found = paths.some(function(path) {",
+              "      var value = getPath(responseBody, path);",
+              "      return value !== undefined && value !== null && value !== \"\";",
+              "    });",
+              "    pm.expect(found, \"任一字段存在: \" + paths.join(\", \")).to.eql(true);",
+              "  });",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "全局助手 SSE",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": "JSON 请求体"
+          }
+        ],
+        "url": "{{baseUrl}}/chat_completions",
+        "description": "接口名称：fetchEventSourceChatCompletions\n接口描述：全局助手使用 fetchEventSource 请求 /tars/v1/chat_completions，响应 text/event-stream。\n分组：聊天与助手\n代码来源：src/layout/GlobalWin/index.tsx\nReq:\n{\n  \"model\": \"test\",\n  \"stream\": true,\n  \"metadata\": {\n    \"patients_info\": [],\n    \"cur_patient_info\": null,\n    \"machine_info\": {\n      \"lamp_brightness\": 50\n    },\n    \"is_audio\": true\n  },\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"调亮无影灯\"\n    }\n  ]\n}\nRes:\ndata: {\"choices\":[{\"delta\":{\"content\":\"ok\"},\"finish_reason\":null}]}\\n\\ndata: [DONE]",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"test\",\n  \"stream\": true,\n  \"metadata\": {\n    \"patients_info\": [],\n    \"cur_patient_info\": null,\n    \"machine_info\": {\n      \"lamp_brightness\": 50\n    },\n    \"is_audio\": true\n  },\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"调亮无影灯\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "function setScopeValue(key, value) {",
+              "  if (value === undefined || value === null || value === \"\") return;",
+              "  var stringValue = String(value);",
+              "  if (pm.environment) pm.environment.set(key, stringValue);",
+              "  if (pm.globals) pm.globals.set(key, stringValue);",
+              "}",
+              "function getScopeValue(key) {",
+              "  if (pm.environment && pm.environment.get(key)) return pm.environment.get(key);",
+              "  if (pm.globals && pm.globals.get(key)) return pm.globals.get(key);",
+              "  if (pm.collectionVariables && pm.collectionVariables.get(key)) return pm.collectionVariables.get(key);",
+              "  return \"\";",
+              "}",
+              "function getIterationValue(columnName) {",
+              "  if (!pm.iterationData || !pm.iterationData.get) return undefined;",
+              "  var value = pm.iterationData.get(columnName);",
+              "  return value === null ? undefined : value;",
+              "}",
+              "function getFirstIterationValue(columnNames) {",
+              "  for (var index = 0; index < columnNames.length; index += 1) {",
+              "    var value = getIterationValue(columnNames[index]);",
+              "    if (value !== undefined && value !== null && value !== \"\") return String(value);",
+              "  }",
+              "  return \"\";",
+              "}",
+              "function getPath(source, path) {",
+              "  return path.split(\".\").reduce(function(current, key) {",
+              "    if (current === undefined || current === null) return undefined;",
+              "    var match = key.match(/^([^\\[]+)\\[(\\d+)\\]$/);",
+              "    if (match) {",
+              "      var arrayValue = current[match[1]];",
+              "      return Array.isArray(arrayValue) ? arrayValue[Number(match[2])] : undefined;",
+              "    }",
+              "    return current[key];",
+              "  }, source);",
+              "}",
+              "function setFirst(key, paths) {",
+              "  for (var index = 0; index < paths.length; index += 1) {",
+              "    var value = getPath(responseBody, paths[index]);",
+              "    if (value !== undefined && value !== null && value !== \"\") {",
+              "      setScopeValue(key, value);",
+              "      return value;",
+              "    }",
+              "  }",
+              "  return \"\";",
+              "}",
+              "var responseBody = {};",
+              "try { responseBody = pm.response.json(); } catch (error) { responseBody = {}; }",
+              "var expectsJson = false;",
+              "var consumesCsvExpectation = false;",
+              "var expectedResultOverrides = {};",
+              "var expectedResult = consumesCsvExpectation ? getFirstIterationValue([\"预期结果\", \"expectedResult\", \"expectedMessage\"]) : getFirstIterationValue([\"expectedResult\", \"expectedMessage\"]);",
+              "if (expectedResult && Object.prototype.hasOwnProperty.call(expectedResultOverrides, expectedResult)) expectedResult = expectedResultOverrides[expectedResult];",
+              "var expectedValid = consumesCsvExpectation ? getFirstIterationValue([\"是否有效\", \"valid\", \"isValid\"]) : getFirstIterationValue([\"valid\", \"isValid\"]);",
+              "var expectedInvalid = String(expectedValid).toLowerCase() === \"false\";",
+              "var expectedSuccess = String(expectedValid).toLowerCase() === \"true\";",
+              "if (expectedResult === \"patientID\") { expectedInvalid = false; expectedSuccess = true; }",
+              "var hasBusinessCode = Object.prototype.hasOwnProperty.call(responseBody, \"code\");",
+              "pm.test(\"HTTP 状态码为 2xx\", function() {",
+              "  pm.expect(pm.response.code).to.be.within(200, 299);",
+              "});",
+              "if (expectsJson) {",
+              "  pm.test(\"响应体为 JSON 对象\", function() {",
+              "    pm.expect(responseBody).to.be.an(\"object\");",
+              "  });",
+              "}",
+              "if (expectsJson && hasBusinessCode) {",
+              "  if (expectedResult && expectedResult !== \"patientID\") {",
+              "    pm.test(\"业务 message 符合预期\", function() {",
+              "      pm.expect(responseBody.message).to.eql(expectedResult);",
+              "    });",
+              "  } else if (expectedInvalid) {",
+              "    pm.test(\"无效用例业务 code 非 0\", function() {",
+              "      pm.expect(Number(responseBody.code)).to.not.eql(0);",
+              "    });",
+              "  } else {",
+              "    pm.test(\"业务 code 为 0\", function() {",
+              "      pm.expect(Number(responseBody.code)).to.eql(0);",
+              "    });",
+              "  }",
+              "}",
+              "if (expectsJson && hasBusinessCode && expectedInvalid) {",
+              "  pm.test(\"无效用例业务 code 非 0\", function() {",
+              "    pm.expect(Number(responseBody.code)).to.not.eql(0);",
+              "  });",
+              "}",
+              "function shouldAssertSuccessShape() {",
+              "  return !expectedInvalid && (!expectedResult || expectedResult === \"patientID\");",
+              "}",
+              "function assertAnyPath(label, paths) {",
+              "  if (!shouldAssertSuccessShape()) return;",
+              "  pm.test(label, function() {",
+              "    var found = paths.some(function(path) {",
+              "      var value = getPath(responseBody, path);",
+              "      return value !== undefined && value !== null && value !== \"\";",
+              "    });",
+              "    pm.expect(found, \"任一字段存在: \" + paths.join(\", \")).to.eql(true);",
+              "  });",
+              "}"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "function getScopeValue(key) {",
+          "  if (pm.environment && pm.environment.get(key)) return pm.environment.get(key);",
+          "  if (pm.globals && pm.globals.get(key)) return pm.globals.get(key);",
+          "  if (pm.collectionVariables && pm.collectionVariables.get(key)) return pm.collectionVariables.get(key);",
+          "  return \"\";",
+          "}",
+          "function setScopeValue(key, value) {",
+          "  if (value === undefined || value === null || value === \"\") return;",
+          "  var stringValue = String(value);",
+          "  if (pm.environment) pm.environment.set(key, stringValue);",
+          "  if (pm.globals) pm.globals.set(key, stringValue);",
+          "}",
+          "var defaults = {\n  \"baseUrl\": \"http://localhost:3000/tars/v1\",\n  \"gatewayUrl\": \"http://localhost:3000/tars/v1/gateway\",\n  \"controlNodeBaseUrl\": \"http://192.168.0.52:38080/tars/v1\",\n  \"rosBaseUrl\": \"http://192.168.0.52:38081/ros_api/v1\",\n  \"chatBaseUrl\": \"http://192.168.2.159:9999/api/v3\",\n  \"frontendBaseUrl\": \"http://localhost:3000\",\n  \"internetPingUrl\": \"https://tars.finetool.cn/ping\",\n  \"username\": \"admin\",\n  \"password\": \"admin\",\n  \"userId\": \"1\",\n  \"tenantId\": \"1\",\n  \"accountId\": \"5\",\n  \"patientID\": \"692776867656982528\",\n  \"patientName\": \"李松\",\n  \"patientIdentityCard\": \"110101199001010011\",\n  \"patientTelephone\": \"13800138000\",\n  \"designVersion\": \"0\",\n  \"filename\": \"model.stl\",\n  \"streamId\": \"1710000000000\"\n};",
+          "Object.keys(defaults).forEach(function(key) {",
+          "  if (!getScopeValue(key)) setScopeValue(key, defaults[key]);",
+          "});"
+        ]
+      }
+    }
+  ]
+}
