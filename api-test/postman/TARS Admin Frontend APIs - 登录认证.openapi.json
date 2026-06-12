@@ -1,0 +1,335 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TARS Admin Frontend APIs - 登录认证",
+    "description": "登录、登出、短信验证码、密码重置和当前用户信息。\n\n此文件用于按模块导入 Apifox。变量不写入模块集合，请先导入 api-docs/apifox-shared-environment.postman_environment.json，或在 Apifox 项目/环境变量中维护同名变量。\n接口依赖变量会通过前置/后置脚本写入环境变量和全局变量，不会写入模块变量。",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/baseUrl/login_by_username": {
+      "post": {
+        "summary": "用户名密码登录",
+        "deprecated": false,
+        "description": "接口名称：loginByUserName\n接口描述：使用 username/password 登录，可通过 returnToken 要求后端返回 token。\n分组：登录认证\n代码来源：src/api/login/index.ts\nReq:\n{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\",\n  \"returnToken\": false\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"accountID\": \"account-id\",\n    \"name\": \"管理员\",\n    \"tenantID\": \"tenant-id\",\n    \"tenantType\": \"clinic\",\n    \"userID\": \"user-id\",\n    \"username\": \"admin\",\n    \"token\": \"\"\n  },\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "returnToken": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password",
+                  "returnToken"
+                ]
+              },
+              "example": {
+                "username": "{{username}}",
+                "password": "{{password}}",
+                "returnToken": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/baseUrl/logout": {
+      "post": {
+        "summary": "登出",
+        "deprecated": false,
+        "description": "接口名称：logout\n接口描述：退出当前登录会话。\n分组：登录认证\n代码来源：src/api/login/index.ts\nReq:\n无\nRes:\n{\n  \"code\": 0,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/baseUrl/login_by_telephone": {
+      "post": {
+        "summary": "手机号验证码登录",
+        "deprecated": false,
+        "description": "接口名称：loginByTel\n接口描述：使用 telephone/code 登录，可通过 returnToken 要求后端返回 token。\n分组：登录认证\n代码来源：src/api/login/index.ts\nReq:\n{\n  \"telephone\": \"13800138000\",\n  \"code\": \"123456\",\n  \"returnToken\": true\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"accountID\": \"account-id\",\n    \"name\": \"用户\",\n    \"tenantID\": \"tenant-id\",\n    \"userID\": \"user-id\",\n    \"token\": \"token-if-returnToken\"\n  },\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "telephone": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "returnToken": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "telephone",
+                  "code",
+                  "returnToken"
+                ]
+              },
+              "example": {
+                "telephone": "{{phone}}",
+                "code": "{{Captcha}}",
+                "returnToken": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/baseUrl/send_sms": {
+      "post": {
+        "summary": "发送短信验证码-Reset",
+        "deprecated": false,
+        "description": "接口名称：sendSMS\n接口描述：发送登录或重置密码短信验证码。\n分组：登录认证\n代码来源：src/api/login/index.ts\nReq:\n{\n  \"telephone\": \"13800138000\",\n  \"type\": \"login\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": \"sms-id-or-message\",\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "telephone": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "telephone",
+                  "type"
+                ]
+              },
+              "example": {
+                "telephone": "{{phone}}",
+                "type": "reset"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/baseUrl/reset_password": {
+      "post": {
+        "summary": "重置密码",
+        "deprecated": false,
+        "description": "接口名称：resetPassword\n接口描述：通过手机号验证码重置密码。\n分组：登录认证\n代码来源：src/api/login/index.ts\nReq:\n{\n  \"telephone\": \"13800138000\",\n  \"code\": \"123456\",\n  \"newPassword\": \"new-password\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": \"ok\",\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "telephone": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "newPassword": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "telephone",
+                  "code",
+                  "newPassword"
+                ]
+              },
+              "example": {
+                "telephone": "15650526180",
+                "code": "035971",
+                "newPassword": "admin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/gatewayUrl": {
+      "post": {
+        "summary": "获取当前用户信息 [command=16001]",
+        "deprecated": false,
+        "description": "接口名称：getUserInfo\n接口描述：通过网关 Command 获取当前登录用户信息。\n分组：登录认证\n网关分发指令：command=16001 (CommandId.GetUserInfo)\n代码来源：src/api/login/index.ts\nReq:\n无\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"AccountID\": \"account-id\",\n    \"ID\": \"user-id\",\n    \"Name\": \"管理员\",\n    \"TenantID\": \"tenant-id\",\n    \"TenantType\": \"clinic\"\n  },\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "command",
+            "in": "header",
+            "description": "网关分发指令，CommandId.GetUserInfo = 16001",
+            "required": true,
+            "example": "16001",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [
+    {
+      "url": "http://dev-cn.your-api-server.com",
+      "description": "开发环境"
+    }
+  ],
+  "security": []
+}
