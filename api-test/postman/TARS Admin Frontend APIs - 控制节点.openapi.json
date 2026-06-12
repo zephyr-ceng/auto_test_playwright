@@ -1,0 +1,777 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TARS Admin Frontend APIs - 控制节点",
+    "description": "本机文件、设备关机重启、版本、导出、录屏和升级。\n\n此文件用于按模块导入 Apifox。变量不写入模块集合，请先导入 api-docs/apifox-shared-environment.postman_environment.json，或在 Apifox 项目/环境变量中维护同名变量。\n接口依赖变量会通过前置/后置脚本写入环境变量和全局变量，不会写入模块变量。",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/controlNodeBaseUrl/get_dir_tree": {
+      "post": {
+        "summary": "获取目录树",
+        "deprecated": false,
+        "description": "接口名称：getDirTree\n接口描述：按路径和后缀过滤查询控制节点目录树。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n{\n  \"path\": \"/data\",\n  \"fileFilter\": [\n    \"stl\",\n    \"dcm\"\n  ]\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"IsDir\": true,\n    \"Name\": \"data\",\n    \"Path\": \"/data\",\n    \"Child\": []\n  },\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "fileFilter": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "path",
+                  "fileFilter"
+                ]
+              },
+              "example": {
+                "path": "/data",
+                "fileFilter": [
+                  "stl",
+                  "dcm"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/download_local_file": {
+      "post": {
+        "summary": "下载本地文件并上报进度",
+        "deprecated": false,
+        "description": "接口名称：downloadLocalFileWithProgress\n接口描述：同下载本地文件，前端额外监听下载进度。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n{\n  \"filePath\": \"/data/model.stl\"\n}\nRes:\n<Blob>",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filePath": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "filePath"
+                ]
+              },
+              "example": {
+                "filePath": "/data/model.stl"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/shutdown": {
+      "post": {
+        "summary": "关机",
+        "deprecated": false,
+        "description": "接口名称：shutDownApi\n接口描述：关闭控制节点设备。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n无\nRes:\n{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/reboot": {
+      "post": {
+        "summary": "重启",
+        "deprecated": false,
+        "description": "接口名称：rebootApi\n接口描述：重启控制节点设备。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n无\nRes:\n{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/wifi_info": {
+      "get": {
+        "summary": "获取当前 Wi-Fi",
+        "deprecated": false,
+        "description": "接口名称：getCurrentWifi\n接口描述：获取当前连接 Wi-Fi、密码和控制节点 IP。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n无\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"ssid\": \"wifi-name\",\n    \"password\": \"wifi-password\",\n    \"ip\": \"192.168.0.52\"\n  },\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/ping": {
+      "get": {
+        "summary": "控制节点健康检查",
+        "deprecated": false,
+        "description": "接口名称：getControlNodeHealthCheck\n接口描述：控制节点 ping 检查，返回 hwid。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n无\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"hwid\": \"control-node-hwid\"\n  },\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/put_caldata": {
+      "post": {
+        "summary": "导出文件到移动盘",
+        "deprecated": false,
+        "description": "接口名称：exportFileToMobileDrive\n接口描述：multipart/form-data 上传并写入指定路径。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n{\n  \"fileName\": \"model.stl\",\n  \"file\": \"<File>\",\n  \"path\": \"/usb\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "由 FormData 生成",
+            "required": true,
+            "example": "multipart/form-data",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "example": "model.stl",
+                    "type": "string"
+                  },
+                  "file": {
+                    "example": "<File>",
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "path": {
+                    "example": "/usb",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fileName",
+                  "file",
+                  "path"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/version": {
+      "get": {
+        "summary": "获取版本信息",
+        "deprecated": false,
+        "description": "接口名称：getVersionInfo\n接口描述：获取当前版本、下一版本和升级开关。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n无\nRes:\n{\n  \"fullVersion\": \"1.0.0\",\n  \"majorVersion\": \"1\",\n  \"changeNotes\": \"\",\n  \"nextVersion\": \"1.0.1\",\n  \"autoUpgrade\": true,\n  \"hwid\": \"control-node-hwid\"\n}",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/file_list": {
+      "get": {
+        "summary": "获取本地文件列表",
+        "deprecated": false,
+        "description": "接口名称：getFileList\n接口描述：获取设计文件、录屏文件和磁盘空间。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n无\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"design_files\": [],\n    \"screen_files\": [],\n    \"total_available_space\": \"10GB\",\n    \"total_used_space\": \"1GB\"\n  },\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/export_local": {
+      "post": {
+        "summary": "导出本地文件",
+        "deprecated": false,
+        "description": "接口名称：exportFile\n接口描述：将本地文件导出到指定路径。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n{\n  \"fileName\": \"model.stl\",\n  \"exportPath\": \"/usb\",\n  \"localPath\": \"/data/model.stl\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "type": "string"
+                  },
+                  "exportPath": {
+                    "type": "string"
+                  },
+                  "localPath": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fileName",
+                  "exportPath",
+                  "localPath"
+                ]
+              },
+              "example": {
+                "fileName": "model.stl",
+                "exportPath": "/usb",
+                "localPath": "/data/model.stl"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/export_status": {
+      "post": {
+        "summary": "查询导出状态",
+        "deprecated": false,
+        "description": "接口名称：getExportStatus\n接口描述：按本地路径查询导出进度。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n{\n  \"localPath\": \"/data/model.stl\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"fileName\": \"model.stl\",\n    \"progress\": 50,\n    \"status\": \"running\"\n  },\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "localPath": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "localPath"
+                ]
+              },
+              "example": {
+                "localPath": "/data/model.stl"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/delete_file": {
+      "post": {
+        "summary": "删除本地文件",
+        "deprecated": false,
+        "description": "接口名称：deleteFile\n接口描述：按路径删除控制节点本地文件。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n{\n  \"path\": \"/data/model.stl\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              },
+              "example": {
+                "path": "/data/model.stl"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/task/start": {
+      "post": {
+        "summary": "开始录屏",
+        "deprecated": false,
+        "description": "接口名称：startScreenRecord\n接口描述：启动指定录屏任务。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n{\n  \"taskName\": \"screen-record\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taskName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "taskName"
+                ]
+              },
+              "example": {
+                "taskName": "screen-record"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/task/stop": {
+      "post": {
+        "summary": "停止录屏",
+        "deprecated": false,
+        "description": "接口名称：stopScreenRecord\n接口描述：停止指定录屏任务。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n{\n  \"taskName\": \"screen-record\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taskName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "taskName"
+                ]
+              },
+              "example": {
+                "taskName": "screen-record"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/task/status": {
+      "post": {
+        "summary": "查询录屏状态",
+        "deprecated": false,
+        "description": "接口名称：getScreenRecordStatus\n接口描述：查询指定录屏任务是否运行中。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n{\n  \"taskName\": \"screen-record\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"isActive\": true\n  },\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taskName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "taskName"
+                ]
+              },
+              "example": {
+                "taskName": "screen-record"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/upgrade_status": {
+      "get": {
+        "summary": "获取升级状态",
+        "deprecated": false,
+        "description": "接口名称：getUpgradeStatus\n接口描述：获取软件升级进度和目标版本。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n无\nRes:\n{\n  \"code\": 0,\n  \"data\": {\n    \"progress\": 0,\n    \"status\": 0,\n    \"version\": \"1.0.1\"\n  },\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/start_upgrade": {
+      "post": {
+        "summary": "开始升级",
+        "deprecated": false,
+        "description": "接口名称：startUpgrade\n接口描述：触发控制节点升级。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n无\nRes:\n{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/controlNodeBaseUrl/set_upgrade": {
+      "post": {
+        "summary": "设置自动升级",
+        "deprecated": false,
+        "description": "接口名称：setUpgrade\n接口描述：开启或关闭自动升级。\n分组：控制节点\n代码来源：src/api/controlNode/index.ts\nReq:\n{\n  \"autoUpgrade\": true\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "autoUpgrade": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "autoUpgrade"
+                ]
+              },
+              "example": {
+                "autoUpgrade": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [
+    {
+      "url": "",
+      "description": "开发环境"
+    }
+  ],
+  "security": []
+}

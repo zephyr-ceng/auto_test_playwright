@@ -1,0 +1,110 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TARS Admin Frontend APIs - 植体系统",
+    "description": "植体系统配置和收藏管理。\n\n此文件用于按模块导入 Apifox。变量不写入模块集合，请先导入 api-docs/apifox-shared-environment.postman_environment.json，或在 Apifox 项目/环境变量中维护同名变量。\n接口依赖变量会通过前置/后置脚本写入环境变量和全局变量，不会写入模块变量。",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/controlNodeBaseUrl/implant_system": {
+      "get": {
+        "summary": "获取植体系统列表",
+        "deprecated": false,
+        "description": "接口名称：getImplantSystemAPI\n接口描述：获取本地植体/钻针系统配置。\n分组：植体系统\n代码来源：src/api/implant/index.ts\nReq:\n无\nRes:\n{\n  \"code\": 0,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"implant-system\",\n      \"systems\": []\n    }\n  ],\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/gatewayUrl": {
+      "post": {
+        "summary": "取消植体收藏 [command=18006]",
+        "deprecated": false,
+        "description": "接口名称：deleteImplantFavorite\n接口描述：取消收藏指定植体类型。\n分组：植体系统\n网关分发指令：command=18006 (CommandId.DeleteImplantFavorite)\n代码来源：src/api/implant/index.ts\nReq:\n{\n  \"type\": \"implant-type\"\n}\nRes:\n{\n  \"code\": 0,\n  \"data\": true,\n  \"message\": \"success\"\n}",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "JSON 请求体",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "command",
+            "in": "header",
+            "description": "网关分发指令，CommandId.DeleteImplantFavorite = 18006",
+            "required": true,
+            "example": "18006",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              "example": {
+                "type": "implant-type"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [
+    {
+      "url": "",
+      "description": "开发环境"
+    }
+  ],
+  "security": []
+}
