@@ -6,6 +6,7 @@
 .venv/
 .idea/
 logs/
+debug.log
 reports/*
 reports/html/*
 data/dicom/张凤_20241114100330_Dicom
