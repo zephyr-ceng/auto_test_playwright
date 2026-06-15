@@ -7,9 +7,14 @@ dependencies = [
     "playwright>=1.58.0",
     "pytest>=9.0.3",
     "pyyaml>=6.0.3",
+    "requests>=2.32.5",
 ]
 
 [tool.pytest.ini_options]
 markers = [
+    "api: requests-based API tests",
+    "ui: Playwright UI tests",
+    "destructive_api: API tests that may create, update, delete, upload, or operate devices",
+    "external_api: API tests that depend on external services, control nodes, ROS, chat, or frontend assets",
     "design_remote: tests that use the remote design editor and may depend on WebGL/model initialization",
 ]

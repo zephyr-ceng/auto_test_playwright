@@ -1,8 +1,6 @@
 from typing import Any, Dict, Optional
 from playwright.sync_api import sync_playwright
 
-from pages import remote
-
 
 class BrowserManager:
     """Playwright 浏览器管理器（同步 API 纯净版）。
