@@ -4,3 +4,14 @@ username: "admin"
 password: "fyton@202602"
 cookies_write_time: '2026-06-03 18:51:26'
 cookies: [ { name: session, value: 43570234-e9ce-4876-9052-8ec06684eb33, domain: tars.finetool.cn, path: /, expires: 1781779889.652484, httpOnly: false, secure: true, sameSite: None } ]
+api:
+  username: "admin"
+  password: "admin"
+  base_url: "http://localhost:3000/tars/v1"
+  gateway_url: "http://localhost:3000/tars/v1/gateway"
+  control_node_base_url: "http://192.168.0.52:38080/tars/v1"
+  ros_base_url: "http://192.168.0.52:38081/ros_api/v1"
+  chat_base_url: "http://192.168.2.159:9999/api/v3"
+  frontend_base_url: "http://localhost:3000"
+  internet_ping_url: "https://tars.finetool.cn/ping"
+  timeout: 30
