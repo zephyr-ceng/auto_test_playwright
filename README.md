@@ -33,11 +33,13 @@
 
 - `core/`：浏览器管理、pytest 钩子等基础能力；
 - `pages/`：页面对象封装（页面定位与操作）；
-- `tests/`：测试用例；
+- `tests/ui/`：UI 测试用例；
+- `tests/api/`：requests 接口测试用例；
+- `api/`：接口测试客户端、Apifox 生成器和模块 API 封装；
 - `data/`：测试数据（含 YAML / DICOM 示例数据）；
 - `logs/`：运行日志与失败截图；
 - `reports/`：测试结果与 Allure 报告输出；
-- `run_tests.py`：执行 pytest 并生成 Allure 报告。
+- `run_tests.py`：按 UI/API suite 执行 pytest 并生成 Allure 报告。
 
 ## Codex Skill 使用
 
@@ -52,7 +54,7 @@ Codex 会按以下约定生成或更新文件：
 
 - `data/<page>_page.yaml`：页面路径与元素定位，`url` 只写路径；
 - `pages/<page>_manager.py`：页面对象封装，文件名必须使用 `*_manager.py`；
-- `tests/test_<page>_page.py`：pytest 用例、fixture、断言和 Allure 标记。
+- `tests/ui/test_<page>_page.py`：pytest 用例、fixture、断言和 Allure 标记。
 
 推荐需求模板：
 
@@ -104,8 +106,17 @@ pip install -r requirements.txt
 # 2) 安装 Playwright 浏览器
 python -m playwright install
 
-# 3) 执行测试并生成 Allure 报告
+# 3) 默认执行 UI 测试并生成 Allure 报告
 python run_tests.py
+
+# 只执行 API 安全冒烟集
+python run_tests.py --suite api
+
+# 执行 UI + API 安全冒烟集
+python run_tests.py --suite all
+
+# 调试时只跑 pytest，不生成 Allure HTML
+python run_tests.py --suite api --no-allure-html
 ```
 
 远程运行
@@ -114,3 +125,40 @@ python run_tests.py
 - 配置 `/config/config.yaml` 的 `remote_url`
 
 执行完成后，可在 `reports/html/` 查看生成的 Allure 报告。
+
+## API 编写与调试
+
+- 接口定义来源：`api-test/apifox/Tars Admin Frontend API.apifox.json`。
+- 重新生成接口封装和测试：`python -m api.generate_from_apifox`。
+- 生成结果：
+    - `api/01-login_by_username-auth/api.py` 等 16 个目录：严格对齐 `api-test/cache/modules/01-...16-...`；
+    - `tests/api/01-login_by_username-auth/test_01_login_auth_api.py` 等 16 个目录：对应 pytest + Allure 测试；
+    - `config/environment.yaml`：Apifox/Postman 默认变量；
+    - `api/generated/summary.json`：生成数量摘要；
+    - `api/generated/unsupported_prerequest.md`：未支持前置脚本清单。
+- 前置脚本处理在 `api/preprocessors.py`：依赖变量校验、CSV body patch、JSON body patch、随机患者名、form-data 文件检查。
+- 默认 API suite 会跳过 `destructive_api` 和 `external_api`。调试单接口时可用：
+
+```bash
+python -m pytest tests/api/01-login_by_username-auth/test_01_login_auth_api.py -q -s
+python -m pytest tests/api/02-patient-management/test_02_patient_management_api.py::TestPatientManagementApi::test_command_13001_2 -q -s
+python -m pytest tests/api -q -m "destructive_api" -s
+```
+
+放开破坏性或外部依赖接口前，先确认 `config/environment.yaml` 的 API 地址和账号指向正确环境，并确认接口不会误删数据、控制设备或触发升级。
+新增或调试接口时，先定位 `api-test/cache/modules/<编号>-<分组>.postman.json`，再查看同名目录下的 `api.py` 与
+`test_<编号>_<分组>_api.py`。
+
+## UI 编写与调试
+
+- UI 用例统一放在 `tests/ui/`。
+- 页面对象仍放在 `pages/*_manager.py`，定位数据仍放在 `data/*_page.yaml`。
+- 调试单个 UI 文件或用例：
+
+```bash
+python -m pytest tests/ui/test_login_page.py -q -s
+python -m pytest tests/ui/test_patients_page.py::TestPatientsPage::test_create_patient_success -q -s
+```
+
+新增 UI 自动化时继续按 POM 结构编写：`data/*.yaml -> pages/*_manager.py -> tests/ui/test_*_page.py`。失败截图仍由
+`core/conftest.py` 统一处理。
