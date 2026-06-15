@@ -131,22 +131,23 @@ python run_tests.py --suite api --no-allure-html
 - 接口定义来源：`api-test/apifox/Tars Admin Frontend API.apifox.json`。
 - 重新生成接口封装和测试：`python -m api.generate_from_apifox`。
 - 生成结果：
-  - `api/01-login-auth/api.py` 等 16 个目录：严格对齐 `api-test/cache/modules/01-...16-...`；
-  - `tests/api/01-login-auth/test_01_login_auth_api.py` 等 16 个目录：对应 pytest + Allure 测试；
-  - `config/environment.yaml`：Apifox/Postman 默认变量；
-  - `api/generated/summary.json`：生成数量摘要；
-  - `api/generated/unsupported_prerequest.md`：未支持前置脚本清单。
+    - `api/01-login_by_username-auth/api.py` 等 16 个目录：严格对齐 `api-test/cache/modules/01-...16-...`；
+    - `tests/api/01-login_by_username-auth/test_01_login_auth_api.py` 等 16 个目录：对应 pytest + Allure 测试；
+    - `config/environment.yaml`：Apifox/Postman 默认变量；
+    - `api/generated/summary.json`：生成数量摘要；
+    - `api/generated/unsupported_prerequest.md`：未支持前置脚本清单。
 - 前置脚本处理在 `api/preprocessors.py`：依赖变量校验、CSV body patch、JSON body patch、随机患者名、form-data 文件检查。
 - 默认 API suite 会跳过 `destructive_api` 和 `external_api`。调试单接口时可用：
 
 ```bash
-python -m pytest tests/api/01-login-auth/test_01_login_auth_api.py -q -s
+python -m pytest tests/api/01-login_by_username-auth/test_01_login_auth_api.py -q -s
 python -m pytest tests/api/02-patient-management/test_02_patient_management_api.py::TestPatientManagementApi::test_command_13001_2 -q -s
 python -m pytest tests/api -q -m "destructive_api" -s
 ```
 
 放开破坏性或外部依赖接口前，先确认 `config/environment.yaml` 的 API 地址和账号指向正确环境，并确认接口不会误删数据、控制设备或触发升级。
-新增或调试接口时，先定位 `api-test/cache/modules/<编号>-<分组>.postman.json`，再查看同名目录下的 `api.py` 与 `test_<编号>_<分组>_api.py`。
+新增或调试接口时，先定位 `api-test/cache/modules/<编号>-<分组>.postman.json`，再查看同名目录下的 `api.py` 与
+`test_<编号>_<分组>_api.py`。
 
 ## UI 编写与调试
 
@@ -159,4 +160,5 @@ python -m pytest tests/ui/test_login_page.py -q -s
 python -m pytest tests/ui/test_patients_page.py::TestPatientsPage::test_create_patient_success -q -s
 ```
 
-新增 UI 自动化时继续按 POM 结构编写：`data/*.yaml -> pages/*_manager.py -> tests/ui/test_*_page.py`。失败截图仍由 `core/conftest.py` 统一处理。
+新增 UI 自动化时继续按 POM 结构编写：`data/*.yaml -> pages/*_manager.py -> tests/ui/test_*_page.py`。失败截图仍由
+`core/conftest.py` 统一处理。
