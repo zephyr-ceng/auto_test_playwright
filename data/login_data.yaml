@@ -1,4 +1,4 @@
-url: "/login"
+url: "/login_by_username"
 locators:
   # input_account / input_password / login_account
   username_input: "#username"
