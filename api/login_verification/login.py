@@ -1,31 +1,34 @@
 from typing import Any, Dict, Optional
-
+import requests
 from requests import Response
 
 from api.common.client import HTTPClient
-
-GLOBAL_SCOPE: Dict[str, str] = {}
-sessionCookie = ""
-
-
-def set_scope_value(key: str, value: Any) -> None:
-    """设置全局变量；空值不写入。"""
-    if value in (None, ""):
-        return
-
-    string_value = str(value)
-    GLOBAL_SCOPE[key] = string_value
-    globals()[key] = string_value
+from utils.yaml_reader import YamlManager
+from utils.logger import Logger
 
 
-def get_scope_value(key: str) -> str:
-    """按 key 获取全局变量；不存在时返回空字符串。"""
-    value = GLOBAL_SCOPE.get(key)
-    if value:
-        return value
+# GLOBAL_SCOPE: Dict[str, str] = {}
+# sessionCookie = ""
+#
+#
+# def set_scope_value(key: str, value: Any) -> None:
+#     """设置全局变量；空值不写入。"""
+#     if value in (None, ""):
+#         return
+#
+#     string_value = str(value)
+#     GLOBAL_SCOPE[key] = string_value
+#     globals()[key] = string_value
 
-    value = globals().get(key)
-    return str(value) if value else ""
+
+# def get_scope_value(key: str) -> str:
+#     """按 key 获取全局变量；不存在时返回空字符串。"""
+#     value = GLOBAL_SCOPE.get(key)
+#     if value:
+#         return value
+#
+#     value = globals().get(key)
+#     return str(value) if value else ""
 
 
 class Login:
@@ -33,10 +36,15 @@ class Login:
 
     def __init__(
             self,
-            base_url: str,
+            client: HTTPClient,
+            env_path: str = "config/environment.yaml"
     ) -> None:
-        self.base_url = base_url
-        self.client = HTTPClient(self.base_url)
+        self.client = client
+        log = Logger("ReadEnv")
+        self.env_path = env_path
+        self._config = YamlManager(log)
+
+    ''' ********************************** 手机号  **************************************************************** '''
 
     def login_by_username(
             self,
@@ -60,51 +68,88 @@ class Login:
         self._save_session_cookie(response)
         return response
 
-    @staticmethod
-    def _save_session_cookie(response: Response) -> None:
+    def _save_session_cookie(self, response: Response) -> None:
         """从 Set-Cookie 响应头中提取 sessionCookie 并写入全局变量。"""
-        set_cookie = response.headers.get("Set-Cookie") or response.headers.get("set-cookie")
-        if set_cookie:
-            set_scope_value("sessionCookie", set_cookie.split(";")[0])
+        cookie_dict = requests.utils.dict_from_cookiejar(self.client.session.cookies)
+        if cookie_dict and self._config:
+            # 还原为 http 传输的字符串格式
+            cookie_str = "; ".join([f"{k}={v}" for k, v in cookie_dict.items()])
+            self._config.update(self.env_path, {"sessionCookie": cookie_str})
+            # 写入的格式为：session=162dce29-5c56-45a0-8ba8-79915535816d
+            print(self._config.read(self.env_path).get("sessionCookie"))
 
     def logout_success(self) -> Response:
         """请求退出登录接口。"""
         return self.client.send_request("POST", "/logout")
 
-    ''' ********************************** 手机号验证  **************************************************************** '''
+    ''' ********************************** 手机号  **************************************************************** '''
 
-    def send_sms(self, phone: str) -> Response:
-        """发送手机号登录验证码。"""
+    def send_sms(self, phone: str, sms_type: str) -> Response:
+        """发送手机号验证码。"""
         payload = {
-            "telephone": str(phone),
-            "type": "login",
+            "telephone": phone,
+            "type": sms_type,
         }
         return self.client.send_request("POST", "/send_sms", json=payload)
 
     def login_by_telephone(
             self,
-            code: str,
             phone: str,
+            code: Optional[str] = None,
             return_token: bool = False,
     ) -> Response:
-        """使用手机号和验证码登录，并保存响应中的 sessionCookie。"""
+        """使用手机号验证码登录；未传 code 时先发送短信并从终端读取验证码。"""
+        telephone = str(phone)
+        verification_code = code
+        if verification_code is None:
+            self.send_sms(telephone, sms_type="login")
+            verification_code = input(f"请输入手机号 {telephone} 收到的验证码: ").strip()
+
+        if not verification_code:
+            raise RuntimeError("验证码不能为空")
+
         payload = {
-            "telephone": str(phone),
-            "code": code,
+            "telephone": telephone,
+            "code": verification_code,
             "returnToken": return_token,
         }
         response = self.client.send_request("POST", "/login_by_telephone", json=payload)
         self._save_session_cookie(response)
         return response
 
-    def login_phone(self, phone: str, return_token: bool = False) -> Response:
-        """手机号验证码登录：先发送短信，再从终端读取验证码并触发登录。"""
-        telephone = phone
-        self.send_sms(telephone)
-        code = input(f"请输入手机号 {telephone} 收到的验证码: ").strip()
-        if not code:
+    ''' ********************************** 重置密码  **************************************************************** '''
+
+    def reset_password(
+            self,
+            phone: str,
+            code: Optional[str] = None,
+            new_password: str = "admin",
+    ) -> Response:
+        """使用手机号验证码重置密码；未传 code 时先发送 reset 短信并从终端读取验证码。"""
+        telephone = str(phone)
+        verification_code = code
+        if verification_code is None:
+            self.send_sms(telephone, sms_type="reset")
+            verification_code = input(f"请输入手机号 {telephone} 收到的重置密码验证码: ").strip()
+
+        if not verification_code:
             raise RuntimeError("验证码不能为空")
-        return self.login_by_telephone(code, telephone, return_token)
+
+        payload = {
+            "telephone": telephone,
+            "code": verification_code,
+            "newPassword": new_password,
+        }
+        return self.client.send_request("POST", "/reset_password", json=payload)
+
+
+class GatewayAPI:
+    def __init__(self, client: HTTPClient) -> None:
+        self.client = client
+
+    def query_information(self, command: str = "16001") -> Response:
+        """ 查询患者信息 """
+        return self.client.send_request(method="POST", command=command)
 
 
 LoginAPI = Login

@@ -1,4 +1,5 @@
 url: "/createDesign?patientID=642972813557358592"
+bash_url: "ssss"
 locators:
   # _dcm_upload
   import_data: "button:has-text('导入数据')"

@@ -13,3 +13,8 @@ def api_env():
 def base_url(api_env):
     """返回 API 基础地址，供所有接口客户端复用。"""
     return api_env.require("baseUrl")
+
+
+@pytest.fixture(scope="session")
+def gateway_url(api_env):
+    return api_env.require("gatewayUrl")
