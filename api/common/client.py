@@ -7,7 +7,6 @@ from requests.exceptions import RequestException
 
 from utils.logger import Logger
 
-
 SENSITIVE_KEYS = {
     "password",
     "token",
@@ -24,21 +23,23 @@ class HTTPClient:
     """HTTP 客户端，统一处理请求日志、Token 关联和异常。"""
 
     def __init__(
-        self,
-        base_url: str,
-        token: Optional[str] = None,
-        timeout: int = 10,
-        logger: Optional[Logger] = None,
+            self,
+            base_url: str,
+            gateway_url: Optional[str] = None,
+            token: Optional[str] = None,
+            timeout: int = 10,
+            logger: Optional[Logger] = None,
     ) -> None:
         if not base_url:
             raise ValueError("base_url must be a non-empty string")
 
         self.base_url = base_url.rstrip("/")
+        # 防止 gateway_url 为 None 时调用 rstrip 报错
+        self.gateway_url = gateway_url.rstrip("/") if gateway_url else None
         self.timeout = timeout
         self.session: Session = requests.Session()
         self._logger = logger or Logger("api_client")
         self._token: Optional[str] = None
-
         if token:
             self.set_token(token)
 
@@ -55,11 +56,21 @@ class HTTPClient:
         self._token = None
         self.session.headers.pop("Authorization", None)
 
-    def send_request(self, method: str, path: str, **kwargs: Any) -> Response:
+    def send_request(self, method: str, path: Optional[str] = None, command: Optional[str] = None,
+                     **kwargs: Any) -> Response:
         """发送 HTTP 请求，并在响应中自动提取 Token。"""
-        url = self._build_url(path)
+        if command:
+            if not self.gateway_url:
+                raise ValueError("gateway_url must be configured before sending a command request")
+            url = self.gateway_url
+        else:
+            if not path:
+                raise ValueError("path must be a non-empty string")
+            url = self._build_url(path)
         headers = self._merge_headers(kwargs.pop("headers", None))
 
+        if command:
+            headers["command"] = command
         self._log_request(method, url, kwargs)
         try:
             response = self.session.request(
@@ -75,6 +86,8 @@ class HTTPClient:
 
         self._log_response(response)
         self._auto_update_token(response)
+        print(url)
+        print(response.json())
         return response
 
     def _build_url(self, path: str) -> str:
@@ -101,9 +114,9 @@ class HTTPClient:
             return
 
         token = (
-            response_body.get("token")
-            or response_body.get("accessToken")
-            or response_body.get("access_token")
+                response_body.get("token")
+                or response_body.get("accessToken")
+                or response_body.get("access_token")
         )
         data = response_body.get("data")
         if not token and isinstance(data, dict):
@@ -121,7 +134,8 @@ class HTTPClient:
 
     def _log_response(self, response: Response) -> None:
         """打印响应日志。"""
-        self._logger.info(f"Response: {response.status_code} {response.url}, body={self._response_body_for_log(response)}")
+        self._logger.info(
+            f"Response: {response.status_code} {response.url}, body={self._response_body_for_log(response)}")
 
     def _response_body_for_log(self, response: Response) -> Any:
         """返回脱敏后的响应日志内容。"""

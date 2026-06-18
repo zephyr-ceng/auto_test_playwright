@@ -2,6 +2,7 @@ from pathlib import Path
 import re
 from typing import Any, Dict, Optional
 import yaml
+from pygments import style
 
 
 class YamlManager:
@@ -45,8 +46,18 @@ class YamlManager:
         try:
             p.parent.mkdir(parents=True, exist_ok=True)
             with p.open("w", encoding="utf-8") as f:
-                yaml.safe_dump(data, f, allow_unicode=True)
+                # --- 核心修改：创建一个临时的 Dumper 行为描述器 ---
+                class QuotedDumper(yaml.SafeDumper):
+                    def represent_data(self, node_data):
+                        # 如果检测到是字符串类型，强制指定其展示样式为双引号
+                        if isinstance(node_data, str):
+                            return self.represent_scalar('tag:yaml.org,2002:str', node_data, style='"')
+                        return super().represent_data(node_data)
 
+                # -----------------------------------------------
+
+                # 替换默认的 Dumper
+                yaml.dump(data, f, Dumper=QuotedDumper, allow_unicode=True)
             self._logger.info(f"Wrote YAML file: {p}")
             return True
         except Exception as e:
@@ -70,12 +81,14 @@ class YamlManager:
             lines = raw.splitlines(keepends=True)
 
             def _inline_yaml(value: Any) -> str:
+                style = '"' if isinstance(value, str) else None
                 dumped = yaml.safe_dump(
                     value,
                     allow_unicode=True,
                     default_flow_style=True,
                     sort_keys=False,
                     width=10_000_000,
+                    default_style=style
                 ).strip()
                 if dumped.endswith("\n..."):
                     dumped = dumped[:-4].strip()
