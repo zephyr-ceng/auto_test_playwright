@@ -6,6 +6,7 @@ from requests import Response, Session
 from requests.exceptions import RequestException
 
 from utils.logger import Logger
+from utils.yaml_reader import YamlManager
 
 SENSITIVE_KEYS = {
     "password",
@@ -13,10 +14,15 @@ SENSITIVE_KEYS = {
     "accessToken",
     "access_token",
     "Authorization",
+    "Cookie",
+    "cookie",
+    "sessionCookie",
     "phone",
     "telephone",
     "code",
 }
+
+ENVIRONMENT_CONFIG_PATH = "config/environment.yaml"
 
 
 class HTTPClient:
@@ -70,7 +76,8 @@ class HTTPClient:
         headers = self._merge_headers(kwargs.pop("headers", None))
 
         if command:
-            headers["command"] = command
+            headers["command"] = str(command)
+            self._inject_gateway_cookie(headers)
         self._log_request(method, url, kwargs)
         try:
             response = self.session.request(
@@ -102,6 +109,23 @@ class HTTPClient:
         if headers:
             merged_headers.update(headers)
         return merged_headers
+
+    def _inject_gateway_cookie(self, headers: Dict[str, str]) -> None:
+        """Read sessionCookie from environment.yaml and inject it into gateway request headers."""
+        session_cookie = self._read_session_cookie()
+        if session_cookie:
+            headers["Cookie"] = session_cookie
+
+    def _read_session_cookie(self) -> Optional[str]:
+        """Return sessionCookie from the API environment config, if configured."""
+        config = YamlManager(self._logger).read(ENVIRONMENT_CONFIG_PATH)
+        if not isinstance(config, dict):
+            return None
+
+        session_cookie = config.get("sessionCookie")
+        if session_cookie in (None, ""):
+            return None
+        return str(session_cookie)
 
     def _auto_update_token(self, response: Response) -> None:
         """从常见响应字段中提取 Token 并自动关联到后续请求。"""

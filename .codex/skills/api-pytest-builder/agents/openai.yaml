@@ -1,0 +1,4 @@
+interface:
+  display_name: "API Pytest Builder"
+  short_description: "Build project API wrappers and pytest cases from endpoint specs."
+  default_prompt: "Use $api-pytest-builder to create an API wrapper and pytest coverage from an endpoint spec."

@@ -68,6 +68,11 @@ class RandomManager:
             return "男" if value == "male" else "女"
         return value
 
+    @staticmethod
+    def random_gender_number():
+        return random.randint(1, 2)
+
+
 if __name__ == "__main__":
     random_manager = RandomManager()
     print(random_manager.random_gender())
