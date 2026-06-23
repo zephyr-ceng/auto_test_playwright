@@ -7,30 +7,6 @@ from utils.yaml_reader import YamlManager
 from utils.logger import Logger
 
 
-# GLOBAL_SCOPE: Dict[str, str] = {}
-# sessionCookie = ""
-#
-#
-# def set_scope_value(key: str, value: Any) -> None:
-#     """设置全局变量；空值不写入。"""
-#     if value in (None, ""):
-#         return
-#
-#     string_value = str(value)
-#     GLOBAL_SCOPE[key] = string_value
-#     globals()[key] = string_value
-
-
-# def get_scope_value(key: str) -> str:
-#     """按 key 获取全局变量；不存在时返回空字符串。"""
-#     value = GLOBAL_SCOPE.get(key)
-#     if value:
-#         return value
-#
-#     value = globals().get(key)
-#     return str(value) if value else ""
-
-
 class Login:
     """登录接口封装。"""
 
