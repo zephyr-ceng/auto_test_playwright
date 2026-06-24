@@ -73,10 +73,12 @@ class HTTPClient:
             if not path:
                 raise ValueError("path must be a non-empty string")
             url = self._build_url(path)
-        headers = self._merge_headers(kwargs.pop("headers", None))
+        has_files = "files" in kwargs
+        headers = self._merge_headers(kwargs.pop("headers", None), use_json_content_type=not has_files)
 
         if command:
             headers["command"] = str(command)
+        if command or path == "/upload_part":
             self._inject_gateway_cookie(headers)
         self._log_request(method, url, kwargs)
         try:
@@ -93,8 +95,8 @@ class HTTPClient:
 
         self._log_response(response)
         self._auto_update_token(response)
-        print(url)
-        print(response.json())
+        # print(url)
+        # print(response.json())
         return response
 
     def _build_url(self, path: str) -> str:
@@ -103,9 +105,13 @@ class HTTPClient:
             return path
         return urljoin(f"{self.base_url}/", path.lstrip("/"))
 
-    def _merge_headers(self, headers: Optional[Dict[str, str]]) -> Dict[str, str]:
+    def _merge_headers(
+            self,
+            headers: Optional[Dict[str, str]],
+            use_json_content_type: bool = True,
+    ) -> Dict[str, str]:
         """合并默认请求头和单次请求头。"""
-        merged_headers = {"Content-Type": "application/json"}
+        merged_headers = {"Content-Type": "application/json"} if use_json_content_type else {}
         if headers:
             merged_headers.update(headers)
         return merged_headers

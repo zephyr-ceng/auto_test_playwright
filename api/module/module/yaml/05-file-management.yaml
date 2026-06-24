@@ -1,0 +1,316 @@
+apiSpecVersion: "1.0.0"
+kind: "TarsModuleApiDocument"
+source:
+  descriptionFile: "api-docs/api-build.md"
+  projectCollection: "api-docs/apifox-collection.postman.json"
+  sharedEnvironment: "api-docs/apifox-shared-environment.postman_environment.json"
+  generatedAt: "2026-06-24"
+module:
+  index: 5
+  name: "文件管理"
+  description: "文件分片上传、单文件上传、上传完成通知和文件描述查询。"
+  markdown: "md/05-file-management.md"
+  yaml: "yaml/05-file-management.yaml"
+environment:
+  frontendBaseUrl: "http://localhost:3000"
+  baseUrl: "http://localhost:3000/tars/v1"
+  gatewayUrl: "http://localhost:3000/tars/v1/gateway"
+  controlNodeBaseUrl: "http://192.168.0.52:38080/tars/v1"
+  rosBaseUrl: "http://192.168.0.52:38081/ros_api/v1"
+  chatBaseUrl: "http://192.168.2.159:9999/api/v3"
+conventions:
+  encoding: "UTF-8"
+  defaultContentType: "application/json"
+  auth: "登录成功后通过 Set-Cookie 获取 session；后续接口由 Cookie Jar 或 Apifox Cookie 管理器携带登录态。"
+  gateway: "网关接口固定请求 {{gatewayUrl}}，通过小写 command 请求头区分业务指令。"
+  businessStatusCodes:
+    - code: 0
+      name: "Success"
+      description: "请求成功且业务逻辑处理正常"
+    - code: 40001
+      name: "Unauthorized"
+      description: "未登录或登录态 Cookie 已过期，客户端应重新登录"
+    - code: 40003
+      name: "Permission Denied"
+      description: "权限不足，禁止访问该资源"
+    - code: 50000
+      name: "Internal Error"
+      description: "服务器内部未知异常，请联系系统管理员"
+endpoints:
+  - name: "开始分片上传"
+    apiName: "startFileUpload"
+    description: "初始化分片上传，可选择前端直传 OSS/COS。"
+    group: "文件管理"
+    source: "src/api/file/index.ts"
+    method: "POST"
+    url: "{{gatewayUrl}}"
+    resolvedUrl: "http://localhost:3000/tars/v1/gateway"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+      - name: "command"
+        value: "11001"
+        description: "网关分发指令，CommandId.StartFileChunkUpload = 11001"
+    gateway:
+      enabled: true
+      command: "11001"
+      description: "网关分发指令，CommandId.StartFileChunkUpload = 11001"
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        entryPoint: 1
+        fileName: "model.stl"
+        fileSize: 1024
+        md5: "file-md5"
+        frontendOssUpload: true
+        partsInfo:
+          - partID: 1
+            partMD5: "part-md5"
+            partSize: 1024
+        extra:
+          files:
+            - filename: "model.stl"
+              offset: 0
+              length: 1024
+          compressVersion: 0
+          cryptoVersion: 0
+        parentKey: "parent-file-key"
+      raw: "{\n  \"entryPoint\": 1,\n  \"fileName\": \"model.stl\",\n  \"fileSize\": 1024,\n  \"md5\": \"file-md5\",\n  \"frontendOssUpload\": true,\n  \"partsInfo\": [\n    {\n      \"partID\": 1,\n      \"partMD5\": \"part-md5\",\n      \"partSize\": 1024\n    }\n  ],\n  \"extra\": {\n    \"files\": [\n      {\n        \"filename\": \"model.stl\",\n        \"offset\": 0,\n        \"length\": 1024\n      }\n    ],\n    \"compressVersion\": 0,\n    \"cryptoVersion\": 0\n  },\n  \"parentKey\": \"parent-file-key\"\n}"
+    response:
+      example:
+        code: 0
+        data:
+          fileKey: "file-key"
+          frontendOssUploadPartsInfo:
+            - partID: 1
+              fileKey: "oss-key"
+          ossAuthInfo:
+            accessKey: "access-key"
+            accessSecret: "access-secret"
+            securityToken: "security-token"
+            bucketName: "bucket"
+            endpoint: "endpoint"
+            provider: 1
+            region: "region"
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"fileKey\": \"file-key\",\n    \"frontendOssUploadPartsInfo\": [\n      {\n        \"partID\": 1,\n        \"fileKey\": \"oss-key\"\n      }\n    ],\n    \"ossAuthInfo\": {\n      \"accessKey\": \"access-key\",\n      \"accessSecret\": \"access-secret\",\n      \"securityToken\": \"security-token\",\n      \"bucketName\": \"bucket\",\n      \"endpoint\": \"endpoint\",\n      \"provider\": 1,\n      \"region\": \"region\"\n    }\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "gatewayUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "上传分片"
+    apiName: "uploadFileChunk"
+    description: "后端中转上传单个分片，multipart/form-data。"
+    group: "文件管理"
+    source: "src/api/file/index.ts"
+    method: "POST"
+    url: "{{baseUrl}}/upload_part"
+    resolvedUrl: "http://localhost:3000/tars/v1/upload_part"
+    headers:
+      - name: "Content-Type"
+        value: "multipart/form-data"
+        description: "由 FormData 生成"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "formdata"
+      contentType: "multipart/form-data"
+      fields:
+        - name: "partID"
+          type: "string"
+          example: "1"
+          description: ""
+        - name: "content"
+          type: "file"
+          example: "<File>"
+          description: ""
+        - name: "fileKey"
+          type: "string"
+          example: "{{fileKey}}"
+          description: ""
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "baseUrl"
+      - "fileKey"
+    scripts:
+      prerequest: true
+      test: true
+  - name: "通知分片上传结果"
+    apiName: "notifyFileChunkUploadResult"
+    description: "前端直传 OSS/COS 后通知后端单个分片结果。"
+    group: "文件管理"
+    source: "src/api/file/index.ts"
+    method: "POST"
+    url: "{{gatewayUrl}}"
+    resolvedUrl: "http://localhost:3000/tars/v1/gateway"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+      - name: "command"
+        value: "11003"
+        description: "网关分发指令，CommandId.NotifyFileChunkUploadResult = 11003"
+    gateway:
+      enabled: true
+      command: "11003"
+      description: "网关分发指令，CommandId.NotifyFileChunkUploadResult = 11003"
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        fileKey: "{{fileKey}}"
+        partID: 1
+        cryptoKey: ""
+        cryptoAlgo: 0
+      raw: "{\n  \"fileKey\": \"{{fileKey}}\",\n  \"partID\": 1,\n  \"cryptoKey\": \"\",\n  \"cryptoAlgo\": 0\n}"
+    response:
+      example:
+        code: 0
+        data: "ok"
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": \"ok\",\n  \"message\": \"success\"\n}"
+    variables:
+      - "fileKey"
+      - "gatewayUrl"
+    scripts:
+      prerequest: true
+      test: true
+  - name: "完成分片上传"
+    apiName: "finishFileUpload"
+    description: "通知后端所有分片已上传完成。"
+    group: "文件管理"
+    source: "src/api/file/index.ts"
+    method: "POST"
+    url: "{{gatewayUrl}}"
+    resolvedUrl: "http://localhost:3000/tars/v1/gateway"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+      - name: "command"
+        value: "11002"
+        description: "网关分发指令，CommandId.FinishFileChunkUpload = 11002"
+    gateway:
+      enabled: true
+      command: "11002"
+      description: "网关分发指令，CommandId.FinishFileChunkUpload = 11002"
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        fileKey: "{{fileKey}}"
+      raw: "{\n  \"fileKey\": \"{{fileKey}}\"\n}"
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "fileKey"
+      - "gatewayUrl"
+    scripts:
+      prerequest: true
+      test: true
+  - name: "上传单文件"
+    apiName: "uploadSingleFile"
+    description: "使用 multipart/form-data 上传单个文件。"
+    group: "文件管理"
+    source: "src/api/file/index.ts"
+    method: "POST"
+    url: "{{baseUrl}}/upload"
+    resolvedUrl: "http://localhost:3000/tars/v1/upload"
+    headers:
+      - name: "Content-Type"
+        value: "multipart/form-data"
+        description: "由 FormData 生成"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "formdata"
+      contentType: "multipart/form-data"
+      fields:
+        - name: "fileName"
+          type: "string"
+          example: "thumbnail.png"
+          description: ""
+        - name: "fileSize"
+          type: "string"
+          example: "1024"
+          description: ""
+        - name: "entryPoint"
+          type: "string"
+          example: "2"
+          description: ""
+        - name: "md5"
+          type: "string"
+          example: "md5"
+          description: ""
+        - name: "file"
+          type: "file"
+          example: "<File>"
+          description: ""
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "baseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "查询文件描述"
+    apiName: "searchFileDescription"
+    description: "按 fileKeys 查询文件下载和分片描述。"
+    group: "文件管理"
+    source: "src/api/file/index.ts"
+    method: "POST"
+    url: "{{gatewayUrl}}"
+    resolvedUrl: "http://localhost:3000/tars/v1/gateway"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+      - name: "command"
+        value: "11004"
+        description: "网关分发指令，CommandId.SearchFileDescription = 11004"
+    gateway:
+      enabled: true
+      command: "11004"
+      description: "网关分发指令，CommandId.SearchFileDescription = 11004"
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        fileKeys:
+          - "{{fileKey}}"
+      raw: "{\n  \"fileKeys\": [\n    \"{{fileKey}}\"\n  ]\n}"
+    response:
+      example:
+        code: 0
+        data:
+          files: []
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"files\": []\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "fileKey"
+      - "gatewayUrl"
+    scripts:
+      prerequest: true
+      test: true
