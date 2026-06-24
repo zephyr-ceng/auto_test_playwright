@@ -1,0 +1,484 @@
+apiSpecVersion: "1.0.0"
+kind: "TarsModuleApiDocument"
+source:
+  descriptionFile: "api-docs/api-build.md"
+  projectCollection: "api-docs/apifox-collection.postman.json"
+  sharedEnvironment: "api-docs/apifox-shared-environment.postman_environment.json"
+  generatedAt: "2026-06-24"
+module:
+  index: 14
+  name: "ROS 与导航"
+  description: "ROS HTTP 接口、模型文件同步、JPEG 流、灯光控制和眼镜升级。"
+  markdown: "md/14-ros-navigation.md"
+  yaml: "yaml/14-ros-navigation.yaml"
+environment:
+  frontendBaseUrl: "http://localhost:3000"
+  baseUrl: "http://localhost:3000/tars/v1"
+  gatewayUrl: "http://localhost:3000/tars/v1/gateway"
+  controlNodeBaseUrl: "http://192.168.0.52:38080/tars/v1"
+  rosBaseUrl: "http://192.168.0.52:38081/ros_api/v1"
+  chatBaseUrl: "http://192.168.2.159:9999/api/v3"
+conventions:
+  encoding: "UTF-8"
+  defaultContentType: "application/json"
+  auth: "登录成功后通过 Set-Cookie 获取 session；后续接口由 Cookie Jar 或 Apifox Cookie 管理器携带登录态。"
+  gateway: "网关接口固定请求 {{gatewayUrl}}，通过小写 command 请求头区分业务指令。"
+  businessStatusCodes:
+    - code: 0
+      name: "Success"
+      description: "请求成功且业务逻辑处理正常"
+    - code: 40001
+      name: "Unauthorized"
+      description: "未登录或登录态 Cookie 已过期，客户端应重新登录"
+    - code: 40003
+      name: "Permission Denied"
+      description: "权限不足，禁止访问该资源"
+    - code: 50000
+      name: "Internal Error"
+      description: "服务器内部未知异常，请联系系统管理员"
+endpoints:
+  - name: "获取 Marker 列表"
+    apiName: "getMarkersList"
+    description: "获取当前和可选 Marker 序列号列表。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "GET"
+    url: "{{rosBaseUrl}}/get_markers_list"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/get_markers_list"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        currentBoardMarker: "board-1"
+        currentJawMarker: "jaw-1"
+        currentHandpieceMarker: "handpiece-1"
+        currentPlaceMarker: "place-1"
+        currentCutMarker: "cut-1"
+        boardMarkerList: []
+        jawMarkerList: []
+        handpieceMarkerList: []
+        placeMarkerList: []
+        cutMarkerList: []
+      raw: "{\n  \"currentBoardMarker\": \"board-1\",\n  \"currentJawMarker\": \"jaw-1\",\n  \"currentHandpieceMarker\": \"handpiece-1\",\n  \"currentPlaceMarker\": \"place-1\",\n  \"currentCutMarker\": \"cut-1\",\n  \"boardMarkerList\": [],\n  \"jawMarkerList\": [],\n  \"handpieceMarkerList\": [],\n  \"placeMarkerList\": [],\n  \"cutMarkerList\": []\n}"
+    variables:
+      - "rosBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "设置 Marker"
+    apiName: "setMarker"
+    description: "设置某类 Marker 的序列号。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "POST"
+    url: "{{rosBaseUrl}}/set_marker"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/set_marker"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        markerType: "boardMarker"
+        markerSerialNumber: "marker-sn"
+      raw: "{\n  \"markerType\": \"boardMarker\",\n  \"markerSerialNumber\": \"marker-sn\"\n}"
+    response:
+      example:
+        code: 0
+        data: {}
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {},\n  \"message\": \"success\"\n}"
+    variables:
+      - "rosBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "ROS 读取用户配置"
+    apiName: "getUserConfigRos"
+    description: "从 ROS 节点读取用户配置。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "GET"
+    url: "{{rosBaseUrl}}/get_user_config?user_id={{userId}}"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/get_user_config?user_id=1"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data:
+          configs:
+            key:
+              value: 1
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"configs\": {\n      \"key\": {\n        \"value\": 1\n      }\n    }\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "rosBaseUrl"
+      - "userId"
+    scripts:
+      prerequest: true
+      test: true
+  - name: "ROS 保存用户配置"
+    apiName: "saveUserConfigRos"
+    description: "向 ROS 节点保存用户配置。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "POST"
+    url: "{{rosBaseUrl}}/save_user_config"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/save_user_config"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        user_id: "{{userId}}"
+        configs:
+          - key: "key"
+            value: "1"
+      raw: "{\n  \"user_id\": \"{{userId}}\",\n  \"configs\": [\n    {\n      \"key\": \"key\",\n      \"value\": \"1\"\n    }\n  ]\n}"
+    response:
+      example:
+        code: 0
+        data: {}
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {},\n  \"message\": \"success\"\n}"
+    variables:
+      - "rosBaseUrl"
+      - "userId"
+    scripts:
+      prerequest: true
+      test: true
+  - name: "上传导航模型文件"
+    apiName: "upLoadFile"
+    description: "multipart/form-data 上传多个模型文件，query id 为设计 ID。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "POST"
+    url: "{{rosBaseUrl}}/upload_model_file?id={{designId}}"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/upload_model_file?id={{designId}}"
+    headers:
+      - name: "Content-Type"
+        value: "multipart/form-data"
+        description: "由 FormData 生成"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "formdata"
+      contentType: "multipart/form-data"
+      fields:
+        - name: "files"
+          type: "file"
+          example: ""
+          description: "[\"<File>\"]"
+        - name: "id"
+          type: "string"
+          example: "{{designId}}"
+          description: ""
+    response:
+      example:
+        code: 0
+        data: {}
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {},\n  \"message\": \"success\"\n}"
+    variables:
+      - "designId"
+      - "rosBaseUrl"
+    scripts:
+      prerequest: true
+      test: true
+  - name: "设置模型文件"
+    apiName: "setModelFile"
+    description: "multipart/form-data 增量上传模型文件。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "POST"
+    url: "{{rosBaseUrl}}/set_model_file"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/set_model_file"
+    headers:
+      - name: "Content-Type"
+        value: "multipart/form-data"
+        description: "由 FormData 生成"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "formdata"
+      contentType: "multipart/form-data"
+      fields:
+        - name: "files"
+          type: "file"
+          example: ""
+          description: "[\"<File>\"]"
+    response:
+      example:
+        code: 0
+        data: {}
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {},\n  \"message\": \"success\"\n}"
+    variables:
+      - "rosBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "下载导航模型文件"
+    apiName: "downLoadFile"
+    description: "按设计 ID 和文件名下载模型文件，返回 Blob。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "GET"
+    url: "{{rosBaseUrl}}/download_model_file?id={{designId}}&filename={{filename}}"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/download_model_file?id={{designId}}&filename=model.stl"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example: "<Blob>"
+      raw: "<Blob>"
+    variables:
+      - "designId"
+      - "filename"
+      - "rosBaseUrl"
+    scripts:
+      prerequest: true
+      test: true
+  - name: "检查 MR 版本"
+    apiName: "checkMrVersion"
+    description: "检查连接眼镜版本兼容性。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "GET"
+    url: "{{rosBaseUrl}}/check_mr_version"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/check_mr_version"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data:
+          minCompatibleVersion: "1.0.0"
+          connectMRs: []
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"minCompatibleVersion\": \"1.0.0\",\n    \"connectMRs\": []\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "rosBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "升级 MR 版本"
+    apiName: "upgradeMrVersion"
+    description: "按眼镜 IP 触发升级。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "POST"
+    url: "{{rosBaseUrl}}/update_mr_version"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/update_mr_version"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        ip: "192.168.0.60"
+      raw: "{\n  \"ip\": \"192.168.0.60\"\n}"
+    response:
+      example:
+        code: 0
+        data: {}
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {},\n  \"message\": \"success\"\n}"
+    variables:
+      - "rosBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "停止 JPEG 流"
+    apiName: "jpegStreamStop"
+    description: "按 stream_id 停止 JPEG 图片流。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "GET"
+    url: "{{rosBaseUrl}}/jpeg_stream/stop?stream_id={{streamId}}"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/jpeg_stream/stop?stream_id=1710000000000"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data: {}
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {},\n  \"message\": \"success\"\n}"
+    variables:
+      - "rosBaseUrl"
+      - "streamId"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "设置设计 Content"
+    apiName: "setDesignContent"
+    description: "向 ROS 节点设置当前手术设计 content。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "POST"
+    url: "{{rosBaseUrl}}/set_design_content"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/set_design_content"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        content: "{}"
+      raw: "{\n  \"content\": \"{}\"\n}"
+    response:
+      example:
+        code: 0
+        data: {}
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {},\n  \"message\": \"success\"\n}"
+    variables:
+      - "rosBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "关闭无影灯"
+    apiName: "closeLampApi"
+    description: "关闭无影灯。"
+    group: "ROS 与导航"
+    source: "src/api/ros/index.ts"
+    method: "GET"
+    url: "{{rosBaseUrl}}/close_lamp"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/close_lamp"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data: {}
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {},\n  \"message\": \"success\"\n}"
+    variables:
+      - "rosBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "获取塔台状态"
+    apiName: "getTowerStatus"
+    description: "按设备 IP 动态创建 ROS HTTP client 后获取塔台状态。"
+    group: "ROS 与导航"
+    source: "src/v2/page/ScreenSharingPage/compoment/util/index.ts"
+    method: "GET"
+    url: "{{rosBaseUrl}}/tower/status"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/tower/status"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example: {}
+      raw: "{}"
+    variables:
+      - "rosBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "获取 JPEG 流状态"
+    apiName: "getJpegStreamStatus"
+    description: "查询 JPEG 流状态。"
+    group: "ROS 与导航"
+    source: "src/v2/page/ScreenSharingPage/compoment/util/index.ts"
+    method: "GET"
+    url: "{{rosBaseUrl}}/jpeg_stream/status"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/jpeg_stream/status"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example: {}
+      raw: "{}"
+    variables:
+      - "rosBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "按设备 IP 停止 JPEG 流"
+    apiName: "stopJpegStream"
+    description: "使用动态设备 IP 停止 JPEG 流。"
+    group: "ROS 与导航"
+    source: "src/v2/page/ScreenSharingPage/compoment/util/index.ts"
+    method: "GET"
+    url: "{{rosBaseUrl}}/jpeg_stream/stop?stream_id={{streamId}}"
+    resolvedUrl: "http://192.168.0.52:38081/ros_api/v1/jpeg_stream/stop?stream_id=1710000000000"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example: {}
+      raw: "{}"
+    variables:
+      - "rosBaseUrl"
+      - "streamId"
+    scripts:
+      prerequest: false
+      test: true
