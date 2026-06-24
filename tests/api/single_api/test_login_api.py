@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from api.common.assertions import assert_business_code, assert_response_json, assert_status_code_2xx
@@ -26,10 +27,12 @@ def gateway_api(http_client):
     return GatewayAPI(http_client)
 
 
+@allure.feature("登录接口")
 class TestLoginAPI:
     """登录接口单接口测试。"""
 
     @pytest.mark.api
+    @allure.story("账号密码登录")
     def test_login_fail_with_wrong_password(self, login_api, api_env) -> None:
         """测试错误密码登录，预期无法登录。"""
         username = api_env.require("username")
@@ -44,6 +47,7 @@ class TestLoginAPI:
         )
 
     @pytest.mark.api
+    @allure.story("账号密码登录")
     @pytest.mark.parametrize(
         "payload_body",
         [
@@ -65,6 +69,7 @@ class TestLoginAPI:
         }, f"登录异常请求体响应不符合预期，payload_body: {payload_body}，响应: {response_body}"
 
     @pytest.mark.api
+    @allure.story("账号密码登录")
     def test_login_success(self, login_api, api_env) -> None:
         """测试默认账号登录成功。"""
         username = api_env.require("username")
@@ -81,6 +86,7 @@ class TestLoginAPI:
         # assert get_scope_value("sessionCookie"), "登录成功后未写入 sessionCookie"
 
     @pytest.mark.api
+    @allure.story("退出登录")
     def test_logout_success(self, login_api, api_env) -> None:
         """测试登录后退出登录成功。"""
         username = api_env.require("username")
@@ -100,6 +106,7 @@ class TestLoginAPI:
 
     @pytest.mark.api
     # @pytest.mark.external_api
+    @allure.story("手机号登录")
     def test_login_by_telephone_success(self, login_api, api_env, request) -> None:
         """测试手机号验证码登录成功。"""
         phone = api_env.require("phone")
@@ -118,7 +125,9 @@ class TestLoginAPI:
         # assert get_scope_value("sessionCookie"), "手机号登录成功后未写入 sessionCookie"
 
     @pytest.mark.api
+    @allure.story("手机号登录")
     def test_login_by_telephone_fail(self, login_api, api_env) -> None:
+        """测试错误验证码登录失败。"""
         phone = api_env.require("phone")
         code = "123456"
         response = login_api.login_by_telephone(phone, code)
@@ -131,6 +140,7 @@ class TestLoginAPI:
         )
 
     @pytest.mark.api
+    @allure.story("重置密码")
     def test_reset_password_success(self, login_api, api_env, request) -> None:
         """测试手机号验证码重置密码成功。"""
         phone = api_env.require("phone")
@@ -148,6 +158,7 @@ class TestLoginAPI:
         assert response_body.get("code") == 0, f"重置密码成功 code 不符合预期，响应: {response_body}"
 
     @pytest.mark.api
+    @allure.story("重置密码")
     def test_reset_password_fail_with_wrong_code(self, login_api, api_env) -> None:
         """测试错误验证码重置密码失败。"""
         phone = api_env.require("phone")
@@ -162,6 +173,7 @@ class TestLoginAPI:
 
     @pytest.mark.api
     @pytest.mark.destructive_api
+    @allure.story("重置密码")
     def test_reset_password_fail_after_five_wrong_codes(self, login_api, api_env) -> None:
         """测试重置密码验证码连续错误五次后账号锁定。"""
         phone = api_env.require("phone")
@@ -179,7 +191,9 @@ class TestLoginAPI:
         }, f"重置密码验证码连续错误五次响应不符合预期，响应: {response_body}"
 
     @pytest.mark.api
+    @allure.story("网关用户信息")
     def test_query_information(self, login_api, gateway_api) -> None:
+        """测试查询当前登录用户信息成功。"""
         login_api.login_by_username("admin", "admin")
         res = gateway_api.query_information()
         assert_status_code_2xx(res)
