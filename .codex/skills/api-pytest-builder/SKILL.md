@@ -51,7 +51,7 @@ self.client.send_request("POST", command="13002", json=payload)
 - Keep wire keys exactly as the API expects, for example `dateOfBirth`, `identityCard`, and `patientID`.
 - Use Pythonic snake_case parameter names, for example `date_of_birth`, then map them to wire keys inside the payload.
 - Return the raw `requests.Response`.
-- Add concise docstrings to public API methods.
+- Add concise Chinese docstrings to public API methods.
 
 Example optional-field payload pattern:
 
@@ -65,15 +65,18 @@ def add_patient(
         telephone: str | None = None,
         desc: str | None = None,
 ) -> Response:
-    payload = {"name": name}
-    optional_fields = {
+    """通过 gateway command 13002 新增患者，name 必填。"""
+    payload: dict[str, str | int] = {"name": name}
+    optional_fields: dict[str, str | int | None] = {
         "gender": gender,
         "dateOfBirth": date_of_birth,
         "identityCard": identity_card,
         "telephone": telephone,
         "desc": desc,
     }
-    payload.update({key: value for key, value in optional_fields.items() if value is not None})
+    for key, value in optional_fields.items():
+        if value is not None:
+            payload[key] = value
     return self.client.send_request("POST", command="13002", json=payload)
 ```
 
@@ -92,13 +95,16 @@ def add_patient(
   - `assert_business_code(response_body, expected_code)`
 - Add explicit assertions for user-provided response requirements, such as `data` shape, ID existence, message text, or field equality.
 - Add `@pytest.mark.api`, `@allure.feature(...)`, and `@allure.story(...)`.
-- Add concise fixture and test docstrings.
+- Use Chinese text for comments, fixture docstrings, test docstrings, `allure.feature`, and `allure.story`.
+- Keep parameter `ids` stable and CLI-friendly; they may remain English identifiers when useful for filtering.
+- Add concise Chinese fixture and test docstrings.
 
 Example session login fixture:
 
 ```python
 @pytest.fixture(scope="session")
 def auth_session_cookie(base_url, gateway_url, api_env):
+    """测试会话内登录一次，让 gateway 接口复用注入的 sessionCookie。"""
     client = HTTPClient(base_url=base_url, gateway_url=gateway_url)
     try:
         Login(client).login_by_username(api_env.require("username"), api_env.require("password"))
@@ -118,6 +124,7 @@ Example parameterized success assertions:
     ids=["name_only", "with_telephone"],
 )
 def test_add_patient_success(self, patient_api, patient_data) -> None:
+    """新增随机患者并校验成功响应中包含患者 ID。"""
     response = patient_api.add_patient(**patient_data)
     assert_status_code_2xx(response)
     response_body = assert_response_json(response)

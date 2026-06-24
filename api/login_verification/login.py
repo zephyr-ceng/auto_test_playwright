@@ -52,7 +52,7 @@ class Login:
             cookie_str = "; ".join([f"{k}={v}" for k, v in cookie_dict.items()])
             self._config.update(self.env_path, {"sessionCookie": cookie_str})
             # 写入的格式为：session=162dce29-5c56-45a0-8ba8-79915535816d
-            print(self._config.read(self.env_path).get("sessionCookie"))
+            # print(self._config.read(self.env_path).get("sessionCookie"))
 
     def logout_success(self) -> Response:
         """请求退出登录接口。"""
