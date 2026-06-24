@@ -1,0 +1,630 @@
+apiSpecVersion: "1.0.0"
+kind: "TarsModuleApiDocument"
+source:
+  descriptionFile: "api-docs/api-build.md"
+  projectCollection: "api-docs/apifox-collection.postman.json"
+  sharedEnvironment: "api-docs/apifox-shared-environment.postman_environment.json"
+  generatedAt: "2026-06-24"
+module:
+  index: 6
+  name: "控制节点"
+  description: "本机文件、设备关机重启、版本、导出、录屏和升级。"
+  markdown: "md/06-control-node.md"
+  yaml: "yaml/06-control-node.yaml"
+environment:
+  frontendBaseUrl: "http://localhost:3000"
+  baseUrl: "http://localhost:3000/tars/v1"
+  gatewayUrl: "http://localhost:3000/tars/v1/gateway"
+  controlNodeBaseUrl: "http://192.168.0.52:38080/tars/v1"
+  rosBaseUrl: "http://192.168.0.52:38081/ros_api/v1"
+  chatBaseUrl: "http://192.168.2.159:9999/api/v3"
+conventions:
+  encoding: "UTF-8"
+  defaultContentType: "application/json"
+  auth: "登录成功后通过 Set-Cookie 获取 session；后续接口由 Cookie Jar 或 Apifox Cookie 管理器携带登录态。"
+  gateway: "网关接口固定请求 {{gatewayUrl}}，通过小写 command 请求头区分业务指令。"
+  businessStatusCodes:
+    - code: 0
+      name: "Success"
+      description: "请求成功且业务逻辑处理正常"
+    - code: 40001
+      name: "Unauthorized"
+      description: "未登录或登录态 Cookie 已过期，客户端应重新登录"
+    - code: 40003
+      name: "Permission Denied"
+      description: "权限不足，禁止访问该资源"
+    - code: 50000
+      name: "Internal Error"
+      description: "服务器内部未知异常，请联系系统管理员"
+endpoints:
+  - name: "获取目录树"
+    apiName: "getDirTree"
+    description: "按路径和后缀过滤查询控制节点目录树。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/get_dir_tree"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/get_dir_tree"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        path: "/data"
+        fileFilter:
+          - "stl"
+          - "dcm"
+      raw: "{\n  \"path\": \"/data\",\n  \"fileFilter\": [\n    \"stl\",\n    \"dcm\"\n  ]\n}"
+    response:
+      example:
+        code: 0
+        data:
+          IsDir: true
+          Name: "data"
+          Path: "/data"
+          Child: []
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"IsDir\": true,\n    \"Name\": \"data\",\n    \"Path\": \"/data\",\n    \"Child\": []\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "下载本地文件"
+    apiName: "downloadLocalFile"
+    description: "从控制节点下载本地文件，返回 Blob。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/download_local_file"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/download_local_file"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        filePath: "/data/model.stl"
+      raw: "{\n  \"filePath\": \"/data/model.stl\"\n}"
+    response:
+      example: "<Blob>"
+      raw: "<Blob>"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "下载本地文件并上报进度"
+    apiName: "downloadLocalFileWithProgress"
+    description: "同下载本地文件，前端额外监听下载进度。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/download_local_file"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/download_local_file"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        filePath: "/data/model.stl"
+      raw: "{\n  \"filePath\": \"/data/model.stl\"\n}"
+    response:
+      example: "<Blob>"
+      raw: "<Blob>"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "关机"
+    apiName: "shutDownApi"
+    description: "关闭控制节点设备。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/shutdown"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/shutdown"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "重启"
+    apiName: "rebootApi"
+    description: "重启控制节点设备。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/reboot"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/reboot"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "获取当前 Wi-Fi"
+    apiName: "getCurrentWifi"
+    description: "获取当前连接 Wi-Fi、密码和控制节点 IP。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "GET"
+    url: "{{controlNodeBaseUrl}}/wifi_info"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/wifi_info"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data:
+          ssid: "wifi-name"
+          password: "wifi-password"
+          ip: "192.168.0.52"
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"ssid\": \"wifi-name\",\n    \"password\": \"wifi-password\",\n    \"ip\": \"192.168.0.52\"\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "控制节点健康检查"
+    apiName: "getControlNodeHealthCheck"
+    description: "控制节点 ping 检查，返回 hwid。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "GET"
+    url: "{{controlNodeBaseUrl}}/ping"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/ping"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data:
+          hwid: "control-node-hwid"
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"hwid\": \"control-node-hwid\"\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "导出文件到移动盘"
+    apiName: "exportFileToMobileDrive"
+    description: "multipart/form-data 上传并写入指定路径。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/put_caldata"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/put_caldata"
+    headers:
+      - name: "Content-Type"
+        value: "multipart/form-data"
+        description: "由 FormData 生成"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "formdata"
+      contentType: "multipart/form-data"
+      fields:
+        - name: "fileName"
+          type: "string"
+          example: "model.stl"
+          description: ""
+        - name: "file"
+          type: "file"
+          example: "<File>"
+          description: ""
+        - name: "path"
+          type: "string"
+          example: "/usb"
+          description: ""
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "获取版本信息"
+    apiName: "getVersionInfo"
+    description: "获取当前版本、下一版本和升级开关。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "GET"
+    url: "{{controlNodeBaseUrl}}/version"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/version"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        fullVersion: "1.0.0"
+        majorVersion: "1"
+        changeNotes: ""
+        nextVersion: "1.0.1"
+        autoUpgrade: true
+        hwid: "control-node-hwid"
+      raw: "{\n  \"fullVersion\": \"1.0.0\",\n  \"majorVersion\": \"1\",\n  \"changeNotes\": \"\",\n  \"nextVersion\": \"1.0.1\",\n  \"autoUpgrade\": true,\n  \"hwid\": \"control-node-hwid\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "获取本地文件列表"
+    apiName: "getFileList"
+    description: "获取设计文件、录屏文件和磁盘空间。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "GET"
+    url: "{{controlNodeBaseUrl}}/file_list"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/file_list"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data:
+          design_files: []
+          screen_files: []
+          total_available_space: "10GB"
+          total_used_space: "1GB"
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"design_files\": [],\n    \"screen_files\": [],\n    \"total_available_space\": \"10GB\",\n    \"total_used_space\": \"1GB\"\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "导出本地文件"
+    apiName: "exportFile"
+    description: "将本地文件导出到指定路径。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/export_local"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/export_local"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        fileName: "model.stl"
+        exportPath: "/usb"
+        localPath: "/data/model.stl"
+      raw: "{\n  \"fileName\": \"model.stl\",\n  \"exportPath\": \"/usb\",\n  \"localPath\": \"/data/model.stl\"\n}"
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "查询导出状态"
+    apiName: "getExportStatus"
+    description: "按本地路径查询导出进度。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/export_status"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/export_status"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        localPath: "/data/model.stl"
+      raw: "{\n  \"localPath\": \"/data/model.stl\"\n}"
+    response:
+      example:
+        code: 0
+        data:
+          fileName: "model.stl"
+          progress: 50
+          status: "running"
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"fileName\": \"model.stl\",\n    \"progress\": 50,\n    \"status\": \"running\"\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "删除本地文件"
+    apiName: "deleteFile"
+    description: "按路径删除控制节点本地文件。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/delete_file"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/delete_file"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        path: "/data/model.stl"
+      raw: "{\n  \"path\": \"/data/model.stl\"\n}"
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "开始录屏"
+    apiName: "startScreenRecord"
+    description: "启动指定录屏任务。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/task/start"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/task/start"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        taskName: "screen-record"
+      raw: "{\n  \"taskName\": \"screen-record\"\n}"
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "停止录屏"
+    apiName: "stopScreenRecord"
+    description: "停止指定录屏任务。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/task/stop"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/task/stop"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        taskName: "screen-record"
+      raw: "{\n  \"taskName\": \"screen-record\"\n}"
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "查询录屏状态"
+    apiName: "getScreenRecordStatus"
+    description: "查询指定录屏任务是否运行中。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/task/status"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/task/status"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        taskName: "screen-record"
+      raw: "{\n  \"taskName\": \"screen-record\"\n}"
+    response:
+      example:
+        code: 0
+        data:
+          isActive: true
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"isActive\": true\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "获取升级状态"
+    apiName: "getUpgradeStatus"
+    description: "获取软件升级进度和目标版本。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "GET"
+    url: "{{controlNodeBaseUrl}}/upgrade_status"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/upgrade_status"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data:
+          progress: 0
+          status: 0
+          version: "1.0.1"
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"progress\": 0,\n    \"status\": 0,\n    \"version\": \"1.0.1\"\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "开始升级"
+    apiName: "startUpgrade"
+    description: "触发控制节点升级。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/start_upgrade"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/start_upgrade"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "设置自动升级"
+    apiName: "setUpgrade"
+    description: "开启或关闭自动升级。"
+    group: "控制节点"
+    source: "src/api/controlNode/index.ts"
+    method: "POST"
+    url: "{{controlNodeBaseUrl}}/set_upgrade"
+    resolvedUrl: "http://192.168.0.52:38080/tars/v1/set_upgrade"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        autoUpgrade: true
+      raw: "{\n  \"autoUpgrade\": true\n}"
+    response:
+      example:
+        code: 0
+        data: null
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": null,\n  \"message\": \"success\"\n}"
+    variables:
+      - "controlNodeBaseUrl"
+    scripts:
+      prerequest: false
+      test: true
