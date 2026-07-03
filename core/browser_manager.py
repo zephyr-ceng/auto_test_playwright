@@ -120,7 +120,7 @@ class BrowserManager:
 
 
 if __name__ == "__main__":
-    bm = BrowserManager(remote_url="ws://192.168.58.128:3000/?browser=chromium")
+    bm = BrowserManager(remote_url="ws://192.168.3.120:3000/?browser=chromium")
     page = bm.start()
     page.goto("https://x.finetool.cn/login")
     page.wait_for_timeout(1000)

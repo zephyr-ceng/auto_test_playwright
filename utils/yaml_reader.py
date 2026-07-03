@@ -34,7 +34,7 @@ class YamlManager:
             with p.open("r", encoding="utf-8") as f:
                 data = yaml.safe_load(f)
 
-            self._logger.info(f"Read YAML file: {p}")
+            # self._logger.info(f"Read YAML file: {p}")
             return data
         except Exception as e:
             self._logger.error(f"Failed to read YAML file {p}: {e}")
