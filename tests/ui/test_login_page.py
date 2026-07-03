@@ -34,6 +34,7 @@ def login_page():
     log = Logger("login_test")
     cv = ConfigValue()
     manager = BrowserManager(browser_type="chromium", headless=True, logger=log, remote_url=cv.remote_url)
+    login_page = LoginPage(manager)
     # page = manager.start()
     page = manager.new_page()
     login = LoginPage(page, logger=log)
