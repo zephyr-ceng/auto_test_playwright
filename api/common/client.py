@@ -44,8 +44,8 @@ class HTTPClient:
         self.gateway_url = gateway_url.rstrip("/") if gateway_url else None
         self.timeout = timeout
         self.session: Session = requests.Session()
-        self._logger = logger or Logger("api_client")
-        self._token: Optional[str] = None
+        self.__logger = logger or Logger("api_client")
+        self.__token: Optional[str] = None
         if token:
             self.set_token(token)
 
@@ -54,12 +54,12 @@ class HTTPClient:
         if not token:
             return
 
-        self._token = token
+        self.__token = token
         self.session.headers.update({"Authorization": f"Bearer {token}"})
 
     def clear_token(self) -> None:
         """清理已关联的 Token。"""
-        self._token = None
+        self.__token = None
         self.session.headers.pop("Authorization", None)
 
     def send_request(self, method: str, path: Optional[str] = None, command: Optional[str] = None,
@@ -72,15 +72,15 @@ class HTTPClient:
         else:
             if not path:
                 raise ValueError("path must be a non-empty string")
-            url = self._build_url(path)
+            url = self.__build_url(path)
         has_files = "files" in kwargs
-        headers = self._merge_headers(kwargs.pop("headers", None), use_json_content_type=not has_files)
+        headers = self.__merge_headers(kwargs.pop("headers", None), use_json_content_type=not has_files)
 
         if command:
             headers["command"] = str(command)
-        if command or path == "/upload_part":
-            self._inject_gateway_cookie(headers)
-        self._log_request(method, url, kwargs)
+        if command or path in ("/upload_part", "/upload"):
+            self.__inject_gateway_cookie(headers)
+        self.__log_request(method, url, kwargs)
         try:
             response = self.session.request(
                 method=method.upper(),
@@ -90,22 +90,22 @@ class HTTPClient:
                 **kwargs,
             )
         except RequestException as exc:
-            self._logger.error(f"HTTP request failed: {method.upper()} {url}, error: {exc}")
+            self.__logger.error(f"HTTP request failed: {method.upper()} {url}, error: {exc}")
             raise RuntimeError(f"HTTP request failed: {method.upper()} {url}") from exc
 
-        self._log_response(response)
-        self._auto_update_token(response)
+        self.__log_response(response)
+        self.__auto_update_token(response)
         # print(url)
         # print(response.json())
         return response
 
-    def _build_url(self, path: str) -> str:
+    def __build_url(self, path: str) -> str:
         """拼接 base_url 和请求 path。"""
         if path.startswith("http://") or path.startswith("https://"):
             return path
         return urljoin(f"{self.base_url}/", path.lstrip("/"))
 
-    def _merge_headers(
+    def __merge_headers(
             self,
             headers: Optional[Dict[str, str]],
             use_json_content_type: bool = True,
@@ -116,15 +116,15 @@ class HTTPClient:
             merged_headers.update(headers)
         return merged_headers
 
-    def _inject_gateway_cookie(self, headers: Dict[str, str]) -> None:
+    def __inject_gateway_cookie(self, headers: Dict[str, str]) -> None:
         """Read sessionCookie from environment.yaml and inject it into gateway request headers."""
-        session_cookie = self._read_session_cookie()
+        session_cookie = self.__read_session_cookie()
         if session_cookie:
             headers["Cookie"] = session_cookie
 
-    def _read_session_cookie(self) -> Optional[str]:
+    def __read_session_cookie(self) -> Optional[str]:
         """Return sessionCookie from the API environment config, if configured."""
-        config = YamlManager(self._logger).read(ENVIRONMENT_CONFIG_PATH)
+        config = YamlManager(self.__logger).read(ENVIRONMENT_CONFIG_PATH)
         if not isinstance(config, dict):
             return None
 
@@ -133,7 +133,7 @@ class HTTPClient:
             return None
         return str(session_cookie)
 
-    def _auto_update_token(self, response: Response) -> None:
+    def __auto_update_token(self, response: Response) -> None:
         """从常见响应字段中提取 Token 并自动关联到后续请求。"""
         try:
             response_body = response.json()
@@ -155,33 +155,33 @@ class HTTPClient:
         if token:
             self.set_token(str(token))
 
-    def _log_request(self, method: str, url: str, kwargs: Dict[str, Any]) -> None:
+    def __log_request(self, method: str, url: str, kwargs: Dict[str, Any]) -> None:
         """打印请求日志。"""
-        self._logger.info(
+        self.__logger.info(
             f"Request: {method.upper()} {url}, "
-            f"params={self._redact(kwargs.get('params'))}, json={self._redact(kwargs.get('json'))}"
+            f"params={self.__redact(kwargs.get('params'))}, json={self.__redact(kwargs.get('json'))}"
         )
 
-    def _log_response(self, response: Response) -> None:
+    def __log_response(self, response: Response) -> None:
         """打印响应日志。"""
-        self._logger.info(
-            f"Response: {response.status_code} {response.url}, body={self._response_body_for_log(response)}")
+        self.__logger.info(
+            f"Response: {response.status_code} {response.url}, body={self.__response_body_for_log(response)}")
 
-    def _response_body_for_log(self, response: Response) -> Any:
+    def __response_body_for_log(self, response: Response) -> Any:
         """返回脱敏后的响应日志内容。"""
         try:
             response_body = response.json()
         except ValueError:
             return response.text[:1000]
-        return self._redact(response_body)
+        return self.__redact(response_body)
 
-    def _redact(self, value: Any) -> Any:
+    def __redact(self, value: Any) -> Any:
         """递归脱敏敏感字段。"""
         if isinstance(value, dict):
             return {
-                key: "***" if key in SENSITIVE_KEYS else self._redact(item)
+                key: "***" if key in SENSITIVE_KEYS else self.__redact(item)
                 for key, item in value.items()
             }
         if isinstance(value, list):
-            return [self._redact(item) for item in value]
+            return [self.__redact(item) for item in value]
         return value

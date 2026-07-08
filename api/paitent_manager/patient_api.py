@@ -93,62 +93,25 @@ class PatientAPIS(Login):
             need_medical_records: bool = True,
     ) -> Response:
         """通过 gateway command 13007 查询患者详情 V2。"""
+        return self.search_patient_detail_v2(
+            patient_id=patient_id,
+            need_files=need_files,
+            need_medical_records=need_medical_records,
+        )
+
+    def search_patient_detail_v2(
+            self,
+            patient_id: str,
+            need_files: bool = True,
+            need_medical_records: bool = True,
+    ) -> Response:
+        """通过 gateway command 13007 查询患者详情并按需返回文件和病例。"""
         payload: dict[str, str | bool] = {
             "id": patient_id,
             "needFiles": need_files,
             "needMedicalRecords": need_medical_records,
         }
         return self.client.send_request("POST", command="13007", json=payload)
-
-    def start_file_upload(
-            self,
-            file_name: str,
-            file_size: int,
-            file_md5: str,
-    ) -> Response:
-        """通过 gateway command 11001 初始化附件分片上传。"""
-        payload = {
-            "entryPoint": 1,
-            "fileName": file_name,
-            "fileSize": file_size,
-            "md5": file_md5,
-            "frontendOssUpload": False,
-            "partsInfo": [
-                {
-                    "partID": 1,
-                    "partMD5": file_md5,
-                    "partSize": file_size,
-                }
-            ],
-            "extra": {
-                "files": [
-                    {
-                        "filename": file_name,
-                        "offset": 0,
-                        "length": file_size,
-                    }
-                ],
-                "compressVersion": 0,
-                "cryptoVersion": 0,
-            },
-        }
-        return self.client.send_request("POST", command="11001", json=payload)
-
-    def upload_file_chunk(self, file_path: str | Path, file_key: str, part_id: int = 1) -> Response:
-        """通过 /upload_part 上传单个附件分片。"""
-        resolved_file_path = Path(file_path)
-        with resolved_file_path.open("rb") as file_obj:
-            files = {"content": (resolved_file_path.name, file_obj)}
-            data = {
-                "partID": str(part_id),
-                "fileKey": file_key,
-            }
-            return self.client.send_request("POST", path="/upload_part", data=data, files=files)
-
-    def finish_file_upload(self, file_key: str) -> Response:
-        """通过 gateway command 11002 通知服务端附件上传完成。"""
-        payload = {"fileKey": file_key}
-        return self.client.send_request("POST", command="11002", json=payload)
 
     def bind_model_file_to_patient(
             self,
@@ -159,8 +122,9 @@ class PatientAPIS(Login):
             file_type: str | None = None,
             params: str | None = None,
             jaw_type: str | None = None,
+            treatment_id: str | None = None,
     ) -> Response:
-        """通过 gateway command 13005 将附件绑定到患者。"""
+        """通过 gateway command 13005 将完整 CT 主文件绑定到患者。"""
         payload: dict[str, object] = {
             "patientID": patient_id,
             "fileKey": file_key,
@@ -171,6 +135,7 @@ class PatientAPIS(Login):
             "type": file_type,
             "params": params,
             "jawType": jaw_type,
+            "treatmentID": treatment_id,
         }
         for key, value in optional_fields.items():
             if value is not None:
@@ -184,12 +149,3 @@ class PatientAPIS(Login):
             "fileKey": file_key,
         }
         return self.client.send_request("POST", command="13006", json=payload)
-
-    def change_bind_file(self, patient_id: str, old_file_key: str, new_file_key: str) -> Response:
-        """通过 gateway command 13008 变更患者已绑定的模型文件。"""
-        payload = {
-            "patientID": patient_id,
-            "oldFileKey": old_file_key,
-            "newFileKey": new_file_key,
-        }
-        return self.client.send_request("POST", command="13008", json=payload)

@@ -18,7 +18,7 @@ class Login:
         self.client = client
         log = Logger("ReadEnv")
         self.env_path = env_path
-        self._config = YamlManager(log)
+        self.__config = YamlManager(log)
 
     ''' ********************************** 手机号  **************************************************************** '''
 
@@ -35,22 +35,22 @@ class Login:
             "returnToken": return_token,
         }
         response = self.client.send_request("POST", "/login_by_username", json=payload)
-        self._save_session_cookie(response)
+        self.__save_session_cookie(response)
         return response
 
     def login_by_payload(self, payload: Dict[str, Any]) -> Response:
         """使用自定义请求体调用用户名密码登录接口。"""
         response = self.client.send_request("POST", "/login_by_username", json=payload)
-        self._save_session_cookie(response)
+        self.__save_session_cookie(response)
         return response
 
-    def _save_session_cookie(self, response: Response) -> None:
+    def __save_session_cookie(self, response: Response) -> None:
         """从 Set-Cookie 响应头中提取 sessionCookie 并写入全局变量。"""
         cookie_dict = requests.utils.dict_from_cookiejar(self.client.session.cookies)
-        if cookie_dict and self._config:
+        if cookie_dict and self.__config:
             # 还原为 http 传输的字符串格式
             cookie_str = "; ".join([f"{k}={v}" for k, v in cookie_dict.items()])
-            self._config.update(self.env_path, {"sessionCookie": cookie_str})
+            self.__config.update(self.env_path, {"sessionCookie": cookie_str})
             # 写入的格式为：session=162dce29-5c56-45a0-8ba8-79915535816d
             # print(self._config.read(self.env_path).get("sessionCookie"))
 
@@ -90,7 +90,7 @@ class Login:
             "returnToken": return_token,
         }
         response = self.client.send_request("POST", "/login_by_telephone", json=payload)
-        self._save_session_cookie(response)
+        self.__save_session_cookie(response)
         return response
 
     ''' ********************************** 重置密码  **************************************************************** '''
