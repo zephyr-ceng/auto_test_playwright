@@ -22,14 +22,18 @@ class BrowserManager:
         self.logger = logger
         self.remote_url = remote_url
 
-        self._playwright = None
-        self._browser = None
-        self._context = None
-        self._page = None
+        self.__playwright = None
+        self.__browser = None
+        self.__context = None
+        self.__page = None
 
-    def _log_and_print(self, message: str, level: str = "info"):
+    def __log_and_print(self, message: str, level: str = "info"):
         """统一处理日志记录与终端打印"""
-        print(message)
+        try:
+            print(message)
+        except UnicodeEncodeError:
+            safe_message = message.encode("gbk", errors="ignore").decode("gbk", errors="ignore")
+            print(safe_message)
         if self.logger:
             log_func = getattr(self.logger, level, self.logger.info)
             log_func(message)
@@ -37,79 +41,79 @@ class BrowserManager:
     def start(self) -> Any:
         """根据 self.remote_url 是否有值，自动决定走远程连接还是本地启动"""
         try:
-            self._playwright = sync_playwright().start()
-            browser_type = getattr(self._playwright, self.browser_type)
+            self.__playwright = sync_playwright().start()
+            browser_type = getattr(self.__playwright, self.browser_type)
 
             # --- 根据参数纯净分流 ---
             if self.remote_url:
-                self._log_and_print(f"🚀 [远程模式] 正在连接设备: {self.remote_url}")
-                self._browser = browser_type.connect(self.remote_url)
+                self.__log_and_print(f"🚀 [远程模式] 正在连接设备: {self.remote_url}")
+                self.__browser = browser_type.connect(self.remote_url)
             else:
-                self._log_and_print(f"🏠 [本地模式] 正在启动浏览器 (headless={self.headless})...")
+                self.__log_and_print(f"🏠 [本地模式] 正在启动浏览器 (headless={self.headless})...")
                 opts = dict(headless=self.headless)
                 opts.update(self.launch_options)
-                self._browser = browser_type.launch(**opts)
+                self.__browser = browser_type.launch(**opts)
             # ---------------------
 
             # 创建全局唯一的上下文与初始页面
-            self._context = self._browser.new_context(viewport={'width': 1920, 'height': 1080})
-            self._page = self._context.new_page()
+            self.__context = self.__browser.new_context(viewport={'width': 1920, 'height': 1080})
+            self.__page = self.__context.new_page()
 
-            self._log_and_print(f"✨ 浏览器就绪！模式: {'远程' if self.remote_url else '本地'}")
-            return self._page
+            self.__log_and_print(f"✨ 浏览器就绪！模式: {'远程' if self.remote_url else '本地'}")
+            return self.__page
 
         except Exception as e:
             error_msg = f"❌ 浏览器启动失败: {e}"
-            self._log_and_print(error_msg, level="error")
+            self.__log_and_print(error_msg, level="error")
             raise
 
     def new_page(self) -> Any:
         """打开新页面。如果未启动，内部自动调用 start()"""
-        if not self._context:
+        if not self.__context:
             self.start()
         try:
             # 如果是首次调用，start() 内部已建好 self._page，直接返回
             # 如果后续多次调用 new_page()，则在原有的 context 下新建标签页
-            if not self._page or self._page.is_closed():
-                self._page = self._context.new_page()
-                self._log_and_print("Created new page")
-            return self._page
+            if not self.__page or self.__page.is_closed():
+                self.__page = self.__context.new_page()
+                self.__log_and_print("Created new page")
+            return self.__page
         except Exception as e:
-            self._log_and_print(f"Failed to create new page: {e}", "error")
+            self.__log_and_print(f"Failed to create new page: {e}", "error")
             raise
 
     def get_page(self) -> Optional[Any]:
-        return self._page
+        return self.__page
 
     def close(self) -> None:
         """优雅释放资源链"""
         try:
-            if self._page:
+            if self.__page:
                 try:
-                    self._page.close()
+                    self.__page.close()
                 except Exception:
                     pass
-            if self._context:
+            if self.__context:
                 try:
-                    self._context.close()
+                    self.__context.close()
                 except Exception:
                     pass
-            if self._browser:
+            if self.__browser:
                 try:
-                    self._browser.close()
+                    self.__browser.close()
                 except Exception:
                     pass
-            if self._playwright:
+            if self.__playwright:
                 try:
-                    self._playwright.stop()
+                    self.__playwright.stop()
                 except Exception:
                     pass
-            self._log_and_print(f"\n🔒 浏览器及 Playwright 实例已安全关闭")
+            self.__log_and_print(f"\n🔒 浏览器及 Playwright 实例已安全关闭")
         finally:
-            self._page = None
-            self._context = None
-            self._browser = None
-            self._playwright = None
+            self.__page = None
+            self.__context = None
+            self.__browser = None
+            self.__playwright = None
 
     def __enter__(self):
         self.start()

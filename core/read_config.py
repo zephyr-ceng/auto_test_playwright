@@ -16,8 +16,8 @@ class ConfigValue:
 
     def __init__(self, config_path: str = "config/config.yaml", logger: Optional[Logger] = None):
         # 如果没有提供 logger，则创建一个内部 logger
-        self._logger = logger or Logger("config")
-        ym = YamlManager(self._logger)
+        self.__logger = logger or Logger("config")
+        ym = YamlManager(self.__logger)
         config = ym.read(config_path)
         if not config:
             raise RuntimeError(f"config_path not configured in {config_path}")
@@ -36,15 +36,15 @@ class LoginPage(BasePage, ConfigValue):
             self,
             driver: Any,
             logger: Optional[Any] = None,
-            locators_path: str = "data/login_data.yaml",
+            locators_path: str = "data/rule/login/login_page.yaml",
             config_path: str = "config/config.yaml",
     ):
         BasePage.__init__(driver, logger)
         ConfigValue.__init__(self, config_path, logger)
-        self._config = YamlManager(self.logger)
+        self.__config = YamlManager(self.logger)
 
         # config.yaml
-        self._config_path = config_path
+        self.__config_path = config_path
         print(self.base_url)
 
 

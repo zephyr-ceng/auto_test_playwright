@@ -38,11 +38,11 @@ class Logger:
 		logs_path.mkdir(parents=True, exist_ok=True)
 		log_file = logs_path / f"{filename}.log"
 
-		self._logger = logging.getLogger(filename)
-		self._logger.setLevel(level)
+		self.__logger = logging.getLogger(filename)
+		self.__logger.setLevel(level)
 
 		# 避免重复添加 handler（当同名 logger 被多次初始化时）
-		if not self._logger.handlers:
+		if not self.__logger.handlers:
 			fmt = logging.Formatter(
 				"%(asctime)s [%(levelname)s] %(name)s - %(message)s",
 				datefmt="%Y-%m-%d %H:%M:%S",
@@ -53,27 +53,27 @@ class Logger:
 			fh.setLevel(level)
 			fh.setFormatter(fmt)
 
-			self._logger.addHandler(fh)
+			self.__logger.addHandler(fh)
 
 	def info(self, msg: str, *args, **kwargs) -> None:
 		"""记录 info 级别日志"""
-		self._logger.info(msg, *args, **kwargs)
+		self.__logger.info(msg, *args, **kwargs)
 
 	def error(self, msg: str, *args, **kwargs) -> None:
 		"""记录 error 级别日志"""
-		self._logger.error(msg, *args, **kwargs)
+		self.__logger.error(msg, *args, **kwargs)
 
 	def warning(self, msg: str, *args, **kwargs) -> None:
 		"""记录 warning 级别日志"""
-		self._logger.warning(msg, *args, **kwargs)
+		self.__logger.warning(msg, *args, **kwargs)
 
 	def debug(self, msg: str, *args, **kwargs) -> None:
 		"""记录 debug 级别日志"""
-		self._logger.debug(msg, *args, **kwargs)
+		self.__logger.debug(msg, *args, **kwargs)
 
 	def get_logger(self) -> logging.Logger:
 		"""返回底层 logging.Logger 实例（如果需要高级操作）"""
-		return self._logger
+		return self.__logger
 
 
 if __name__ == "__main__":

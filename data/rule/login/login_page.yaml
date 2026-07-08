@@ -8,7 +8,7 @@ locators:
   # login_account 返回提示
   form_error: ".ant-form-item-explain-error"
   toast_message: ".ant-message-notice-content"
-  modal_content: ".ant-modal-content"
+  modal_content: ".ant-modal-wrap, .ant-modal-content"
 
   # accept_webgl_ack
   ack_button: "button:has-text('我已了解')"

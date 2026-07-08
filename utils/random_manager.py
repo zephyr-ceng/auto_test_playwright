@@ -5,19 +5,19 @@ from typing import Optional
 
 
 class RandomManager:
-    _SURNAMES = [
+    __SURNAMES = [
         "赵", "钱", "孙", "李", "周", "吴", "郑", "王", "冯", "陈",
         "褚", "卫", "蒋", "沈", "韩", "杨", "朱", "秦", "尤", "许",
         "何", "吕", "施", "张", "孔", "曹", "严", "华", "金", "魏",
         "陶", "姜", "戚", "谢", "邹", "喻", "柏", "水", "窦", "章",
     ]
 
-    _GIVEN_NAME_CHARS = list(
+    __GIVEN_NAME_CHARS = list(
         "伟芳娜秀敏静丽强磊军洋勇艳杰娟涛明超秀英霞平刚桂英慧峰"
         "鹏飞鑫雪楠玲丹萍倩婷宇晨泽浩俊博子轩思涵雨桐梓涵一诺嘉怡"
     )
 
-    _MOBILE_PREFIXES = [
+    __MOBILE_PREFIXES = [
         "130", "131", "132", "133", "134", "135", "136", "137", "138", "139",
         "150", "151", "152", "153", "155", "156", "157", "158", "159",
         "166", "171", "172", "173", "175", "176", "177", "178",
@@ -27,9 +27,9 @@ class RandomManager:
 
     @staticmethod
     def random_chinese_name(two_char_given_name_ratio: float = 0.8) -> str:
-        surname = random.choice(RandomManager._SURNAMES)
+        surname = random.choice(RandomManager.__SURNAMES)
         given_len = 2 if random.random() < two_char_given_name_ratio else 1
-        given = "".join(random.choice(RandomManager._GIVEN_NAME_CHARS) for _ in range(given_len))
+        given = "".join(random.choice(RandomManager.__GIVEN_NAME_CHARS) for _ in range(given_len))
         return f"{surname}{given}"
 
     @staticmethod
@@ -57,7 +57,7 @@ class RandomManager:
 
     @staticmethod
     def random_phone() -> str:
-        prefix = random.choice(RandomManager._MOBILE_PREFIXES)
+        prefix = random.choice(RandomManager.__MOBILE_PREFIXES)
         suffix = "".join(random.choice(string.digits) for _ in range(8))
         return f"{prefix}{suffix}"
 

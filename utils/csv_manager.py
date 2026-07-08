@@ -17,12 +17,12 @@ class CSVManager:
             logger: 可选日志对象。
         """
         self.logger = logger
-        self.csv_file = self._resolve_csv_path(csv_file)
+        self.csv_file = self.__resolve_csv_path(csv_file)
         # 关键步骤：确保目录存在，避免写入时报错
         self.csv_file.parent.mkdir(parents=True, exist_ok=True)
 
     @staticmethod
-    def _resolve_csv_path(csv_file: str) -> Path:
+    def __resolve_csv_path(csv_file: str) -> Path:
         """解析 CSV 路径；相对路径默认挂到 data/test_data 目录。"""
         csv_path = Path(csv_file)
         if csv_path.is_absolute():
@@ -32,7 +32,7 @@ class CSVManager:
         test_data_dir = project_root / "data" / "test_data"
         return test_data_dir / csv_path
 
-    def _read_header(self, encoding: str = "utf-8-sig") -> List[str]:
+    def __read_header(self, encoding: str = "utf-8-sig") -> List[str]:
         """读取表头（内部方法）。"""
         if not self.csv_file.exists() or self.csv_file.stat().st_size == 0:
             return []
@@ -40,7 +40,7 @@ class CSVManager:
             reader = csv.reader(f)
             return next(reader, [])
 
-    def _append_values_row(self, values: Sequence[object], fieldnames: Sequence[str], encoding: str = "utf-8-sig") -> str:
+    def __append_values_row(self, values: Sequence[object], fieldnames: Sequence[str], encoding: str = "utf-8-sig") -> str:
         """按“值列表”追加一行（内部方法）。"""
         if len(values) != len(fieldnames):
             raise ValueError("values length must match fieldnames length")
@@ -66,10 +66,10 @@ class CSVManager:
             后续写入： append_row(values=[...])  # 自动读取已有表头
         """
         if fieldnames is None:
-            fieldnames = self._read_header(encoding=encoding)
+            fieldnames = self.__read_header(encoding=encoding)
         if not fieldnames:
             raise ValueError("fieldnames are required for first write")
-        return self._append_values_row(values=values, fieldnames=fieldnames, encoding=encoding)
+        return self.__append_values_row(values=values, fieldnames=fieldnames, encoding=encoding)
 
     def read_csv(self, encoding: str = "utf-8-sig") -> List[Dict[str, str]]:
         """
