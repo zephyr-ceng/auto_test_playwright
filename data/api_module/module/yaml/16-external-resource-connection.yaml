@@ -1,0 +1,129 @@
+apiSpecVersion: "1.0.0"
+kind: "TarsModuleApiDocument"
+source:
+  descriptionFile: "api-docs/api-build.md"
+  projectCollection: "api-docs/apifox-collection.postman.json"
+  sharedEnvironment: "api-docs/apifox-shared-environment.postman_environment.json"
+  generatedAt: "2026-06-24"
+module:
+  index: 16
+  name: "外部资源与连接"
+  description: "预签名资源下载、网络探测、ROS WebSocket 和静态运行时资源。"
+  markdown: "md/16-external-resource-connection.md"
+  yaml: "yaml/16-external-resource-connection.yaml"
+environment:
+  frontendBaseUrl: "http://localhost:3000"
+  baseUrl: "http://localhost:3000/tars/v1"
+  gatewayUrl: "http://localhost:3000/tars/v1/gateway"
+  controlNodeBaseUrl: "http://192.168.0.52:38080/tars/v1"
+  rosBaseUrl: "http://192.168.0.52:38081/ros_api/v1"
+  chatBaseUrl: "http://192.168.2.159:9999/api/v3"
+conventions:
+  encoding: "UTF-8"
+  defaultContentType: "application/json"
+  auth: "登录成功后通过 Set-Cookie 获取 session；后续接口由 Cookie Jar 或 Apifox Cookie 管理器携带登录态。"
+  gateway: "网关接口固定请求 {{gatewayUrl}}，通过小写 command 请求头区分业务指令。"
+  businessStatusCodes:
+    - code: 0
+      name: "Success"
+      description: "请求成功且业务逻辑处理正常"
+    - code: 40001
+      name: "Unauthorized"
+      description: "未登录或登录态 Cookie 已过期，客户端应重新登录"
+    - code: 40003
+      name: "Permission Denied"
+      description: "权限不足，禁止访问该资源"
+    - code: 50000
+      name: "Internal Error"
+      description: "服务器内部未知异常，请联系系统管理员"
+endpoints:
+  - name: "预签名分片下载"
+    apiName: "downloadChunks"
+    description: "从后端返回的 Part.DownloadURL 直接下载分片；URL 通常为 OSS/COS 预签名地址。"
+    group: "外部资源与连接"
+    source: "src/utils/chunkDownload.ts"
+    method: "GET"
+    url: "https://example-cdn.invalid/path/to/part"
+    resolvedUrl: "https://example-cdn.invalid/path/to/part"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example: "<Blob>"
+      raw: "<Blob>"
+    variables: []
+    scripts:
+      prerequest: false
+      test: true
+  - name: "网络在线探测"
+    apiName: "loopWatchInternet"
+    description: "默认探测公网 ping 地址判断网络连通性。"
+    group: "外部资源与连接"
+    source: "src/layout/AdminLayout/components/SettingModal/components/Setting/hooks/useIntervalWifi.ts"
+    method: "GET"
+    url: "{{internetPingUrl}}"
+    resolvedUrl: "https://tars.finetool.cn/ping"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example: "HTTP 2xx/非 2xx"
+      raw: "HTTP 2xx/非 2xx"
+    variables:
+      - "internetPingUrl"
+    scripts:
+      prerequest: false
+      test: true
+  - name: "ROS Bridge WebSocket"
+    apiName: "ROSClient"
+    description: "通过 roslib 连接 ROS bridge，默认 ws://localhost:9090，可由界面输入 ws://{ip}:9090。"
+    group: "外部资源与连接"
+    source: "src/services/tower-ros/client.ts"
+    method: "GET"
+    url: "ws://localhost:9090"
+    resolvedUrl: "ws://localhost:9090"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example: "WebSocket messages"
+      raw: "WebSocket messages"
+    variables: []
+    scripts:
+      prerequest: false
+      test: true
+  - name: "GDCM WASM 脚本"
+    apiName: "fetchGdcmconvJs"
+    description: "压缩 worker 加载公共静态脚本 /cs/gdcmconv.js。"
+    group: "外部资源与连接"
+    source: "src/pages/SurgicalDesign/components/UploadModelFileFromLocalExploreModal/pipeline/worker/compressWorkerLogic.ts"
+    method: "GET"
+    url: "{{frontendBaseUrl}}/cs/gdcmconv.js"
+    resolvedUrl: "http://localhost:3000/cs/gdcmconv.js"
+    headers: []
+    gateway:
+      enabled: false
+    authRequired: true
+    requestBody:
+      mode: "none"
+      example: null
+    response:
+      example: "JavaScript runtime"
+      raw: "JavaScript runtime"
+    variables:
+      - "frontendBaseUrl"
+    scripts:
+      prerequest: false
+      test: true

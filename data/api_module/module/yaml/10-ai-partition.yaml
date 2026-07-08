@@ -1,0 +1,162 @@
+apiSpecVersion: "1.0.0"
+kind: "TarsModuleApiDocument"
+source:
+  descriptionFile: "api-docs/api-build.md"
+  projectCollection: "api-docs/apifox-collection.postman.json"
+  sharedEnvironment: "api-docs/apifox-shared-environment.postman_environment.json"
+  generatedAt: "2026-06-24"
+module:
+  index: 10
+  name: "AI 分割"
+  description: "启动 AI 分割任务、查询任务状态和牙尖异常分析。"
+  markdown: "md/10-ai-partition.md"
+  yaml: "yaml/10-ai-partition.yaml"
+environment:
+  frontendBaseUrl: "http://localhost:3000"
+  baseUrl: "http://localhost:3000/tars/v1"
+  gatewayUrl: "http://localhost:3000/tars/v1/gateway"
+  controlNodeBaseUrl: "http://192.168.0.52:38080/tars/v1"
+  rosBaseUrl: "http://192.168.0.52:38081/ros_api/v1"
+  chatBaseUrl: "http://192.168.2.159:9999/api/v3"
+conventions:
+  encoding: "UTF-8"
+  defaultContentType: "application/json"
+  auth: "登录成功后通过 Set-Cookie 获取 session；后续接口由 Cookie Jar 或 Apifox Cookie 管理器携带登录态。"
+  gateway: "网关接口固定请求 {{gatewayUrl}}，通过小写 command 请求头区分业务指令。"
+  businessStatusCodes:
+    - code: 0
+      name: "Success"
+      description: "请求成功且业务逻辑处理正常"
+    - code: 40001
+      name: "Unauthorized"
+      description: "未登录或登录态 Cookie 已过期，客户端应重新登录"
+    - code: 40003
+      name: "Permission Denied"
+      description: "权限不足，禁止访问该资源"
+    - code: 50000
+      name: "Internal Error"
+      description: "服务器内部未知异常，请联系系统管理员"
+endpoints:
+  - name: "启动 AI 分割"
+    apiName: "starAiPartition"
+    description: "启动指定 taskType 的 AI 分割任务。"
+    group: "AI 分割"
+    source: "src/api/partition/index.ts"
+    method: "POST"
+    url: "{{gatewayUrl}}"
+    resolvedUrl: "http://localhost:3000/tars/v1/gateway"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+      - name: "command"
+        value: "17001"
+        description: "网关分发指令，CommandId.StarAiPartion = 17001"
+    gateway:
+      enabled: true
+      command: "17001"
+      description: "网关分发指令，CommandId.StarAiPartion = 17001"
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        surgicalDesignID: "{{designId}}"
+        taskType: "dentalsegment"
+        nextTaskType: "dentalarch"
+      raw: "{\n  \"surgicalDesignID\": \"{{designId}}\",\n  \"taskType\": \"dentalsegment\",\n  \"nextTaskType\": \"dentalarch\"\n}"
+    response:
+      example:
+        code: 0
+        data:
+          taskID: "task-id"
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"taskID\": \"task-id\"\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "designId"
+      - "gatewayUrl"
+    scripts:
+      prerequest: true
+      test: true
+  - name: "查询 AI 分割状态"
+    apiName: "getAiPartitionStatus"
+    description: "查询 AI 分割任务状态和结果数据。"
+    group: "AI 分割"
+    source: "src/api/partition/index.ts"
+    method: "POST"
+    url: "{{gatewayUrl}}"
+    resolvedUrl: "http://localhost:3000/tars/v1/gateway"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+      - name: "command"
+        value: "17002"
+        description: "网关分发指令，CommandId.QueryAiPartitionResult = 17002"
+    gateway:
+      enabled: true
+      command: "17002"
+      description: "网关分发指令，CommandId.QueryAiPartitionResult = 17002"
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        taskID: "{{taskId}}"
+        parameters: {}
+      raw: "{\n  \"taskID\": \"{{taskId}}\",\n  \"parameters\": {}\n}"
+    response:
+      example:
+        code: 0
+        data:
+          taskID: "task-id"
+          status: "COMPLETED"
+          data: "result-file-key"
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"taskID\": \"task-id\",\n    \"status\": \"COMPLETED\",\n    \"data\": \"result-file-key\"\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "gatewayUrl"
+      - "taskId"
+    scripts:
+      prerequest: true
+      test: true
+  - name: "牙尖异常分析"
+    apiName: "getExpByToothCusp"
+    description: "获取牙尖点异常分析任务。"
+    group: "AI 分割"
+    source: "src/api/partition/index.ts"
+    method: "POST"
+    url: "{{gatewayUrl}}"
+    resolvedUrl: "http://localhost:3000/tars/v1/gateway"
+    headers:
+      - name: "Content-Type"
+        value: "application/json"
+        description: "JSON 请求体"
+      - name: "command"
+        value: "17003"
+        description: "网关分发指令，CommandId.ExpByToothCusp = 17003"
+    gateway:
+      enabled: true
+      command: "17003"
+      description: "网关分发指令，CommandId.ExpByToothCusp = 17003"
+    authRequired: true
+    requestBody:
+      mode: "raw"
+      contentType: "application/json"
+      example:
+        surgicalDesignID: "{{designId}}"
+        taskType: "dentalcusp"
+      raw: "{\n  \"surgicalDesignID\": \"{{designId}}\",\n  \"taskType\": \"dentalcusp\"\n}"
+    response:
+      example:
+        code: 0
+        data:
+          taskID: "task-id"
+        message: "success"
+      raw: "{\n  \"code\": 0,\n  \"data\": {\n    \"taskID\": \"task-id\"\n  },\n  \"message\": \"success\"\n}"
+    variables:
+      - "designId"
+      - "gatewayUrl"
+    scripts:
+      prerequest: true
+      test: true
