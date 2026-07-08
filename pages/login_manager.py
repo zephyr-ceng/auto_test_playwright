@@ -5,21 +5,23 @@ from core.read_config import ConfigValue
 from core.base_page import BasePage
 from utils.yaml_reader import YamlManager
 
+LOGIN_LOCATORS_PATH = "data/rule/login/login_page.yaml"
+
 
 class LoginPage(BasePage, ConfigValue):
     def __init__(
             self,
             driver: Any,
             logger: Optional[Any] = None,
-            locators_path: str = "data/login_data.yaml",
+            locators_path: str = LOGIN_LOCATORS_PATH,
             config_path: str = "config/config.yaml",
     ):
         BasePage.__init__(self, driver, logger)
         ConfigValue.__init__(self, config_path, logger)
-        self._config = YamlManager(logger)
+        self.__config = YamlManager(logger)
 
         # config.yaml
-        self._config_path = config_path
+        self.__config_path = config_path
         # shared_cfg = self._config.read(self._config_path)
         # if shared_cfg is None:
         #     raise RuntimeError(f"failed to read yaml config: {self._config_path}")
@@ -33,15 +35,18 @@ class LoginPage(BasePage, ConfigValue):
         # if not self.username or not self.password or not self.base_url:
         #     raise RuntimeError(f"username/password/base_url not configured in {config_path}")
 
-        # login_data.yaml
-        login_cfg = self._config.read(locators_path)
+        # login page yaml
+        login_cfg = self.__config.read(locators_path)
+        if login_cfg is None:
+            raise RuntimeError(f"failed to read yaml config: {locators_path}")
         self.locators = login_cfg.get("locators")
         self.login_url = self.build_url(self.base_url, login_cfg.get("url"))  # 拼接url
+        self.__locators_path = locators_path
 
-    def _get_locator(self, key: str, required: bool = False):
+    def __get_locator(self, key: str, required: bool = False):
         selector = self.locators.get(key)
         if required and not selector:
-            raise RuntimeError(f"locator `{key}` is not configured for LoginPage")
+            raise RuntimeError(f"locator `{key}` is not configured in {self.__locators_path}")
         return selector
 
     def open_login(self) -> None:
@@ -50,7 +55,7 @@ class LoginPage(BasePage, ConfigValue):
         self.open_url(self.login_url)
 
     def accept_webgl_ack(self) -> None:
-        act_btn = self._get_locator("ack_button")
+        act_btn = self.__get_locator("ack_button")
         if not act_btn:
             return
         ack_locator = self.driver.locator(act_btn)
@@ -59,24 +64,24 @@ class LoginPage(BasePage, ConfigValue):
             self.driver.wait_for_timeout(500)
 
     def input_account(self, account: str) -> bool:
-        username_locator = self._get_locator("username_input")
+        username_locator = self.__get_locator("username_input")
         if not username_locator:
             return False
         return self.type_text(username_locator, account, clear_first=True)
 
     def input_password(self, password: str) -> bool:
-        password_locator = self._get_locator("password_input")
+        password_locator = self.__get_locator("password_input")
         if not password_locator:
             return False
         return self.type_text(password_locator, password, clear_first=True)
 
-    def _click_login(self) -> bool:
-        login_btn = self._get_locator("login_button")
+    def __click_login(self) -> bool:
+        login_btn = self.__get_locator("login_button")
         if not login_btn:
             return False
         return self.click(login_btn)
 
-    def _collect_texts(self, selector: Optional[str]) -> List[str]:
+    def __collect_texts(self, selector: Optional[str]) -> List[str]:
         if not selector:
             return []
         locator = self.driver.locator(selector)
@@ -92,13 +97,13 @@ class LoginPage(BasePage, ConfigValue):
             self.accept_webgl_ack()
             self.input_account(account)
             self.input_password(password)
-            self._click_login()
+            self.__click_login()
             self.driver.wait_for_timeout(1200)
 
             texts = []
-            texts.extend(self._collect_texts(self._get_locator("form_error")))
-            texts.extend(self._collect_texts(self._get_locator("toast_message")))
-            texts.extend(self._collect_texts(self._get_locator("modal_content")))
+            texts.extend(self.__collect_texts(self.__get_locator("form_error")))
+            texts.extend(self.__collect_texts(self.__get_locator("toast_message")))
+            texts.extend(self.__collect_texts(self.__get_locator("modal_content")))
             combined = "\n".join(texts).strip()
             return combined or None
         except Exception as e:
@@ -107,8 +112,8 @@ class LoginPage(BasePage, ConfigValue):
 
     def get_user_agreement_text(self) -> str:
         self.open_login()
-        agreement_text = self._get_locator("agreement_text", required=True)
-        agreement_dialog = self._get_locator("agreement_dialog", required=True)
+        agreement_text = self.__get_locator("agreement_text", required=True)
+        agreement_dialog = self.__get_locator("agreement_dialog", required=True)
         self.click(agreement_text)
         if not self.wait_for_selector(agreement_dialog):
             return ""
@@ -122,7 +127,7 @@ class LoginPage(BasePage, ConfigValue):
         self.accept_webgl_ack()
         self.input_account(account)
         self.input_password(password)
-        self._click_login()
+        self.__click_login()
         self.driver.wait_for_timeout(1200)
         cookies = self.driver.context.cookies()
         return cookies if cookies else None
@@ -149,8 +154,8 @@ class LoginPage(BasePage, ConfigValue):
         self.cookies = new_cookies
         local_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
         self.cookies_write_time = local_time
-        self._config.update(self._config_path, {"cookies_write_time": local_time})
-        self._config.update(self._config_path, {"cookies": self.cookies})
+        self.__config.update(self.__config_path, {"cookies_write_time": local_time})
+        self.__config.update(self.__config_path, {"cookies": self.cookies})
 
 
 if __name__ == "__main__":

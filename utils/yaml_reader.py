@@ -9,10 +9,10 @@ class YamlManager:
     """YAML 工具类：读取/写入 YAML，并输出日志。"""
 
     def __init__(self, log):
-        self._logger = log
-        self._project_root = Path(__file__).resolve().parents[1]
+        self.__logger = log
+        self.__project_root = Path(__file__).resolve().parents[1]
 
-    def _resolve_path(self, file_path: str) -> Path:
+    def __resolve_path(self, file_path: str) -> Path:
         """
         解析路径：
         - 绝对路径：直接使用
@@ -21,14 +21,14 @@ class YamlManager:
         p = Path(file_path)
         if p.is_absolute():
             return p
-        return self._project_root / p
+        return self.__project_root / p
 
     def read(self, file_path: str) -> Optional[Any]:
         """读取 YAML 文件并返回解析结果，失败返回 None。"""
-        p = self._resolve_path(file_path)
+        p = self.__resolve_path(file_path)
         try:
             if not p.exists():
-                self._logger.error(f"YAML file not found: {p}")
+                self.__logger.error(f"YAML file not found: {p}")
                 return None
 
             with p.open("r", encoding="utf-8") as f:
@@ -37,12 +37,12 @@ class YamlManager:
             # self._logger.info(f"Read YAML file: {p}")
             return data
         except Exception as e:
-            self._logger.error(f"Failed to read YAML file {p}: {e}")
+            self.__logger.error(f"Failed to read YAML file {p}: {e}")
             return None
 
     def write(self, file_path: str, data: Any) -> bool:
         """写入 YAML 文件，成功返回 True，失败返回 False。"""
-        p = self._resolve_path(file_path)
+        p = self.__resolve_path(file_path)
         try:
             p.parent.mkdir(parents=True, exist_ok=True)
             with p.open("w", encoding="utf-8") as f:
@@ -58,19 +58,19 @@ class YamlManager:
 
                 # 替换默认的 Dumper
                 yaml.dump(data, f, Dumper=QuotedDumper, allow_unicode=True)
-            self._logger.info(f"Wrote YAML file: {p}")
+            self.__logger.info(f"Wrote YAML file: {p}")
             return True
         except Exception as e:
-            self._logger.error(f"Failed to write YAML file {p}: {e}")
+            self.__logger.error(f"Failed to write YAML file {p}: {e}")
             return False
 
     def update(self, file_path: str, updates: Dict[str, Any]) -> bool:
         """Update top-level YAML keys while keeping existing file format as-is."""
         if not isinstance(updates, dict):
-            self._logger.error("updates must be a dict")
+            self.__logger.error("updates must be a dict")
             return False
 
-        p = self._resolve_path(file_path)
+        p = self.__resolve_path(file_path)
         try:
             p.parent.mkdir(parents=True, exist_ok=True)
             if p.exists():
@@ -127,10 +127,10 @@ class YamlManager:
                 _replace_or_append(k, v)
 
             p.write_text("".join(lines), encoding="utf-8")
-            self._logger.info(f"Updated YAML file (in-place): {p}")
+            self.__logger.info(f"Updated YAML file (in-place): {p}")
             return True
         except Exception as e:
-            self._logger.error(f"Failed to update YAML file {p}: {e}")
+            self.__logger.error(f"Failed to update YAML file {p}: {e}")
             return False
 
 

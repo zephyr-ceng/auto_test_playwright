@@ -1,0 +1,41 @@
+url: "/surgicalDesignList"
+locators:
+  # create_patient_modal
+  new_patient_button: "main button.ant-btn-primary:has-text('新建患者')"
+  create_patient_modal: ".ant-modal-wrap"
+  create_patient_dialog: ".ant-modal-wrap [role='dialog']"
+  create_patient_title: ".ant-modal-wrap .ant-modal-title"
+  create_patient_cancel_button: ".ant-modal-footer button.ant-btn-default"
+  create_patient_submit_button: ".ant-modal-footer button.ant-btn-primary"
+  ack_button: "button:has-text('我已了解')"
+
+  # create_patient_form
+  name: ".ant-modal-wrap #name"
+  birthday: ".ant-modal-wrap #dateOfBirth"
+  phone: ".ant-modal-wrap #telephone[maxlength='50']"
+  remark: ".ant-modal-wrap textarea#desc"
+  gender_items: ".ant-modal-wrap .ant-form-item:has(label[for='gender']) .cursor-pointer"
+  gender_selected_indicator: ".bg-\\[\\#1E88E5\\]"
+  form_error: ".ant-modal-wrap .ant-form-item-explain-error"
+
+  # create_patient_result
+  toast_message: ".ant-message-notice-content"
+
+  # count_page_patients / count_page_designs
+  patient_management_tab: "xpath=(//li[@role='menuitem'])[1]"
+  design_management_tab: "xpath=(//li[@role='menuitem'])[2]"
+  page_size_trigger: ".ant-pagination-options .ant-pagination-options-size-changer"
+  page_size_option: ".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option"
+  patients_rows: ".ant-table-tbody > tr.ant-table-row"
+  designs_rows: "[class*='design-manage-card-layout']"
+
+  # search_patient
+  patient_search_name_input: "input[placeholder='请输入患者姓名']"
+  patient_search_phone_input: "input[placeholder='请输入电话号码']"
+  patient_search_button: "main button[type='submit']"
+
+  # search_design
+  design_search_name_input: "input[placeholder='请输入患者姓名']"
+  design_status_trigger: ".ant-select:not(.ant-pagination-options-size-changer)"
+  design_status_option: ".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option"
+  design_search_button: "main button[type='submit']"

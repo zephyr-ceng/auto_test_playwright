@@ -363,7 +363,7 @@ class BasePage:
 
     """*************************************************** Role定位方式 *************************************************************************** """
 
-    def _get_role_locator(self, role_ele: str, role_name: Optional[str] = None):
+    def __get_role_locator(self, role_ele: str, role_name: Optional[str] = None):
         """
         获取 role 定位对应的 Playwright Locator。
 
@@ -378,11 +378,11 @@ class BasePage:
             return self.driver.get_by_role(role_ele)
         return self.driver.get_by_role(role_ele, name=role_name)
 
-    def _get_locator_single_role(self, role_ele: str):
-        return self._get_role_locator(role_ele)
+    def __get_locator_single_role(self, role_ele: str):
+        return self.__get_role_locator(role_ele)
 
-    def _get_locator_multi_role(self, role_ele, role_name):
-        return self._get_role_locator(role_ele, role_name)
+    def __get_locator_multi_role(self, role_ele, role_name):
+        return self.__get_role_locator(role_ele, role_name)
 
     @_handle_role_action("Click role")
     def click_role(self, role_ele: str, role_name: Optional[str] = None) -> bool:
@@ -396,7 +396,7 @@ class BasePage:
         Returns:
             点击成功返回 True，点击失败返回 False。
         """
-        self._get_role_locator(role_ele, role_name).click()
+        self.__get_role_locator(role_ele, role_name).click()
         if self.logger:
             self.logger.info(f"Click role: {role_ele}, name={role_name}")
         return True
@@ -414,7 +414,7 @@ class BasePage:
         Returns:
             填充成功返回 True，填充失败返回 False。
         """
-        self._get_role_locator(role_ele, role_name).fill(text)
+        self.__get_role_locator(role_ele, role_name).fill(text)
         if self.logger:
             self.logger.info(f"Type text role: {role_ele}, name={role_name}")
         return True
@@ -432,7 +432,7 @@ class BasePage:
         Returns:
             发送成功返回 True，发送失败返回 False。
         """
-        self._get_role_locator(role_ele, role_name).press(keys)
+        self.__get_role_locator(role_ele, role_name).press(keys)
         if self.logger:
             self.logger.info(f"Send keys role: {role_ele}, name={role_name}, keys={keys}")
         return True

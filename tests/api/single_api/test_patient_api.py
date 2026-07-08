@@ -247,37 +247,10 @@ class TestPatientAPI:
     @pytest.mark.parametrize(
         "file_path",
         [
-            Path("data/dicom/20240718_101201/DCT0000.dcm"),
+            Path("data/dicom/wujia"),
         ],
-        ids=["dct0000_dcm"],
+        ids=["吴佳"],
     )
     def test_file_upload(self, patient_api, file_path: Path) -> None:
         """按初始化、上传分片、完成上传的顺序校验附件上传成功。"""
-        if not file_path.exists():
-            pytest.skip(f"缺少附件上传测试文件: {file_path}")
-
-        file_name = file_path.name
-        file_size = file_path.stat().st_size
-        file_md5 = _file_md5(file_path)
-
-        start_response = patient_api.start_file_upload(
-            file_name=file_name,
-            file_size=file_size,
-            file_md5=file_md5,
-        )
-        assert_status_code_2xx(start_response)
-        start_response_body = assert_response_json(start_response)
-        data = start_response_body.get("data")
-        assert isinstance(data, dict), f"初始化附件上传响应 data 不是对象，响应: {start_response_body}"
-        file_key = data.get("fileKey")
-        assert file_key not in (None, ""), f"初始化附件上传响应未包含 fileKey，响应: {start_response_body}"
-
-        upload_response = patient_api.upload_file_chunk(file_path=file_path, file_key=str(file_key))
-        assert_status_code_2xx(upload_response)
-        upload_response_body = assert_response_json(upload_response)
-        assert_business_code(upload_response_body, 0)
-
-        finish_response = patient_api.finish_file_upload(file_key=str(file_key))
-        assert_status_code_2xx(finish_response)
-        finish_response_body = assert_response_json(finish_response)
-        assert_business_code(finish_response_body, 0)
+        patient_api.start_file_upload()

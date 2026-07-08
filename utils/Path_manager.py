@@ -5,10 +5,10 @@ from pathlib import Path
 class PathManager:
     def __init__(self, path_dir):
         self.all_subdirs = []
-        self.path = self._is_path(path_dir)
+        self.path = self.__is_path(path_dir)
 
     @staticmethod
-    def _is_path(path_dir):
+    def __is_path(path_dir):
         _project_root = Path(__file__).resolve().parents[1]
         p = Path(path_dir)
         if p.is_absolute():
