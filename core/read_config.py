@@ -8,14 +8,14 @@ from core.base_page import BasePage
 class ConfigValue:
     """配置读取基类：
 
-    - 默认从项目根目录读取 'config.yaml'（可通过 config_path 覆盖）
-    - 使用 utils.YamlManager 读取文件（需要 logger）
-    - 读取后将顶层键作为属性注入到实例中，子类可直接访问如 self.some_key
-    - 提供 get/reload 方法
+    - 默认从项目根目录读取配置文件（可通过配置路径覆盖）
+    - 使用 YAML 管理器读取文件（需要日志对象）
+    - 读取后将顶层键作为属性注入到实例中，子类可直接访问对应属性
+    - 提供配置读取能力
     """
 
     def __init__(self, config_path: str = "config/config.yaml", logger: Optional[Logger] = None):
-        # 如果没有提供 logger，则创建一个内部 logger
+        # 如果没有提供日志对象，则创建一个内部日志对象
         self.__logger = logger or Logger("config")
         ym = YamlManager(self.__logger)
         config = ym.read(config_path)
@@ -23,6 +23,7 @@ class ConfigValue:
             raise RuntimeError(f"config_path not configured in {config_path}")
         self.remote_url = config.get("remote_url")
         self.base_url = config.get("base_url")
+        self.cleanup_created_patients = config.get("cleanup_created_patients") is True
         self.username = config.get("username")
         self.password = config.get("password")
         self.cookies_write_time = config.get("cookies_write_time")

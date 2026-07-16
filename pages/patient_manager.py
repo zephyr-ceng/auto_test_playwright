@@ -29,6 +29,7 @@ class PatientsPage(BasePage):
         self.patient_url = self.build_url(self.__login_page.base_url, page_cfg.get("url"))
         self.patient_locators = page_cfg.get("locators")
         self.__locators_path = locators_path
+        self.__created_patient_names: list[str] = []
 
     """************************************************  基础函数  **********************************************************************************  """
 
@@ -233,7 +234,7 @@ class PatientsPage(BasePage):
             patient_id: str = "mock-patient-id",
             message: str = "接口返回message",
     ) -> None:
-        """Mock SavePatient 网关响应，避免 UI 用例写入真实患者数据。"""
+        """模拟保存患者网关响应，避免界面用例写入真实患者数据。"""
         route_pattern = "**/gateway"
 
         def handler(route):
@@ -269,8 +270,25 @@ class PatientsPage(BasePage):
         except Exception:
             return
 
+    def __register_created_patient(self, name: str) -> None:
+        """记录界面用例真实创建的患者，供类级夹具收尾阶段统一清理。"""
+        patient_name = (name or "").strip()
+        if patient_name and patient_name not in self.__created_patient_names:
+            self.__created_patient_names.append(patient_name)
+
+    def __unregister_created_patient(self, name: str) -> None:
+        """从待清理患者列表中移除已确认删除的患者。"""
+        patient_name = (name or "").strip()
+        if not patient_name:
+            return
+        self.__created_patient_names = [
+            created_name
+            for created_name in self.__created_patient_names
+            if created_name != patient_name
+        ]
+
     def __count_page_items(self, tab_selector_key: str, rows_selector_key: str, number: int) -> int:
-        """ 统计设计or患者的数量 """
+        """统计设计或患者的数量。"""
         if number <= 0:
             raise ValueError("number must be > 0")
 
@@ -296,7 +314,7 @@ class PatientsPage(BasePage):
         return count
 
     def __open_patient_management_tab(self) -> None:
-        """打开患者管理页并切换到患者管理 tab。"""
+        """打开患者管理页并切换到患者管理页签。"""
         self.__open_url(self.patient_url)
         tab = self.__selector_patient("patient_management_tab")
         if tab:
@@ -304,7 +322,7 @@ class PatientsPage(BasePage):
             self.wait_for_time(500)
 
     def __search_patient_rows(self, name: str = "", phone: str = ""):
-        """按姓名和电话筛选患者列表，返回搜索后的表格行 locator。"""
+        """按姓名和电话筛选患者列表，返回搜索后的表格行定位器。"""
         name_input = self.__required_selector("patient_search_name_input")
         phone_input = self.__required_selector("patient_search_phone_input")
         search_button = self.__required_selector("patient_search_button")
@@ -376,6 +394,8 @@ class PatientsPage(BasePage):
         self.__fill_create_form(name, birthday, phone, gender, remark)
         self.__click_submit()
         self.wait_for_time(1000)
+        if "createDesign" in self.driver.url or "patientID=" in self.driver.url:
+            self.__register_created_patient(name)
 
     def create_patient_invalid(self, name: str, birthday: str = "", phone: str = "", gender: str = "",
                                remark: str = "", ) -> Optional[str]:
@@ -385,7 +405,7 @@ class PatientsPage(BasePage):
 
     def create_patient_effective(self, name: str, birthday: str = "", phone: str = "", gender: str = "",
                                  remark: str = "", ) -> Optional[str]:
-        """ 新建患者有效，返回患者的URL """
+        """新建有效患者，并返回患者页面地址。"""
         self.create_patient(name, birthday, phone, gender, remark)
         deadline = time.time() + 15
         while time.time() < deadline:
@@ -434,7 +454,7 @@ class PatientsPage(BasePage):
             *,
             mock: Optional[dict] = None,
     ) -> dict:
-        """提交新建患者弹窗，返回错误、toast、URL 和弹窗状态。"""
+        """提交新建患者弹窗，返回错误、提示、页面地址和弹窗状态。"""
         self.__open_url(self.patient_url)
         self.__open_create_form()
         if mock:
@@ -455,7 +475,7 @@ class PatientsPage(BasePage):
                 self.__clear_save_patient_mock()
 
     def input_phone_and_get_state(self, phone: str) -> dict:
-        """输入电话号码并返回输入框实际长度和 maxlength。"""
+        """输入电话号码并返回输入框实际长度和最大长度限制。"""
         self.__open_url(self.patient_url)
         self.__open_create_form()
         self.__input_phone(phone)
@@ -490,7 +510,7 @@ class PatientsPage(BasePage):
             phone: str = "",
             remark: str = "",
     ) -> dict:
-        """填写部分表单后取消，再重新打开并返回表单 reset 状态。"""
+        """填写部分表单后取消，再重新打开并返回表单重置状态。"""
         self.__open_url(self.patient_url)
         self.__open_create_form()
         self.__fill_create_form(name=name, phone=phone, remark=remark)
@@ -507,7 +527,7 @@ class PatientsPage(BasePage):
         }
 
     def search_patient(self, name: str, phone: str) -> bool:
-        """通过 name/phone/gender 查询患者，存在返回 True，不存在返回 False。"""
+        """通过姓名和电话查询患者，存在返回 True，不存在返回 False。"""
         self.__open_patient_management_tab()
         rows = self.__search_patient_rows(name=name, phone=phone)
         ele_count = rows.count()
@@ -537,6 +557,8 @@ class PatientsPage(BasePage):
                 toast = self.__toast_text()
                 rows_after_delete = self.__search_patient_rows(name=name)
                 exists_after_delete = self.__patient_exists_in_rows(rows_after_delete, name=name)
+                if confirm_clicked and not exists_after_delete:
+                    self.__unregister_created_patient(name)
 
         return {
             "searched_before_delete": searched_before_delete,
@@ -545,6 +567,18 @@ class PatientsPage(BasePage):
             "toast": toast,
             "exists_after_delete": exists_after_delete,
         }
+
+    def cleanup_created_patients(self) -> list[dict]:
+        """删除本页面对象生命周期内登记的真实患者，返回清理失败明细。"""
+        failures = []
+        for patient_name in reversed(self.__created_patient_names[:]):
+            try:
+                state = self.delete_patient(patient_name)
+                if state.get("exists_after_delete") is not False:
+                    failures.append({"patient_name": patient_name, "state": state})
+            except Exception as e:
+                failures.append({"patient_name": patient_name, "error": str(e)})
+        return failures
 
     def search_design(self, name: str, status: str) -> bool:
         """查询手术设计：先切到设计管理，再按姓名和状态筛选。"""

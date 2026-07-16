@@ -1,9 +1,10 @@
 remote_url: "ws://192.168.3.78:3000/?browser=chromium" # 远程地址
 base_url: "https://x.finetool.cn"
+cleanup_created_patients: true
 username: "admin"
 password: "fyton@202602"
-cookies_write_time: "2026-07-15 14:37:57"
-cookies: [{name: session, value: 29d47011-15cd-45d8-b21f-58913b9fea6f, domain: tars.finetool.cn, path: /, expires: 1785393476.250921, httpOnly: false, secure: true, sameSite: None}]
+cookies_write_time: "2026-07-16 16:19:12"
+cookies: [{name: session, value: 4d1d0963-f0d7-43dd-9ce5-09746a200e32, domain: tars.finetool.cn, path: /, expires: 1785485951.667294, httpOnly: false, secure: true, sameSite: None}]
 api:
   username: "admin"
   password: "admin"

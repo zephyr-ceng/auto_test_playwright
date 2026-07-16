@@ -208,7 +208,7 @@ class DesignManager(BasePage):
 
     @staticmethod
     def __elapsed_ms(start_time: float) -> int:
-        """返回从 start_time 到当前的毫秒耗时，最小为 1。"""
+        """返回从起始时间到当前的毫秒耗时，最小为 1。"""
         return max(1, int((time.time() - start_time) * 1000))
 
     @staticmethod
@@ -388,6 +388,34 @@ class DesignManager(BasePage):
                 last_error = e
         raise RuntimeError(f"cannot find visible import confirm button: {last_error}")
 
+    def __latest_create_tooth_message(
+            self,
+            ignored_messages: Optional[set[str]] = None,
+            timeout_ms: int = 3000,
+    ) -> str:
+        """读取最新病例创建提示，可跳过已知旧提示。"""
+        ignored_messages = ignored_messages or set()
+        message_selector = self.__selector_design("create_tooth_msg", required=True)
+        deadline = time.time() + timeout_ms / 1000
+        last_message = ""
+
+        while time.time() < deadline:
+            try:
+                messages = [
+                    text.strip()
+                    for text in self.get_locator(message_selector).all_inner_texts()
+                    if text and text.strip()
+                ]
+                if messages:
+                    last_message = messages[-1]
+                    if last_message not in ignored_messages:
+                        return last_message
+            except Exception as e:
+                if self.__logger:
+                    self.__logger.info(f"Create tooth message is not ready: {e}")
+            self.wait_for_time(200)
+        return last_message
+
     def __create_tooth(self, tooth_positions: List[int]) -> str:
         """创建同一颌牙位列表对应的单个病例。"""
         tooth_positions = self.__validate_tooth_positions(tooth_positions)
@@ -397,6 +425,14 @@ class DesignManager(BasePage):
             self.__logger.error(f"patientID not found in url: {page_url}")
             raise RuntimeError("cannot find patientID in url")
         case_list = self.__read_case_tooth_positions(self.get_page_url())  # 获取所有牙位
+        is_duplicate_tooth = bool(
+            case_list
+            and any(
+                str(tooth_position) in case_tooth_text
+                for tooth_position in tooth_positions
+                for case_tooth_text in case_list
+            )
+        )
 
         # 新建病例
         if not self.click(self.__selector_design("new_case_button", required=True)):
@@ -414,14 +450,10 @@ class DesignManager(BasePage):
         self.click(self.__selector_design("save_button", required=True))
 
         # 获取弹窗文本
-        alert_text = self.get_locator(self.__selector_design("create_tooth_msg", required=True)).inner_text()
-        if case_list:
-            if any(
-                    str(tooth_position) in case_tooth_text
-                    for tooth_position in tooth_positions
-                    for case_tooth_text in case_list
-            ):
-                self.click(self.__selector_design("cancel_button", required=True))
+        ignored_messages = {"操作成功"} if is_duplicate_tooth else None
+        alert_text = self.__latest_create_tooth_message(ignored_messages=ignored_messages)
+        if is_duplicate_tooth:
+            self.click(self.__selector_design("cancel_button", required=True))
         self.wait_for_time(1000)
         return alert_text
 
@@ -826,7 +858,7 @@ class DesignManager(BasePage):
         self.click_role("button", role_name=self.__selector_design("skip_button_text", required=True))
 
     def __assertion_render_canvas(self, timeout_ms: int = 30000) -> dict:
-        """检查可见 canvas 是否有尺寸且不是空白画布。"""
+        """检查可见画布是否有尺寸且不是空白画布。"""
         canvas_selector = self.__selector_design("render_canvas") or "canvas:visible"
         checked_at = self.__now_iso()
         canvas = self.driver.locator(canvas_selector).first
@@ -894,7 +926,7 @@ class DesignManager(BasePage):
             file_path: str,
             file_name: str,
     ) -> bool:
-        """按文件类型上传患者数据；文件类型支持 ct、up_stl、low_stl、other_stl。"""
+        """按文件类型上传患者数据；文件类型支持 CT、上颌口扫、下颌口扫和其他口扫。"""
         return self.__upload_patient_data_report(file_type, file_path, file_name)["success"]
 
     def __upload_patient_data_report(
@@ -1047,6 +1079,26 @@ class DesignManager(BasePage):
         self.__patients_page.create_patient("T_" + self.__random.random_chinese_name())
         return [self.__create_tooth(tooth_position_list)]
 
+    def case_create_duplicate_tooth_detection(self, tooth_positions: list[int]) -> dict:
+        """创建患者并重复创建同牙位病例，返回两次创建提示供测试断言。"""
+        tooth_positions = self.__validate_tooth_positions(tooth_positions)
+        patient_name = "T_" + self.__random.random_chinese_name()
+        self.__patients_page.create_patient(patient_name)
+
+        first_message = self.__create_tooth(tooth_positions)
+        duplicate_message = self.__create_tooth(tooth_positions)
+        return {
+            "patient_name": patient_name,
+            "tooth_positions": tooth_positions,
+            "first_message": first_message,
+            "duplicate_message": duplicate_message,
+            "url": self.get_page_url(),
+        }
+
+    def cleanup_created_patients(self) -> list[dict]:
+        """清理设计页流程中通过患者页真实创建的患者。"""
+        return self.__patients_page.cleanup_created_patients()
+
     def __new_design_report(self, tooth_position: int) -> dict:
         """创建完整设计诊断报告的基础结构。"""
         self.__patient_name = "T_" + self.__random.random_chinese_name()
@@ -1070,7 +1122,7 @@ class DesignManager(BasePage):
 
     @staticmethod
     def __upload_assertion_report(upload_report: dict) -> dict:
-        """移除上传报告中的 AI 子对象，避免 uploads 和 ai 重复表达同一内容。"""
+        """移除上传报告中的 AI 子对象，避免上传结果和 AI 结果重复表达同一内容。"""
         return {
             key: value
             for key, value in upload_report.items()

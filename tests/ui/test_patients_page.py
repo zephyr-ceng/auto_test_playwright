@@ -55,8 +55,17 @@ def page():
     # manager = BrowserManager(browser_type="chromium", headless=False, logger=log)
     browser_page = manager.new_page()
     patients = PatientsPage(browser_page, log)
-    yield patients
-    manager.close()
+    cleanup_failures = []
+    try:
+        yield patients
+    finally:
+        try:
+            if cv.cleanup_created_patients:
+                cleanup_failures = patients.cleanup_created_patients()
+        finally:
+            manager.close()
+        if cleanup_failures:
+            raise AssertionError(f"清理患者管理真实患者失败: {cleanup_failures}")
 
 
 @allure.feature("Patients")
@@ -180,7 +189,7 @@ class TestPatientsPage:
         ids=["name_200_success", "create_success"],
     )
     def test_create_patient_success_with_mock(self, page, case_id, name, mock_patient_id):
-        """mock 新建患者成功响应，校验成功提示和跳转地址。"""
+        """模拟新建患者成功响应，校验成功提示和跳转地址。"""
         case = _case(case_id)
         allure.dynamic.title(f"{case['用例编号']} - {case['用例标题']}")
         state = page.submit_create_patient_form(
@@ -194,7 +203,7 @@ class TestPatientsPage:
 
     @allure.story("Create Patient Failure")
     def test_create_patient_failure_with_mock(self, page):
-        """UI-CP-014：mock 新建患者失败响应，展示接口 message 且不跳转。"""
+        """UI-CP-014：模拟新建患者失败响应，展示接口消息且不跳转。"""
         case = _case("UI-CP-014")
         allure.dynamic.title(f"{case['用例编号']} - {case['用例标题']}")
         expected_message = "接口返回message"
@@ -220,7 +229,7 @@ class TestPatientsPage:
     @allure.story("select page show number")
     @pytest.mark.parametrize("number", [10, 20, 50, 100])
     def test_count_patients(self, page, number):
-        """ 单页面显示设计及患者数量 """
+        """单页面显示设计及患者数量。"""
         allure.dynamic.title(f"每页显示数量为: {number}")
         count_pa = page.count_page_patients(number)
         count_de = page.count_page_designs(number)
