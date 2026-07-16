@@ -52,10 +52,20 @@ def page():
     log = Logger("patients_test")
     cv = ConfigValue()
     manager = BrowserManager(browser_type="chromium", headless=True, logger=log, remote_url=cv.remote_url)
+    # manager = BrowserManager(browser_type="chromium", headless=False, logger=log)
     browser_page = manager.new_page()
     patients = PatientsPage(browser_page, log)
-    yield patients
-    manager.close()
+    cleanup_failures = []
+    try:
+        yield patients
+    finally:
+        try:
+            if cv.cleanup_created_patients:
+                cleanup_failures = patients.cleanup_created_patients()
+        finally:
+            manager.close()
+        if cleanup_failures:
+            raise AssertionError(f"清理患者管理真实患者失败: {cleanup_failures}")
 
 
 @allure.feature("Patients")
@@ -179,7 +189,7 @@ class TestPatientsPage:
         ids=["name_200_success", "create_success"],
     )
     def test_create_patient_success_with_mock(self, page, case_id, name, mock_patient_id):
-        """mock 新建患者成功响应，校验成功提示和跳转地址。"""
+        """模拟新建患者成功响应，校验成功提示和跳转地址。"""
         case = _case(case_id)
         allure.dynamic.title(f"{case['用例编号']} - {case['用例标题']}")
         state = page.submit_create_patient_form(
@@ -193,7 +203,7 @@ class TestPatientsPage:
 
     @allure.story("Create Patient Failure")
     def test_create_patient_failure_with_mock(self, page):
-        """UI-CP-014：mock 新建患者失败响应，展示接口 message 且不跳转。"""
+        """UI-CP-014：模拟新建患者失败响应，展示接口消息且不跳转。"""
         case = _case("UI-CP-014")
         allure.dynamic.title(f"{case['用例编号']} - {case['用例标题']}")
         expected_message = "接口返回message"
@@ -204,10 +214,22 @@ class TestPatientsPage:
         assert state["toast"] == expected_message, f"未展示接口失败 message，实际状态: {state}"
         assert "/createDesign" not in state["url"], f"创建失败不应跳转创建设计页，实际状态: {state}"
 
+    @allure.story("Delete Patient")
+    def test_delete_patient_after_create(self, page):
+        """创建随机真实患者后删除，验证删除后无法再按姓名查询到该患者。"""
+        allure.dynamic.title("创建随机患者后删除患者")
+        patient_name = f"UI_DEL_{RandomManager.random_chinese_name()}"
+        page.create_patient(name=patient_name)
+        state = page.delete_patient(patient_name)
+        assert state["searched_before_delete"] is True, f"删除前未查询到新建患者，实际状态: {state}"
+        assert state["delete_clicked"] is True, f"未成功点击删除按钮，实际状态: {state}"
+        assert state["confirm_clicked"] is True, f"未成功点击删除确认按钮，实际状态: {state}"
+        assert state["exists_after_delete"] is False, f"删除后仍能查询到患者，实际状态: {state}"
+
     @allure.story("select page show number")
     @pytest.mark.parametrize("number", [10, 20, 50, 100])
     def test_count_patients(self, page, number):
-        """ 单页面显示设计及患者数量 """
+        """单页面显示设计及患者数量。"""
         allure.dynamic.title(f"每页显示数量为: {number}")
         count_pa = page.count_page_patients(number)
         count_de = page.count_page_designs(number)

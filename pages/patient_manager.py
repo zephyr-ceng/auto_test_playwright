@@ -29,6 +29,7 @@ class PatientsPage(BasePage):
         self.patient_url = self.build_url(self.__login_page.base_url, page_cfg.get("url"))
         self.patient_locators = page_cfg.get("locators")
         self.__locators_path = locators_path
+        self.__created_patient_names: list[str] = []
 
     """************************************************  基础函数  **********************************************************************************  """
 
@@ -233,7 +234,7 @@ class PatientsPage(BasePage):
             patient_id: str = "mock-patient-id",
             message: str = "接口返回message",
     ) -> None:
-        """Mock SavePatient 网关响应，避免 UI 用例写入真实患者数据。"""
+        """模拟保存患者网关响应，避免界面用例写入真实患者数据。"""
         route_pattern = "**/gateway"
 
         def handler(route):
@@ -269,8 +270,25 @@ class PatientsPage(BasePage):
         except Exception:
             return
 
+    def __register_created_patient(self, name: str) -> None:
+        """记录界面用例真实创建的患者，供类级夹具收尾阶段统一清理。"""
+        patient_name = (name or "").strip()
+        if patient_name and patient_name not in self.__created_patient_names:
+            self.__created_patient_names.append(patient_name)
+
+    def __unregister_created_patient(self, name: str) -> None:
+        """从待清理患者列表中移除已确认删除的患者。"""
+        patient_name = (name or "").strip()
+        if not patient_name:
+            return
+        self.__created_patient_names = [
+            created_name
+            for created_name in self.__created_patient_names
+            if created_name != patient_name
+        ]
+
     def __count_page_items(self, tab_selector_key: str, rows_selector_key: str, number: int) -> int:
-        """ 统计设计or患者的数量 """
+        """统计设计或患者的数量。"""
         if number <= 0:
             raise ValueError("number must be > 0")
 
@@ -295,6 +313,67 @@ class PatientsPage(BasePage):
         print(count)
         return count
 
+    def __open_patient_management_tab(self) -> None:
+        """打开患者管理页并切换到患者管理页签。"""
+        self.__open_url(self.patient_url)
+        tab = self.__selector_patient("patient_management_tab")
+        if tab:
+            self.click(tab)
+            self.wait_for_time(500)
+
+    def __search_patient_rows(self, name: str = "", phone: str = ""):
+        """按姓名和电话筛选患者列表，返回搜索后的表格行定位器。"""
+        name_input = self.__required_selector("patient_search_name_input")
+        phone_input = self.__required_selector("patient_search_phone_input")
+        search_button = self.__required_selector("patient_search_button")
+        row_selector = self.__required_selector("patients_rows")
+
+        self.type_text(name_input, name or "", clear_first=True)
+        self.type_text(phone_input, phone or "", clear_first=True)
+        self.click(search_button)
+        self.wait_for_time(1200)
+        return self.driver.locator(row_selector)
+
+    def __patient_exists_in_rows(self, rows, name: str = "", phone: str = "") -> bool:
+        """判断搜索结果中是否存在匹配姓名或电话的患者。"""
+        ele_count = rows.count()
+        if ele_count == 0:
+            return False
+        for i in range(ele_count):
+            row = rows.nth(i)
+            cells = row.locator("td")
+            row_name = cells.nth(0).inner_text().strip()
+            row_phone = cells.nth(1).inner_text().strip()
+            if name and name in row_name:
+                return True
+            if phone and phone in row_phone:
+                return True
+        return False
+
+    def __click_first_patient_delete_button(self) -> bool:
+        """点击患者搜索结果中的第一个删除按钮。"""
+        selector = self.__required_selector("patient_delete_button")
+        try:
+            self.driver.locator(selector).first.click()
+            self.wait_for_time(500)
+            return True
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Click first patient delete button failed: {e}")
+            return False
+
+    def __confirm_delete_patient(self) -> bool:
+        """确认删除患者弹窗。"""
+        selector = self.__required_selector("patient_delete_confirm_button")
+        try:
+            self.driver.locator(selector).click()
+            self.wait_for_time(1200)
+            return True
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Confirm delete patient failed: {e}")
+            return False
+
     """  ************************************************  测试函数  **********************************************************************************  """
 
     def count_page_patients(self, number: int) -> int | None:
@@ -315,6 +394,8 @@ class PatientsPage(BasePage):
         self.__fill_create_form(name, birthday, phone, gender, remark)
         self.__click_submit()
         self.wait_for_time(1000)
+        if "createDesign" in self.driver.url or "patientID=" in self.driver.url:
+            self.__register_created_patient(name)
 
     def create_patient_invalid(self, name: str, birthday: str = "", phone: str = "", gender: str = "",
                                remark: str = "", ) -> Optional[str]:
@@ -324,7 +405,7 @@ class PatientsPage(BasePage):
 
     def create_patient_effective(self, name: str, birthday: str = "", phone: str = "", gender: str = "",
                                  remark: str = "", ) -> Optional[str]:
-        """ 新建患者有效，返回患者的URL """
+        """新建有效患者，并返回患者页面地址。"""
         self.create_patient(name, birthday, phone, gender, remark)
         deadline = time.time() + 15
         while time.time() < deadline:
@@ -373,7 +454,7 @@ class PatientsPage(BasePage):
             *,
             mock: Optional[dict] = None,
     ) -> dict:
-        """提交新建患者弹窗，返回错误、toast、URL 和弹窗状态。"""
+        """提交新建患者弹窗，返回错误、提示、页面地址和弹窗状态。"""
         self.__open_url(self.patient_url)
         self.__open_create_form()
         if mock:
@@ -394,7 +475,7 @@ class PatientsPage(BasePage):
                 self.__clear_save_patient_mock()
 
     def input_phone_and_get_state(self, phone: str) -> dict:
-        """输入电话号码并返回输入框实际长度和 maxlength。"""
+        """输入电话号码并返回输入框实际长度和最大长度限制。"""
         self.__open_url(self.patient_url)
         self.__open_create_form()
         self.__input_phone(phone)
@@ -429,7 +510,7 @@ class PatientsPage(BasePage):
             phone: str = "",
             remark: str = "",
     ) -> dict:
-        """填写部分表单后取消，再重新打开并返回表单 reset 状态。"""
+        """填写部分表单后取消，再重新打开并返回表单重置状态。"""
         self.__open_url(self.patient_url)
         self.__open_create_form()
         self.__fill_create_form(name=name, phone=phone, remark=remark)
@@ -446,44 +527,58 @@ class PatientsPage(BasePage):
         }
 
     def search_patient(self, name: str, phone: str) -> bool:
-        """通过 name/phone/gender 查询患者，存在返回 True，不存在返回 False。"""
-        self.__open_url(self.patient_url)
-        # 点击病患管理后查找相关元素
-        tab = self.__selector_patient("patient_management_tab")
-        if tab:
-            self.click(tab)
-            self.wait_for_time(500)
-
-        name_input = self.__selector_patient("patient_search_name_input")
-        phone_input = self.__selector_patient("patient_search_phone_input")
-        search_button = self.__selector_patient("patient_search_button")
-        row_selector = self.__selector_patient("patients_rows")
-        if not name_input or not phone_input or not search_button or not row_selector:
-            raise RuntimeError(f"patient query locators are not configured in {self.__locators_path}")
-
-        self.type_text(name_input, name or "", clear_first=True)
-        self.type_text(phone_input, phone or "", clear_first=True)
-        self.click(search_button)
-        self.wait_for_time(1200)
-        rows = self.driver.locator(row_selector)
-        res = []
+        """通过姓名和电话查询患者，存在返回 True，不存在返回 False。"""
+        self.__open_patient_management_tab()
+        rows = self.__search_patient_rows(name=name, phone=phone)
         ele_count = rows.count()
-        if ele_count > 0:
-            for i in range(ele_count):
-                row = rows.nth(i)
-                cells = row.locator("td")
-                row_name = cells.nth(0).inner_text().strip()
-                row_phone = cells.nth(1).inner_text().strip()
-                if name in row_name or phone in row_phone or not row_name or not row_phone:
-                    res.append(True)
-                else:
-                    res.append(False)
-            for i in range(len(res)):
-                if res[i] is True:
-                    return True
-            return False
-        else:
+        if ele_count == 0:
             return True
+        if not name and not phone:
+            return ele_count > 0
+        return self.__patient_exists_in_rows(rows, name=name, phone=phone)
+
+    def delete_patient(self, name: str) -> dict:
+        """按姓名搜索并删除首个匹配患者，返回删除链路和删除后查询状态。"""
+        if not name:
+            raise ValueError("name is required to delete patient")
+
+        self.__open_patient_management_tab()
+        rows = self.__search_patient_rows(name=name)
+        searched_before_delete = self.__patient_exists_in_rows(rows, name=name)
+        delete_clicked = False
+        confirm_clicked = False
+        toast = None
+        exists_after_delete = searched_before_delete
+
+        if searched_before_delete:
+            delete_clicked = self.__click_first_patient_delete_button()
+            if delete_clicked:
+                confirm_clicked = self.__confirm_delete_patient()
+                toast = self.__toast_text()
+                rows_after_delete = self.__search_patient_rows(name=name)
+                exists_after_delete = self.__patient_exists_in_rows(rows_after_delete, name=name)
+                if confirm_clicked and not exists_after_delete:
+                    self.__unregister_created_patient(name)
+
+        return {
+            "searched_before_delete": searched_before_delete,
+            "delete_clicked": delete_clicked,
+            "confirm_clicked": confirm_clicked,
+            "toast": toast,
+            "exists_after_delete": exists_after_delete,
+        }
+
+    def cleanup_created_patients(self) -> list[dict]:
+        """删除本页面对象生命周期内登记的真实患者，返回清理失败明细。"""
+        failures = []
+        for patient_name in reversed(self.__created_patient_names[:]):
+            try:
+                state = self.delete_patient(patient_name)
+                if state.get("exists_after_delete") is not False:
+                    failures.append({"patient_name": patient_name, "state": state})
+            except Exception as e:
+                failures.append({"patient_name": patient_name, "error": str(e)})
+        return failures
 
     def search_design(self, name: str, status: str) -> bool:
         """查询手术设计：先切到设计管理，再按姓名和状态筛选。"""
