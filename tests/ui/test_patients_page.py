@@ -52,6 +52,7 @@ def page():
     log = Logger("patients_test")
     cv = ConfigValue()
     manager = BrowserManager(browser_type="chromium", headless=True, logger=log, remote_url=cv.remote_url)
+    # manager = BrowserManager(browser_type="chromium", headless=False, logger=log)
     browser_page = manager.new_page()
     patients = PatientsPage(browser_page, log)
     yield patients
@@ -203,6 +204,18 @@ class TestPatientsPage:
         )
         assert state["toast"] == expected_message, f"未展示接口失败 message，实际状态: {state}"
         assert "/createDesign" not in state["url"], f"创建失败不应跳转创建设计页，实际状态: {state}"
+
+    @allure.story("Delete Patient")
+    def test_delete_patient_after_create(self, page):
+        """创建随机真实患者后删除，验证删除后无法再按姓名查询到该患者。"""
+        allure.dynamic.title("创建随机患者后删除患者")
+        patient_name = f"UI_DEL_{RandomManager.random_chinese_name()}"
+        page.create_patient(name=patient_name)
+        state = page.delete_patient(patient_name)
+        assert state["searched_before_delete"] is True, f"删除前未查询到新建患者，实际状态: {state}"
+        assert state["delete_clicked"] is True, f"未成功点击删除按钮，实际状态: {state}"
+        assert state["confirm_clicked"] is True, f"未成功点击删除确认按钮，实际状态: {state}"
+        assert state["exists_after_delete"] is False, f"删除后仍能查询到患者，实际状态: {state}"
 
     @allure.story("select page show number")
     @pytest.mark.parametrize("number", [10, 20, 50, 100])

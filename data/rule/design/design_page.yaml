@@ -1,0 +1,94 @@
+url: "/createDesign?patientID=642972813557358592"
+locators:
+  # _upload_patient_data / _dcm_upload
+  import_data_button_name: "导入数据"
+  ct_dicom_type_button_name: "CT数据 DICOM格式"
+  up_stl_type_button_name: "上颌口扫 STL / PLY格式"
+  low_stl_type_button_name: "下颌口扫 STL / PLY格式"
+  other_stl_type_button_name: "其他 STL / PLY格式"
+  upload_area_button_name: "点击或拖拽文件到此处"
+  input_model_name: "input[placeholder='输入模型名称']"
+  confirm_import_button: "button:has-text('确认导入')"
+  confirmed_btn: "button:has-text('确 认')"
+
+  # _input_label / _create_tooth
+  input_label: "div.ant-select-content:visible"
+  input_combobox: "combobox"
+  new_case_button: "button:has-text('新增病例')"
+  tooth_path_template: "[role='dialog'] svg path[data-name='{tooth_position}']"
+  save_button: "button:has-text('保 存')"
+  cancel_button: "button:has-text('取 消')"
+  create_tooth_msg: "div.ant-message-notice-content"
+
+  # 预留/病例卡片
+  case_card: "//div[contains(@class,'bg-[#232323]')]"
+
+  # _read_case_tooth_positions
+  case_tooth_position_cards: "xpath=//div[contains(@class,'_medicalRecordPlane')]//div[contains(@class,'cursor-pointer') and .//span[contains(@class,'text-base')]]"
+
+  # treatment_path_manager / get_current_surgical_path
+  tooth_label_template: "span:has-text('{tooth_position}')"
+
+  # _drag_surgical / _dragg_surgical
+  surgical_stage_draggable_cards: "div[draggable='true']:visible"
+
+  # create_design_and_wait_progress
+  create_design_button: "创建设计"
+  progressbar: "[role='progressbar']"
+  tool_button: "div._tool-btn_m3ugk_1"
+  implant_design_ready_button: "button:has-text('下一步：选择牙尖点')"
+  render_canvas: "canvas:visible"
+
+  # create_stl_design_and_wait_progress / _select_load_model
+  load_model_dialog_name: "加载模型"
+  load_model_dialog: "xpath=//*[@role='dialog' and .//*[normalize-space()='加载模型']]"
+  load_model_item_template: "xpath=.//*[@role='listitem' and .//*[normalize-space()='{model_name}']]"
+  load_model_checkbox: "input.ant-checkbox-input"
+  load_model_confirm_button_text: "确 定"
+
+  # select_implant
+  implant_tooth_card_template: "xpath=//*[normalize-space()='{tooth_position}']/ancestor::*[contains(@class,'cursor-pointer')][1]"
+  implant_tooth_card_edit_icon: "xpath=.//*[local-name()='svg'][1]"
+  implant_toolbar_tool_button: "div[class*='_tool-btn']:visible"
+  implant_add_tooltip_text: "添加种植体"
+  implant_visible_tooltip_template: "xpath=//*[@role='tooltip' and normalize-space()='{tooltip_text}' and not(ancestor::*[contains(@class,'ant-tooltip-hidden')])]"
+  implant_editor_dialog: "xpath=//*[@role='dialog' and (.//*[normalize-space()='添加种植体'] or .//*[normalize-space()='修改种植体'])]"
+  implant_dialog_tooth_path_template: "xpath=//*[@role='dialog' and (.//*[normalize-space()='添加种植体'] or .//*[normalize-space()='修改种植体'])]//*[local-name()='path' and @data-name='{tooth_position}']"
+  implant_dialog_tooth_group_template: "xpath=//*[@role='dialog' and (.//*[normalize-space()='添加种植体'] or .//*[normalize-space()='修改种植体'])]//*[local-name()='g' and .//*[local-name()='path' and @data-name='{tooth_position}']]"
+  implant_add_dialog_name: "添加种植体"
+  implant_edit_dialog_name: "修改种植体"
+  implant_select_dialog_name: "选择植体"
+  select_implant_button: "选择植体"
+  implant_favorite_tab_text: "收藏"
+  implant_model_button_name: "Φ4.80mm x 8.00mm"
+  implant_confirm_button_text: "确 定"
+  implant_dialog_footer_button_template: "xpath=./div[contains(@class,'ant-modal-content')]/div[contains(@class,'ant-modal-footer')]//button[normalize-space()='{button_text}' or .//*[normalize-space()='{button_text}']]"
+
+  # skip_apex_adjustment
+  next_apex_button_text: "下一步：选择牙尖点"
+  finish_adjustment_button_text: "完成调整"
+  skip_button_text: "暂时不用"
+
+  # 预留/当前未调用
+  treatment_path_title: "xpath=//div[contains(@class,'_treatmentPathway_')]//div[normalize-space()='治疗路径']"
+  patient_data_item: "text=术前CT"
+  case_card_template: "xpath=//div[contains(@class,'_medicalRecordPlane')]//*[normalize-space()='{case_no}']"
+  add_treatment_button: "button:has-text('添加流程')"
+  add_treatment_submit_button: "button:has-text('添加流程')"
+  add_treatment_title_input: "input[placeholder='请输入治疗标题']"
+  add_treatment_date_input: "input[placeholder='请选择日期']"
+  add_treatment_remark_textarea: "textarea[placeholder='请备注相关的信息']"
+
+  # treatment_stage_* 预留/当前未调用
+  treatment_stage_cards: "div[class*='_treatment_']"
+  treatment_stage_edit_button_template: "xpath=(//*[normalize-space()='治疗路径']/following::*[normalize-space()='{stage_index}'][1]/following::button)[1]"
+  treatment_stage_delete_button_template: "xpath=(//*[normalize-space()='治疗路径']/following::*[normalize-space()='{stage_index}'][1]/following::button)[2]"
+  treatment_stage_title_input: "input[placeholder='请输入治疗标题']"
+  treatment_stage_status_combobox: "input[role='combobox']"
+  treatment_stage_status_options: ".ant-select-dropdown:visible .ant-select-item-option"
+  treatment_stage_date_input: "input[placeholder='请选择日期']"
+  treatment_stage_remark_textarea: "textarea[placeholder='请备注相关的信息']"
+  treatment_stage_confirm_button: "button:has-text('确 认')"
+  treatment_stage_cancel_button: "button:has-text('取 消')"
+  treatment_stage_success_message: "text=操作成功"
+  delete_treatment_confirm_button: ".ant-modal button.ant-btn-primary:has-text('确 定')"

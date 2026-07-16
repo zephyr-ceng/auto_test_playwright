@@ -33,6 +33,8 @@ locators:
   patient_search_name_input: "input[placeholder='请输入患者姓名']"
   patient_search_phone_input: "input[placeholder='请输入电话号码']"
   patient_search_button: "main button[type='submit']"
+  patient_delete_button: "button:has-text('删除')"
+  patient_delete_confirm_button: ".ant-popover button.ant-btn-primary:has-text('确 定'), .ant-modal button.ant-btn-primary:has-text('确 定')"
 
   # search_design
   design_search_name_input: "input[placeholder='请输入患者姓名']"

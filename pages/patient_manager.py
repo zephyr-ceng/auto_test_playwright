@@ -295,6 +295,67 @@ class PatientsPage(BasePage):
         print(count)
         return count
 
+    def __open_patient_management_tab(self) -> None:
+        """打开患者管理页并切换到患者管理 tab。"""
+        self.__open_url(self.patient_url)
+        tab = self.__selector_patient("patient_management_tab")
+        if tab:
+            self.click(tab)
+            self.wait_for_time(500)
+
+    def __search_patient_rows(self, name: str = "", phone: str = ""):
+        """按姓名和电话筛选患者列表，返回搜索后的表格行 locator。"""
+        name_input = self.__required_selector("patient_search_name_input")
+        phone_input = self.__required_selector("patient_search_phone_input")
+        search_button = self.__required_selector("patient_search_button")
+        row_selector = self.__required_selector("patients_rows")
+
+        self.type_text(name_input, name or "", clear_first=True)
+        self.type_text(phone_input, phone or "", clear_first=True)
+        self.click(search_button)
+        self.wait_for_time(1200)
+        return self.driver.locator(row_selector)
+
+    def __patient_exists_in_rows(self, rows, name: str = "", phone: str = "") -> bool:
+        """判断搜索结果中是否存在匹配姓名或电话的患者。"""
+        ele_count = rows.count()
+        if ele_count == 0:
+            return False
+        for i in range(ele_count):
+            row = rows.nth(i)
+            cells = row.locator("td")
+            row_name = cells.nth(0).inner_text().strip()
+            row_phone = cells.nth(1).inner_text().strip()
+            if name and name in row_name:
+                return True
+            if phone and phone in row_phone:
+                return True
+        return False
+
+    def __click_first_patient_delete_button(self) -> bool:
+        """点击患者搜索结果中的第一个删除按钮。"""
+        selector = self.__required_selector("patient_delete_button")
+        try:
+            self.driver.locator(selector).first.click()
+            self.wait_for_time(500)
+            return True
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Click first patient delete button failed: {e}")
+            return False
+
+    def __confirm_delete_patient(self) -> bool:
+        """确认删除患者弹窗。"""
+        selector = self.__required_selector("patient_delete_confirm_button")
+        try:
+            self.driver.locator(selector).click()
+            self.wait_for_time(1200)
+            return True
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Confirm delete patient failed: {e}")
+            return False
+
     """  ************************************************  测试函数  **********************************************************************************  """
 
     def count_page_patients(self, number: int) -> int | None:
@@ -447,43 +508,43 @@ class PatientsPage(BasePage):
 
     def search_patient(self, name: str, phone: str) -> bool:
         """通过 name/phone/gender 查询患者，存在返回 True，不存在返回 False。"""
-        self.__open_url(self.patient_url)
-        # 点击病患管理后查找相关元素
-        tab = self.__selector_patient("patient_management_tab")
-        if tab:
-            self.click(tab)
-            self.wait_for_time(500)
-
-        name_input = self.__selector_patient("patient_search_name_input")
-        phone_input = self.__selector_patient("patient_search_phone_input")
-        search_button = self.__selector_patient("patient_search_button")
-        row_selector = self.__selector_patient("patients_rows")
-        if not name_input or not phone_input or not search_button or not row_selector:
-            raise RuntimeError(f"patient query locators are not configured in {self.__locators_path}")
-
-        self.type_text(name_input, name or "", clear_first=True)
-        self.type_text(phone_input, phone or "", clear_first=True)
-        self.click(search_button)
-        self.wait_for_time(1200)
-        rows = self.driver.locator(row_selector)
-        res = []
+        self.__open_patient_management_tab()
+        rows = self.__search_patient_rows(name=name, phone=phone)
         ele_count = rows.count()
-        if ele_count > 0:
-            for i in range(ele_count):
-                row = rows.nth(i)
-                cells = row.locator("td")
-                row_name = cells.nth(0).inner_text().strip()
-                row_phone = cells.nth(1).inner_text().strip()
-                if name in row_name or phone in row_phone or not row_name or not row_phone:
-                    res.append(True)
-                else:
-                    res.append(False)
-            for i in range(len(res)):
-                if res[i] is True:
-                    return True
-            return False
-        else:
+        if ele_count == 0:
             return True
+        if not name and not phone:
+            return ele_count > 0
+        return self.__patient_exists_in_rows(rows, name=name, phone=phone)
+
+    def delete_patient(self, name: str) -> dict:
+        """按姓名搜索并删除首个匹配患者，返回删除链路和删除后查询状态。"""
+        if not name:
+            raise ValueError("name is required to delete patient")
+
+        self.__open_patient_management_tab()
+        rows = self.__search_patient_rows(name=name)
+        searched_before_delete = self.__patient_exists_in_rows(rows, name=name)
+        delete_clicked = False
+        confirm_clicked = False
+        toast = None
+        exists_after_delete = searched_before_delete
+
+        if searched_before_delete:
+            delete_clicked = self.__click_first_patient_delete_button()
+            if delete_clicked:
+                confirm_clicked = self.__confirm_delete_patient()
+                toast = self.__toast_text()
+                rows_after_delete = self.__search_patient_rows(name=name)
+                exists_after_delete = self.__patient_exists_in_rows(rows_after_delete, name=name)
+
+        return {
+            "searched_before_delete": searched_before_delete,
+            "delete_clicked": delete_clicked,
+            "confirm_clicked": confirm_clicked,
+            "toast": toast,
+            "exists_after_delete": exists_after_delete,
+        }
 
     def search_design(self, name: str, status: str) -> bool:
         """查询手术设计：先切到设计管理，再按姓名和状态筛选。"""
