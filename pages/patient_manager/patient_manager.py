@@ -3,11 +3,11 @@ import time
 from typing import Any, List, Optional
 
 from core.base_page import BasePage
-from pages.login_manager import LoginPage
+from pages.login.login_manager import LoginPage
 from utils.yaml_reader import YamlManager
 from utils.random_manager import RandomManager
 
-PATIENT_MANAGER_LOCATORS_PATH = "data/rule/patient_manager/patient_manager_page.yaml"
+PATIENT_MANAGER_LOCATORS_PATH = "data/ui/patient_manager/patient_manager_page.yaml"
 
 
 class PatientsPage(BasePage):
@@ -374,6 +374,18 @@ class PatientsPage(BasePage):
                 self.logger.error(f"Confirm delete patient failed: {e}")
             return False
 
+    def __sidebar_state(self) -> dict:
+        """Return sidebar collapsed class and rendered width for toggle assertions."""
+        sider_selector = self.__required_selector("sidebar")
+        sidebar = self.driver.locator(sider_selector).first
+        class_name = sidebar.get_attribute("class") or ""
+        box = sidebar.bounding_box()
+        return {
+            "collapsed": "ant-layout-sider-collapsed" in class_name,
+            "class": class_name,
+            "width": round(box["width"], 2) if box else None,
+        }
+
     """  ************************************************  测试函数  **********************************************************************************  """
 
     def count_page_patients(self, number: int) -> int | None:
@@ -385,6 +397,28 @@ class PatientsPage(BasePage):
         """ 统计单页设计数量 """
         self.__open_url(self.patient_url)
         return self.__count_page_items("design_management_tab", "designs_rows", number)
+
+    def toggle_sidebar_collapse_expand(self) -> dict:
+        """Click the sidebar trigger twice and return before/collapsed/expanded states."""
+        self.__open_url(self.patient_url)
+        trigger_selector = self.__required_selector("sidebar_trigger")
+        trigger = self.driver.locator(trigger_selector).first
+        trigger.wait_for(state="visible")
+
+        before = self.__sidebar_state()
+        trigger.click()
+        self.wait_for_time(500)
+        after_collapse = self.__sidebar_state()
+        trigger.click()
+        self.wait_for_time(500)
+        after_expand = self.__sidebar_state()
+
+        return {
+            "trigger_visible": trigger.is_visible(),
+            "before": before,
+            "after_collapse": after_collapse,
+            "after_expand": after_expand,
+        }
 
     def create_patient(self, name: str, birthday: str = "", phone: str = "", gender: str = "", remark: str = "", ) -> \
             Optional[str]:

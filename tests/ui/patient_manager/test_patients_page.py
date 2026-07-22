@@ -5,13 +5,13 @@ import pytest
 
 from core.browser_manager import BrowserManager
 from core.read_config import ConfigValue
-from pages.patient_manager import PatientsPage
+from pages.patient_manager.patient_manager import PatientsPage
 from utils.csv_manager import CSVManager
 from utils.logger import Logger
 from utils.random_manager import RandomManager
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-CREATE_PATIENT_CASE_CSV = PROJECT_ROOT / "data" / "rule" / "patient_manager" / "create_patient_form_case.csv"
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+CREATE_PATIENT_CASE_CSV = PROJECT_ROOT / "data" / "ui" / "patient_manager" / "create_patient_form_case.csv"
 
 
 def _load_create_patient_ui_cases() -> list[dict]:
@@ -235,6 +235,18 @@ class TestPatientsPage:
         count_de = page.count_page_designs(number)
         assert count_pa == number, f"并未查询到对应数据:实际值{count_pa} != 预设值{number}"
         assert count_de == number, f"并未查询到对应数据:实际值{count_pa} != 预设值{number}"
+
+    @allure.story("Sidebar Display")
+    def test_toggle_sidebar_collapse_expand(self, page):
+        """验证侧边栏可缩小并再次放大展示。"""
+        allure.dynamic.title("侧边栏缩小和放大展示")
+        state = page.toggle_sidebar_collapse_expand()
+        assert state["trigger_visible"] is True, f"侧边栏触发器不可见，实际状态: {state}"
+        assert state["after_collapse"] != state["before"], f"点击缩小后侧边栏状态未变化，实际状态: {state}"
+        assert state["after_expand"] != state["after_collapse"], f"点击放大后侧边栏状态未变化，实际状态: {state}"
+        assert state["after_expand"]["collapsed"] == state["before"]["collapsed"], (
+            f"点击放大后侧边栏未恢复初始折叠状态，实际状态: {state}"
+        )
 
     @allure.story("select patients")
     @pytest.mark.parametrize("name,phone", [('test', '16666666666'), ('演示', ''), ("", "139")])

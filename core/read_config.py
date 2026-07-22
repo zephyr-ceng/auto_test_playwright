@@ -37,7 +37,7 @@ class LoginPage(BasePage, ConfigValue):
             self,
             driver: Any,
             logger: Optional[Any] = None,
-            locators_path: str = "data/rule/login/login_page.yaml",
+            locators_path: str = "data/ui/login/login_page.yaml",
             config_path: str = "config/config.yaml",
     ):
         BasePage.__init__(driver, logger)

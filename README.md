@@ -36,7 +36,10 @@
 - `tests/ui/`：UI 测试用例；
 - `tests/api/`：requests 接口测试用例；
 - `api/`：接口测试客户端、Apifox 生成器和模块 API 封装；
-- `data/`：测试数据（含 YAML / DICOM 示例数据）；
+- `data/ui/`：UI 页面定位、规则说明和 UI 用例数据；
+- `data/api/`：API 接口规格、模块文档和生成说明；
+- `data/test_data/`：通用 CSV 测试数据；
+- `data/dicom/`、`data/stl/`：UI 文件上传相关示例数据；
 - `logs/`：运行日志与失败截图；
 - `reports/`：测试结果与 Allure 报告输出；
 - `run_tests.py`：按 UI/API suite 执行 pytest 并生成 Allure 报告。
@@ -52,9 +55,9 @@
 
 Codex 会按以下约定生成或更新文件：
 
-- `data/<page>_page.yaml`：页面路径与元素定位，`url` 只写路径；
-- `pages/<page>_manager.py`：页面对象封装，文件名必须使用 `*_manager.py`；
-- `tests/ui/test_<page>_page.py`：pytest 用例、fixture、断言和 Allure 标记。
+- `data/ui/<module>/<page>_page.yaml`：页面路径与元素定位，`url` 只写路径；
+- `pages/<module>/<page>_manager.py`：页面对象封装，文件名必须使用 `*_manager.py`；
+- `tests/ui/<module>/test_<page>_page.py`：pytest 用例、fixture、断言和 Allure 标记。
 
 推荐需求模板：
 
@@ -128,7 +131,7 @@ python run_tests.py --suite api --no-allure-html
 
 ## API 编写与调试
 
-- 接口定义来源：`api-test/apifox/Tars Admin Frontend API.apifox.json`。
+- 接口定义来源：`data/api/Tars Admin Frontend API.apifox.json`。
 - 重新生成接口封装和测试：`python -m api.generate_from_apifox`。
 - 生成结果：
     - `api/01-login_by_username-auth/api.py` 等 16 个目录：严格对齐 `api-test/cache/modules/01-...16-...`；
@@ -151,14 +154,14 @@ python -m pytest tests/api -q -m "destructive_api" -s
 
 ## UI 编写与调试
 
-- UI 用例统一放在 `tests/ui/`。
-- 页面对象仍放在 `pages/*_manager.py`，定位数据仍放在 `data/*_page.yaml`。
+- UI 用例统一放在 `tests/ui/<module>/`。
+- 页面对象仍放在 `pages/<module>/*_manager.py`，定位数据放在 `data/ui/<module>/*_page.yaml`。
 - 调试单个 UI 文件或用例：
 
 ```bash
-python -m pytest tests/ui/test_login_page.py -q -s
-python -m pytest tests/ui/test_patients_page.py::TestPatientsPage::test_create_patient_success -q -s
+python -m pytest tests/ui/login/test_login_page.py -q -s
+python -m pytest tests/ui/patient_manager/test_patients_page.py::TestPatientsPage::test_create_patient_success -q -s
 ```
 
-新增 UI 自动化时继续按 POM 结构编写：`data/*.yaml -> pages/*_manager.py -> tests/ui/test_*_page.py`。失败截图仍由
+新增 UI 自动化时继续按 POM 结构编写：`data/ui/<module>/*_page.yaml -> pages/<module>/*_manager.py -> tests/ui/<module>/test_*_page.py`。失败截图仍由
 `core/conftest.py` 统一处理。

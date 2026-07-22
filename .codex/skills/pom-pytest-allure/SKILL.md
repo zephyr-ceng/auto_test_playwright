@@ -1,6 +1,6 @@
 ---
 name: pom-pytest-allure
-description: Project workflow for Playwright_demo UI automation. Use when Codex receives a feature requirement, page workflow, element locator task, pytest case request, assertion standard, or Allure reporting requirement and must create or update Page Object manager files under pages, page YAML locators under data/rule, pytest tests under tests/ui, and Allure labels for standard reports.
+description: Project workflow for Playwright_demo UI automation. Use when Codex receives a feature requirement, page workflow, element locator task, pytest case request, assertion standard, or Allure reporting requirement and must create or update Page Object manager files under pages, page YAML locators under data/ui, pytest tests under tests/ui, and Allure labels for standard reports.
 ---
 
 # POM Pytest Allure
@@ -11,26 +11,26 @@ Use this skill to turn a user requirement plus assertion standard into maintaina
 
 Keep the project flow consistent:
 
-`data/rule/<module>/<page_or_workflow>_page.yaml -> pages/*_manager.py -> tests/ui/test_*_page.py -> pytest assert -> core.conftest failure screenshot -> Allure report`
+`data/ui/<module>/<page_or_workflow>_page.yaml -> pages/<module>/*_manager.py -> tests/ui/<module>/test_*_page.py -> pytest assert -> core.conftest failure screenshot -> Allure report`
 
 ## Required Outputs
 
 For a new page or workflow, create or update all three layers unless the user explicitly narrows the scope:
 
-- `data/rule/<module>/<page_or_workflow>_page.yaml`: page path and all selectors. The `url` value must be a path only.
-- `pages/<page>_manager.py`: Page Object manager, filename must end with `_manager.py`.
-- `tests/ui/test_<page>_page.py`: pytest cases with fixtures, assertions, and Allure labels.
+- `data/ui/<module>/<page_or_workflow>_page.yaml`: page path and all selectors. The `url` value must be a path only.
+- `pages/<module>/<page>_manager.py`: Page Object manager, filename must end with `_manager.py`.
+- `tests/ui/<module>/test_<page>_page.py`: pytest cases with fixtures, assertions, and Allure labels.
 
 Do not put selectors directly in tests. Tests call page manager business methods and assert returned values.
 
 ## Naming Rules
 
 - Use snake_case page names.
-- Page Object files must be named `pages/<page>_manager.py`; examples: `login_manager.py`, `patient_manager.py`, `order_manager.py`.
+- Page Object files must be named `pages/<module>/<page>_manager.py`; examples: `pages/login/login_manager.py`, `pages/patient_manager/patient_manager.py`, `pages/order/order_manager.py`.
 - Page classes should use PascalCase plus `Page` or `Manager`, matching existing style when extending a module.
-- UI locator files must live under the matching business rule directory, using `data/rule/<module>/<page_or_workflow>_page.yaml`.
-- Keep related case CSV files, rule Markdown files, and page YAML files in the same `data/rule/<module>/` directory.
-- Test files should use `tests/ui/test_<page>_page.py`.
+- UI locator files must live under the matching business rule directory, using `data/ui/<module>/<page_or_workflow>_page.yaml`.
+- Keep related case CSV files, rule Markdown files, and page YAML files in the same `data/ui/<module>/` directory.
+- Test files should use `tests/ui/<module>/test_<page>_page.py`.
 - Fixture names should be clear and page-specific, such as `login_page`, `order_page`, or `page` only when the existing file already uses that convention.
 
 ## Implementation Flow
@@ -39,9 +39,9 @@ Do not put selectors directly in tests. Tests call page manager business methods
    - `core/base_page.py`
    - `core/browser_manager.py`
    - `core/conftest.py`
-   - nearby `pages/*_manager.py`
-   - nearby `tests/test_*_page.py`
-   - relevant `data/rule/<module>/*_page.yaml`
+   - nearby `pages/<module>/*_manager.py`
+   - nearby `tests/ui/<module>/test_*_page.py`
+   - relevant `data/ui/<module>/*_page.yaml`
    - Before generating or changing automation code, search and read the existing project files that may already contain reusable page methods, fixtures, utilities, locator keys, or workflow helpers.
    - Before generating new scripts or methods, identify reusable functions in existing page managers, `BasePage`, and `utils`; call or compose those functions instead of reimplementing the same workflow.
 

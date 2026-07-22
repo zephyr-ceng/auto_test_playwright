@@ -9,6 +9,10 @@ locators:
   create_patient_submit_button: ".ant-modal-footer button.ant-btn-primary"
   ack_button: "button:has-text('我已了解')"
 
+  # toggle_sidebar_collapse_expand
+  sidebar: ".ant-layout-sider"
+  sidebar_trigger: ".ant-layout-sider-trigger"
+
   # create_patient_form
   name: ".ant-modal-wrap #name"
   birthday: ".ant-modal-wrap #dateOfBirth"

@@ -5,7 +5,7 @@ from core.read_config import ConfigValue
 from core.base_page import BasePage
 from utils.yaml_reader import YamlManager
 
-LOGIN_LOCATORS_PATH = "data/rule/login/login_page.yaml"
+LOGIN_LOCATORS_PATH = "data/ui/login/login_page.yaml"
 
 
 class LoginPage(BasePage, ConfigValue):

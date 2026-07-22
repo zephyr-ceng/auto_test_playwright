@@ -2,7 +2,7 @@ import allure
 import pytest
 
 from core.browser_manager import BrowserManager
-from pages.login_manager import LoginPage
+from pages.login.login_manager import LoginPage
 from utils.csv_manager import CSVManager
 from utils.logger import Logger
 from core.read_config import ConfigValue

@@ -25,7 +25,7 @@ locators:
   # treatment_path_manager / get_current_surgical_path
   tooth_label_template: "span:has-text('{tooth_position}')"
 
-  # _drag_surgical / _dragg_surgical
+  # _drag_surgical
   surgical_stage_draggable_cards: "div[draggable='true']:visible"
 
   # create_design_and_wait_progress
